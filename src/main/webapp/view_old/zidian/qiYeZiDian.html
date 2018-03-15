@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" href="/whwr/css/style.css" type="text/css" />
+        <link rel="stylesheet" href="/whwr/whwr/zidian/qiYeZiDian.css" type="text/css" />
+        <script type="text/javascript" src="/whwr/js/jquery2.js"></script>
+        <script type="text/javascript" src="/whwr/js/json2.js"></script>
+        <script type="text/javascript" src="/whwr/js/popMenu.js"></script>
+        <script type="text/javascript" src="/whwr/js/whwr.js"></script>
+        <script type="text/javascript" src="/whwr/js/whwr.form.js"></script>
+        <script type="text/javascript" src="/whwr/js/whwr.list.js"></script>
+        <script type="text/javascript" src="/whwr/js/whwr.data.js"></script>
+        <script type="text/javascript" src="/whwr/js/whwr.pinyin.js"></script>
+        <script type="text/javascript" src="/whwr/js/calendar.js"></script>
+        <script type="text/javascript" src="/whwr/whwr/zidian/qiYeZiDian.js"></script>
+    </head>
+    <body>
+        <table id="title">
+            <tr>
+                <td id="logo"></td>
+                <td id="pageTitle"></td>
+            </tr>
+        </table>
+
+        <div style="width: 100%;">
+            <table id="tblQiyezidian" class="list" style="table-layout:fixed;width: 100%;">
+                <tr class="biaoTou">
+                    <td width="30%" id="tblQyzd_mc_lb">
+                        名称
+                    </td>
+                    <td width="30%" id="tblQyzd_dm_lb">
+                        代码
+                    </td>
+                    <td id="tblQyzd_bz_lb">
+                        备注
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="divCx4Qyzd" class="pop">
+            <table id="tblCx4Qyzd" class="form">
+                <tr>
+                    <td style="width: 120px;" class="title">
+                        字典类别：
+                    </td>
+                    <td>
+                        <input type="text" id="tblCx4Qyzd_zdlb" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 120px;" class="title">
+                        字典名称：
+                    </td>
+                    <td>
+                        <input type="text" id="tblCx4Qyzd_mc" />
+                    </td>
+                </tr>
+                <tr class="diBian">
+                    <td colspan="2">
+                        <input type="button" value="查询" onclick="javascript:cxQiYeZiDian()" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="cd4Qyzd" class="popMenu">
+            <ul>
+                <li id="zjQyzd">
+                    增加企业字典
+                </li>
+                <li id="xgQyzd">
+                    修改企业字典
+                </li>
+                <li id="scQyzd">
+                    删除企业字典
+                </li>
+            </ul>
+        </div>
+
+        <div id="divFrmQyzd" class="pop">
+            <table id="tblFrmQyzd" class="form">
+                <tr>
+                    <td id="tblFrmQyzd_zdlb_lb" class="title" style="width: 150px;">
+                        字典类别：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmQyzd_zdlb" />
+                    </td>
+                </tr>
+                <tr>
+                    <td id="tblFrmQyzd_mc_lb" class="title" style="width: 150px;">
+                        名&ensp;&ensp;&ensp;&ensp;称：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmQyzd_mc" />
+                    </td>
+                </tr>
+                <tr>
+                    <td id="tblFrmQyzd_dm_lb" class="title" style="width: 150px;">
+                        代&ensp;&ensp;&ensp;&ensp;码：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmQyzd_dm" />
+                    </td>
+                </tr>
+                <tr>
+                    <td id="tblFrmQyzd_bz_lb" class="title" style="width: 150px;">
+                        备&ensp;&ensp;&ensp;&ensp;注：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmQyzd_bz" />
+                    </td>
+                </tr>
+                <tr class="diBian">
+                    <td colspan="4" style="text-align: center;">
+                        <input id="tblFrmQyzd_bc" type="button" value="保存"
+                               onclick="javascript:bcQiYeZiDian()" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="board"></div>
+    </body>
+</html>

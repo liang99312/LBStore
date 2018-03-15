@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" href="../../whwr/css/style.css" type="text/css" />
+        <link rel="stylesheet" href="whwr/cangku/common/selKuCun.css" type="text/css" />
+        <script type="text/javascript" src="../../whwr/js/jquery2.js"></script>
+        <script type="text/javascript" src="../../whwr/js/json2.js"></script>
+        <script type="text/javascript" src="../../whwr/js/popMenu.js"></script>
+        <script type="text/javascript" src="../../whwr/js/whwr.js"></script>
+        <script type="text/javascript" src="../../whwr/js/whwr.form.js"></script>
+        <script type="text/javascript" src="../../whwr/js/whwr.list.js"></script>
+        <script type="text/javascript" src="../../whwr/js/whwr.data.js"></script>
+        <script type="text/javascript" src="../../whwr/js/whwr.pinyin.js"></script>
+        <script type="text/javascript" src="../../whwr/js/calendar.js"></script>
+        <script type="text/javascript" src="whwr/cangku/common/selKuCun.js"></script>
+    </head>
+    <body>
+        <table id="title">
+            <tr>
+                <td id="logo"></td>
+                <td id="pageTitle"></td>
+            </tr>
+        </table>
+
+        <div id="divCx4Kc" class="pop">
+            <table id="tblCx4Kc" class="form">
+                <tr>
+                    <td style="width: 120px;" class="title">
+                        仓&ensp;&ensp;&ensp;&ensp;库：
+                    </td>
+                    <td>
+                        <input type="text" id="tblCx4Kc_ck" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 120px;" class="title">
+                        库&ensp;&ensp;&ensp;&ensp;位：
+                    </td>
+                    <td>
+                        <input type="text" id="tblCx4Kc_ck" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 120px;" class="title">
+                        流&ensp;水&ensp;号：
+                    </td>
+                    <td>
+                        <input type="text" id="tblCx4Kc_ck" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 120px;" class="title">
+                        物资名称：
+                    </td>
+                    <td>
+                        <input type="text" id="tblCx4Kc_gys" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 120px;" class="title">
+                        型号规格：
+                    </td>
+                    <td>
+                        <input type="text" id="tblCx4Kc_zt" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 120px;" class="title">
+                        时间&ensp;&ensp;起：
+                    </td>
+                    <td>
+                        <input type="text" id="tblCx4Kc_qssj" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 120px;" class="title">
+                        &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;止：
+                    </td>
+                    <td>
+                        <input type="text" id="tblCx4Kc_jssj" />
+                    </td>
+                </tr>
+                <tr class="diBian">
+                    <td colspan="4">
+                        <input type="button" value="查询" onclick="javascript:cxKuCun()" />
+                    </td>
+                </tr>
+            </table>
+            <table id="tblRuKuDan" class="list" style="table-layout:fixed;width: 100%;">
+                <tr class="biaoTou">
+                    <td id="tblKc_lsh_lb">
+                        流水号
+                    </td>
+                    <td id="tblKc_wzmc_lb">
+                        名称
+                    </td>
+                    <td id="tblKc_pp_lb">
+                        品牌
+                    </td>
+                    <td id="tblKc_xhgg_lb">
+                        型号规格
+                    </td>
+                    <td id="tblKc_syl_lb">
+                        剩余量
+                    </td>
+                    <td id="tblKc_kw_lb">
+                        库位
+                    </td>
+                    <td id="tblKc_rksj_lb">
+                        入库时间
+                    </td>
+                    <td id="tblKc_bz_lb">
+                        
+                    </td>
+                </tr>
+            </table>
+            
+        </div>
+
+        <div id="dvIfm" class="plugin">
+		<div class="mask"></div>
+		<iframe id="ifrm" class="plugin" ></iframe>
+	</div>
+        
+        <div id="board"></div>
+    </body>
+</html>

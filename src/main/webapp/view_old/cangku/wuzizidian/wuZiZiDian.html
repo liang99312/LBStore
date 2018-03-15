@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" href="/whwr/css/style.css" type="text/css" />
+        <link rel="stylesheet" href="/whwr/whwr/cangku/wuzizidian/wuZiZiDian.css" type="text/css" />
+        <script type="text/javascript" src="/whwr/js/jquery2.js"></script>
+        <script type="text/javascript" src="/whwr/js/json2.js"></script>
+        <script type="text/javascript" src="/whwr/js/popMenu.js"></script>
+        <script type="text/javascript" src="/whwr/js/whwr.js"></script>
+        <script type="text/javascript" src="/whwr/js/whwr.form.js"></script>
+        <script type="text/javascript" src="/whwr/js/whwr.list.js"></script>
+        <script type="text/javascript" src="/whwr/js/whwr.data.js"></script>
+        <script type="text/javascript" src="/whwr/js/whwr.pinyin.js"></script>
+        <script type="text/javascript" src="/whwr/js/calendar.js"></script>
+        <script type="text/javascript" src="/whwr/whwr/cangku/wuzizidian/wuZiZiDian.js"></script>
+    </head>
+    <body>
+        <table id="title">
+            <tr>
+                <td id="logo"></td>
+                <td id="pageTitle"></td>
+            </tr>
+        </table>
+
+        <div style="width: 100%;">
+            <table id="tblQiyezidian" class="list" style="table-layout:fixed;width: 100%;">
+                <tr class="biaoTou">
+                    <td width="30%" id="tblWzzd_mc_lb">
+                        名称
+                    </td>
+                    <td width="30%" id="tblWzzd_dm_lb">
+                        代码
+                    </td>
+                    <td id="tblWzzd_bz_lb">
+                        备注
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="divCx4Wzzd" class="pop">
+            <table id="tblCx4Wzzd" class="form">
+                <tr>
+                    <td style="width: 120px;" class="title">
+                        字典类别：
+                    </td>
+                    <td>
+                        <input type="text" id="tblCx4Wzzd_zdlb" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 120px;" class="title">
+                        字典名称：
+                    </td>
+                    <td>
+                        <input type="text" id="tblCx4Wzzd_mc" />
+                    </td>
+                </tr>
+                <tr class="diBian">
+                    <td colspan="2">
+                        <input type="button" value="查询" onclick="javascript:cxWuZiZiDian()" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="cd4Wzzd" class="popMenu">
+            <ul>
+                <li id="zjWzzd">
+                    增加物资字典
+                </li>
+                <li id="xgWzzd">
+                    修改物资字典
+                </li>
+                <li id="xhggWzzd">
+                    配置型号规格
+                </li>
+                <li id="scWzzd">
+                    删除物资字典
+                </li>
+            </ul>
+        </div>
+
+        <div id="cd4Xhgg" class="popMenu">
+            <ul>
+                <li id="zjXhgg">
+                    增加型号规格
+                </li>
+                <li id="xgXhgg">
+                    修改型号规格
+                </li>
+                <li id="scXhgg">
+                    删除型号规格
+                </li>
+            </ul>
+        </div>
+
+        <div id="cd4WzzdGxys" class="popMenu">
+            <ul>
+                <li id="zjGxys">
+                    增加个性要素
+                </li>
+                <li id="xgGxys">
+                    修改个性要素
+                </li>
+                <li id="scGxys">
+                    删除个性要素
+                </li>
+            </ul>
+        </div>
+
+        <div id="divFrmWzzd" class="pop">
+            <table id="tblFrmWzzd" class="form">
+                <tr>
+                    <td id="tblFrmWzzd_zdlb_lb" class="title" style="width: 150px;">
+                        物资类别：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmWzzd_zdlb" />
+                    </td>
+                </tr>
+                <tr>
+                    <td id="tblFrmWzzd_mc_lb" class="title" style="width: 150px;">
+                        名&ensp;&ensp;&ensp;&ensp;称：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmWzzd_mc" />
+                    </td>
+                </tr>
+                <tr>
+                    <td id="tblFrmWzzd_dm_lb" class="title" style="width: 150px;">
+                        代&ensp;&ensp;&ensp;&ensp;码：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmWzzd_dm" />
+                    </td>
+                </tr>
+                <tr>
+                    <td id="tblFrmWzzd_bm_lb" class="title" style="width: 150px;">
+                        别&ensp;&ensp;&ensp;&ensp;名：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmWzzd_bm" />
+                    </td>
+                </tr>
+                <tr>
+                    <td id="tblFrmWzzd_dw_lb" class="title" style="width: 150px;">
+                        单&ensp;&ensp;&ensp;&ensp;位：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmWzzd_dw" />
+                    </td>
+                </tr>
+                <tr>
+                    <td id="tblFrmWzzd_bz_lb" class="title" style="width: 150px;">
+                        备&ensp;&ensp;&ensp;&ensp;注：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmWzzd_bz" />
+                    </td>
+                </tr>
+                <tr id="tblFrmWzzd_gxys_tr" style="display: none;"><td colspan="2" style="padding-left: 0px;">
+                        <table id="tblGxys" class="form"></table>
+                    </td>
+                </tr>
+                <tr class="diBian">
+                    <td colspan="2" style="text-align: center;">
+                        <input id="tblFrmWzzd_gxys" type="button" value="增加个性要素"
+                               onclick="javascript:zjGxys()" />
+                        <input id="tblFrmWzzd_bc" type="button" value="保存"
+                               onclick="javascript:bcWuZiZiDian()" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="divFrmGxys" class="pop">
+            <table id="tblFrmGxys" class="form">
+                <tr>
+                    <td id="tblFrmGxys_mc_lb" class="title" style="width: 150px;">
+                        名&ensp;&ensp;&ensp;&ensp;称：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmGxys_mc" />
+                    </td>
+                </tr>
+                <tr>
+                    <td id="tblFrmGxys_dm_lb" class="title" style="width: 150px;">
+                        代&ensp;&ensp;&ensp;&ensp;码：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmGxys_dm" />
+                    </td>
+                </tr>
+                <tr>
+                    <td id="tblFrmGxys_lx_lb" class="title" style="width: 150px;">
+                        数据类型：
+                    </td>
+                    <td>
+                        <select id="tblFrmGxys_lx" style="width: 200px;">
+                            <option value="number">数字</option>
+                            <option value="text">文本</option>
+                            <option value="date">日期</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td id="tblFrmGxys_sjly_lb" class="title" style="width: 150px;">
+                        数据来源：
+                    </td>
+                    <td>
+                        <select id="tblFrmGxys_sjly" style="width: 200px;">
+                            <option value="sgsr">手工输入</option>
+                            <option value="a01">查询人员</option>
+                            <option value="ck">查询仓库</option>
+                            <option value="kh">查询客户</option>
+                            <option value="gys">查询供应商</option>
+                            <option value="qyzd">查询企业字典</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr id="tblFrmGxys_zdlb_tr" style="display: none;">
+                    <td id="tblFrmGxys_zdlb_lb" class="title" style="width: 150px;">
+                        字典类别：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmGxys_zdlb" />
+                    </td>
+                </tr>
+                <tr class="diBian">
+                    <td colspan="2" style="text-align: center;">
+                        <input id="tblFrmGxys_bc" type="button" value="保存"
+                               onclick="javascript:bcGeXingYaoSu()" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="divFrmXhgg" class="pop">
+            <table id="tblFrmXhgg" class="form">
+                <tr>
+                    <td id="tblFrmXhgg_zdlb_lb" class="title" style="width: 150px;">
+                        物资类别：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmXhgg_zdlb" />
+                    </td>
+                </tr>
+                <tr>
+                    <td id="tblFrmXhgg_wzmc_lb" class="title" style="width: 150px;">
+                        物资名称：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmXhgg_wzmc" />
+                    </td>
+                </tr>
+                <tr><td colspan="2" style="padding-left: 0px;">
+                        <table id="tblXhgg_title" >
+                            <tr class="biaoTou">
+                                <td width="150px">
+                                    规格名称
+                                </td>
+                                <td width="100px">
+                                    代码
+                                </td>
+                                <td width="150px">
+                                    警报数量
+                                </td>
+                                <td width="100px">
+                                    是否警报
+                                </td>
+                                <td>
+                                    备注
+                                </td>
+                            </tr>
+                        </table>
+                        <div style="overflow: auto;overflow-x: hidden; background: none; width: 800px;max-height: 300px;">
+                            <div style="overflow: auto;overflow-y: scroll; background: none;width: 820px;max-height: 300px;">
+                                <table id="tblXhgg"></table>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="diBian">
+                    <td colspan="2" style="text-align: center;">
+                        <input id="tblFrmWzzd_bc" type="button" value="确定"
+                               onclick="javascript:GbXhgg()" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="divFrmXhggMx" class="pop">
+            <table id="tblFrmXhggMx" class="form">
+                <tr>
+                    <td id="tblFrmXhggMx_ggmc_lb" class="title" style="width: 150px;">
+                        规格名称：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmXhggMx_ggmc" />
+                    </td>
+                </tr>
+                <tr>
+                    <td id="tblFrmXhggMx_dm_lb" class="title" style="width: 150px;">
+                        代&ensp;&ensp;&ensp;&ensp;码：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmXhggMx_dm" />
+                    </td>
+                </tr>
+                <tr>
+                    <td id="tblFrmXhggMx_sl_lb" class="title" style="width: 150px;">
+                        警报数量：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmXhggMx_sl" />
+                    </td>
+                </tr>
+                <tr>
+                    <td id="tblFrmXhggMx_jb_lb" class="title" style="width: 150px;">
+                        是否警报：
+                    </td>
+                    <td>
+                        <input type="radio" name="shifou" id="shi" value="1"/>
+                        是
+                        <input type="radio" name="shifou" id="fou" value="0" checked="checked"/>
+                        否
+                    </td>
+                </tr>
+                <tr>
+                    <td id="tblFrmXhggMx_bz_lb" class="title" style="width: 150px;">
+                        备&ensp;&ensp;&ensp;&ensp;注：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmXhggMx_bz" />
+                    </td>
+                </tr>
+                <tr class="diBian">
+                    <td colspan="2" style="text-align: center;">
+                        <input id="tblFrmXhggMx_bc" type="button" value="保存"
+                               onclick="javascript:bcXhgg()" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="board"></div>
+    </body>
+</html>

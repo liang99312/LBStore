@@ -1,0 +1,28 @@
+div#divCx4Wzlb {
+    top: 36px;
+    z-index: 10;
+    width:400px;
+}
+
+div#divFrmYuanGong {
+    z-index: 10;
+}
+
+table#tblFrmWzlb_gw tr:first-child td{
+    border-top-width: 0;
+}
+
+table#tblFrmWzlb_gw tr:last-child td{
+    border-bottom-width: 0;
+}
+
+table#tblFrmWzlb_gw td{
+    width: 20%;
+}
+
+input[type=password] {
+    border: 0;
+    width:200px;
+    border-bottom: 1px solid #065E9E;
+    background-color: transparent;
+}

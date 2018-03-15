@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" href="/whwr/css/style.css" type="text/css" />
+        <link rel="stylesheet" href="/whwr/whwr/bumen/buMen.css" type="text/css" />
+        <script type="text/javascript" src="/whwr/js/jquery2.js"></script>
+        <script type="text/javascript" src="/whwr/js/json2.js"></script>
+        <script type="text/javascript" src="/whwr/js/popMenu.js"></script>
+        <script type="text/javascript" src="/whwr/js/whwr.js"></script>
+        <script type="text/javascript" src="/whwr/js/whwr.form.js"></script>
+        <script type="text/javascript" src="/whwr/js/whwr.list.js"></script>
+        <script type="text/javascript" src="/whwr/js/whwr.data.js"></script>
+        <script type="text/javascript" src="/whwr/js/whwr.pinyin.js"></script>
+        <script type="text/javascript" src="/whwr/js/calendar.js"></script>
+        <script type="text/javascript" src="/whwr/whwr/bumen/buMen.js"></script>
+    </head>
+    <body>
+        <table id="title">
+            <tr>
+                <td id="logo"></td>
+                <td id="pageTitle"></td>
+            </tr>
+        </table>
+
+        <div style="width: 100%;">
+            <table id="tblKehu" class="list" style="table-layout:fixed;width: 100%;">
+                <tr class="biaoTou">
+                    <td width="30%" id="tblBm_mc_lb">
+                        名称
+                    </td>
+                    <td width="20%" id="tblBm_dm_lb">
+                        代码
+                    </td>
+                    <td id="tblBm_bz_lb">
+                        备注
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="divCx4Bm" class="pop">
+            <table id="tblCx4Bm" class="form">
+                <tr>
+                    <td style="width: 120px;" class="title">
+                        部门名称：
+                    </td>
+                    <td>
+                        <input type="text" id="tblCx4Bm_mc" />
+                    </td>
+                </tr>
+                <tr class="diBian">
+                    <td colspan="2">
+                        <input type="button" value="查询" onclick="javascript:cxBuMen()" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="cd4Bm" class="popMenu">
+            <ul>
+                <li id="zjBm">
+                    增加部门
+                </li>
+                <li id="xgBm">
+                    修改部门
+                </li>
+                <li id="scBm">
+                    删除部门
+                </li>
+            </ul>
+        </div>
+
+        <div id="divFrmBm" class="pop">
+            <table id="tblFrmBm" class="form">
+                <tr>
+                    <td id="tblFrmBm_mc_lb" class="title" style="width: 150px;">
+                        姓&ensp;&ensp;&ensp;&ensp;名：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmBm_mc" />
+                    </td>
+                </tr>
+                <tr>
+                    <td id="tblFrmBm_dm_lb" class="title" style="width: 150px;">
+                        代&ensp;&ensp;&ensp;&ensp;码：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmBm_dm" />
+                    </td>
+                </tr>
+                <tr>
+                    <td id="tblFrmBm_bz_lb" class="title" style="width: 150px;">
+                        备&ensp;&ensp;&ensp;&ensp;注：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmBm_bz" />
+                    </td>
+                </tr>
+                <tr class="diBian">
+                    <td colspan="4" style="text-align: center;">
+                        <input id="tblFrmBm_bc" type="button" value="保存"
+                               onclick="javascript:bcBuMen()" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="board"></div>
+    </body>
+</html>

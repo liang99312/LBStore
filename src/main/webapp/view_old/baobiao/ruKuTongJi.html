@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="/js/calendar.js"></script>
+	<script type="text/javascript">
+		var wuZi = {"list": [], "seq": -1, "yeXu": 1, "zys": 0};
+		var cangKu = {};
+
+		$(document).ready(function() {
+			lp_cxCangKu();
+			$("#cangKuMingCheng").inputKit({"src": lp_CangKuList,"obj":"cangKu"});
+			$("#rkQiShiShiJian,#rkJieShuShiJian").setCalendar();
+			$("#divFrmQingDan").show().css("z-index", "20");
+		});
+
+		function cxQingDan() {
+			if ($("#rkQiShiShiJian").val() === "" || $("#rkJieShuShiJian").val() === "") {
+				return alert("请输入开始和结束时间");
+			}
+			var json = {};
+			if ($("#cangKuMingCheng").val().length > 0) {
+				json.ckbh = cangKu.bh;
+			}
+			json.qssj = $("#rkQiShiShiJian").val();
+			var jsdate = new Date($("#rkJieShuShiJian").val());
+			jsdate.setDate(jsdate.getDate() + 1);
+			json.jssj = jsdate.toISOString().substring(0,10);
+			json = {"jsonObj": JSON.stringify(json)};
+			$.ajax({
+				url: "/ck/rkbb.do",
+				data: json,
+				dataType: "json",
+				type: "post",
+				cache: false,
+				error: function(msg, textStatus) {
+					failureResp(msg.responseText);
+				},
+				success: function(json) {
+					if (checkResult(json)) {
+						jxQingDan(json);
+					}
+				}
+			});
+		}
+		
+		function jxQingDan(json) {
+			var dwSz = [];
+			var xjSz = [];
+			wuZi.list = json.sz;
+			var zje = 0;
+			$("#tblRuKuTongJi tr").remove();
+			$("#dyTblQingDan tr").remove();
+			$("#dyTblQingDan").append("<tr><td colspan='10' style='text-align:center;'>"+$("#cangKuMingCheng").val()+$("#rkQiShiShiJian").val()+"到"+$("#rkJieShuShiJian").val()+"入库统计表</td></tr>");
+			$("#dyTblQingDan").append("<tr class='lbBiaoTou'><td style='width:9%;' >时间</td><td style='width:10%;' >供应商</td><td style='width:18%;' >产品名称</td><td style='width:10%;' >品牌</td><td style='width:10%;' >生产厂</td><td style='width:10%;' >型号规格</td><td style='width:8%;' >单位</td><td style='width:8%;' >单价</td><td style='width:8%;' >数量</td><td >金额</td></tr>");
+			for (var i = 0; i < wuZi.list.length; i++) {
+				var xj = [];
+				var e = wuZi.list[i];
+				e.dw = e.dw.toUpperCase();
+				if(dwSz.indexOf(e.dw) > -1){
+					xj = xjSz[dwSz.indexOf(e.dw)];
+					xj.push(e);
+				}else{
+					xj.push(e);
+					dwSz.push(e.dw);
+					xjSz.push(xj);
+				}
+				zje = zje + parseFloat((e.jhjg*e.jhsl).toFixed(3));
+			}
+			for (var i = 0; i < xjSz.length; i++) {
+				var xj = xjSz[i];
+				xj.sort(by('wzmc',by('xhgg')));
+				var xjSl = 0;
+				var xjJe = 0;
+				for (var j = 0; j < xj.length; j++) {
+					var e = xj[j];
+					xjSl = xjSl + e.jhsl;
+					xjJe = xjJe + parseFloat((e.jhjg*e.jhsl).toFixed(3));
+					$("#tblRuKuTongJi").append("<tr><td style='width:9%;'>" + e.rksj.substring(0,10) + "</td><td style='width:15%;'>" + e.gys + "</td><td style='width:18%;'>" + e.wzmc + "</td><td style='width:10%;'>" + e.pp 
+						+ "</td><td style='width:10%;'>" + e.scc + "</td><td style='width:10%;'>" + e.xhgg + "</td><td style='width:6%;'>" + e.dw + "</td><td style='width:6%;text-align:right;'>" + e.jhjg 
+						+ "</td><td style='width:8%;text-align:right;'>" + e.jhsl + "</td><td style='text-align:right;'>" + (e.jhjg*e.jhsl).toFixed(3) + "</td></tr>");
+					$("#dyTblQingDan").append("<tr><td style='width:9%;'>" + e.rksj.substring(0,10) + "</td><td style='width:15%;'>" + e.gys + "</td><td style='width:18%;'>" + e.wzmc + "</td><td style='width:10%;'>" + e.pp 
+						+ "</td><td style='width:10%;'>" + e.scc + "</td><td style='width:10%;'>" + e.xhgg + "</td><td style='width:6%;'>" + e.dw + "</td><td style='width:6%;text-align:right;'>" + e.jhjg 
+						+ "</td><td style='width:8%;text-align:right;'>" + e.jhsl + "</td><td style='text-align:right;'>" + (e.jhjg*e.jhsl).toFixed(3) + "</td></tr>");
+				}
+				xjSl = isXiaoShu("" + xjSl)? xjSl.toFixed(3):xjSl;
+				$("#dyTblQingDan").append("<tr style='background-color:#fffbe5'><td>小计：</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td style='text-align:right;'>"+xjSl+"</td><td style='text-align:right;'>"+xjJe.toFixed(2)+"</td></tr>");
+				$("#tblRuKuTongJi").append("<tr style='background-color:#fffbe5'><td>小计：</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td style='text-align:right;'>"+xjSl+"</td><td style='text-align:right;'>"+xjJe.toFixed(2)+"</td></tr>");
+			}
+			zje = zje.toFixed(2);
+			if(wuZi.list.length > 0){
+				$("#dyTblQingDan").append("<tr style='background-color:#ffec85'><td>合计：</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td style='text-align:right;'>"+zje+"</td></tr>");
+				$("#tblRuKuTongJi").append("<tr style='background-color:#ffec85'><td>合计：</td><td></td><td></td><td></td></td><td><td></td><td><td><td></td></td></td><td style='text-align:right;'>"+zje+"</td></tr>");
+			}
+		}
+
+		function isXiaoShu(s) {
+			var z = /^-?\d+\.\d+$/;
+			return z.test(s);
+		}
+		
+		var by = function(name,minor){
+			return function(o,p){
+				var a,b;
+				if(o && p && typeof o === 'object' && typeof p ==='object'){
+					a = o[name];
+					b = p[name];
+					if (a === b) { 
+						return typeof minor === 'function'? minor(o, p) : 0;
+					}
+					if (typeof a === typeof b) { 
+						return a < b ? -1 : 1; 
+					} 
+					return typeof a < typeof b ? -1 : 1;
+				} else { 
+					thro("error"); 
+				} 
+			};
+		};
+
+
+		function gbQingDan() {
+			$("#divFrmQingDan").hide();
+			$("#ckBaoBiao").hide();
+		}
+		function daochu() {
+			tableToExcel('dyTblQingDan', 'Sheet1', '入库统计表.xls');
+		}
+		var tableToExcel = (function() {
+			var uri = 'data:application/vnd.ms-excel;base64,';
+			var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>';
+			var base64 = function(s) {
+					return window.btoa(unescape(encodeURIComponent(s)));
+				};
+			var format = function(s, c) {
+					return s.replace(/{(\w+)}/g, function(m, p) {
+						return c[p];
+					});
+				};
+			return function(table, name, filename) {
+				if (!table.nodeType)
+					table = document.getElementById(table);
+				var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+
+				document.getElementById("dlink").href = uri + base64(format(template, ctx));
+				document.getElementById("dlink").download = filename;
+				document.getElementById("dlink").click();
+			};
+		})();
+	</script>
+<body>
+        <style type="text/css">
+                div#divTiShi{
+                        position: absolute;
+                        z-index: 95;
+                        display: none;
+                }
+
+                table{
+                        position: relative;
+                        float: left;
+                        width: 100%;
+                        text-align: left;
+                        border-spacing: 0px;
+                        border-collapse: collapse;
+                        empty-cells: show;
+                        cursor: pointer;
+                        margin: 0;
+                        padding: 0;
+                }
+
+                table.zhuBiao td{
+                        empty-cells: show;
+                        border: 1px solid #000;
+                        font-size: 14px;
+                        padding-left: 5px;
+                }
+
+                table.wuZiMx tr>td:first-child {
+                        border-left: 0;
+                }
+
+                table.wuZiMx tr>td:last-child {
+                        border-right: 0;
+                }
+
+                table.wuZiMx tr:first-child td{
+                        border-top-width: 0;
+                }
+
+                table.wuZiMx tr:last-child td{
+                        border-bottom-width: 0;
+                }
+
+                tr.lbBiaoTou td {
+                        font-size: 4.5mm;
+                        font-weight: 900;
+                        text-align: center;
+                        color: #000;
+                }
+
+                table#lbTou td{
+                        text-align: center;
+                        padding-left: 0;
+                }
+
+        </style>
+        <div id="divFrmQingDan" class="pop" style="width: 1200px;">
+                <a id="dlink" style="display:none;"><span id="dlinkSpan">导出</span></a>
+                <div id="zxBiao" style="width: 1200px;">
+                        <table class="zhuBiao" style="background-color: #E9F5FD;">
+                                <tr>
+                                        <td style="padding: 0;padding-bottom: 5mm; border-width: 0;background-color: #E9F5FD;">
+                                                <table>
+                                                        <tr style="border-bottom: 2px solid #000;">
+                                                                <td style="text-align: center; font-size: 5mm; padding-bottom: 2.5mm; border-width: 0;">入库统计表</td>
+                                                                <td style='width:30px; text-align: right;border-width: 0;'>
+                                                                        <input class="yinCang" onclick="javascript:gbQingDan()" type='button' value='X' />
+                                                                </td>
+                                                        </tr>
+                                                </table>
+                                        </td>
+                                </tr>
+                                <tr>
+                                        <td style="text-align: center; border-width: 0;background-color: #E9F5FD;">
+                                                仓库：
+                                                <input type="text" id="cangKuMingCheng"/>
+                                                时间从：<input type="text" id="rkQiShiShiJian" style="width: 140px;"/>
+                                                到：<input type="text" id="rkJieShuShiJian" style="width: 140px;"/>	
+                                                <input type="button" value="查询" onclick="javascript:cxQingDan()"/>
+                                                <input type="button" value="导出" onclick="javascript:daochu()"/>
+                                        </td>
+                                </tr>
+                                <tr class="dyXianShi" style="display:none;">
+                                        <td style="padding: 0;border-width: 0;">
+                                                <table id="dyTblQingDan" class="wzLieBiao" style="width: 1200px;">
+                                                        
+                                                </table>
+                                        </td>
+                                </tr>
+                                <tr>
+                                        <td style="padding: 0;padding-top: 5mm; border-width: 0;">
+                                                <div style="padding-bottom:10px;width: 100%">
+                                                        <table style="border-collapse:collapse;" cellSpacing=1 cellPadding=0 width=1220px border=0>
+                                                                <tr>
+                                                                        <td style="padding: 0;border-width: 0;">
+                                                                                <table id="lbTou" class="wzLieBiao" style="width: 1200px;background-color: #E9F5FD;">
+                                                                                        <tr class="lbBiaoTou">
+                                                                                                <td style='width:9%;' >时间</td>
+												<td style='width:15%;' >供应商</td>
+												<td style='width:18%;' >物资名称</td>
+												<td style='width:10%;' >品牌</td>
+												<td style='width:10%;' >生产厂</td>
+												<td style='width:10%;' >型号规格</td>
+												<td style='width:6%;' >单位</td>
+												<td style='width:6%;' >单价</td>
+												<td style='width:8%;' >数量</td>
+												<td>金额</td>
+                                                                                        </tr>
+                                                                                </table>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td style="padding: 0;border-width: 0;">
+                                                                                <div style="overflow: auto;overflow-x: hidden; width: 1200px; height: 600px;">
+                                                                                        <div style="overflow: auto; width: 1220px; height: 600px;">
+                                                                                                <table id="tblRuKuTongJi" style="width: 1200px; table-layout: fixed;" class="wzLieBiao">
+                                                                                                </table>
+                                                                                        </div>
+                                                                                </div>
+                                                                        </td>
+                                                                </tr>
+                                                        </table>
+                                                </div>
+                                        </td>
+                                </tr>
+                        </table>
+                </div>
+        </div>
+</body>
+</html>

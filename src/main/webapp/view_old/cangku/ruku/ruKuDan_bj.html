@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" href="/whwr/css/style.css" type="text/css" />
+        <link rel="stylesheet" href="/whwr/whwr/cangku/ruku/ruKuDan_bj.css" type="text/css" />
+        <script type="text/javascript" src="/whwr/js/jquery2.js"></script>
+        <script type="text/javascript" src="/whwr/js/json2.js"></script>
+        <script type="text/javascript" src="/whwr/js/popMenu.js"></script>
+        <script type="text/javascript" src="/whwr/js/whwr.js"></script>
+        <script type="text/javascript" src="/whwr/js/whwr.form.js"></script>
+        <script type="text/javascript" src="/whwr/js/whwr.list.js"></script>
+        <script type="text/javascript" src="/whwr/js/whwr.data.js"></script>
+        <script type="text/javascript" src="/whwr/js/whwr.pinyin.js"></script>
+        <script type="text/javascript" src="/whwr/js/calendar.js"></script>
+        <script type="text/javascript" src="/whwr/whwr/cangku/ruku/ruKuDan_bj.js"></script>
+    </head>
+    <body>
+        <div id="cd4Rkdmx" class="popMenu">
+            <ul>
+                <li id="zjMx">
+                    增加明细
+                </li>
+                <li id="xgMx">
+                    修改明细
+                </li>
+                <li id="scMx">
+                    删除明细
+                </li>
+            </ul>
+        </div>
+        
+        <div id="cd4Dymx" class="popMenu">
+            <ul>
+                <li id="scDymx">
+                    删除
+                </li>
+            </ul>
+        </div>
+
+        <div id="divFrmRkd" class="pop">
+            <table id="tblFrmRkd" class="form">
+                <tr>
+                    <td id="tblFrmRkd_ck_lb" class="title" style="width: 120px;">
+                        仓&ensp;&ensp;&ensp;&ensp;库：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmRkd_ck" />
+                    </td>
+                    <td id="tblFrmRkd_ly_lb" class="title" style="width: 120px;">
+                        来&ensp;&ensp;&ensp;&ensp;源：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmRkd_ly" />
+                    </td>
+                </tr>
+                <tr>
+                    <td id="tblFrmRkd_gys_lb" class="title" style="width: 120px;">
+                        供&ensp;应&ensp;商：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmRkd_gys" />
+                    </td>
+                    <td id="tblFrmRkd_jhr_lb" class="title" style="width: 120px;">
+                        接&ensp;货&ensp;人：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmRkd_jhr" />
+                    </td>
+                </tr>
+                <tr>
+                    <td id="tblFrmRkd_kh_lb" class="title" style="width: 120px;">
+                        客&ensp;&ensp;&ensp;&ensp;户：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmRkd_kh" />
+                    </td>
+                    <td id="tblFrmRkd_dh_lb" class="title" style="width: 120px;">
+                        单&ensp;&ensp;&ensp;&ensp;号：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmRkd_dh" />
+                    </td>
+                </tr>
+                <tr>
+                    <td id="tblFrmRkd_dh_lb" class="title" style="width: 120px;">
+                        总&ensp;数&ensp;量：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmRkd_dh" />
+                    </td>
+                    <td id="tblFrmRkd_dh_lb" class="title" style="width: 120px;">
+                        总&ensp;金&ensp;额：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmRkd_dh" />
+                    </td>
+                </tr>
+                <tr>
+                    <td id="tblFrmRkd_bz_lb" class="title" style="width: 120px;">
+                        备&ensp;&ensp;&ensp;&ensp;注：
+                    </td>
+                    <td colspan="3">
+                        <input type="text" id="tblFrmRkd_bz" />
+                    </td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <td style="padding-left: 0;border: none;">
+                        <table id="tablRkdMx" style="border-collapse:collapse;" cellSpacing=1 cellPadding=0 width=820px border=0>
+                            <tr>
+                                <td style="padding: 0;border-width: 0;">
+                                    <table id="tblMxBt" class="list" style="width: 800px;background-color: #E9F5FD;">
+                                        <tr class="biaoTou">
+                                            <td style='width:15%;' >物资名称</td>
+                                            <td style='width:15%;' >品牌</td>
+                                            <td style='width:18%;' >型号规格</td>
+                                            <td style='width:10%;' >数量</td>
+                                            <td>金额</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0;border-width: 0;">
+                                    <div style="overflow: auto;overflow-x: hidden; width: 800px; height: 300px;">
+                                        <div style="overflow: auto; width: 820px; height: 300px;">
+                                            <table id="tblMx" style="width: 800px; table-layout: fixed;" class="list">
+                                                <tr><td style='width:15%;'></td><td style='width:15%;'></td><td style='width:18%;'></td><td style='width:10%;'></td><td></td></tr>
+                                                <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <table>
+                <tr class="diBian">
+                    <td style="text-align: center;">
+                        <input id="tblFrmRkd_bc" type="button" value="保存" onclick="javascript:bcRuKuDan()" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="divFrmRkdMx" class="pop">
+            <table id="tblFrmRkdMx" class="form">
+                <tr>
+                    <td id="tblFrmRkdMx_ck_lb" class="title" style="width: 120px;">
+                        物资名称：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmRkdMx_ck" />
+                    </td>
+                    <td id="tblFrmRkdMx_ly_lb" class="title" style="width: 120px;">
+                        品&ensp;&ensp;&ensp;&ensp;牌：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmRkdMx_ly" />
+                    </td>
+                </tr>
+                <tr>
+                    <td id="tblFrmRkdMx_gys_lb" class="title" style="width: 120px;">
+                        型号规格：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmRkdMx_gys" />
+                    </td>
+                    <td id="tblFrmRkdMx_jhr_lb" class="title" style="width: 120px;">
+                        生&ensp;产&ensp;厂：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmRkdMx_jhr" />
+                    </td>
+                </tr>
+                <tr>
+                    <td id="tblFrmRkdMx_kh_lb" class="title" style="width: 120px;">
+                        单&ensp;&ensp;&ensp;&ensp;价：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmRkdMx_kh" />
+                    </td>
+                    <td id="tblFrmRkdMx_dw_lb" class="title" style="width: 120px;">
+                        单&ensp;&ensp;&ensp;&ensp;位：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmRkdMx_dw" />
+                    </td>
+                </tr>
+                <tr id="trGxys" style="height:auto;">
+                    <td colspan="4"><table id="tblGxys"></table></td>
+                </tr>
+                <tr>
+                    <td id="tblFrmRkdMx_dh_lb" class="title" style="width: 120px;">
+                        数&ensp;&ensp;&ensp;&ensp;量：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmRkdMx_dh" />
+                    </td>
+                    <td id="tblFrmRkdMx_dh_lb" class="title" style="width: 120px;">
+                        金&ensp;&ensp;&ensp;&ensp;额：
+                    </td>
+                    <td>
+                        <input type="text" id="tblFrmRkdMx_dh" />
+                    </td>
+                </tr>
+                <tr>
+                    <td id="tblFrmRkdMx_bz_lb" class="title" style="width: 120px;">
+                        备&ensp;&ensp;&ensp;&ensp;注：
+                    </td>
+                    <td colspan="3">
+                        <input type="text" id="tblFrmRkdMx_bz" />
+                    </td>
+                </tr>
+            </table>
+            <table style="border-collapse:collapse;" cellSpacing=1 cellPadding=0 width=800px border=0>
+                <tr>
+                    <td style="padding: 0;border-width: 0;">
+                        <table id="tblDymxBt" class="list" style="width: 780px;background-color: #E9F5FD;">
+                            <tr class="biaoTou">
+                                <td style='width:9%;' >序号</td>
+                                <td style='width:9%;' >1</td>
+                                <td style='width:9%;' >2</td>
+                                <td style='width:9%;' >3</td>
+                                <td style='width:9%;' >4</td>
+                                <td style='width:9%;' >5</td>
+                                <td style='width:9%;' >6</td>
+                                <td style='width:9%;' >7</td>
+                                <td style='width:9%;' >8</td>
+                                <td style='width:9%;' >9</td>
+                                <td>10</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0;border-width: 0;">
+                        <div style="overflow: auto;overflow-x: hidden; width: 800px; height: 300px;">
+                            <div style="overflow: auto; width: 820px; height: 300px;">
+                                <table id="tblDymx" style="width: 800px; table-layout: fixed;" class="list">
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <table>
+                <tr class="diBian">
+                    <td style="text-align: center;">
+                        <input id="tblFrmRkd_bc" type="button" value="保存" onclick="javascript:bcRuKuDan()" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <div id="board"></div>
+    </body>
+</html>

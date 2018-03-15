@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>WHWR仓库管理系统</title>
+        <link href="/whwr/content/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="/whwr/content/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/whwr/content/sidebar-menu/sidebar-menu.css" rel="stylesheet" />
+        <link href="/whwr/content/ace/css/ace-rtl.min.css" rel="stylesheet" />
+        <link href="/whwr/content/ace/css/ace-skins.min.css" rel="stylesheet" />
+        <link href="/whwr/content/toastr/toastr.min.css" rel="stylesheet" />
+
+        <script src="/whwr/js/jquery2.js"></script>
+        <script src="/whwr/content/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/whwr/content/sidebar-menu/sidebar-menu.js"></script>
+        <script src="/whwr/content/bootstrap/js/bootstrap-tab.js"></script>
+        <script src="/whwr/whwr/home/home.js"></script>
+
+        <style type="text/css">
+            body {
+                font-size: 12px;
+            }
+
+            .nav > li > a {
+                padding: 5px 10px;
+            }
+
+            .tab-content {
+                padding-top: 3px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="navbar navbar-default" id="navbar">
+            <div class="navbar-container" id="navbar-container">
+                <div class="navbar-header pull-left">
+                    <a href="#" class="navbar-brand" style="font-size: 26px;padding-top: 14px;">
+                        <small>
+                            <i class="icon-fire"></i>
+                            WHWR仓库管理系统
+                        </small>
+                    </a>
+                </div>
+
+                <div class="navbar-header pull-right" role="navigation">
+                    <div style="color: #fff; height:50px; line-height:50px; margin-right: 50px;">
+                        欢迎光临，<span id="span_user_name" style="color: red;font-size:14px;">***</span>&ensp;&ensp;
+                        <a href="/whwr/logout.do" onclick="return confirm('确定退出系统？');" style="color: #fff;">
+                            <i class="icon-off"></i>
+                            退出
+                        </a>
+                    </div>
+                </div>
+                <div class="navbar-header ace-settings-container" id="ace-settings-container" style="float:right;top:15px;">
+                    <div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
+                        <i class="icon-cog bigger-150"></i>
+                    </div>
+                    <div class="ace-settings-box" id="ace-settings-box">
+                        <div>
+                            <div class="pull-left">
+                                <select id="skin-colorpicker">
+                                    <option data-skin="default" value="#438EB9">原始</option>
+                                    <option data-skin="skin-1" value="#222A2D">蓝黑</option>
+                                    <option data-skin="skin-2" value="#C6487E">红色</option>
+                                    <option data-skin="skin-3" value="#D0D0D0">黑色</option>
+                                </select>
+                            </div>
+                            <span>&nbsp; 选择皮肤</span>
+                        </div>
+                        <div>
+                            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-navbar" />
+                            <label class="lbl" for="ace-settings-navbar"> 固定导航条</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-sidebar" />
+                            <label class="lbl" for="ace-settings-sidebar"> 固定滑动条</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-breadcrumbs" />
+                            <label class="lbl" for="ace-settings-breadcrumbs">固定面包屑</label>
+                        </div>
+
+                        <div>
+                            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" />
+                            <label class="lbl" for="ace-settings-rtl">切换到左边</label>
+                        </div>
+
+                        <div>
+                            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-add-container" />
+                            <label class="lbl" for="ace-settings-add-container">
+                                切换窄屏
+                                <b></b>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="main-container" id="main-container">
+            <div class="main-container-inner">
+                <a class="menu-toggler" id="menu-toggler" href="#">
+                    <span class="menu-text"></span>
+                </a>
+                <div class="sidebar" id="sidebar">
+                    <ul class="nav nav-list" id="menu"></ul>
+                    <div class="sidebar-collapse" id="sidebar-collapse">
+                        <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+                    </div>
+                </div>
+                <div class="main-content">
+                    <div class="page-content">
+                        <div class="row">
+                            <div class="col-xs-12" style="padding-left:5px;">
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li class="active"><a href="#Index" role="tab" data-toggle="tab">首页</a></li>
+                                </ul>
+                                <div class="tab-content" >
+                                    <div role="tabpanel" class="tab-pane active" id="Index">
+                                        <h2 style="margin-left:20px;">欢迎进入WHWR仓库管理</h2>
+                                        <p style="margin-left:20px;">点击左侧菜单进行操作</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+                <i class="icon-double-angle-up icon-only bigger-110"></i>
+            </a>
+        </div>
+        <div class="navbar navbar-inverse navbar-fixed-bottom" style="min-height: 40px;text-align: center; vertical-align: middle;width: 100%; height: 40px;line-height: 40px; font-size: 18px; color: #FFF;">————    whwr   ————</div>
+
+        <script src="/whwr/content/ace/js/ace-extra.min.js"></script>
+        <script src="/whwr/content/ace/js/ace.min.js"></script>
+
+    </body>
+</html>

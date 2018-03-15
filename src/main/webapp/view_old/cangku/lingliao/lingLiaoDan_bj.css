@@ -1,0 +1,37 @@
+div#divCx4Lld {
+    top: 36px;
+    z-index: 10;
+    width:400px;
+}
+
+div#divFrmGly {
+    text-align: center;
+    z-index: 20;
+}
+
+div#divFrmKw{
+    z-index: 20;
+}
+
+table#tblFrmLld_gw tr:first-child td{
+    border-top-width: 0;
+}
+
+table#tblFrmLld_gw tr:last-child td{
+    border-bottom-width: 0;
+}
+
+table#tblFrmLld_gw td{
+    width: 20%;
+}
+
+input[type=password] {
+    border: 0;
+    width:200px;
+    border-bottom: 1px solid #065E9E;
+    background-color: transparent;
+}
+
+table#tblFrmLld select{
+    width: 150px;
+}
