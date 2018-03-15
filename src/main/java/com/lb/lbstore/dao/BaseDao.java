@@ -6,8 +6,9 @@
 package com.lb.lbstore.dao;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
-import net.sf.json.JSONObject;
+import java.util.Map;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -268,11 +269,27 @@ public abstract class BaseDao {
     }
 
     public Object findObjectById(Class c, Serializable id) {
-        return sessionFactory.getCurrentSession().load(c, id);
+        Object result = null;
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
+            result = session.load(c, id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (session != null) {
+                    session.close();
+                }
+            } catch (Exception he) {
+                he.printStackTrace();
+            }
+        }
+        return result;
     }
 
-    public JSONObject getPages(String sql, int pageNow) {
-        JSONObject result = new JSONObject();
+    public Map<String,Object> getPages(String sql, int pageNow) {
+        Map<String,Object> result = new HashMap<String,Object>();
         int total = getCount("select count(1) " + sql, null);
         int zys = (total - 1) / 20 + 1;
         result.put("zys", zys);

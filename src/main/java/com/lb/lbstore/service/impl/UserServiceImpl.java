@@ -43,7 +43,5 @@ public class UserServiceImpl implements UserService{
         String sql = "select (1) from User";
         return userDao.getPageList(sql,null,1,20);
     }
-    
-    
      
 }
