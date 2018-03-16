@@ -1,23 +1,23 @@
-var goYuanGong = "/whwr/goYuanGong.action";
-var goBuMen = "/whwr/goBuMen.action";
-var goKeHu = "/whwr/goKeHu.action";
-var goGongYingShang = "/whwr/goGongYingShang.action";
-var goCangKu = "/whwr/goCangKu.action";
-var goWuZiLeiBie = "/whwr/goWuZiLeiBie.action";
-var goWuZiZiDian = "/whwr/goWuZiZiDian.action";
-var goQingGou = "/whwr/goQingGou.action";
-var goCaiGou = "/whwr/goCaiGou.action";
-var goRuKuDan = "/whwr/goRuKuDan.action";
-var goLingLiaoDan = "/whwr/goLingLiaoDan.action";
-var goFaHuo = "/whwr/goFaHuo.action";
-var goSunHao = "/whwr/goSunHao.action";
-var goHuanKu = "/whwr/goHuanKu.action";
-var goKunCun = "/whwr/goKunCun.action";
-var goTongJi = "/whwr/goTongJi.action";
-var goBaoBiao = "/whwr/goBaoBiao.action";
-var goZiDianLeiBie = "/whwr/goZiDianLeiBie.action";
-var goQiYeZiDian = "/whwr/goQiYeZiDian.action";
-var goPassword = "/whwr/goPassword.action";
+var goYuanGong = "/LBStore/goYuanGong.action";
+var goBuMen = "/LBStore/goBuMen.action";
+var goKeHu = "/LBStore/goKeHu.action";
+var goGongYingShang = "/LBStore/goGongYingShang.action";
+var goCangKu = "/LBStore/goCangKu.action";
+var goWuZiLeiBie = "/LBStore/goWuZiLeiBie.action";
+var goWuZiZiDian = "/LBStore/goWuZiZiDian.action";
+var goQingGou = "/LBStore/goQingGou.action";
+var goCaiGou = "/LBStore/goCaiGou.action";
+var goRuKuDan = "/LBStore/goRuKuDan.action";
+var goLingLiaoDan = "/LBStore/goLingLiaoDan.action";
+var goFaHuo = "/LBStore/goFaHuo.action";
+var goSunHao = "/LBStore/goSunHao.action";
+var goHuanKu = "/LBStore/goHuanKu.action";
+var goKunCun = "/LBStore/goKunCun.action";
+var goTongJi = "/LBStore/goTongJi.action";
+var goBaoBiao = "/LBStore/goBaoBiao.action";
+var goZiDianLeiBie = "/LBStore/goZiDianLeiBie.action";
+var goQiYeZiDian = "/LBStore/goQiYeZiDian.action";
+var goPassword = "/LBStore/goPassword.action";
 
 var allMenu = {data: [
         {id: '1', text: '组织机构', icon: 'icon-leaf', url: '', menus: [
@@ -51,15 +51,17 @@ var loadUser = null;
 
 $(document).ready(function () {
     $.ajax({
-        url: "/whwr/getLoginA01.action",
+        url: "/LBStore/getLoginA01.do",
         contentType: "application/json",
         type: "post",
         cache: false,
         error: function (msg, textStatus) {
         },
         success: function (json) {
-            loadUser = json;
-            $("#span_user_name").html(json.mc);
+            if(json.result === 0){
+                loadUser = json.a01;
+                $("#span_user_name").html(loadUser.mc);
+            }
         }
     });
     setMenu("");//测试
