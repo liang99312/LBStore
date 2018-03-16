@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="/LBStore/content/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="/LBStore/content/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/LBStore/content/autocomplete/autocomplete.css" rel="stylesheet" />
+        <script src="/LBStore/js/jquery2.js"></script>
+        <script src="/LBStore/js/jquery.form.js"></script>
+        <script src="/LBStore/content/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/LBStore/content/bootstrap/js/bootstrap-paginator.js"></script>
+        <script src="/LBStore/content/autocomplete/autocomplete.js"></script>
+        <script src="/LBStore/view/common/common.js"></script>
+        <script src="/LBStore/view/a01/a01.js"></script>
+    </head>
+    <body style='height:800px;'>
+        <div style="float:left; width: 100%">
+            <div style="width: 100%">
+                <div style="width: 100%;float:left; padding-top: 5px;">
+                    <span>&nbsp;姓名：</span><input id="selName" type="text" /><span>&nbsp;状态：</span><input id="selState" type="text" />
+                    <button type="button" class="btn btn-primary btn-sm" onclick="selectA01();" style="margin-left: 2px;">查找</button>
+                </div>
+                <div style="width: 100%;float:left; padding-top: 5px;">
+                    <button type="button" class="btn btn-primary btn-sm" onclick="addA01();">新增员工</button>
+                </div>
+            </div>
+            <div id="list1" class="table-responsive" style="height: 678px;width:100%;padding-top: 5px;">
+                <table id="data_table" class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>姓名</th>
+                        <th>性别</th>
+                        <th>职位</th>
+                    </tr>
+                    </thead>
+                    <tbody id='data_table_body'>
+                    <tr><td>请查询员工记录</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <ul id="example"></ul>
+        </div>
+        <div class="modal fade" id="a01Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #ace1ff;height: 40px;border-top-left-radius: 6px;border-top-right-radius: 6px;padding:10px">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="a01Model_title">添加员工</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="content">
+                            <div id="divBase" class="form-group">
+                                <label for="inpBase">编&ensp;&ensp;&ensp;&ensp;号：</label>
+                                <input type="text" id="inpBase" />
+                            </div>
+                            <div id="divParent" class="form-group">
+                                <label for="inpParent">姓&ensp;&ensp;&ensp;&ensp;名：</label>
+                                <input type="text" id="inpParent" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpName">代&ensp;&ensp;&ensp;&ensp;码：</label>
+                                <input type="text" id="inpName" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpKey">性&ensp;&ensp;&ensp;&ensp;别：</label>
+                                <input type="text" id="inpKey" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpDesc">职&ensp;&ensp;&ensp;&ensp;位：</label>
+                                <input type="text" id="inpDesc" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpKey">登录密码：</label>
+                                <input type="text" id="inpKey" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="text-align: center;padding: 8px;">
+                        <button type="submit" class="btn btn-primary" onclick="saveA01()">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

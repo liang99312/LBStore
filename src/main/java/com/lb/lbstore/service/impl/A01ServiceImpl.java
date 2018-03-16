@@ -66,14 +66,14 @@ public class A01ServiceImpl implements A01Service{
     
     @Override
     public int queryRows(HashMap map) {
-        String sql = "select (1) from A01";
+        String sql = "select (1) from A01 where state < 9";
         return a01Dao.getCount(sql,null);
     }
 
     @Override
     public List<A01> queryA01sByPage(HashMap map) {
-        String sql = "select (1) from A01";
-        return a01Dao.getPageList(sql,null,1,20);
+        String hql = "from A01 where state < 9";
+        return a01Dao.getPageList(hql,null,1,20);
     }
 
 }

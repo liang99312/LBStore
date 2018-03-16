@@ -25,7 +25,6 @@ public class A01 {
     private String a01pic;
     private String a01qx;
     private String password;
-    private String a01flag;
     private Integer state = 0;
 
     public A01() {
@@ -108,14 +107,6 @@ public class A01 {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getA01flag() {
-        return a01flag;
-    }
-
-    public void setA01flag(String a01flag) {
-        this.a01flag = a01flag;
     }
 
     public Integer getState() {

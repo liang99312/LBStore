@@ -4,10 +4,10 @@ var addTabs = function (options) {
     var url = window.location.protocol + '//' + window.location.host;
     options.url = url + options.url;
     id = "tab_" + options.id;
-	var active_flag = false;
-	if($("#" + id)){
-		active_flag = $("#" + id).hasClass('active');
-	}
+    var active_flag = false;
+    if ($("#" + id)) {
+        active_flag = $("#" + id).hasClass('active');
+    }
     $(".active").removeClass("active");
     //如果TAB不存在，创建一个新的TAB
     if (!$("#" + id)[0]) {
@@ -24,17 +24,17 @@ var addTabs = function (options) {
         if (options.content) {
             content = '<div role="tabpanel" class="tab-pane" id="' + id + '">' + options.content + '</div>';
         } else {//没有内容，使用IFRAME打开链接
-            content = '<div role="tabpanel" class="tab-pane" id="' + id + '"><iframe id="iframe_'+id+'" src="' + options.url + 
-				'" width="100%" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="yes" allowtransparency="yes" onload="Javascript:SetWinHeight(this)"></iframe></div>';
+            content = '<div role="tabpanel" class="tab-pane" id="' + id + '"><iframe id="iframe_' + id + '" src="' + options.url +
+                    '" width="100%" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="yes" allowtransparency="yes" onload="Javascript:SetWinHeight(this)"></iframe></div>';
         }
         //加入TABS
         $(".nav-tabs").append(title);
         $(".tab-content").append(content);
-    }else{
-		if(active_flag){
-			$("#iframe_" + id).attr('src', $("#iframe_" + id).attr('src'));
-		}
-	}
+    } else {
+        if (active_flag) {
+            $("#iframe_" + id).attr('src', $("#iframe_" + id).attr('src'));
+        }
+    }
     //激活TAB
     $("#tab_" + id).addClass('active');
     $("#" + id).addClass("active");
@@ -53,7 +53,7 @@ $(function () {
     mainHeight = $(document.body).height() - 45;
     $('.main-left,.main-right').height(mainHeight);
     $("[addtabs]").click(function () {
-        addTabs({ id: $(this).attr("id"), title: $(this).attr('title'), close: true });
+        addTabs({id: $(this).attr("id"), title: $(this).attr('title'), close: true});
     });
 
     $(".nav-tabs").on("click", "[tabclose]", function (e) {

@@ -1,4 +1,4 @@
-var goYuanGong = "/LBStore/goYuanGong.action";
+var goYuanGong = "/LBStore/a01/goA01.do";
 var goBuMen = "/LBStore/goBuMen.action";
 var goKeHu = "/LBStore/goKeHu.action";
 var goGongYingShang = "/LBStore/goGongYingShang.action";
@@ -94,7 +94,7 @@ function SetWinHeight(obj) {
     if (document.getElementById) {
         if (win && !window.opera) {
             if (win.contentDocument && win.contentDocument.body.offsetHeight) {
-                win.height = win.contentDocument.body.offsetHeight + 20;
+                win.height = win.contentDocument.body.offsetHeight + 25;
             } else if (win.Document && win.Document.body.scrollHeight) {
                 win.height = win.Document.body.scrollHeight;
             }
