@@ -61,6 +61,8 @@ $(document).ready(function () {
             if(json.result === 0){
                 loadUser = json.a01;
                 $("#span_user_name").html(loadUser.mc);
+            }else{
+                window.top.location.href="/LBStore/logout.do";
             }
         }
     });
