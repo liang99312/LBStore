@@ -100,18 +100,14 @@
                 if (loadName === "") {
                     return alert("请输入用户名");
                 }
-                var json = {"name": loadName, "id": 1};
-                json = JSON.stringify(json);
+                var json = {"bh": loadName, "password": password};
                 $.ajax({
-                    url: "/LBStore/user/getUser.do",
+                    url: "/LBStore/login.do",
                     data: json,
                     contentType: "application/json",
                     dataType: "json",
-                    type: "post",
+                    type: "get",
                     cache: false,
-                    complete: function (XMLHttpRequest, textStatus) {
-                        alert("登录失败,请联系系统管理员");
-                    },
                     error: function (msg, textStatus) {
                         if (confirm("登录失败，您要查看错误信息吗？")) {
                             alert(msg.responseText);
@@ -119,7 +115,7 @@
                     },
                     success: function (json) {
                         if (json.result === 0) {
-                            window.location.href = "/LBStore/dl.do";
+                            window.location.href = "/LBStore/goHome.do";
                         } else {
                             alert(json.msg);
                         }
