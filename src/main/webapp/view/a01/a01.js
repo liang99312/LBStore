@@ -10,9 +10,13 @@ function jxA01(json) {
     a01s = [];
     a01s = json.list;
     $.each(json.list, function (index, item) { //遍历返回的json
-        var trStr = '<tr><td>' + item.bh + '</td><td>' + item.mc + '</td><td>' + item.a0111 + '</td><td>' + item.a0105 + '</td><td>'
-            + '<button class="btn btn-info btn-xs icon-edit" onclick="editA01(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;'
-            + '<button class="btn btn-danger btn-xs icon-remove" onclick="delA01(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button></td></tr>';
+        var classStr = '';
+        if(item.state === -1){
+            classStr = ' class="danger"';
+        }
+        var trStr = '<tr'+classStr+'><td>' + item.bh + '</td><td>' + item.mc + '</td><td>' + item.a0111 + '</td><td>' + item.a0105 + '</td><td>'
+                + '<button class="btn btn-info btn-xs icon-edit" onclick="editA01(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;'
+                + '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteA01(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button></td></tr>';
         $("#data_table_body").append(trStr);
     });
 }
@@ -23,8 +27,8 @@ function selectA01() {
     if ($("#selName").val() !== "") {
         a01.mc = $("#selName").val();
     }
-    if ($("#selState").val() !== '') {
-        a01.state = $("#selName").val();
+    if ($("#selState").val() !== '' && $("#selState").val() !== "-9") {
+        a01.state = $("#selState").val();
     }
     tj.paramters = a01;
     var options = {};
@@ -38,9 +42,12 @@ function selectA01() {
 function addA01() {
     optFlag = 1;
     $("#a01Model_title").html("新增员工");
-    $("#inpName").val("");
-    $("#inpDesc").val("");
-    $("#inpKey").val("");
+    $("#inpBh").val("");
+    $("#inpMc").val("");
+    $("#inpDm").val("");
+    $("#inpA0111").val("男");
+    $("#inpA0105").val("");
+    $("#inpPassword").val("");
     $("#a01Modal").modal("show");
 }
 
@@ -53,82 +60,73 @@ function editA01(index) {
     var a01 = a01s[index];
     editIndex = index;
     $("#a01Model_title").html("修改员工");
-    $("#inpName").val(a01.a01Name);
-    $("#inpDesc").val(a01.a01Desc);
-    $("#inpKey").val(a01.a01Key);
+    $("#inpBh").val(a01.bh);
+    $("#inpMc").val(a01.mc);
+    $("#inpDm").val(a01.dm);
+    $("#inpA0111").val(a01.a0111);
+    $("#inpA0105").val(a01.a0105);
+    $("#inpPassword").val(a01.password);
     $("#a01Modal").modal("show");
 }
 
 function saveA01() {
     var a01 = {};
     var url = "";
-    var type = "";
     if (optFlag === 2) {
         if (a01s[editIndex] === undefined) {
             return;
         }
         a01 = a01s[editIndex];
         url = "/LBStore/a01/updateA01.do";
-        type = "put";
     } else if (optFlag === 1) {
         url = "/LBStore/a01/saveA01.do";
-        type = "post";
-        if ($("#inpParent").val()==="" || $("#inpParent").val() !== selectParent.a01Name) {
-            return alert("请选择父类");
-        }
-        a01.parentId = selectParent.id;
-        a01.a01Level = selectParent.a01Level + 1;
-        a01.businessA01 = selectParent.businessA01;
     }
-    a01.a01Name = $("#inpName").val();
-    a01.a01Desc = $("#inpDesc").val();
-    a01.a01Key = $("#inpKey").val();
+    a01.bh = $("#inpBh").val();
+    a01.mc = $("#inpMc").val();
+    a01.dm = $("#inpDm").val();
+    a01.a0111 = $("#inpA0111").val();
+    a01.a0105 = $("#inpA0105").val();
+    a01.password = $("#inpPassword").val();
     $.ajax({
         url: url,
         data: JSON.stringify(a01),
         contentType: "application/json",
-        type: type,
+        type: "post",
         cache: false,
         error: function (msg, textStatus) {
             alert("保存失败");
         },
         success: function (json) {
-            if(json.a01 === 200){
-                var user = json.data;
-                user.name = user.a01Name;
-                rk_parentA01s.push(user);
-                $('#inpParent').AutoComplete({'data': rk_parentA01s,'paramName':'selectParent'});
+            if (json.result === 0) {
                 $("#a01Modal").modal("hide");
-                queryBase = selectBase;
-                $('#selBaseA01').val(queryBase.a01Name);
                 selectA01();
-            }else{
-                alert("保存失败:" + json.message? json.message:"");
+            } else {
+                alert("保存失败:" + json.msg ? json.msg : "");
             }
         }
     });
 }
 
-function delA01(index) {
+function deleteA01(index) {
     if (a01s[index] === undefined) {
         return alert("请选择员工");
     }
     var a01 = a01s[index];
-    if (confirm("确定删除员工：" + a01.a01Name + "?")) {
+    if (confirm("确定删除员工：" + a01.mc + "?")) {
         $.ajax({
             url: "/LBStore/a01/deleteA01.do?id="+a01.id,
             contentType: "application/json",
-            type: "delete",
+            type: "get",
             dataType: "json",
             cache: false,
             error: function (msg, textStatus) {
                 alert("删除失败");
             },
             success: function (json) {
-                if (json.a01 === 200)
+                if (json.result === 0)
                     selectA01();
                 else
-                    alert("删除失败:" + json.message? json.message:"");
+                    alert("删除失败:" + json.msg ? json.msg : "");
             }
         });
     }

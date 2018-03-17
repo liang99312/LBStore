@@ -135,7 +135,7 @@ public class A01Controller extends BaseController {
         return map;
     }
     
-    @RequestMapping(value = "deleteA01.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "deleteA01.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String, Object> deleteA01(@RequestParam Integer id) {
         if (!existsUser()) {
