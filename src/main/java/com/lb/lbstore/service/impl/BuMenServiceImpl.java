@@ -47,9 +47,7 @@ public class BuMenServiceImpl implements BuMenService {
     @Override
     public boolean deleteBuMen(Integer id) {
         BuMen buMen = (BuMen) buMenDao.findObjectById(BuMen.class, id);
-        if(buMen.getState() == 9){
-            return false;
-        }else if(buMen.getState() == 0){
+        if(buMen.getState() == 0){
             buMen.setState(-1);
             return buMenDao.update(buMen);
         }else if(buMen.getState() == -1){

@@ -11,8 +11,8 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.lb.lbstore.domain.BuMen;
-import com.lb.lbstore.service.BuMenService;
+import com.lb.lbstore.domain.GongYingShang;
+import com.lb.lbstore.service.GongYingShangService;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,32 +23,32 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/buMen")
-public class BuMenController extends BaseController {
+@RequestMapping("/gongYingShang")
+public class GongYingShangController extends BaseController {
 
     @Resource
-    private BuMenService buMenServiceImpl;
+    private GongYingShangService gongYingShangServiceImpl;
 
-    @RequestMapping("goBuMen.do")
+    @RequestMapping("goGongYingShang.do")
     public String goFangJian() {
         if (!existsUser()) {
             return "../index";
         }
-        return "buMen/buMen";
+        return "gongYingShang/gongYingShang";
     }
 
-    @RequestMapping(value = "getAllBuMens.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "getAllGongYingShangs.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Map<String, Object> getAllBuMens() {
+    public Map<String, Object> getAllGongYingShangs() {
         if (!existsUser()) {
             return notLoginResult();
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            List<BuMen> buMenList = new ArrayList<BuMen>();
-            buMenList = buMenServiceImpl.getAllBuMens();
+            List<GongYingShang> gongYingShangList = new ArrayList<GongYingShang>();
+            gongYingShangList = gongYingShangServiceImpl.getAllGongYingShangs();
             map.put("result", 0);
-            map.put("sz", buMenList);
+            map.put("sz", gongYingShangList);
         } catch (Exception e) {
             map.put("result", -1);
             map.put("msg", e.getMessage());
@@ -56,18 +56,18 @@ public class BuMenController extends BaseController {
         return map;
     }
 
-    @RequestMapping(value = "saveBuMen.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "saveGongYingShang.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Map<String, Object> saveBuMen(@RequestBody BuMen model) {
+    public Map<String, Object> saveGongYingShang(@RequestBody GongYingShang model) {
         if (!existsUser()) {
             return notLoginResult();
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             model.setState(0);
-            BuMen buMen = buMenServiceImpl.saveBuMen(model);
+            GongYingShang gongYingShang = gongYingShangServiceImpl.saveGongYingShang(model);
             map.put("result", 0);
-            map.put("buMen", buMen);
+            map.put("gongYingShang", gongYingShang);
         } catch (Exception e) {
             map.put("result", -1);
             map.put("msg", e.getMessage());
@@ -75,15 +75,15 @@ public class BuMenController extends BaseController {
         return map;
     }
 
-    @RequestMapping(value = "updateBuMen.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "updateGongYingShang.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Map<String, Object> updateBuMen(@RequestBody BuMen model) {
+    public Map<String, Object> updateGongYingShang(@RequestBody GongYingShang model) {
         if (!existsUser()) {
             return notLoginResult();
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            boolean result = buMenServiceImpl.updateBuMen(model);
+            boolean result = gongYingShangServiceImpl.updateGongYingShang(model);
             map.put("result", result? 0:-1);
         } catch (Exception e) {
             map.put("result", -1);
@@ -92,34 +92,35 @@ public class BuMenController extends BaseController {
         return map;
     }
     
-    @RequestMapping(value = "deleteBuMen.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "deleteGongYingShang.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Map<String, Object> deleteBuMen(@RequestParam Integer id) {
+    public Map<String, Object> deleteGongYingShang(@RequestParam Integer id) {
         if (!existsUser()) {
             return notLoginResult();
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            boolean result = buMenServiceImpl.deleteBuMen(id);
+            boolean result = gongYingShangServiceImpl.deleteGongYingShang(id);
             map.put("result", result? 0:-1);
         } catch (Exception e) {
+            e.printStackTrace();
             map.put("result", -1);
             map.put("msg", e.getMessage());
         }
         return map;
     }
     
-    @RequestMapping(value = "getBuMenById.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "getGongYingShangById.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Map<String, Object> getBuMenById(@RequestParam Integer id) {
+    public Map<String, Object> getGongYingShangById(@RequestParam Integer id) {
         if (!existsUser()) {
             return notLoginResult();
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            BuMen buMen = buMenServiceImpl.getBuMenById(id);
+            GongYingShang gongYingShang = gongYingShangServiceImpl.getGongYingShangById(id);
             map.put("result", 0);
-            map.put("buMen", buMen);
+            map.put("gongYingShang", gongYingShang);
         } catch (Exception e) {
             map.put("result", -1);
             map.put("msg", e.getMessage());
@@ -128,7 +129,7 @@ public class BuMenController extends BaseController {
     }
 
     //分页查询
-    @RequestMapping(value = "listBuMensByPage.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "listGongYingShangsByPage.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Page listTeachersByPage(@RequestBody Page model) {
         HashMap map = model.getParamters();
@@ -136,7 +137,7 @@ public class BuMenController extends BaseController {
             map = new HashMap();
         }
         if (model.getRows() == 0) {
-            model.setRows(this.buMenServiceImpl.queryRows(map));//查询记录数
+            model.setRows(this.gongYingShangServiceImpl.queryRows(map));//查询记录数
         }
         if (model.getRows() == 0) {
             model.setCurrentPage(1);
@@ -151,7 +152,7 @@ public class BuMenController extends BaseController {
         }
         map.put("beginRow", model.getBegin());
         map.put("pageSize", model.getPageSize());
-        model.setList(this.buMenServiceImpl.queryBuMensByPage(map));
+        model.setList(this.gongYingShangServiceImpl.queryGongYingShangsByPage(map));
         return model;
     }
 
