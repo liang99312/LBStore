@@ -3,7 +3,7 @@ var goBuMen = "/LBStore/buMen/goBuMen.do";
 var goKeHu = "/LBStore/keHu/goKeHu.do";
 var goGongYingShang = "/LBStore/gongYingShang/goGongYingShang.do";
 var goCangKu = "/LBStore/goCangKu.do";
-var goWuZiLeiBie = "/LBStore/goWuZiLeiBie.do";
+var goWuZiLeiBie = "/LBStore/wuZiLeiBie/goWuZiLeiBie.do";
 var goWuZiZiDian = "/LBStore/goWuZiZiDian.do";
 var goQingGou = "/LBStore/goQingGou.do";
 var goCaiGou = "/LBStore/goCaiGou.do";
@@ -27,19 +27,19 @@ var allMenu = {data: [
                 {id: '201', text: '客户管理', icon: 'icon-glass', url: goKeHu}]},
         {id: '3', text: '供应商管理', icon: 'icon-leaf', url: '', menus: [
                 {id: '301', text: '供应商管理', icon: 'icon-glass', url: goGongYingShang}]},
-        {id: '3', text: '仓库设置', icon: 'icon-leaf', url: '', menus: [
-                {id: '301', text: '仓库管理', icon: 'icon-glass', url: goCangKu}, 
-                {id: '301', text: '物资类别', icon: 'icon-glass', url: goWuZiLeiBie}, 
-                {id: '301', text: '物资字典', icon: 'icon-glass', url: goWuZiZiDian}]},
-        {id: '4', text: '仓库管理', icon: 'icon-leaf', url: '', menus: [
-                {id: '401', text: '申购管理', icon: 'icon-glass', url: goQingGou},
-                {id: '402', text: '采购管理', icon: 'icon-glass', url: goCaiGou},
-                {id: '403', text: '入库管理', icon: 'icon-glass', url: goRuKuDan},
-                {id: '404', text: '领料管理', icon: 'icon-glass', url: goLingLiaoDan},
-                {id: '405', text: '发货管理', icon: 'icon-glass', url: goFaHuo},
-                {id: '406', text: '损耗管理', icon: 'icon-glass', url: goSunHao},
-                {id: '407', text: '还库管理', icon: 'icon-glass', url: goHuanKu},
-                {id: '408', text: '统计分析', icon: 'icon-glass', url: goTongJi}]},
+        {id: '4', text: '仓库设置', icon: 'icon-leaf', url: '', menus: [
+                {id: '401', text: '仓库管理', icon: 'icon-glass', url: goCangKu}, 
+                {id: '402', text: '物资类别', icon: 'icon-glass', url: goWuZiLeiBie}, 
+                {id: '403', text: '物资字典', icon: 'icon-glass', url: goWuZiZiDian}]},
+        {id: '5', text: '仓库管理', icon: 'icon-leaf', url: '', menus: [
+                {id: '501', text: '申购管理', icon: 'icon-glass', url: goQingGou},
+                {id: '502', text: '采购管理', icon: 'icon-glass', url: goCaiGou},
+                {id: '503', text: '入库管理', icon: 'icon-glass', url: goRuKuDan},
+                {id: '504', text: '领料管理', icon: 'icon-glass', url: goLingLiaoDan},
+                {id: '505', text: '发货管理', icon: 'icon-glass', url: goFaHuo},
+                {id: '506', text: '损耗管理', icon: 'icon-glass', url: goSunHao},
+                {id: '507', text: '还库管理', icon: 'icon-glass', url: goHuanKu},
+                {id: '508', text: '统计分析', icon: 'icon-glass', url: goTongJi}]},
         {id: '7', text: '企业字典', icon: 'icon-leaf', url: '', menus: [
                 {id: '701', text: '字典类别', icon: 'icon-glass', url: goZiDianLeiBie},
                 {id: '702', text: '企业字典', icon: 'icon-glass', url: goQiYeZiDian}]},
