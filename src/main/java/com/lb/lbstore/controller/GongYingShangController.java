@@ -30,7 +30,7 @@ public class GongYingShangController extends BaseController {
     private GongYingShangService gongYingShangServiceImpl;
 
     @RequestMapping("goGongYingShang.do")
-    public String goFangJian() {
+    public String goGongYingShang() {
         if (!existsUser()) {
             return "../index";
         }
