@@ -1,6 +1,6 @@
 var goYuanGong = "/LBStore/a01/goA01.do";
 var goBuMen = "/LBStore/buMen/goBuMen.do";
-var goKeHu = "/LBStore/goKeHu.do";
+var goKeHu = "/LBStore/keHu/goKeHu.do";
 var goGongYingShang = "/LBStore/gongYingShang/goGongYingShang.do";
 var goCangKu = "/LBStore/goCangKu.do";
 var goWuZiLeiBie = "/LBStore/goWuZiLeiBie.do";
