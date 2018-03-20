@@ -11,8 +11,8 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.lb.lbstore.domain.BuMen;
-import com.lb.lbstore.service.BuMenService;
+import com.lb.lbstore.domain.WuZiZiDian;
+import com.lb.lbstore.service.WuZiZiDianService;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,32 +23,32 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/buMen")
-public class BuMenController extends BaseController {
+@RequestMapping("/wuZiZiDian")
+public class WuZiZiDianController extends BaseController {
 
     @Resource
-    private BuMenService buMenServiceImpl;
+    private WuZiZiDianService wuZiZiDianServiceImpl;
 
-    @RequestMapping("goBuMen.do")
-    public String goBuMen() {
+    @RequestMapping("goWuZiZiDian.do")
+    public String goWuZiZiDian() {
         if (!existsUser()) {
             return "../index";
         }
-        return "zuZhi/buMen/buMen";
+        return "wuZiZiDian/wuZiZiDian";
     }
 
-    @RequestMapping(value = "getAllBuMens.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "getAllWuZiZiDians.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Map<String, Object> getAllBuMens() {
+    public Map<String, Object> getAllWuZiZiDians() {
         if (!existsUser()) {
             return notLoginResult();
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            List<BuMen> buMenList = new ArrayList<BuMen>();
-            buMenList = buMenServiceImpl.getAllBuMens();
+            List<WuZiZiDian> wuZiZiDianList = new ArrayList<WuZiZiDian>();
+            wuZiZiDianList = wuZiZiDianServiceImpl.getAllWuZiZiDians();
             map.put("result", 0);
-            map.put("sz", buMenList);
+            map.put("sz", wuZiZiDianList);
         } catch (Exception e) {
             map.put("result", -1);
             map.put("msg", e.getMessage());
@@ -56,18 +56,18 @@ public class BuMenController extends BaseController {
         return map;
     }
 
-    @RequestMapping(value = "saveBuMen.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "saveWuZiZiDian.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Map<String, Object> saveBuMen(@RequestBody BuMen model) {
+    public Map<String, Object> saveWuZiZiDian(@RequestBody WuZiZiDian model) {
         if (!existsUser()) {
             return notLoginResult();
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             model.setState(0);
-            BuMen buMen = buMenServiceImpl.saveBuMen(model);
+            WuZiZiDian wuZiZiDian = wuZiZiDianServiceImpl.saveWuZiZiDian(model);
             map.put("result", 0);
-            map.put("buMen", buMen);
+            map.put("wuZiZiDian", wuZiZiDian);
         } catch (Exception e) {
             map.put("result", -1);
             map.put("msg", e.getMessage());
@@ -75,15 +75,15 @@ public class BuMenController extends BaseController {
         return map;
     }
 
-    @RequestMapping(value = "updateBuMen.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "updateWuZiZiDian.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Map<String, Object> updateBuMen(@RequestBody BuMen model) {
+    public Map<String, Object> updateWuZiZiDian(@RequestBody WuZiZiDian model) {
         if (!existsUser()) {
             return notLoginResult();
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            boolean result = buMenServiceImpl.updateBuMen(model);
+            boolean result = wuZiZiDianServiceImpl.updateWuZiZiDian(model);
             map.put("result", result? 0:-1);
         } catch (Exception e) {
             map.put("result", -1);
@@ -92,15 +92,15 @@ public class BuMenController extends BaseController {
         return map;
     }
     
-    @RequestMapping(value = "deleteBuMen.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "deleteWuZiZiDian.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Map<String, Object> deleteBuMen(@RequestParam Integer id) {
+    public Map<String, Object> deleteWuZiZiDian(@RequestParam Integer id) {
         if (!existsUser()) {
             return notLoginResult();
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            boolean result = buMenServiceImpl.deleteBuMen(id);
+            boolean result = wuZiZiDianServiceImpl.deleteWuZiZiDian(id);
             map.put("result", result? 0:-1);
         } catch (Exception e) {
             map.put("result", -1);
@@ -109,17 +109,17 @@ public class BuMenController extends BaseController {
         return map;
     }
     
-    @RequestMapping(value = "getBuMenById.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "getWuZiZiDianById.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Map<String, Object> getBuMenById(@RequestParam Integer id) {
+    public Map<String, Object> getWuZiZiDianById(@RequestParam Integer id) {
         if (!existsUser()) {
             return notLoginResult();
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            BuMen buMen = buMenServiceImpl.getBuMenById(id);
+            WuZiZiDian wuZiZiDian = wuZiZiDianServiceImpl.getWuZiZiDianById(id);
             map.put("result", 0);
-            map.put("buMen", buMen);
+            map.put("wuZiZiDian", wuZiZiDian);
         } catch (Exception e) {
             map.put("result", -1);
             map.put("msg", e.getMessage());
@@ -128,7 +128,7 @@ public class BuMenController extends BaseController {
     }
 
     //分页查询
-    @RequestMapping(value = "listBuMensByPage.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "listWuZiZiDiansByPage.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Page listTeachersByPage(@RequestBody Page model) {
         HashMap map = model.getParamters();
@@ -136,7 +136,7 @@ public class BuMenController extends BaseController {
             map = new HashMap();
         }
         if (model.getRows() == 0) {
-            model.setRows(this.buMenServiceImpl.queryRows(map));//查询记录数
+            model.setRows(this.wuZiZiDianServiceImpl.queryRows(map));//查询记录数
         }
         if (model.getRows() == 0) {
             model.setCurrentPage(1);
@@ -151,7 +151,7 @@ public class BuMenController extends BaseController {
         }
         map.put("beginRow", model.getBegin());
         map.put("pageSize", model.getPageSize());
-        model.setList(this.buMenServiceImpl.queryBuMensByPage(map));
+        model.setList(this.wuZiZiDianServiceImpl.queryWuZiZiDiansByPage(map));
         return model;
     }
 
