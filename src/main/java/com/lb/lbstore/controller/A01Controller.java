@@ -31,11 +31,11 @@ public class A01Controller extends BaseController {
     private A01Service a01ServiceImpl;
 
     @RequestMapping("goA01.do")
-    public String goFangJian() {
+    public String goA01() {
         if (!existsUser()) {
             return "../index";
         }
-        return "a01/a01";
+        return "zuZhi/a01/a01";
     }
 
     @RequestMapping(value = "getAllA01s.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
