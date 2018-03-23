@@ -63,3 +63,11 @@ CREATE TABLE `store`.`wuzizidian` (
   `bz` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `state` int(11) DEFAULT 0,
   PRIMARY KEY (`id`))ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `store`.`cangku` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `mc` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `dm` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `bz` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `state` int(11) DEFAULT 0,
+  PRIMARY KEY (`id`))ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

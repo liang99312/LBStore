@@ -18,7 +18,7 @@ and open the template in the editor.
         <script src="/LBStore/content/bootstrap/js/bootstrap-paginator.js"></script>
         <script src="/LBStore/content/autocomplete/autocomplete.js"></script>
         <script src="/LBStore/view/common/common.js"></script>
-        <script src="/LBStore/view/cangKu/wuZiLeiBie/wuZiLeiBie.js"></script>
+        <script src="/LBStore/view/cangKu/cangKu/cangKu.js"></script>
     </head>
     <body style='height:800px;'>
         <div style="float:left; width: 100%">
@@ -31,10 +31,10 @@ and open the template in the editor.
                         <option value="0">有效</option>
                         <option value="-1">无效</option>
                     </select>
-                    <button type="button" class="btn btn-primary btn-sm" onclick="selectWuZiLeiBie();" style="margin-left: 2px;">查找</button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="selectCangKu();" style="margin-left: 2px;">查找</button>
                 </div>
                 <div style="width: 100%;float:left; padding-top: 5px;">
-                    <button type="button" class="btn btn-primary btn-sm" onclick="addWuZiLeiBie();">新增物资类别</button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="addCangKu();">新增仓库</button>
                 </div>
             </div>
             <div id="list1" class="table-responsive" style="height: 678px;width:100%;padding-top: 5px;">
@@ -47,19 +47,19 @@ and open the template in the editor.
                     </tr>
                     </thead>
                     <tbody id='data_table_body'>
-                    <tr><td>请查询物资类别记录</td></tr>
+                    <tr><td>请查询仓库记录</td></tr>
                     </tbody>
                 </table>
             </div>
 
             <ul id="example"></ul>
         </div>
-        <div class="modal fade" id="wuZiLeiBieModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade" id="cangKuModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header" style="background: #ace1ff;height: 40px;border-top-left-radius: 6px;border-top-right-radius: 6px;padding:10px">
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title" id="wuZiLeiBieModel_title">添加物资类别</h4>
+                        <h4 class="modal-title" id="cangKuModel_title">添加仓库</h4>
                     </div>
                     <div class="modal-body">
                         <div class="content">
@@ -78,7 +78,7 @@ and open the template in the editor.
                         </div>
                     </div>
                     <div class="modal-footer" style="text-align: center;padding: 8px;">
-                        <button type="submit" class="btn btn-primary" onclick="saveWuZiLeiBie()">保存</button>
+                        <button type="submit" class="btn btn-primary" onclick="saveCangKu()">保存</button>
                     </div>
                 </div>
             </div>

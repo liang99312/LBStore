@@ -34,7 +34,7 @@ public class WuZiZiDianController extends BaseController {
         if (!existsUser()) {
             return "../index";
         }
-        return "wuZiZiDian/wuZiZiDian";
+        return "cangKu/wuZiZiDian/wuZiZiDian";
     }
 
     @RequestMapping(value = "getAllWuZiZiDians.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
