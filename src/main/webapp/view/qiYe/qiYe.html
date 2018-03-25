@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>企业维护</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="/LBStore/content/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
@@ -18,59 +18,56 @@ and open the template in the editor.
         <script src="/LBStore/content/bootstrap/js/bootstrap-paginator.js"></script>
         <script src="/LBStore/content/autocomplete/autocomplete.js"></script>
         <script src="/LBStore/view/common/common.js"></script>
-        <script src="/LBStore/view/zuZhi/a01/a01.js"></script>
+        <script src="/LBStore/view/qiYe/qiYe.js"></script>
     </head>
     <body style='height:800px;'>
         <div style="float:left; width: 100%">
             <div style="width: 100%">
                 <div style="width: 100%;float:left; padding-top: 5px;">
-                    <span>&nbsp;姓名：</span><input id="selName" type="text" />
+                    <span>&nbsp;名称：</span><input id="selName" type="text" />
                     <span>&nbsp;状态：</span>
                     <select id="selState" style="width: 100px; height: 26px;line-height: 26px;">
                         <option value="-9" selected = "selected">全部</option>
                         <option value="0">有效</option>
                         <option value="-1">无效</option>
                     </select>
-                    <button type="button" class="btn btn-primary btn-sm" onclick="selectA01();" style="margin-left: 2px;">查找</button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="selectQiYe();" style="margin-left: 2px;">查找</button>
                 </div>
                 <div style="width: 100%;float:left; padding-top: 5px;">
-                    <button type="button" class="btn btn-primary btn-sm" onclick="addA01();">新增员工</button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="addQiYe();">新增企业</button>
                 </div>
             </div>
             <div id="list1" class="table-responsive" style="height: 678px;width:100%;padding-top: 5px;">
                 <table id="data_table" class="table table-hover">
                     <thead>
                     <tr>
-                        <th style="width:18%">编号</th>
-                        <th style="width:18%">姓名</th>
-                        <th style="width:18%">性别</th>
-                        <th style="width:18%">职位</th>
+                        <th style="width:18%">名称</th>
+                        <th style="width:15%">代码</th>
+                        <th style="width:15%">联系人</th>
+                        <th style="width:15%">电话</th>
+                        <th style="width:15%">管理员</th>
                         <th>操作</th>
                     </tr>
                     </thead>
                     <tbody id='data_table_body'>
-                    <tr><td>请查询员工记录</td></tr>
+                    <tr><td>请查询企业记录</td></tr>
                     </tbody>
                 </table>
             </div>
 
             <ul id="example"></ul>
         </div>
-        <div class="modal fade" id="a01Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade" id="qiYeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header" style="background: #ace1ff;height: 40px;border-top-left-radius: 6px;border-top-right-radius: 6px;padding:10px">
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title" id="a01Model_title">添加员工</h4>
+                        <h4 class="modal-title" id="qiYeModel_title">添加企业</h4>
                     </div>
                     <div class="modal-body">
                         <div class="content">
                             <div class="form-group">
-                                <label for="inpBh">编&ensp;&ensp;&ensp;&ensp;号：</label>
-                                <input type="text" id="inpBh" />
-                            </div>
-                            <div class="form-group">
-                                <label for="inpMc">姓&ensp;&ensp;&ensp;&ensp;名：</label>
+                                <label for="inpMc">名&ensp;&ensp;&ensp;&ensp;称：</label>
                                 <input type="text" id="inpMc" />
                             </div>
                             <div class="form-group">
@@ -78,24 +75,29 @@ and open the template in the editor.
                                 <input type="text" id="inpDm" />
                             </div>
                             <div class="form-group">
-                                <label for="inpA0111">性&ensp;&ensp;&ensp;&ensp;别：</label>
-                                <select id="inpA0111" style="width: 174px; height: 26px;line-height: 26px;">
-                                    <option value="男" selected = "selected">男</option>
-                                    <option value="女">女</option>
-                                </select>
+                                <label for="inpLxr">联&ensp;系&ensp;人：</label>
+                                <input type="text" id="inpLxr" />
                             </div>
                             <div class="form-group">
-                                <label for="inpA0105">职&ensp;&ensp;&ensp;&ensp;位：</label>
-                                <input type="text" id="inpA0105" />
+                                <label for="inpLxdh">联系电话：</label>
+                                <input type="text" id="inpLxdh" />
                             </div>
                             <div class="form-group">
-                                <label for="inpPassword">登录密码：</label>
-                                <input type="password" id="inpPassword" />
+                                <label for="inpDz">地&ensp;&ensp;&ensp;&ensp;址：</label>
+                                <input type="text" id="inpDz" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpGly">管&ensp;理&ensp;员：</label>
+                                <input type="text" id="inpGly" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpBz">备&ensp;&ensp;&ensp;&ensp;注：</label>
+                                <input type="text" id="inpBz" style="width: 400px;"/>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer" style="text-align: center;padding: 8px;">
-                        <button type="submit" class="btn btn-primary" onclick="saveA01()">保存</button>
+                        <button type="submit" class="btn btn-primary" onclick="saveQiYe()">保存</button>
                     </div>
                 </div>
             </div>

@@ -17,7 +17,7 @@ public interface BuMenService {
 
     public BuMen getBuMenById(Integer id);
     
-    public List<BuMen> getAllBuMens();
+    public List<BuMen> getAllBuMens(Integer qy_id);
     
     public boolean updateBuMen(BuMen buMen);
     

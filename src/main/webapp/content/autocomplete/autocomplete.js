@@ -391,10 +391,10 @@
 
             if ($.isPlainObject(value)) {
                 if(value.label === undefined){
-                    value.label = value.name;
+                    value.label = value.mc;
                 }
                 if(value.value === undefined){
-                    value.value = value.name;
+                    value.value = value.mc;
                 }
                 var item = $.extend(false, {}, value);
             } else if (typeof (value) === 'string') {

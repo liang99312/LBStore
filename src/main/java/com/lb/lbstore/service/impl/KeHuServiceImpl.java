@@ -29,8 +29,8 @@ public class KeHuServiceImpl implements KeHuService {
     }
 
     @Override
-    public List<KeHu> getAllKeHus() {
-        return keHuDao.getResult("from KeHu keHu", null);
+    public List<KeHu> getAllKeHus(Integer qy_id) {
+        return keHuDao.getResult("from KeHu keHu where qy_id"+qy_id, null);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class KeHuServiceImpl implements KeHuService {
 
     @Override
     public int queryRows(HashMap map) {
-        String sql = "select (1) from KeHu where 1=1";
+        String sql = "select (1) from KeHu where qy_id="+map.get("qy_id");
         if (map.containsKey("mc")) {
             sql += " and mc like '" + map.get("mc") + "'";
         }
@@ -70,7 +70,7 @@ public class KeHuServiceImpl implements KeHuService {
 
     @Override
     public List<KeHu> queryKeHusByPage(HashMap map) {
-        String hql = "from KeHu where 1=1";
+        String hql = "from KeHu where qy_id="+map.get("qy_id");
         if (map.containsKey("mc")) {
             hql += " and mc like '" + map.get("mc") + "'";
         }

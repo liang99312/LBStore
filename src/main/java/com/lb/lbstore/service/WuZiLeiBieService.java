@@ -17,7 +17,7 @@ public interface WuZiLeiBieService {
 
     public WuZiLeiBie getWuZiLeiBieById(Integer id);
     
-    public List<WuZiLeiBie> getAllWuZiLeiBies();
+    public List<WuZiLeiBie> getAllWuZiLeiBies(Integer qy_id);
     
     public boolean updateWuZiLeiBie(WuZiLeiBie wuZiLeiBie);
     

@@ -29,8 +29,8 @@ public class WuZiZiDianServiceImpl implements WuZiZiDianService {
     }
 
     @Override
-    public List<WuZiZiDian> getAllWuZiZiDians() {
-        return wuZiZiDianDao.getResult("from WuZiZiDian wuZiZiDian", null);
+    public List<WuZiZiDian> getAllWuZiZiDians(Integer qy_id) {
+        return wuZiZiDianDao.getResult("from WuZiZiDian wuZiZiDian where qy_id"+qy_id, null);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class WuZiZiDianServiceImpl implements WuZiZiDianService {
 
     @Override
     public int queryRows(HashMap map) {
-        String sql = "select (1) from WuZiZiDian where 1=1";
+        String sql = "select (1) from WuZiZiDian where qy_id="+map.get("qy_id");
         if (map.containsKey("mc")) {
             sql += " and mc like '" + map.get("mc") + "'";
         }
@@ -70,7 +70,7 @@ public class WuZiZiDianServiceImpl implements WuZiZiDianService {
 
     @Override
     public List<WuZiZiDian> queryWuZiZiDiansByPage(HashMap map) {
-        String hql = "from WuZiZiDian where 1=1";
+        String hql = "from WuZiZiDian where qy_id="+map.get("qy_id");
         if (map.containsKey("mc")) {
             hql += " and mc like '" + map.get("mc") + "'";
         }

@@ -47,10 +47,14 @@ public class A01Controller extends BaseController {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             List<A01> a01List = new ArrayList<A01>();
-            a01List.addAll(DataUtil.a01s);
-            if (a01List.isEmpty()) {
+            if (DataUtil.a01s.isEmpty()) {
                 DataUtil.getA01sFromDb();
-                a01List.addAll(DataUtil.a01s);
+            }
+            int qy_id = getDlA01().getQy_id();
+            for(A01 a01:DataUtil.a01s){
+                if(a01.getQy_id() == qy_id){
+                    a01List.add(a01);
+                }
             }
             map.put("result", 0);
             map.put("sz", a01List);
@@ -108,6 +112,7 @@ public class A01Controller extends BaseController {
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
+            model.setQy_id(getDlA01().getQy_id());
             A01 a01 = a01ServiceImpl.saveA01(model);
             map.put("result", 0);
             map.put("a01", a01);
@@ -201,6 +206,7 @@ public class A01Controller extends BaseController {
         if (map == null) {
             map = new HashMap();
         }
+        map.put("qy_id", getDlA01().getQy_id());
         if (model.getRows() == 0) {
             model.setRows(this.a01ServiceImpl.queryRows(map));//查询记录数
         }

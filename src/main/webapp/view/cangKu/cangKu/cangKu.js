@@ -1,9 +1,15 @@
 var cangKus;
 var optFlag = 1;
 var editIndex = -1;
+var opt = {"data":[],"yxData":[],"unrepeat":true};
 
 $(document).ready(function () {
+    getAllA01s(setA01Data);
 });
+
+function setA01Data(){
+    opt = {"data":lb_allA01s,"yxData":[],"unrepeat":true};
+}
 
 function jxCangKu(json) {
     $("#data_table_body tr").remove();
@@ -16,6 +22,7 @@ function jxCangKu(json) {
         }
         var trStr = '<tr'+classStr+'><td>' + item.mc + '</td><td>' + item.dm + '</td><td>'
                 + '<button class="btn btn-info btn-xs icon-edit" onclick="editCangKu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;'
+                + '<button class="btn btn-info btn-xs icon-cog" onclick="setCangKu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;'
                 + '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteCangKu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button></td></tr>';
         $("#data_table_body").append(trStr);
     });
@@ -61,6 +68,16 @@ function editCangKu(index) {
     $("#inpDm").val(cangKu.dm);
     $("#inpBz").val(cangKu.bz);
     $("#cangKuModal").modal("show");
+}
+
+function setCangKu(index){
+    if (cangKus[index] === undefined) {
+        return alert("请选择仓库");
+    }
+    var cangKu = cangKus[index];
+    editIndex = index;
+    $("#tblYg").inputTable(opt);
+    $("#cangKuSetModal").modal("show");
 }
 
 function saveCangKu() {

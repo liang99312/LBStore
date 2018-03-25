@@ -17,7 +17,7 @@ public interface WuZiZiDianService {
 
     public WuZiZiDian getWuZiZiDianById(Integer id);
     
-    public List<WuZiZiDian> getAllWuZiZiDians();
+    public List<WuZiZiDian> getAllWuZiZiDians(Integer qy_id);
     
     public boolean updateWuZiZiDian(WuZiZiDian wuZiZiDian);
     

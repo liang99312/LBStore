@@ -46,7 +46,7 @@ public class WuZiLeiBieController extends BaseController {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             List<WuZiLeiBie> wuZiLeiBieList = new ArrayList<WuZiLeiBie>();
-            wuZiLeiBieList = wuZiLeiBieServiceImpl.getAllWuZiLeiBies();
+            wuZiLeiBieList = wuZiLeiBieServiceImpl.getAllWuZiLeiBies(getDlA01().getQy_id());
             map.put("result", 0);
             map.put("sz", wuZiLeiBieList);
         } catch (Exception e) {
@@ -64,6 +64,7 @@ public class WuZiLeiBieController extends BaseController {
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
+            model.setQy_id(getDlA01().getQy_id());
             model.setState(0);
             WuZiLeiBie wuZiLeiBie = wuZiLeiBieServiceImpl.saveWuZiLeiBie(model);
             map.put("result", 0);
@@ -135,6 +136,7 @@ public class WuZiLeiBieController extends BaseController {
         if (map == null) {
             map = new HashMap();
         }
+        map.put("qy_id", getDlA01().getQy_id());
         if (model.getRows() == 0) {
             model.setRows(this.wuZiLeiBieServiceImpl.queryRows(map));//查询记录数
         }

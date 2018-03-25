@@ -22,6 +22,7 @@ public class WuZiLeiBie {
     
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
+    private Integer qy_id;
     private String mc;
     private String dm;
     private String bz;
@@ -33,6 +34,14 @@ public class WuZiLeiBie {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getQy_id() {
+        return qy_id;
+    }
+
+    public void setQy_id(Integer qy_id) {
+        this.qy_id = qy_id;
     }
 
     public String getMc() {

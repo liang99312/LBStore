@@ -11,8 +11,8 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.lb.lbstore.domain.WuZiZiDian;
-import com.lb.lbstore.service.WuZiZiDianService;
+import com.lb.lbstore.domain.QiYe;
+import com.lb.lbstore.service.QiYeService;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,32 +23,32 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/wuZiZiDian")
-public class WuZiZiDianController extends BaseController {
+@RequestMapping("/qiYe")
+public class QiYeController extends BaseController {
 
     @Resource
-    private WuZiZiDianService wuZiZiDianServiceImpl;
+    private QiYeService qiYeServiceImpl;
 
-    @RequestMapping("goWuZiZiDian.do")
-    public String goWuZiZiDian() {
+    @RequestMapping("goQiYe.do")
+    public String goQiYe() {
         if (!existsUser()) {
             return "../index";
         }
-        return "cangKu/wuZiZiDian/wuZiZiDian";
+        return "qiYe/qiYe";
     }
 
-    @RequestMapping(value = "getAllWuZiZiDians.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "getAllQiYes.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Map<String, Object> getAllWuZiZiDians() {
+    public Map<String, Object> getAllQiYes() {
         if (!existsUser()) {
             return notLoginResult();
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            List<WuZiZiDian> wuZiZiDianList = new ArrayList<WuZiZiDian>();
-            wuZiZiDianList = wuZiZiDianServiceImpl.getAllWuZiZiDians(getDlA01().getQy_id());
+            List<QiYe> qiYeList = new ArrayList<QiYe>();
+            qiYeList = qiYeServiceImpl.getAllQiYes();
             map.put("result", 0);
-            map.put("sz", wuZiZiDianList);
+            map.put("sz", qiYeList);
         } catch (Exception e) {
             map.put("result", -1);
             map.put("msg", e.getMessage());
@@ -56,19 +56,18 @@ public class WuZiZiDianController extends BaseController {
         return map;
     }
 
-    @RequestMapping(value = "saveWuZiZiDian.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "saveQiYe.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Map<String, Object> saveWuZiZiDian(@RequestBody WuZiZiDian model) {
+    public Map<String, Object> saveQiYe(@RequestBody QiYe model) {
         if (!existsUser()) {
             return notLoginResult();
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            model.setQy_id(getDlA01().getQy_id());
             model.setState(0);
-            WuZiZiDian wuZiZiDian = wuZiZiDianServiceImpl.saveWuZiZiDian(model);
+            QiYe qiYe = qiYeServiceImpl.saveQiYe(model);
             map.put("result", 0);
-            map.put("wuZiZiDian", wuZiZiDian);
+            map.put("qiYe", qiYe);
         } catch (Exception e) {
             map.put("result", -1);
             map.put("msg", e.getMessage());
@@ -76,15 +75,15 @@ public class WuZiZiDianController extends BaseController {
         return map;
     }
 
-    @RequestMapping(value = "updateWuZiZiDian.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "updateQiYe.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Map<String, Object> updateWuZiZiDian(@RequestBody WuZiZiDian model) {
+    public Map<String, Object> updateQiYe(@RequestBody QiYe model) {
         if (!existsUser()) {
             return notLoginResult();
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            boolean result = wuZiZiDianServiceImpl.updateWuZiZiDian(model);
+            boolean result = qiYeServiceImpl.updateQiYe(model);
             map.put("result", result? 0:-1);
         } catch (Exception e) {
             map.put("result", -1);
@@ -93,34 +92,35 @@ public class WuZiZiDianController extends BaseController {
         return map;
     }
     
-    @RequestMapping(value = "deleteWuZiZiDian.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "deleteQiYe.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Map<String, Object> deleteWuZiZiDian(@RequestParam Integer id) {
+    public Map<String, Object> deleteQiYe(@RequestParam Integer id) {
         if (!existsUser()) {
             return notLoginResult();
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            boolean result = wuZiZiDianServiceImpl.deleteWuZiZiDian(id);
+            boolean result = qiYeServiceImpl.deleteQiYe(id);
             map.put("result", result? 0:-1);
         } catch (Exception e) {
+            e.printStackTrace();
             map.put("result", -1);
             map.put("msg", e.getMessage());
         }
         return map;
     }
     
-    @RequestMapping(value = "getWuZiZiDianById.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "getQiYeById.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Map<String, Object> getWuZiZiDianById(@RequestParam Integer id) {
+    public Map<String, Object> getQiYeById(@RequestParam Integer id) {
         if (!existsUser()) {
             return notLoginResult();
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            WuZiZiDian wuZiZiDian = wuZiZiDianServiceImpl.getWuZiZiDianById(id);
+            QiYe qiYe = qiYeServiceImpl.getQiYeById(id);
             map.put("result", 0);
-            map.put("wuZiZiDian", wuZiZiDian);
+            map.put("qiYe", qiYe);
         } catch (Exception e) {
             map.put("result", -1);
             map.put("msg", e.getMessage());
@@ -129,16 +129,15 @@ public class WuZiZiDianController extends BaseController {
     }
 
     //分页查询
-    @RequestMapping(value = "listWuZiZiDiansByPage.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "listQiYesByPage.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Page listTeachersByPage(@RequestBody Page model) {
         HashMap map = model.getParamters();
         if (map == null) {
             map = new HashMap();
         }
-        map.put("qy_id", getDlA01().getQy_id());
         if (model.getRows() == 0) {
-            model.setRows(this.wuZiZiDianServiceImpl.queryRows(map));//查询记录数
+            model.setRows(this.qiYeServiceImpl.queryRows(map));//查询记录数
         }
         if (model.getRows() == 0) {
             model.setCurrentPage(1);
@@ -153,7 +152,7 @@ public class WuZiZiDianController extends BaseController {
         }
         map.put("beginRow", model.getBegin());
         map.put("pageSize", model.getPageSize());
-        model.setList(this.wuZiZiDianServiceImpl.queryWuZiZiDiansByPage(map));
+        model.setList(this.qiYeServiceImpl.queryQiYesByPage(map));
         return model;
     }
 

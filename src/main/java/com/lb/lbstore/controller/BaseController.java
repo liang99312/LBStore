@@ -72,7 +72,7 @@ public class BaseController {
     }
 
     public boolean isSuperUser() {
-        return "sa".equals(getUserName());
+        return "sa".equals(getUserName()) || getDlA01().getState() > 7;
     }
 
     public void renderJson(String jsonString) throws IOException {

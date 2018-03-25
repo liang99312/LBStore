@@ -17,7 +17,7 @@ public interface CangKuService {
 
     public CangKu getCangKuById(Integer id);
     
-    public List<CangKu> getAllCangKus();
+    public List<CangKu> getAllCangKus(Integer qy_id);
     
     public boolean updateCangKu(CangKu cangKu);
     

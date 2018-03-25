@@ -75,7 +75,7 @@ public class A01ServiceImpl implements A01Service {
 
     @Override
     public int queryRows(HashMap map) {
-        String sql = "select (1) from A01 where state < 9";
+        String sql = "select (1) from A01 where qy_id="+map.get("qy_id")+" and state < 8";
         if (map.containsKey("mc")) {
             sql += " and mc like '" + map.get("mc") + "'";
         }
@@ -87,7 +87,7 @@ public class A01ServiceImpl implements A01Service {
 
     @Override
     public List<A01> queryA01sByPage(HashMap map) {
-        String hql = "from A01 where state < 9";
+        String hql = "from A01 where qy_id="+map.get("qy_id")+" and state < 8";
         if (map.containsKey("mc")) {
             hql += " and mc like '" + map.get("mc") + "'";
         }

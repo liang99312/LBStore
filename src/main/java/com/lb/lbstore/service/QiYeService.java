@@ -5,7 +5,7 @@
  */
 package com.lb.lbstore.service;
 
-import com.lb.lbstore.domain.KeHu;
+import com.lb.lbstore.domain.QiYe;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,20 +13,20 @@ import java.util.List;
  *
  * @author Administrator
  */
-public interface KeHuService {
+public interface QiYeService {
 
-    public KeHu getKeHuById(Integer id);
+    public QiYe getQiYeById(Integer id);
     
-    public List<KeHu> getAllKeHus(Integer qy_id);
+    public List<QiYe> getAllQiYes();
     
-    public boolean updateKeHu(KeHu keHu);
+    public boolean updateQiYe(QiYe qiYe);
     
-    public KeHu saveKeHu(KeHu keHu);
+    public QiYe saveQiYe(QiYe qiYe);
     
-    public boolean deleteKeHu(Integer id);
+    public boolean deleteQiYe(Integer id);
     
     public int queryRows(HashMap map);
     
-    public List<KeHu> queryKeHusByPage(HashMap map);
+    public List<QiYe> queryQiYesByPage(HashMap map);
 
 }

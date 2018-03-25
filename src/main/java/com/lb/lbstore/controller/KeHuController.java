@@ -46,7 +46,7 @@ public class KeHuController extends BaseController {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             List<KeHu> keHuList = new ArrayList<KeHu>();
-            keHuList = keHuServiceImpl.getAllKeHus();
+            keHuList = keHuServiceImpl.getAllKeHus(getDlA01().getQy_id());
             map.put("result", 0);
             map.put("sz", keHuList);
         } catch (Exception e) {
@@ -64,6 +64,7 @@ public class KeHuController extends BaseController {
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
+            model.setQy_id(getDlA01().getQy_id());
             model.setState(0);
             KeHu keHu = keHuServiceImpl.saveKeHu(model);
             map.put("result", 0);
@@ -136,6 +137,7 @@ public class KeHuController extends BaseController {
         if (map == null) {
             map = new HashMap();
         }
+        map.put("qy_id", getDlA01().getQy_id());
         if (model.getRows() == 0) {
             model.setRows(this.keHuServiceImpl.queryRows(map));//查询记录数
         }

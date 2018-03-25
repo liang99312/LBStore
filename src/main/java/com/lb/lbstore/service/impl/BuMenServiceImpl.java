@@ -29,8 +29,8 @@ public class BuMenServiceImpl implements BuMenService {
     }
 
     @Override
-    public List<BuMen> getAllBuMens() {
-        return buMenDao.getResult("from BuMen buMen", null);
+    public List<BuMen> getAllBuMens(Integer qy_id) {
+        return buMenDao.getResult("from BuMen buMen where qy_id="+qy_id, null);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class BuMenServiceImpl implements BuMenService {
 
     @Override
     public int queryRows(HashMap map) {
-        String sql = "select (1) from BuMen where 1=1";
+        String sql = "select (1) from BuMen where  qy_id="+map.get("qy_id");
         if (map.containsKey("mc")) {
             sql += " and mc like '" + map.get("mc") + "'";
         }
@@ -70,7 +70,7 @@ public class BuMenServiceImpl implements BuMenService {
 
     @Override
     public List<BuMen> queryBuMensByPage(HashMap map) {
-        String hql = "from BuMen where 1=1";
+        String hql = "from BuMen where qy_id="+map.get("qy_id");
         if (map.containsKey("mc")) {
             hql += " and mc like '" + map.get("mc") + "'";
         }

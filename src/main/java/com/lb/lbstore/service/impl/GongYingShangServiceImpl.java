@@ -29,8 +29,8 @@ public class GongYingShangServiceImpl implements GongYingShangService {
     }
 
     @Override
-    public List<GongYingShang> getAllGongYingShangs() {
-        return gongYingShangDao.getResult("from GongYingShang gongYingShang", null);
+    public List<GongYingShang> getAllGongYingShangs(Integer qy_id) {
+        return gongYingShangDao.getResult("from GongYingShang gongYingShang where qy_id"+qy_id, null);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class GongYingShangServiceImpl implements GongYingShangService {
 
     @Override
     public int queryRows(HashMap map) {
-        String sql = "select (1) from GongYingShang where 1=1";
+        String sql = "select (1) from GongYingShang where qy_id="+map.get("qy_id");
         if (map.containsKey("mc")) {
             sql += " and mc like '" + map.get("mc") + "'";
         }
@@ -70,7 +70,7 @@ public class GongYingShangServiceImpl implements GongYingShangService {
 
     @Override
     public List<GongYingShang> queryGongYingShangsByPage(HashMap map) {
-        String hql = "from GongYingShang where 1=1";
+        String hql = "from GongYingShang where qy_id="+map.get("qy_id");
         if (map.containsKey("mc")) {
             hql += " and mc like '" + map.get("mc") + "'";
         }

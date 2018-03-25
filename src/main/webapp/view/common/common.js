@@ -1,7 +1,7 @@
-var rk_baseCodes;
+var lb_allA01s;
 
-function getBaseCodes(func){
-    hajax("/whwr/codeManage/listBaseCodes.do",{},"rk_baseCodes",func);
+function getAllA01s(func){
+    hajax("/LBStore/a01/getAllA01s.do",{},"lb_allA01s",func);
 }
 
 function findCode(list,id){
@@ -20,14 +20,14 @@ function hajax(url,d,result,func){
         url: url,
         data: d,
         dataType: "json",
-        type: "get",
+        type: "post",
         cache: false,
         error: function (msg, textStatus) {
             alert("查询数据失败");
         },
         success: function (json) {
-            if(json.code === 200){
-                eval(result + " = json.data");
+            if(json.result === 0){
+                eval(result + " = json.sz");
                 if(func){
                     func();
                 }

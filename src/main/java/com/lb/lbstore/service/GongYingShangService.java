@@ -17,7 +17,7 @@ public interface GongYingShangService {
 
     public GongYingShang getGongYingShangById(Integer id);
     
-    public List<GongYingShang> getAllGongYingShangs();
+    public List<GongYingShang> getAllGongYingShangs(Integer qy_id);
     
     public boolean updateGongYingShang(GongYingShang gongYingShang);
     

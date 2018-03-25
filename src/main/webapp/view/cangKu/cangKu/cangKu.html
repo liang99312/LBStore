@@ -18,6 +18,7 @@ and open the template in the editor.
         <script src="/LBStore/content/bootstrap/js/bootstrap-paginator.js"></script>
         <script src="/LBStore/content/autocomplete/autocomplete.js"></script>
         <script src="/LBStore/view/common/common.js"></script>
+        <script src="/LBStore/view/common/table.js"></script>
         <script src="/LBStore/view/cangKu/cangKu/cangKu.js"></script>
     </head>
     <body style='height:800px;'>
@@ -40,14 +41,14 @@ and open the template in the editor.
             <div id="list1" class="table-responsive" style="height: 678px;width:100%;padding-top: 5px;">
                 <table id="data_table" class="table table-hover">
                     <thead>
-                    <tr>
-                        <th style="width:18%">名称</th>
-                        <th style="width:18%">代码</th>
-                        <th>操作</th>
-                    </tr>
+                        <tr>
+                            <th style="width:18%">名称</th>
+                            <th style="width:18%">代码</th>
+                            <th>操作</th>
+                        </tr>
                     </thead>
                     <tbody id='data_table_body'>
-                    <tr><td>请查询仓库记录</td></tr>
+                        <tr><td>请查询仓库记录</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -79,6 +80,66 @@ and open the template in the editor.
                     </div>
                     <div class="modal-footer" style="text-align: center;padding: 8px;">
                         <button type="submit" class="btn btn-primary" onclick="saveCangKu()">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="cangKuSetModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #ace1ff;height: 40px;border-top-left-radius: 6px;border-top-right-radius: 6px;padding:10px">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="cangKuSetModel_title">设置仓库</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="content">
+                            <div class="form-group">
+                                <label>库&ensp;&ensp;位：</label>
+                                <div>
+                                    <input type="text" id="inpKw" />
+                                    <input type="text" id="inpXh" />
+                                    <button class="btn btn-info btn-xs icon-plus" onclick="addKw()"></button>
+                                    <button class="btn btn-info btn-xs icon-edit" onclick="editKw()"></button>
+                                    <button class="btn btn-danger btn-xs icon-minus" onclick="delKw()"></button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="tblYg">管理员：</label>
+                                <table id="tblYg" class="table-bordered"></table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="text-align: center;padding: 8px;">
+                        <button type="submit" class="btn btn-primary" onclick="saveCangKu()">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="kuWeiSetModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #ace1ff;height: 40px;border-top-left-radius: 6px;border-top-right-radius: 6px;padding:10px">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="cangKuSetModel_title">设置库位</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="content">
+                            <div class="form-group">
+                                <label for="inpKwMc">名&ensp;&ensp;称：</label>
+                                <input type="text" id="inpKwMc" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpKwQi">序号起：</label>
+                                <input type="text" id="inpKwQi" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpKwZhi">&ensp;&ensp;&ensp;&ensp;止：</label>
+                                <input type="text" id="inpKwZhi" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="text-align: center;padding: 8px;">
+                        <button type="submit" class="btn btn-primary" onclick="saveKuWei()">保存</button>
                     </div>
                 </div>
             </div>

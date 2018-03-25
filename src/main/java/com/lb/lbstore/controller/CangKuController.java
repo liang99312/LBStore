@@ -46,7 +46,7 @@ public class CangKuController extends BaseController {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             List<CangKu> cangKuList = new ArrayList<CangKu>();
-            cangKuList = cangKuServiceImpl.getAllCangKus();
+            cangKuList = cangKuServiceImpl.getAllCangKus(getDlA01().getQy_id());
             map.put("result", 0);
             map.put("sz", cangKuList);
         } catch (Exception e) {
@@ -64,6 +64,7 @@ public class CangKuController extends BaseController {
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
+            model.setQy_id(getDlA01().getQy_id());
             model.setState(0);
             CangKu cangKu = cangKuServiceImpl.saveCangKu(model);
             map.put("result", 0);
@@ -135,6 +136,7 @@ public class CangKuController extends BaseController {
         if (map == null) {
             map = new HashMap();
         }
+        map.put("qy_id", getDlA01().getQy_id());
         if (model.getRows() == 0) {
             model.setRows(this.cangKuServiceImpl.queryRows(map));//查询记录数
         }

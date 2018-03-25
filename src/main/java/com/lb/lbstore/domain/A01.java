@@ -17,6 +17,7 @@ public class A01 {
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
+    private Integer qy_id;
     private String bh;
     private String mc;
     private String dm;
@@ -43,6 +44,14 @@ public class A01 {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getQy_id() {
+        return qy_id;
+    }
+
+    public void setQy_id(Integer qy_id) {
+        this.qy_id = qy_id;
     }
 
     public String getBh() {

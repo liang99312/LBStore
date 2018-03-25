@@ -9,17 +9,21 @@ import javax.persistence.Id;
 
 @Entity
 @JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
-public class BuMen {
+public class QiYe {
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
-    private Integer qy_id;
     private String mc;
     private String dm;
+    private String dz;
+    private String lxr;
+    private String lxdh;
+    private String gly;
     private String bz;
-    private Integer state = 0;
+    private transient A01 a01;
+    private Integer state;
 
-    public BuMen() {
+    public QiYe() {
     }
 
     public Integer getId() {
@@ -28,14 +32,6 @@ public class BuMen {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getQy_id() {
-        return qy_id;
-    }
-
-    public void setQy_id(Integer qy_id) {
-        this.qy_id = qy_id;
     }
 
     public String getMc() {
@@ -54,12 +50,52 @@ public class BuMen {
         this.dm = dm;
     }
 
+    public String getDz() {
+        return dz;
+    }
+
+    public void setDz(String dz) {
+        this.dz = dz;
+    }
+
+    public String getLxr() {
+        return lxr;
+    }
+
+    public void setLxr(String lxr) {
+        this.lxr = lxr;
+    }
+
+    public String getLxdh() {
+        return lxdh;
+    }
+
+    public void setLxdh(String lxdh) {
+        this.lxdh = lxdh;
+    }
+
     public String getBz() {
         return bz;
     }
 
     public void setBz(String bz) {
         this.bz = bz;
+    }
+
+    public String getGly() {
+        return gly;
+    }
+
+    public void setGly(String gly) {
+        this.gly = gly;
+    }
+
+    public A01 getA01() {
+        return a01;
+    }
+
+    public void setA01(A01 a01) {
+        this.a01 = a01;
     }
 
     public Integer getState() {
@@ -73,7 +109,7 @@ public class BuMen {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 53 * hash + Objects.hashCode(this.id);
+        hash = 59 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -85,7 +121,7 @@ public class BuMen {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final BuMen other = (BuMen) obj;
+        final QiYe other = (QiYe) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
