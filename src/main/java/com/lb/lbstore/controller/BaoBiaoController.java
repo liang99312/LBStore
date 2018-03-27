@@ -5,6 +5,7 @@
  */
 package com.lb.lbstore.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.lb.lbstore.domain.Page;
 import javax.annotation.Resource;
 
@@ -16,7 +17,9 @@ import com.lb.lbstore.service.BaoBiaoService;
 import com.lb.lbstore.util.FileUtil;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,10 +67,11 @@ public class BaoBiaoController extends BaseController {
 
     @RequestMapping(value = "saveBaoBiao.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Map<String, Object> saveBaoBiao(@RequestParam("file") MultipartFile file, @RequestBody BaoBiao model) {
+    public Map<String, Object> saveBaoBiao(@RequestParam("file") MultipartFile file, @RequestParam("model") String modelString) {
         if (!existsUser()) {
             return notLoginResult();
         }
+        BaoBiao model = JSON.parseObject(modelString, BaoBiao.class);
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             String suffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
@@ -92,10 +96,11 @@ public class BaoBiaoController extends BaseController {
 
     @RequestMapping(value = "updateBaoBiao.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Map<String, Object> updateBaoBiao(@RequestParam("file") MultipartFile file, @RequestBody BaoBiao model) {
+    public Map<String, Object> updateBaoBiao(@RequestParam("file") MultipartFile file, @RequestParam("model") String modelString) {
         if (!existsUser()) {
             return notLoginResult();
         }
+        BaoBiao model = JSON.parseObject(modelString, BaoBiao.class);
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             String old_path = model.getF_path();
@@ -159,7 +164,7 @@ public class BaoBiaoController extends BaseController {
         return map;
     }
 
-    @RequestMapping(value = "getBaoBiaoNrById.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "getBaoBiaoNrById.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public void getBaoBiaoNrById(@RequestParam Integer id) {
         if (!existsUser()) {
@@ -173,9 +178,9 @@ public class BaoBiaoController extends BaseController {
             BaoBiao baoBiao = baoBiaoServiceImpl.getBaoBiaoById(id);
             File file = new File(baoBiao.getF_path());
             if ((file.exists()) && (file.isFile())) {
-                fileReader = new FileReader(file);
-                br = new BufferedReader(fileReader);
-                char[] buf = new char['?'];
+                FileInputStream in = new FileInputStream(file);
+                br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+                char[] buf = new char[4096];
                 int len = 0;
                 PrintWriter pw = this.response.getWriter();
                 while ((len = br.read(buf, 0, 4096)) != -1) {
@@ -183,7 +188,7 @@ public class BaoBiaoController extends BaseController {
                 }
             }
         } catch (Exception ex) {
-
+            ex.printStackTrace();
         } finally {
             try {
                 if (br != null) {

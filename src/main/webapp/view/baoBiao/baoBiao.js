@@ -4,7 +4,19 @@ var editIndex = -1;
 var selectMk;
 
 $(document).ready(function () {
-    $('#inpMk').AutoComplete({'data': lb_moKuais,'paramName':'selectMk'});
+    $('#inpMk').AutoComplete({'data': lb_moKuais, 'paramName': 'selectMk'});
+//    查询报表内容
+//    $.ajax({
+//        url: "/LBStore/baoBiao/getBaoBiaoNrById.do?id=" + 1,
+//        contentType: "application/json",
+//        type: "get",
+//        dataType: "html",
+//        cache: false,
+//        error: function (msg, textStatus) {
+//        },
+//        success: function (json) {
+//        }
+//    });
 });
 
 function jxBaoBiao(json) {
@@ -13,10 +25,10 @@ function jxBaoBiao(json) {
     baoBiaos = json.list;
     $.each(json.list, function (index, item) { //遍历返回的json
         var classStr = '';
-        if(item.state === -1){
+        if (item.state === -1) {
             classStr = ' class="danger"';
         }
-        var trStr = '<tr'+classStr+'><td>' + item.mc + '</td><td>' + item.dm + '</td><td>' + item.lxr + '</td><td>' + item.lxdh + '</td><td>'
+        var trStr = '<tr' + classStr + '><td>' + item.mc + '</td><td>' + item.mk + '</td><td>'
                 + '<button class="btn btn-info btn-xs icon-edit" onclick="editBaoBiao(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;'
                 + '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteBaoBiao(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button></td></tr>';
         $("#data_table_body").append(trStr);
@@ -59,11 +71,11 @@ function editBaoBiao(index) {
     editIndex = index;
     $("#baoBiaoModel_title").html("修改报表");
     $("#inpMc").val(baoBiao.mc);
-    for(var i = 0;i<lb_moKuais.length;i++){
+    for (var i = 0; i < lb_moKuais.length; i++) {
         var e = lb_moKuais[i];
-        if(e.id === baoBiao.mk){
+        if (e.id === baoBiao.mkdm) {
             selectMk = e;
-            $("#inpDm").val(selectMk.name);
+            $("#inpMk").val(selectMk.mc);
             break;
         }
     }
@@ -83,13 +95,13 @@ function saveBaoBiao() {
         url = "/LBStore/baoBiao/saveBaoBiao.do";
     }
     baoBiao.mc = $("#inpMc").val();
-    if(!selectMk || $("#inpMk").val() !== selectMk.name){
+    if (!selectMk || $("#inpMk").val() !== selectMk.mc) {
         return alert("请设置报表模块！");
     }
-    baoBiao.mk = selectMk.name;
+    baoBiao.mk = selectMk.mc;
     baoBiao.mkdm = selectMk.id;
-    var dataString = {"model":JSON.stringify(baoBiao)};
-    $("#formFangXing").ajaxSubmit({
+    var dataString = {"model": JSON.stringify(baoBiao)};
+    $("#bbForm").ajaxSubmit({
         url: url,
         data: dataString,
         contentType: "application/json",
@@ -116,7 +128,7 @@ function deleteBaoBiao(index) {
     var baoBiao = baoBiaos[index];
     if (confirm("确定删除报表：" + baoBiao.mc + "?")) {
         $.ajax({
-            url: "/LBStore/baoBiao/deleteBaoBiao.do?id="+baoBiao.id,
+            url: "/LBStore/baoBiao/deleteBaoBiao.do?id=" + baoBiao.id,
             contentType: "application/json",
             type: "get",
             dataType: "json",
