@@ -90,3 +90,12 @@ CREATE TABLE `store`.`cangku` (
   `bz` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `state` int(11) DEFAULT 0,
   PRIMARY KEY (`id`))ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `store`.`baobiao` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `qy_id` INT NOT NULL,
+  `mc` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `mk` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `mkdm` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `f_path` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`))ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
