@@ -1,8 +1,13 @@
-var lb_allA01s;
 var lb_moKuais = [{id:'503',mc:'入库管理'},{id:'504',mc:'领料管理'},{id:'505',mc:'发货管理'},{id:'506',mc:'损耗管理'},{id:'507',mc:'还库管理'},{id:'509',mc:'统计分析'}];
+var lb_allA01s;
+var lb_baoBiaos;
 
 function getAllA01s(func){
     hajax("/LBStore/a01/getAllA01s.do",{},"lb_allA01s",func);
+}
+
+function getBaoBiaosByMk(mkdm,func){
+    hajax("/LBStore/baoBiao/getBaoBiaosByMk.do",{mkdm:mkdm},"lb_baoBiaos",func);
 }
 
 function findCode(list,id){
@@ -19,7 +24,7 @@ function findCode(list,id){
 function hajax(url,d,result,func){
     $.ajax({
         url: url,
-        data: d,
+        data: JSON.stringify(d),
         dataType: "json",
         type: "post",
         cache: false,
