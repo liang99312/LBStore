@@ -1,8 +1,11 @@
 package com.lb.lbstore.util;
 
 import com.lb.lbstore.domain.A01;
+import com.lb.lbstore.domain.QiYe;
 import com.lb.lbstore.service.A01Service;
+import com.lb.lbstore.service.QiYeService;
 import com.lb.lbstore.service.impl.A01ServiceImpl;
+import com.lb.lbstore.service.impl.QiYeServiceImpl;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,11 +14,18 @@ import java.util.Set;
 public class DataUtil {
 
     public static boolean a01ChangeFlag = false;
+    public static List<QiYe> qiYes = new ArrayList<QiYe>();
     public static List<A01> a01s = new ArrayList<A01>();
     public static List<Integer> upIds = new ArrayList<Integer>();
     public static HashMap<Integer, Integer> upA01Ids = new HashMap<Integer, Integer>();
     public static HashMap<Integer, Long> loginIds = new HashMap<Integer, Long>();
     public static HashMap<Integer, String> fingerMap = new HashMap<Integer, String>();
+    
+    public static void getQiYesFromDb() {
+        QiYeService qiYeService = (QiYeServiceImpl) ApplicationUtil.getBean("qiYeServiceImpl");
+        qiYes.clear();
+        qiYes.addAll((List<QiYe>) qiYeService.getAllQiYes());
+    }
 
     public static void getA01sFromDb() {
         A01Service a01Service = (A01ServiceImpl) ApplicationUtil.getBean("a01ServiceImpl");

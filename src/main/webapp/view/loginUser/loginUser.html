@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>在线用户</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="/LBStore/content/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="/LBStore/content/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/LBStore/content/autocomplete/autocomplete.css" rel="stylesheet" />
+        <script src="/LBStore/js/jquery2.js"></script>
+        <script src="/LBStore/js/jquery.form.js"></script>
+        <script src="/LBStore/content/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/LBStore/content/bootstrap/js/bootstrap-paginator.js"></script>
+        <script src="/LBStore/content/autocomplete/autocomplete.js"></script>
+        <script src="/LBStore/view/common/common.js"></script>
+        <script src="/LBStore/view/loginUser/loginUser.js"></script>
+    </head>
+    <body style='height:800px;'>
+        <div style="float:left; width: 100%">
+            <div style="width: 100%">
+                <div style="width: 100%;float:left; padding-top: 5px;">
+                    <span>&nbsp;企业：</span><input id="selName" type="text" />
+                    <span>&nbsp;信息：</span><input id="selName" type="text" />
+                    <button type="button" class="btn btn-primary btn-sm" onclick="selectLoginUser();" style="margin-left: 2px;">查找</button>
+                </div>
+            </div>
+            <div id="list1" class="table-responsive" style="height: 678px;width:100%;padding-top: 5px;">
+                <table id="data_table" class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th style="width:18%">企业</th>
+                        <th style="width:15%">姓名</th>
+                        <th style="width:15%">编号</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody id='data_table_body'>
+                    <tr><td>请查询在线用户记录</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <ul id="example"></ul>
+        </div>
+    </body>
+</html>

@@ -102,7 +102,7 @@
                 }
                 var json = {"bh": loadName, "password": password};
                 $.ajax({
-                    url: "/LBStore/login.do",
+                    url: "/LBStore/login_admin.do",
                     data: json,
                     contentType: "application/json",
                     dataType: "json",
@@ -115,7 +115,7 @@
                     },
                     success: function (json) {
                         if (json.result === 0) {
-                            window.location.href = "/LBStore/goHome.do";
+                            window.location.href = "/LBStore/goAdmin.do";
                         } else {
                             alert(json.msg);
                         }

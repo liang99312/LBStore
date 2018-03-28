@@ -38,7 +38,15 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
-
+    <listener>  
+        <listener-class>com.lb.lbstore.userlisten.LsContextListener</listener-class>  
+    </listener>  
+    <listener>  
+        <listener-class>com.lb.lbstore.userlisten.LsSessionListener</listener-class>  
+    </listener>  
+    <listener>  
+        <listener-class>com.lb.lbstore.userlisten.LsRequestLitener</listener-class>  
+    </listener> 
 
     <filter>
         <filter-name>SpringOpenSessionInViewFilter</filter-name>
