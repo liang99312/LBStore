@@ -36,7 +36,7 @@ public class ApplicationConstants {
 
     public static int MAX_ONLINE_COUNT = 0;//最高在线人数  
 
-    public static void addLoginUser(A01 a01,String sessenId) {
+    public static void addLoginUser(A01 a01, String sessenId) {
         if (DataUtil.qiYes.isEmpty()) {
             DataUtil.getQiYesFromDb();
         }
@@ -64,7 +64,7 @@ public class ApplicationConstants {
         }
     }
 
-    public static boolean removeLoginUser(Integer id,String sessionId) {
+    public static boolean removeLoginUser(Integer id, String sessionId) {
         boolean result = true;
         LoginUser lu = null;
         for (LoginUser l : ApplicationConstants.LOGINUSERS) {
@@ -75,7 +75,7 @@ public class ApplicationConstants {
         }
         if (lu != null) {
             HttpSession session = ApplicationConstants.SESSION_MAP.get(sessionId);
-            if(session != null){
+            if (session != null) {
                 session.removeAttribute("a01");
                 session.invalidate();
             }
@@ -83,14 +83,54 @@ public class ApplicationConstants {
         }
         return result;
     }
-    
-    public static List<LoginUser> getLoginUserByPage(int begin,int size){
-        List<LoginUser> loginUser_list = new ArrayList<LoginUser>();
-        int end = begin+size;
-        if(end > ApplicationConstants.LOGINUSERS.size()){
-            end = ApplicationConstants.LOGINUSERS.size();
+
+    public static int getLoginUserRows(int qy_id, String name) {
+        int result = 0;
+        if (qy_id == -1 && "".equals(name)) {
+            return ApplicationConstants.LOGINUSERS.size();
         }
-        loginUser_list = ApplicationConstants.LOGINUSERS.subList(begin, end);
+        for (LoginUser lu : ApplicationConstants.LOGINUSERS) {
+            if (qy_id != -1) {
+                if (qy_id == lu.getQy_id()) {
+                    result++;
+                    continue;
+                }
+            }
+            if (!"".equals(name)) {
+                if (lu.getMc().contains(name) || lu.getBh().contains(name)) {
+                    result++;
+                }
+            }
+        }
+        return result;
+    }
+
+    public static List<LoginUser> getLoginUserByPage(int begin, int size, int qy_id, String name) {
+        List<LoginUser> list = new ArrayList<LoginUser>();
+        if (qy_id == -1 && "".equals(name)) {
+            list.addAll(ApplicationConstants.LOGINUSERS);
+        } else {
+            for (LoginUser lu : ApplicationConstants.LOGINUSERS) {
+                if (qy_id != -1) {
+                    if (qy_id == lu.getQy_id()) {
+                        list.add(lu);
+                        continue;
+                    }
+                }
+                if (!"".equals(name)) {
+                    if (lu.getMc().contains(name) || lu.getBh().contains(name)) {
+                        list.add(lu);
+                    }
+                }
+            }
+        }
+
+        List<LoginUser> loginUser_list = new ArrayList<LoginUser>();
+        int end = begin + size;
+        if (end > list.size()) {
+            end = list.size();
+        }
+        loginUser_list = list.subList(begin, end);
         return loginUser_list;
     }
 }

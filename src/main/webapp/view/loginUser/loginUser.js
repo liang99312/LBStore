@@ -1,9 +1,15 @@
 var loginUsers;
 var optFlag = 1;
 var editIndex = -1;
+var selQiYe;
 
 $(document).ready(function () {
+    getQiYes(setTrager_qiYe);
 });
+
+function setTrager_qiYe(){
+    $('#selQy').AutoComplete({'data': lb_qiYes,'paramName':'selQiYe'});
+}
 
 function jxLoginUser(json) {
     $("#data_table_body tr").remove();
@@ -26,8 +32,8 @@ function selectLoginUser() {
     if ($("#selName").val() !== "") {
         loginUser.mc = $("#selName").val();
     }
-    if ($("#selState").val() !== '' && $("#selState").val() !== "-9") {
-        loginUser.state = $("#selState").val();
+    if (selQiYe && $("#selQy").val() !== "" && $("#selQy").val() === selQiYe.mc) {
+        loginUser.qy_id = selQiYe.id;
     }
     tj.paramters = loginUser;
     var options = {};

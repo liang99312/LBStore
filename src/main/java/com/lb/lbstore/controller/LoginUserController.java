@@ -58,8 +58,16 @@ public class LoginUserController extends BaseController {
         if (map == null) {
             map = new HashMap();
         }
+        int qy_id = -1;
+        if(map.containsKey("qy_id")){
+            qy_id = Integer.valueOf(map.get("qy_id").toString());
+        }
+        String name = "";
+        if(map.containsKey("mc")){
+            name = map.get("mc").toString();
+        }
         if (model.getRows() == 0) {
-            model.setRows(ApplicationConstants.LOGINUSERS.size());//查询记录数
+            model.setRows(ApplicationConstants.getLoginUserRows(qy_id, name));//查询记录数
         }
         if (model.getRows() == 0) {
             model.setCurrentPage(1);
@@ -74,7 +82,7 @@ public class LoginUserController extends BaseController {
         }
         map.put("beginRow", model.getBegin());
         map.put("pageSize", model.getPageSize());
-        model.setList(ApplicationConstants.getLoginUserByPage(model.getBegin(), model.getPageSize()));
+        model.setList(ApplicationConstants.getLoginUserByPage(model.getBegin(), model.getPageSize(),qy_id, name));
         return model;
     }
 

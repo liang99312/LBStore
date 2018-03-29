@@ -1,6 +1,7 @@
 var lb_moKuais = [{id:'503',mc:'入库管理'},{id:'504',mc:'领料管理'},{id:'505',mc:'发货管理'},{id:'506',mc:'损耗管理'},{id:'507',mc:'还库管理'},{id:'509',mc:'统计分析'}];
 var lb_allA01s;
 var lb_baoBiaos;
+var lb_qiYes;
 
 function getAllA01s(func){
     hajax("/LBStore/a01/getAllA01s.do",{},"lb_allA01s",func);
@@ -8,6 +9,10 @@ function getAllA01s(func){
 
 function getBaoBiaosByMk(mkdm,func){
     hajax("/LBStore/baoBiao/getBaoBiaosByMk.do",{mkdm:mkdm},"lb_baoBiaos",func);
+}
+
+function getQiYes(func){
+    hajax("/LBStore/qiYe/getAllQiYes.do",{},"lb_qiYes",func);
 }
 
 function findCode(list,id){
