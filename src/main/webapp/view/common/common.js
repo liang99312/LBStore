@@ -1,32 +1,32 @@
-var lb_moKuais = [{id:'503',mc:'入库管理'},{id:'504',mc:'领料管理'},{id:'505',mc:'发货管理'},{id:'506',mc:'损耗管理'},{id:'507',mc:'还库管理'},{id:'509',mc:'统计分析'}];
+var lb_moKuais = [{id: '503', mc: '入库管理'}, {id: '504', mc: '领料管理'}, {id: '505', mc: '发货管理'}, {id: '506', mc: '损耗管理'}, {id: '507', mc: '还库管理'}, {id: '509', mc: '统计分析'}];
 var lb_allA01s;
 var lb_baoBiaos;
 var lb_qiYes;
 
-function getAllA01s(func){
-    hajax("/LBStore/a01/getAllA01s.do",{},"lb_allA01s",func);
+function getAllA01s(func) {
+    hajax("/LBStore/a01/getAllA01s.do", {}, "lb_allA01s", func);
 }
 
-function getBaoBiaosByMk(mkdm,func){
-    hajax("/LBStore/baoBiao/getBaoBiaosByMk.do",{mkdm:mkdm},"lb_baoBiaos",func);
+function getBaoBiaosByMk(mkdm, func) {
+    hajax("/LBStore/baoBiao/getBaoBiaosByMk.do", {mkdm: mkdm}, "lb_baoBiaos", func);
 }
 
-function getQiYes(func){
-    hajax("/LBStore/qiYe/getAllQiYes.do",{},"lb_qiYes",func);
+function getQiYes(func) {
+    hajax("/LBStore/qiYe/getAllQiYes.do", {}, "lb_qiYes", func);
 }
 
-function findCode(list,id){
+function findCode(list, id) {
     var e;
-    for(var i=0;i<list.length;i++){
+    for (var i = 0; i < list.length; i++) {
         e = list[i];
-        if(e.id === id){
+        if (e.id === id) {
             break;
         }
     }
     return e;
 }
 
-function hajax(url,d,result,func){
+function hajax(url, d, result, func) {
     $.ajax({
         url: url,
         data: JSON.stringify(d),
@@ -37,9 +37,9 @@ function hajax(url,d,result,func){
             alert("查询数据失败");
         },
         success: function (json) {
-            if(json.result === 0){
+            if (json.result === 0) {
                 eval(result + " = json.sz");
-                if(func){
+                if (func) {
                     func();
                 }
             }
@@ -52,7 +52,7 @@ function queryPaginator(options) {
     var url = options.url;
     var func = options.func;
     var ul = options.ul;
-    
+
     $.ajax({
         url: url,
         data: JSON.stringify(tj),
@@ -71,7 +71,7 @@ function queryPaginator(options) {
                     bootstrapMajorVersion: 3, //版本
                     currentPage: currentPage, //当前页数
                     totalPages: pageCount, //总页数
-                    count:count,
+                    count: count,
                     itemTexts: function (type, page, current) {
                         switch (type) {
                             case "first":
@@ -91,7 +91,7 @@ function queryPaginator(options) {
                         }
                     }, //点击事件，用于通过Ajax来刷新整个list列表
                     onPageClicked: function (event, originalEvent, type, page) {
-                        if(page === 0){
+                        if (page === 0) {
                             return;
                         }
                         tj.currentPage = page;
@@ -135,61 +135,87 @@ function getNowFormatDate() {
     return currentdate;
 }
 
-function dateFormat(longTypeDate){
+function dateFormat(longTypeDate) {
     var datetimeType = "";
     var date = new Date();
     date.setTime(longTypeDate);
-    datetimeType+= date.getFullYear();   //年
-    datetimeType+= "-" + getMonth(date); //月
+    datetimeType += date.getFullYear();   //年
+    datetimeType += "-" + getMonth(date); //月
     datetimeType += "-" + getDay(date);   //日
-    datetimeType+= "&nbsp;&nbsp;" + getHours(date);   //时
-    datetimeType+= ":" + getMinutes(date);      //分
-    datetimeType+= ":" + getSeconds(date);      //分
+    datetimeType += "&nbsp;&nbsp;" + getHours(date);   //时
+    datetimeType += ":" + getMinutes(date);      //分
+    datetimeType += ":" + getSeconds(date);      //分
     return datetimeType;
 }
 
 //返回 01-12 的月份值
-function getMonth(date){
+function getMonth(date) {
     var month = "";
     month = date.getMonth() + 1; //getMonth()得到的月份是0-11
-    if(month<10){
+    if (month < 10) {
         month = "0" + month;
     }
     return month;
 }
 //返回01-30的日期
-function getDay(date){
+function getDay(date) {
     var day = "";
     day = date.getDate();
-    if(day<10){
+    if (day < 10) {
         day = "0" + day;
     }
     return day;
 }
 //返回小时
-function getHours(date){
+function getHours(date) {
     var hours = "";
     hours = date.getHours();
-    if(hours<10){
+    if (hours < 10) {
         hours = "0" + hours;
     }
     return hours;
 }
 //返回分
-function getMinutes(date){
+function getMinutes(date) {
     var minute = "";
     minute = date.getMinutes();
-    if(minute<10){
+    if (minute < 10) {
         minute = "0" + minute;
     }
     return minute;
 }
 //返回秒
-function getSeconds(date){
+function getSeconds(date) {
     var second = "";
     second = date.getSeconds();
-    if(second<10){
+    if (second < 10) {
         second = "0" + second;
     }
     return second;
+}
+
+function getKuWeiHao(mc, qsh, jsh) {
+    var array = [];
+    if (!qsh || "" === qsh || !jsh || "" === jsh) {
+        return array;
+    }
+    var reg = /^[A-Za-z]+$/;
+    if (!isNaN(qsh) && !isNaN(jsh)) {
+        var begin = parseInt(qsh);
+        var end = parseInt(jsh);
+        for (var i = begin; i <= end; i++) {
+            var s = mc + i;
+            var o = {id:i,mc:s};
+            array.push(o);
+        }
+    } else if (reg.test(qsh) && reg.test(jsh)) {
+        var begin = qsh.charCodeAt(0);
+        var end = jsh.charCodeAt(0);
+        for (var i = begin; i <= end; i++) {
+            var s = mc + String.fromCharCode(i);
+            var o = {id:i,mc:s};
+            array.push(o);
+        }
+    }
+    return array;
 }

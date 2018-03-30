@@ -6,8 +6,6 @@
 package com.lb.lbstore.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,17 +19,15 @@ import javax.persistence.Id;
 
 @Entity
 @JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
-public class CangKu {
+public class KuWei {
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
     private Integer qy_id;
+    private Integer ck_id;
     private String mc;
-    private String dm;
-    private String bz;
-    private transient List<A01> a01s = new ArrayList();
-    private transient List<KuWei> kws = new ArrayList();
-    private Integer state = 0;
+    private String qsh;
+    private String jsh;
 
     public Integer getId() {
         return this.id;
@@ -57,46 +53,29 @@ public class CangKu {
         this.mc = mc;
     }
 
-    public String getDm() {
-        return dm;
+    public Integer getCk_id() {
+        return ck_id;
     }
 
-    public void setDm(String dm) {
-        this.dm = dm;
+    public void setCk_id(Integer ck_id) {
+        this.ck_id = ck_id;
     }
 
-    public String getBz() {
-        return bz;
+    public String getQsh() {
+        return qsh;
     }
 
-    public void setBz(String bz) {
-        this.bz = bz;
+    public void setQsh(String qsh) {
+        this.qsh = qsh;
     }
 
-    public Integer getState() {
-        return state;
+    public String getJsh() {
+        return jsh;
     }
 
-    public void setState(Integer state) {
-        this.state = state;
+    public void setJsh(String jsh) {
+        this.jsh = jsh;
     }
-
-    public List<A01> getA01s() {
-        return a01s;
-    }
-
-    public void setA01s(List<A01> a01s) {
-        this.a01s = a01s;
-    }
-
-    public List<KuWei> getKws() {
-        return kws;
-    }
-
-    public void setKws(List<KuWei> kws) {
-        this.kws = kws;
-    }
-
 
     @Override
     public int hashCode() {
@@ -113,7 +92,7 @@ public class CangKu {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final CangKu other = (CangKu) obj;
+        final KuWei other = (KuWei) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }

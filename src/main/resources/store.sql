@@ -99,3 +99,20 @@ CREATE TABLE `store`.`baobiao` (
   `mkdm` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `f_path` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`))ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `store`.`kuwei` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `qy_id` INT NOT NULL,
+  `ck_id` INT NOT NULL,
+  `mc` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `qsh` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `jsh` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`))ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `store`.`cangkua01` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `qy_id` INT NOT NULL,
+  `ck_id` INT NOT NULL,
+  `a01_id` INT NOT NULL,
+  `bz` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`))ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

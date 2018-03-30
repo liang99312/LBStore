@@ -43,6 +43,7 @@ public abstract class BaseDao {
             session.flush();
             tx.commit();
         } catch (Exception e) {
+            tx.rollback();
             e.printStackTrace();
         } finally {
             try {
@@ -69,6 +70,7 @@ public abstract class BaseDao {
             tx.commit();
             result = true;
         } catch (Exception e) {
+            tx.rollback();
             e.printStackTrace();
         } finally {
             try {
@@ -94,6 +96,7 @@ public abstract class BaseDao {
             tx.commit();
             result = true;
         } catch (Exception e) {
+            tx.rollback();
             e.printStackTrace();
         } finally {
             try {
@@ -119,6 +122,7 @@ public abstract class BaseDao {
             tx.commit();
             result = true;
         } catch (Exception e) {
+            tx.rollback();
             e.printStackTrace();
         } finally {
             try {
@@ -146,6 +150,7 @@ public abstract class BaseDao {
             tx.commit();
             result = true;
         } catch (Exception e) {
+            tx.rollback();
             e.printStackTrace();
         } finally {
             try {
@@ -228,6 +233,7 @@ public abstract class BaseDao {
             tx.commit();
             result = true;
         } catch (Exception e) {
+            tx.rollback();
             e.printStackTrace();
         } finally {
             try {
@@ -255,6 +261,7 @@ public abstract class BaseDao {
             tx.commit();
             result = true;
         } catch (Exception e) {
+            tx.rollback();
             e.printStackTrace();
         } finally {
             try {
@@ -310,6 +317,7 @@ public abstract class BaseDao {
             tx.commit();
             result = true;
         } catch (Exception e) {
+            tx.rollback();
             e.printStackTrace();
         } finally {
             try {

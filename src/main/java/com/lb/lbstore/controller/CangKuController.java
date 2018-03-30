@@ -5,6 +5,7 @@
  */
 package com.lb.lbstore.controller;
 
+import com.lb.lbstore.domain.A01;
 import com.lb.lbstore.domain.Page;
 import javax.annotation.Resource;
 
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.lb.lbstore.domain.CangKu;
+import com.lb.lbstore.domain.CangKuA01;
+import com.lb.lbstore.domain.KuWei;
 import com.lb.lbstore.service.CangKuService;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -85,14 +88,14 @@ public class CangKuController extends BaseController {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             boolean result = cangKuServiceImpl.updateCangKu(model);
-            map.put("result", result? 0:-1);
+            map.put("result", result ? 0 : -1);
         } catch (Exception e) {
             map.put("result", -1);
             map.put("msg", e.getMessage());
         }
         return map;
     }
-    
+
     @RequestMapping(value = "deleteCangKu.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String, Object> deleteCangKu(@RequestParam Integer id) {
@@ -102,15 +105,15 @@ public class CangKuController extends BaseController {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             boolean result = cangKuServiceImpl.deleteCangKu(id);
-            map.put("result", result? 0:-1);
+            map.put("result", result ? 0 : -1);
         } catch (Exception e) {
             map.put("result", -1);
             map.put("msg", e.getMessage());
         }
         return map;
     }
-    
-    @RequestMapping(value = "getCangKuById.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+
+    @RequestMapping(value = "getCangKuById.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String, Object> getCangKuById(@RequestParam Integer id) {
         if (!existsUser()) {
@@ -155,6 +158,78 @@ public class CangKuController extends BaseController {
         map.put("pageSize", model.getPageSize());
         model.setList(this.cangKuServiceImpl.queryCangKusByPage(map));
         return model;
+    }
+
+    @RequestMapping(value = "getCangKuKuWeiById.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> getCangKuKuWeiById(@RequestParam Integer id) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            List<KuWei> kws = cangKuServiceImpl.getCangKuKuWeiById(id);
+            map.put("result", 0);
+            map.put("sz", kws);
+        } catch (Exception e) {
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
+    }
+
+    @RequestMapping(value = "getCangKuA01ById.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> getCangKuA01ById(@RequestParam Integer id) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            List<A01> a01s = cangKuServiceImpl.getCangKuA01ById(id);
+            map.put("result", 0);
+            map.put("sz", a01s);
+        } catch (Exception e) {
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
+    }
+
+    @RequestMapping(value = "saveCangKuSetting.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> saveCangKuSetting(@RequestBody CangKu model) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            Integer qy_id = getDlA01().getQy_id();
+            List<CangKuA01> a01s = new ArrayList();
+            for (A01 a01 : model.getA01s()) {
+                CangKuA01 a = new CangKuA01();
+                a.setA01_id(a01.getId());
+                a.setCk_id(model.getId());
+                a.setQy_id(qy_id);
+                a01s.add(a);
+            }
+            List<KuWei> kws = new ArrayList();
+            for (KuWei kw : model.getKws()) {
+                KuWei k = new KuWei();
+                k.setCk_id(model.getId());
+                k.setQy_id(qy_id);
+                k.setQsh(kw.getQsh());
+                k.setMc(kw.getMc());
+                k.setJsh(kw.getJsh());
+                kws.add(k);
+            }
+            boolean result = cangKuServiceImpl.saveCangKuA01Kw(a01s, kws, model.getId());
+            map.put("result", result ? 0 : -1);
+        } catch (Exception e) {
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
     }
 
 }

@@ -6,8 +6,6 @@
 package com.lb.lbstore.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,17 +19,14 @@ import javax.persistence.Id;
 
 @Entity
 @JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
-public class CangKu {
+public class CangKuA01 {
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
     private Integer qy_id;
-    private String mc;
-    private String dm;
+    private Integer ck_id;
+    private Integer a01_id;
     private String bz;
-    private transient List<A01> a01s = new ArrayList();
-    private transient List<KuWei> kws = new ArrayList();
-    private Integer state = 0;
 
     public Integer getId() {
         return this.id;
@@ -49,20 +44,20 @@ public class CangKu {
         this.qy_id = qy_id;
     }
 
-    public String getMc() {
-        return mc;
+    public Integer getCk_id() {
+        return ck_id;
     }
 
-    public void setMc(String mc) {
-        this.mc = mc;
+    public void setCk_id(Integer ck_id) {
+        this.ck_id = ck_id;
     }
 
-    public String getDm() {
-        return dm;
+    public Integer getA01_id() {
+        return a01_id;
     }
 
-    public void setDm(String dm) {
-        this.dm = dm;
+    public void setA01_id(Integer a01_id) {
+        this.a01_id = a01_id;
     }
 
     public String getBz() {
@@ -72,31 +67,6 @@ public class CangKu {
     public void setBz(String bz) {
         this.bz = bz;
     }
-
-    public Integer getState() {
-        return state;
-    }
-
-    public void setState(Integer state) {
-        this.state = state;
-    }
-
-    public List<A01> getA01s() {
-        return a01s;
-    }
-
-    public void setA01s(List<A01> a01s) {
-        this.a01s = a01s;
-    }
-
-    public List<KuWei> getKws() {
-        return kws;
-    }
-
-    public void setKws(List<KuWei> kws) {
-        this.kws = kws;
-    }
-
 
     @Override
     public int hashCode() {
@@ -113,16 +83,11 @@ public class CangKu {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final CangKu other = (CangKu) obj;
+        final CangKuA01 other = (CangKuA01) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return mc;
     }
 
 }
