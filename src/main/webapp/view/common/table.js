@@ -81,6 +81,70 @@
             };
             resetTable(opt);
             setInput();
+        },
+
+        selectTable: function (opt) {
+            var tblId = $(this).attr("id");
+            var yxData = opt.yxData;
+            var data = opt.data;
+            var ls = opt.ls ? opt.ls : 4;
+            var width = 100 / ls;
+            width = width + "%";
+            var resetTable = function () {
+                var hs = parseInt((data.length - 1) / ls) + 1;
+                $("#" + tblId + " tr").remove();
+                for (var i = 0; i < hs; i++) {
+                    var str = "<tr>";
+                    for (var j = 0; j < ls; j++) {
+                        var s = "&ensp;";
+                        var d = data[i * ls + j];
+                        if (d) {
+                            s = "<label><input type='checkbox' id='" + tblId + "_ck_" + d.id + "' />" + d.mc + "</label>";
+                        }
+                        str += "<td style='width:" + width + "'>" + s + "</td>";
+                    }
+                    str += "</tr>";
+                    $("#" + tblId).append(str);
+                }
+            };
+
+            var setCheck = function () {
+                for (var m = 0; m < yxData.length; m++) {
+                    var e = yxData[m];
+                    var ck = $("#" + tblId + "_ck_" + e.id);
+                    if (ck) {
+                        ck.prop("checked", true);
+                    }
+                }
+
+                $('#' + tblId + ' input').each(function (i) {
+                    $(this).click(function () {
+                        if ($(this).is(":checked")) {
+                            addXzData(data[i]);
+                        }else{
+                            delXzData(data[i]);
+                        }
+                    });
+                });
+            };
+            
+            var addXzData = function(d){
+                yxData.push(d);
+            };
+            var delXzData = function(d){
+                var index = -1;
+                for (var m = 0; m < yxData.length; m++) {
+                    var e = yxData[m];
+                    if (e.id === d.id) {
+                        index = m;
+                        break;
+                    }
+                }
+                yxData.splice(index,1);
+            };
+            
+            resetTable(opt);
+            setCheck();
         }
     });
 })(jQuery);

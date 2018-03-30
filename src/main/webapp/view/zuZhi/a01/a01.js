@@ -1,8 +1,10 @@
 var a01s;
 var optFlag = 1;
 var editIndex = -1;
+var opt = {"data": lb_allMoKuais, "yxData": []};
 
 $(document).ready(function () {
+    $("#tblQx").selectTable(opt);
 });
 
 function jxA01(json) {
@@ -16,6 +18,7 @@ function jxA01(json) {
         }
         var trStr = '<tr'+classStr+'><td>' + item.bh + '</td><td>' + item.mc + '</td><td>' + item.a0111 + '</td><td>' + item.a0105 + '</td><td>'
                 + '<button class="btn btn-info btn-xs icon-edit" onclick="editA01(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;'
+                + '<button class="btn btn-info btn-xs icon-cog" onclick="setA01(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;'
                 + '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteA01(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button></td></tr>';
         $("#data_table_body").append(trStr);
     });
@@ -67,6 +70,10 @@ function editA01(index) {
     $("#inpA0105").val(a01.a0105);
     $("#inpPassword").val(a01.password);
     $("#a01Modal").modal("show");
+}
+
+function setA01(){
+    $("#a01QxModal").modal("show");
 }
 
 function saveA01() {
@@ -130,4 +137,9 @@ function deleteA01(index) {
             }
         });
     }
+}
+
+function saveA01Qx(){
+    
+    alert(JSON.stringify(opt.yxData));
 }
