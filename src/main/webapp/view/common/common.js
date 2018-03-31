@@ -11,6 +11,7 @@ var lb_allMoKuais = [
 var lb_allA01s;
 var lb_baoBiaos;
 var lb_qiYes;
+var lb_ziDianFenLeis;
 
 function getAllA01s(func) {
     hajax("/LBStore/a01/getAllA01s.do", {}, "lb_allA01s", func);
@@ -22,6 +23,10 @@ function getBaoBiaosByMk(mkdm, func) {
 
 function getQiYes(func) {
     hajax("/LBStore/qiYe/getAllQiYes.do", {}, "lb_qiYes", func);
+}
+
+function getZiDianFenLeis(func){
+    hajax("/LBStore/ziDianFenLei/getAllZiDianFenLeis.do", {}, "lb_ziDianFenLeis", func);
 }
 
 function findCode(list, id) {

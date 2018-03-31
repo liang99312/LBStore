@@ -15,8 +15,8 @@ var goHuanKu = "/LBStore/goHuanKu.do";
 var goKunCun = "/LBStore/goKunCun.do";
 var goTongJi = "/LBStore/goTongJi.do";
 var goBaoBiao = "/LBStore/baoBiao/goBaoBiao.do";
-var goZiDianLeiBie = "/LBStore/goZiDianLeiBie.do";
-var goQiYeZiDian = "/LBStore/goQiYeZiDian.do";
+var goZiDianLeiBie = "/LBStore/ziDianFenLei/goZiDianFenLei.do";
+var goQiYeZiDian = "/LBStore/ziDian/goZiDian.do";
 var goPassword = "/LBStore/goPassword.do";
 
 var allMenu = {data: [

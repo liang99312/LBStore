@@ -60,7 +60,7 @@ public class BuMenServiceImpl implements BuMenService {
     public int queryRows(HashMap map) {
         String sql = "select (1) from BuMen where  qy_id="+map.get("qy_id");
         if (map.containsKey("mc")) {
-            sql += " and mc like '" + map.get("mc") + "'";
+            sql += " and mc like '%" + map.get("mc") + "%'";
         }
         if (map.containsKey("state")) {
             sql += " and state = " + map.get("state");
@@ -72,7 +72,7 @@ public class BuMenServiceImpl implements BuMenService {
     public List<BuMen> queryBuMensByPage(HashMap map) {
         String hql = "from BuMen where qy_id="+map.get("qy_id");
         if (map.containsKey("mc")) {
-            hql += " and mc like '" + map.get("mc") + "'";
+            hql += " and mc like '%" + map.get("mc") + "%'";
         }
         if (map.containsKey("state")) {
             hql += " and state = " + map.get("state");

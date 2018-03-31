@@ -40,7 +40,7 @@ public class CangKuServiceImpl implements CangKuService {
 
     @Override
     public List<CangKu> getAllCangKus(Integer qy_id) {
-        return cangKuDao.getResult("from CangKu cangKu where qy_id"+qy_id, null);
+        return cangKuDao.getResult("from CangKu cangKu where qy_id="+qy_id, null);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class CangKuServiceImpl implements CangKuService {
     public int queryRows(HashMap map) {
         String sql = "select (1) from CangKu where qy_id="+map.get("qy_id");
         if (map.containsKey("mc")) {
-            sql += " and mc like '" + map.get("mc") + "'";
+            sql += " and mc like '%" + map.get("mc") + "%'";
         }
         if (map.containsKey("state")) {
             sql += " and state = " + map.get("state");
@@ -82,7 +82,7 @@ public class CangKuServiceImpl implements CangKuService {
     public List<CangKu> queryCangKusByPage(HashMap map) {
         String hql = "from CangKu where qy_id="+map.get("qy_id");
         if (map.containsKey("mc")) {
-            hql += " and mc like '" + map.get("mc") + "'";
+            hql += " and mc like '%" + map.get("mc") + "%'";
         }
         if (map.containsKey("state")) {
             hql += " and state = " + map.get("state");

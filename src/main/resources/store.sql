@@ -116,3 +116,20 @@ CREATE TABLE `store`.`cangkua01` (
   `a01_id` INT NOT NULL,
   `bz` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`))ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `store`.`zidianfenlei` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `qy_id` INT NOT NULL,
+  `mc` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `dm` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `bz` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`))ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `store`.`zidian` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `qy_id` INT NOT NULL,
+  `zdfl_id` INT NOT NULL,
+  `mc` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `dm` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `bz` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`))ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

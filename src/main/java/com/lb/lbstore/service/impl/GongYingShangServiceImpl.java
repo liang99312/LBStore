@@ -30,7 +30,7 @@ public class GongYingShangServiceImpl implements GongYingShangService {
 
     @Override
     public List<GongYingShang> getAllGongYingShangs(Integer qy_id) {
-        return gongYingShangDao.getResult("from GongYingShang gongYingShang where qy_id"+qy_id, null);
+        return gongYingShangDao.getResult("from GongYingShang gongYingShang where qy_id="+qy_id, null);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class GongYingShangServiceImpl implements GongYingShangService {
     public int queryRows(HashMap map) {
         String sql = "select (1) from GongYingShang where qy_id="+map.get("qy_id");
         if (map.containsKey("mc")) {
-            sql += " and mc like '" + map.get("mc") + "'";
+            sql += " and mc like '%" + map.get("mc") + "%'";
         }
         if (map.containsKey("state")) {
             sql += " and state = " + map.get("state");

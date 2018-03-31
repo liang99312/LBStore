@@ -60,7 +60,7 @@ public class QiYeServiceImpl implements QiYeService {
     public int queryRows(HashMap map) {
         String sql = "select (1) from QiYe where 1=1";
         if (map.containsKey("mc")) {
-            sql += " and mc like '" + map.get("mc") + "'";
+            sql += " and mc like '%" + map.get("mc") + "%'";
         }
         if (map.containsKey("state")) {
             sql += " and state = " + map.get("state");
@@ -72,7 +72,7 @@ public class QiYeServiceImpl implements QiYeService {
     public List<QiYe> queryQiYesByPage(HashMap map) {
         String hql = "from QiYe where 1=1";
         if (map.containsKey("mc")) {
-            hql += " and mc like '" + map.get("mc") + "'";
+            hql += " and mc like '%" + map.get("mc") + "%'";
         }
         if (map.containsKey("state")) {
             hql += " and state = " + map.get("state");

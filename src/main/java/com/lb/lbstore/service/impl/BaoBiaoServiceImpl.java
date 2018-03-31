@@ -30,7 +30,7 @@ public class BaoBiaoServiceImpl implements BaoBiaoService {
 
     @Override
     public List<BaoBiao> getAllBaoBiaos(Integer qy_id) {
-        return baoBiaoDao.getResult("from BaoBiao baoBiao where qy_id"+qy_id, null);
+        return baoBiaoDao.getResult("from BaoBiao baoBiao where qy_id="+qy_id, null);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class BaoBiaoServiceImpl implements BaoBiaoService {
     public int queryRows(HashMap map) {
         String sql = "select (1) from BaoBiao where qy_id="+map.get("qy_id");
         if (map.containsKey("mc")) {
-            sql += " and mc like '" + map.get("mc") + "'";
+            sql += " and mc like '%" + map.get("mc") + "%'";
         }
         if (map.containsKey("state")) {
             sql += " and state = " + map.get("state");
@@ -65,7 +65,7 @@ public class BaoBiaoServiceImpl implements BaoBiaoService {
     public List<BaoBiao> queryBaoBiaosByPage(HashMap map) {
         String hql = "from BaoBiao where qy_id="+map.get("qy_id");
         if (map.containsKey("mc")) {
-            hql += " and mc like '" + map.get("mc") + "'";
+            hql += " and mc like '%" + map.get("mc") + "%'";
         }
         if (map.containsKey("state")) {
             hql += " and state = " + map.get("state");

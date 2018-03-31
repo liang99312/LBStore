@@ -30,7 +30,7 @@ public class WuZiLeiBieServiceImpl implements WuZiLeiBieService {
 
     @Override
     public List<WuZiLeiBie> getAllWuZiLeiBies(Integer qy_id) {
-        return wuZiLeiBieDao.getResult("from WuZiLeiBie wuZiLeiBie where qy_id"+qy_id, null);
+        return wuZiLeiBieDao.getResult("from WuZiLeiBie wuZiLeiBie where qy_id="+qy_id, null);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class WuZiLeiBieServiceImpl implements WuZiLeiBieService {
     public int queryRows(HashMap map) {
         String sql = "select (1) from WuZiLeiBie where qy_id="+map.get("qy_id");
         if (map.containsKey("mc")) {
-            sql += " and mc like '" + map.get("mc") + "'";
+            sql += " and mc like '%" + map.get("mc") + "%'";
         }
         if (map.containsKey("state")) {
             sql += " and state = " + map.get("state");
@@ -72,7 +72,7 @@ public class WuZiLeiBieServiceImpl implements WuZiLeiBieService {
     public List<WuZiLeiBie> queryWuZiLeiBiesByPage(HashMap map) {
         String hql = "from WuZiLeiBie where qy_id="+map.get("qy_id");
         if (map.containsKey("mc")) {
-            hql += " and mc like '" + map.get("mc") + "'";
+            hql += " and mc like '%" + map.get("mc") + "%'";
         }
         if (map.containsKey("state")) {
             hql += " and state = " + map.get("state");
