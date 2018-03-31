@@ -26,8 +26,8 @@ CREATE TABLE `store`.`a01` (
   `state` int(11) DEFAULT '0',
   PRIMARY KEY (`id`))ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-insert into `store`.a01 (id, bh, mc, password, state,qy_id) 
-  values(1,'sa','super系统管理员','sa123',9,-1);
+insert into `store`.a01 (id, bh, mc, password, state,qy_id,a01qx) 
+  values(1,'sa','super系统管理员','sa123',9,-1,'-1');
 
 CREATE TABLE `store`.`bumen` (
   `id` INT NOT NULL AUTO_INCREMENT,

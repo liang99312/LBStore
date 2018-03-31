@@ -28,8 +28,8 @@ var allMenu = {data: [
         {id: '3', text: '供应商管理', icon: 'icon-leaf', url: '', menus: [
                 {id: '301', text: '供应商管理', icon: 'icon-glass', url: goGongYingShang}]},
         {id: '4', text: '仓库设置', icon: 'icon-leaf', url: '', menus: [
-                {id: '401', text: '仓库管理', icon: 'icon-glass', url: goCangKu}, 
-                {id: '402', text: '物资类别', icon: 'icon-glass', url: goWuZiLeiBie}, 
+                {id: '401', text: '仓库管理', icon: 'icon-glass', url: goCangKu},
+                {id: '402', text: '物资类别', icon: 'icon-glass', url: goWuZiLeiBie},
                 {id: '403', text: '物资字典', icon: 'icon-glass', url: goWuZiZiDian}]},
         {id: '5', text: '仓库管理', icon: 'icon-leaf', url: '', menus: [
 //                {id: '501', text: '申购管理', icon: 'icon-glass', url: goQingGou},
@@ -59,35 +59,35 @@ $(document).ready(function () {
         error: function (msg, textStatus) {
         },
         success: function (json) {
-            if(json.result === 0){
+            if (json.result === 0) {
                 loadUser = json.a01;
                 $("#span_user_name").html(loadUser.mc);
-            }else{
-                window.top.location.href="/LBStore/logout.do";
+                setMenu(loadUser.a01qx);
+            } else {
+                window.top.location.href = "/LBStore/logout.do";
             }
         }
     });
-    setMenu("");//测试
 });
 
 function setMenu(quanxian) {
     var qxArray = quanxian.split(";");
     var menu = jQuery.extend(true, {}, allMenu);
-    ;
-    // for (var i = allMenu.data.length-1; i > -1; i--) {
-    //     var m = allMenu.data[i];
-    //     for (var j = m.menus.length-1; j > -1; j--) {
-    //         var e = m.menus[j];
-    //         if(qxArray.indexOf(e.id) < 0){
-    //             menu.data[i].menus.splice(j,1);
-    //         }
-    //     }
-    //     if(menu.data[i].menus.length === 0){
-    //         menu.data.splice(i,1);
-    //     }
-    // }
+    if (quanxian !== '-1') {
+        for (var i = allMenu.data.length - 1; i > -1; i--) {
+            var m = allMenu.data[i];
+            for (var j = m.menus.length - 1; j > -1; j--) {
+                var e = m.menus[j];
+                if (qxArray.indexOf(e.id) < 0) {
+                    menu.data[i].menus.splice(j, 1);
+                }
+            }
+            if (menu.data[i].menus.length === 0) {
+                menu.data.splice(i, 1);
+            }
+        }
+    }
     $('#menu').sidebarMenu(menu);
-
 }
 
 function SetWinHeight(obj) {

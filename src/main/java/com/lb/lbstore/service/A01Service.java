@@ -21,6 +21,8 @@ public interface A01Service {
     
     public boolean updateA01(A01 a01);
     
+    public boolean updateA01Qx(A01 a01);
+    
     public A01 saveA01(A01 a01);
     
     public boolean deleteA01(Integer id);

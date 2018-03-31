@@ -65,45 +65,6 @@ public class A01Controller extends BaseController {
         return map;
     }
 
-    @RequestMapping(value = "getQx.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public Map<String, Object> getQx() {
-        if (!existsUser()) {
-            return notLoginResult();
-        }
-        Map<String, Object> map = new HashMap<String, Object>();
-        try {
-            String qxStr = "";
-            if (isSuperUser()) {
-                qxStr += "100100,200100,200200,200300,300100,300200,300300,300400,300500,300600,300700,300800,300900,400100,500100,600100,700100,700200,800100,900100";
-            } else {
-                Object obj = getDlA01();
-                if (obj != null) {
-                    A01 a01 = (A01) obj;
-                    String tempStr = a01.getA01qx();
-                    if (tempStr != null && !"".equals(tempStr)) {
-                        String[] tempStrs = tempStr.split("@");
-                        for (String s : tempStrs) {
-                            if (s != null && !"".equals(s)) {
-                                int i = Integer.parseInt(s);
-                                qxStr += "," + i;
-                            }
-                        }
-                        if (qxStr.length() > 0) {
-                            qxStr = qxStr.substring(1);
-                        }
-                    }
-                }
-            }
-            map.put("result", 0);
-            map.put("qx", qxStr);
-        } catch (Exception e) {
-            map.put("result", -1);
-            map.put("msg", e.getMessage());
-        }
-        return map;
-    }
-
     @RequestMapping(value = "saveA01.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String, Object> saveA01(@RequestBody A01 model) {
@@ -132,6 +93,23 @@ public class A01Controller extends BaseController {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             boolean result = a01ServiceImpl.updateA01(model);
+            map.put("result", result? 0:-1);
+        } catch (Exception e) {
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
+    }
+    
+    @RequestMapping(value = "updateA01Qx.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> updateA01Qx(@RequestBody A01 model) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            boolean result = a01ServiceImpl.updateA01Qx(model);
             map.put("result", result? 0:-1);
         } catch (Exception e) {
             map.put("result", -1);

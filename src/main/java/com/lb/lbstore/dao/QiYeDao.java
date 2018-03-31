@@ -29,6 +29,7 @@ public class QiYeDao extends BaseDao {
             a01.setMc("系统管理员");
             a01.setPassword("123456");
             a01.setState(8);
+            a01.setA01qx("-1");
             session.save(a01);
             session.flush();
             tx.commit();

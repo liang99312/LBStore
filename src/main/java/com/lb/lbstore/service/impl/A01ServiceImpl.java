@@ -97,4 +97,9 @@ public class A01ServiceImpl implements A01Service {
         return a01Dao.getPageList(hql, null, 1, 20);
     }
 
+    @Override
+    public boolean updateA01Qx(A01 a01) {
+        return a01Dao.changeQuanXian(a01.getId(),a01.getA01qx());
+    }
+
 }
