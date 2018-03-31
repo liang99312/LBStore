@@ -29,8 +29,8 @@ public class ZiDianServiceImpl implements ZiDianService {
     }
 
     @Override
-    public List<ZiDian> getAllZiDians(Integer qy_id) {
-        return ziDianDao.getResult("from ZiDian ziDian where qy_id="+qy_id, null);
+    public List<ZiDian> getAllZiDians4fl(Integer qy_id, Integer zdfl_id) {
+        return ziDianDao.getResult("from ZiDian ziDian where qy_id=" + qy_id + " and zdfl_id=" + zdfl_id, null);
     }
 
     @Override
@@ -46,13 +46,13 @@ public class ZiDianServiceImpl implements ZiDianService {
 
     @Override
     public boolean deleteZiDian(Integer id) {
-        String sql = "delete from zidian where id="+id;
+        String sql = "delete from zidian where id=" + id;
         return ziDianDao.excuteSql(sql);
     }
 
     @Override
     public int queryRows(HashMap map) {
-        String sql = "select (1) from ZiDian where qy_id="+map.get("qy_id");
+        String sql = "select (1) from ZiDian where qy_id=" + map.get("qy_id");
         if (map.containsKey("mc")) {
             sql += " and mc like '%" + map.get("mc") + "%'";
         }
@@ -64,7 +64,7 @@ public class ZiDianServiceImpl implements ZiDianService {
 
     @Override
     public List<ZiDian> queryZiDiansByPage(HashMap map) {
-        String hql = "from ZiDian where qy_id="+map.get("qy_id");
+        String hql = "from ZiDian where qy_id=" + map.get("qy_id");
         if (map.containsKey("mc")) {
             hql += " and mc like '%" + map.get("mc") + "%'";
         }

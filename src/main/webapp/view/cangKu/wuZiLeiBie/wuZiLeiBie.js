@@ -1,9 +1,21 @@
 var wuZiLeiBies;
 var optFlag = 1;
 var editIndex = -1;
+var editFenLei;
+var editType;
+var tsType = [{id: 1, mc: "文本"}, {id: 2, mc: "数字"}];
+var tysx = [];
+var optTsFlag = 1;
+var editTsIndex = -1;
 
 $(document).ready(function () {
+    $('#inpTsType').AutoComplete({'data': tsType, 'paramName': 'editType'});
+    getZiDianFenLeis(setTrager_fenLei);
 });
+
+function setTrager_fenLei() {
+    $('#inpTsZiDian').AutoComplete({'data': lb_ziDianFenLeis, 'paramName': 'editFenLei'});
+}
 
 function jxWuZiLeiBie(json) {
     $("#data_table_body tr").remove();
@@ -11,10 +23,15 @@ function jxWuZiLeiBie(json) {
     wuZiLeiBies = json.list;
     $.each(json.list, function (index, item) { //遍历返回的json
         var classStr = '';
-        if(item.state === -1){
+        if (item.state === -1) {
             classStr = ' class="danger"';
         }
-        var trStr = '<tr'+classStr+'><td>' + item.mc + '</td><td>' + item.dm + '</td><td>'
+        if (item.tysx && item.tysx !== null && item.tysx !== "") {
+            item.tysx = JSON.parse(item.tysx);
+        } else {
+            item.tysx = [];
+        }
+        var trStr = '<tr' + classStr + '><td>' + item.mc + '</td><td>' + item.dm + '</td><td>'
                 + '<button class="btn btn-info btn-xs icon-edit" onclick="editWuZiLeiBie(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;'
                 + '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteWuZiLeiBie(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button></td></tr>';
         $("#data_table_body").append(trStr);
@@ -63,6 +80,11 @@ function editWuZiLeiBie(index) {
     $("#wuZiLeiBieModal").modal("show");
 }
 
+function setTysx(json) {
+    tysx = json.tysx;
+    buildTysx(tysx);
+}
+
 function saveWuZiLeiBie() {
     var wuZiLeiBie = {};
     var url = "";
@@ -75,6 +97,7 @@ function saveWuZiLeiBie() {
     } else if (optFlag === 1) {
         url = "/LBStore/wuZiLeiBie/saveWuZiLeiBie.do";
     }
+    wuZiLeiBie.tysx = JSON.stringify(tysx);
     wuZiLeiBie.mc = $("#inpMc").val();
     wuZiLeiBie.dm = $("#inpDm").val();
     wuZiLeiBie.bz = $("#inpBz").val();
@@ -105,7 +128,7 @@ function deleteWuZiLeiBie(index) {
     var wuZiLeiBie = wuZiLeiBies[index];
     if (confirm("确定删除物资类别：" + wuZiLeiBie.mc + "?")) {
         $.ajax({
-            url: "/LBStore/wuZiLeiBie/deleteWuZiLeiBie.do?id="+wuZiLeiBie.id,
+            url: "/LBStore/wuZiLeiBie/deleteWuZiLeiBie.do?id=" + wuZiLeiBie.id,
             contentType: "application/json",
             type: "get",
             dataType: "json",
@@ -121,4 +144,97 @@ function deleteWuZiLeiBie(index) {
             }
         });
     }
+}
+
+function buildTysx(data) {
+    $("#divTysx").empty();
+    for (var i = 0; i < data.length; i++) {
+        var e = data[i];
+        if (!e.value || e.value === null) {
+            e.value = "";
+        }
+        var s = "<div class='form-group'><label for='edts_inp_" + e.id + "'>" + e.mc + "：</label><input type='text' id='tysx_inp_" + e.id + "' value='" + e.value + "' />\n\
+                <button class='btn btn-info btn-xs icon-edit ts_edit'></button><button class='btn btn-danger btn-xs icon-minus ts_del'></div>";
+        $("#divTysx").append(s);
+        if (e.zdfl && e.zdfl > 0) {
+            getZiDian4FenLei(e.zdfl, function () {
+                $("#edts_inp_" + e.id).AutoComplete({'data': lb_ziDian4fl, 'afterSelectedHandler': function (json) {
+                        e.value = json.mc;
+                    }});
+            });
+        }
+    }
+    $("#divTysx .ts_edit").each(function (i) {
+        $(this).click(function () {
+            editTeYouShuXing(i);
+        });
+    });
+    $("#divTysx .ts_del").each(function (i) {
+        $(this).click(function () {
+            delTeYouShuXing(i);
+        });
+    });
+}
+
+function addTeYouShuXing() {
+    optTsFlag = 1;
+    $("#wuZiLeiBieModel_title").html("增加特有属性");
+    $("#inpTsMc").val("");
+    $("#teYouShuXingModal").modal("show");
+}
+
+function editTeYouShuXing(index) {
+    if (tysx[index]) {
+        optTsFlag = 2;
+        editTsIndex = index;
+        var t = tysx[index];
+        $("#wuZiLeiBieModel_title").html("修改特有属性");
+        $("#inpTsMc").val(t.mc);
+        $("#inpTsType").val(t.type);
+        if (t.zdfl && t.zdfl > 0) {
+            editFenLei = {id: t.zdfl, mc: t.zdfl_mc};
+            $("#inpTsZiDian").val(editFenLei.mc);
+        }
+        $("#teYouShuXingModal").modal("show");
+    }
+}
+
+function delTeYouShuXing(index) {
+    if (tysx[index]) {
+        if (confirm("确定删除特有属性：" + tysx[index].mc + "?")) {
+            tysx.splice(index, 1);
+            for (var i = 0; i < tysx.length; i++) {
+                tysx[i].id = i;
+            }
+            buildTysx(tysx);
+        }
+    }
+}
+
+function saveTeYouShuXing() {
+    if (optTsFlag === 1) {
+        var ts = {};
+        ts.id = tysx.length;
+        ts.mc = $("#inpTsMc").val();
+        ts.type = $("#inpTsType").val();
+        if (editFenLei && editFenLei !== null) {
+            ts.zdfl = editFenLei.id;
+            ts.zdfl_mc = editFenLei.mc;
+        }
+        tysx.push(ts);
+    } else if (optTsFlag === 2) {
+        var ts = {};
+        ts.mc = $("#inpTsMc").val();
+        ts.type = $("#inpTsType").val();
+        if (editFenLei && editFenLei !== null) {
+            ts.zdfl = editFenLei.id;
+            ts.zdfl_mc = editFenLei.mc;
+        }
+        tysx.splice(editTsIndex, 1, ts);
+    }
+    for (var i = 0; i < tysx.length; i++) {
+        tysx[i].id = i;
+    }
+    buildTysx(tysx);
+    $("#teYouShuXingModal").modal("hide");
 }

@@ -12,6 +12,7 @@ var lb_allA01s;
 var lb_baoBiaos;
 var lb_qiYes;
 var lb_ziDianFenLeis;
+var lb_ziDian4fl;
 
 function getAllA01s(func) {
     hajax("/LBStore/a01/getAllA01s.do", {}, "lb_allA01s", func);
@@ -27,6 +28,10 @@ function getQiYes(func) {
 
 function getZiDianFenLeis(func){
     hajax("/LBStore/ziDianFenLei/getAllZiDianFenLeis.do", {}, "lb_ziDianFenLeis", func);
+}
+
+function getZiDian4FenLei(id,func){
+    hajax("/LBStore/ziDianFenLei/getAllZiDianFenLeis.do", {zdfl_id:id}, "lb_ziDian4fl", func);
 }
 
 function findCode(list, id) {

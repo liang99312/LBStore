@@ -17,7 +17,7 @@ public interface ZiDianService {
 
     public ZiDian getZiDianById(Integer id);
     
-    public List<ZiDian> getAllZiDians(Integer qy_id);
+    public List<ZiDian> getAllZiDians4fl(Integer qy_id,Integer zdfl_id);
     
     public boolean updateZiDian(ZiDian ziDian);
     

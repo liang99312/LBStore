@@ -37,16 +37,16 @@ public class ZiDianController extends BaseController {
         return "ziDian/ziDian/ziDian";
     }
 
-    @RequestMapping(value = "getAllZiDians.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "getAllZiDians4fl.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Map<String, Object> getAllZiDians() {
+    public Map<String, Object> getAllZiDians4fl(@RequestBody ZiDian model) {
         if (!existsUser()) {
             return notLoginResult();
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             List<ZiDian> ziDianList = new ArrayList<ZiDian>();
-            ziDianList = ziDianServiceImpl.getAllZiDians(getDlA01().getQy_id());
+            ziDianList = ziDianServiceImpl.getAllZiDians4fl(getDlA01().getQy_id(),model.getZdfl_id());
             map.put("result", 0);
             map.put("sz", ziDianList);
         } catch (Exception e) {
