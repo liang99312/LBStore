@@ -12,6 +12,7 @@ var lb_allA01s;
 var lb_baoBiaos;
 var lb_qiYes;
 var lb_ziDianFenLeis;
+var lb_wuZiLeiBies;
 var lb_ziDian4fl;
 
 function getAllA01s(func) {
@@ -30,8 +31,12 @@ function getZiDianFenLeis(func){
     hajax("/LBStore/ziDianFenLei/getAllZiDianFenLeis.do", {}, "lb_ziDianFenLeis", func);
 }
 
+function getWuZiLeiBies(func){
+    hajax("/LBStore/wuZiLeiBie/getAllWuZiLeiBies.do", {}, "lb_wuZiLeiBies", func);
+}
+
 function getZiDian4FenLei(id,func){
-    hajax("/LBStore/ziDianFenLei/getAllZiDianFenLeis.do", {zdfl_id:id}, "lb_ziDian4fl", func);
+    hajax("/LBStore/ziDian/getAllZiDians4fl.do", {id:0,qy_id:0,zdfl_id:id}, "lb_ziDian4fl", func);
 }
 
 function findCode(list, id) {
@@ -49,7 +54,7 @@ function hajax(url, d, result, func) {
     $.ajax({
         url: url,
         data: JSON.stringify(d),
-        dataType: "json",
+        contentType: "application/json",
         type: "post",
         cache: false,
         error: function (msg, textStatus) {

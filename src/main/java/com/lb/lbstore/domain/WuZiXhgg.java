@@ -18,16 +18,20 @@ import javax.persistence.Id;
  */
 @Entity
 @JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
-public class WuZiLeiBie {
-    
+public class WuZiXhgg {
+
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
     private Integer qy_id;
+    private Integer wzzd_id;
     private String mc;
     private String dm;
-    private String bz;
-    private String tysx;
-    private Integer state;
+    private Double sl = 0D;
+    private Double jb = 0D;
+
+    public WuZiXhgg() {
+
+    }
 
     public Integer getId() {
         return id;
@@ -43,6 +47,14 @@ public class WuZiLeiBie {
 
     public void setQy_id(Integer qy_id) {
         this.qy_id = qy_id;
+    }
+
+    public Integer getWzzd_id() {
+        return wzzd_id;
+    }
+
+    public void setWzzd_id(Integer wzzd_id) {
+        this.wzzd_id = wzzd_id;
     }
 
     public String getMc() {
@@ -61,34 +73,26 @@ public class WuZiLeiBie {
         this.dm = dm;
     }
 
-    public String getBz() {
-        return bz;
+    public Double getSl() {
+        return sl;
     }
 
-    public void setBz(String bz) {
-        this.bz = bz;
+    public void setSl(Double sl) {
+        this.sl = sl;
     }
 
-    public String getTysx() {
-        return tysx;
+    public Double getJb() {
+        return jb;
     }
 
-    public void setTysx(String tysx) {
-        this.tysx = tysx;
-    }
-
-    public Integer getState() {
-        return state;
-    }
-
-    public void setState(Integer state) {
-        this.state = state;
+    public void setJb(Double jb) {
+        this.jb = jb;
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 37 * hash + Objects.hashCode(this.id);
+        int hash = 5;
+        hash = 11 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -100,15 +104,15 @@ public class WuZiLeiBie {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final WuZiLeiBie other = (WuZiLeiBie) obj;
+        final WuZiXhgg other = (WuZiXhgg) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
     }
-    
+
     @Override
-    public String toString(){
+    public String toString() {
         return mc;
     }
 }

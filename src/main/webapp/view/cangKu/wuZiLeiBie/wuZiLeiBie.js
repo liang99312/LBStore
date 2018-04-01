@@ -7,6 +7,7 @@ var tsType = [{id: 1, mc: "文本"}, {id: 2, mc: "数字"}];
 var tysx = [];
 var optTsFlag = 1;
 var editTsIndex = -1;
+var tgIndex = 0;
 
 $(document).ready(function () {
     $('#inpTsType').AutoComplete({'data': tsType, 'paramName': 'editType'});
@@ -57,6 +58,7 @@ function selectWuZiLeiBie() {
 }
 
 function addWuZiLeiBie() {
+    tysx = [];
     optFlag = 1;
     $("#wuZiLeiBieModel_title").html("新增物资类别");
     $("#inpMc").val("");
@@ -77,6 +79,7 @@ function editWuZiLeiBie(index) {
     $("#inpMc").val(wuZiLeiBie.mc);
     $("#inpDm").val(wuZiLeiBie.dm);
     $("#inpBz").val(wuZiLeiBie.bz);
+    setTysx(wuZiLeiBie);
     $("#wuZiLeiBieModal").modal("show");
 }
 
@@ -153,17 +156,12 @@ function buildTysx(data) {
         if (!e.value || e.value === null) {
             e.value = "";
         }
-        var s = "<div class='form-group'><label for='edts_inp_" + e.id + "'>" + e.mc + "：</label><input type='text' id='tysx_inp_" + e.id + "' value='" + e.value + "' />\n\
+        var s = "<div class='form-group'><label for='edts_inp_" + e.id + "'>" + e.mc + "：</label><input type='text' id='edts_inp_" + e.id + "' value='" + e.value + "' />\n\
                 <button class='btn btn-info btn-xs icon-edit ts_edit'></button><button class='btn btn-danger btn-xs icon-minus ts_del'></div>";
         $("#divTysx").append(s);
-        if (e.zdfl && e.zdfl > 0) {
-            getZiDian4FenLei(e.zdfl, function () {
-                $("#edts_inp_" + e.id).AutoComplete({'data': lb_ziDian4fl, 'afterSelectedHandler': function (json) {
-                        e.value = json.mc;
-                    }});
-            });
-        }
     }
+    tgIndex = 0;
+    setEvent(data);
     $("#divTysx .ts_edit").each(function (i) {
         $(this).click(function () {
             editTeYouShuXing(i);
@@ -174,6 +172,22 @@ function buildTysx(data) {
             delTeYouShuXing(i);
         });
     });
+}
+
+function setEvent(data) {
+    var e = data[tgIndex];
+    if (e) {
+        if (e.zdfl && e.zdfl > 0) {
+            getZiDian4FenLei(e.zdfl, function () {
+                $("#edts_inp_" + e.id).AutoComplete({'data': lb_ziDian4fl});
+                tgIndex++;
+                setEvent(data);
+            });
+        } else {
+            tgIndex++;
+            setEvent(data);
+        }
+    }
 }
 
 function addTeYouShuXing() {

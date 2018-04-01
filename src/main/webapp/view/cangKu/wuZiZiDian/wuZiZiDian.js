@@ -1,9 +1,17 @@
 var wuZiZiDians;
 var optFlag = 1;
 var editIndex = -1;
+var selLeiBie;
+var editLeiBie;
 
 $(document).ready(function () {
+    getWuZiLeiBies(setTrager_leiBie);
 });
+
+function setTrager_leiBie(){
+    $('#selLeiBie').AutoComplete({'data': lb_wuZiLeiBies,'paramName':'selLeiBie'});
+    $('#inpLeiBie').AutoComplete({'data': lb_wuZiLeiBies,'paramName':'editLeiBie'});
+}
 
 function jxWuZiZiDian(json) {
     $("#data_table_body tr").remove();
@@ -64,6 +72,16 @@ function editWuZiZiDian(index) {
     $("#inpBm").val(wuZiZiDian.bm);
     $("#inpDw").val(wuZiZiDian.dw);
     $("#inpBz").val(wuZiZiDian.bz);
+    for(var i =0;i<lb_wuZiLeiBies.length;i++){
+        var e = lb_wuZiLeiBies[i];
+        if(e.id === wuZiZiDian.wzlb_id){
+            editLeiBie = e;
+            break;
+        }
+    }
+    if(editLeiBie && editLeiBie !== null){
+        $("#inpLeiBie").val(editLeiBie.mc);
+    }
     $("#wuZiZiDianModal").modal("show");
 }
 
@@ -78,6 +96,11 @@ function saveWuZiZiDian() {
         url = "/LBStore/wuZiZiDian/updateWuZiZiDian.do";
     } else if (optFlag === 1) {
         url = "/LBStore/wuZiZiDian/saveWuZiZiDian.do";
+    }
+    if ($("#inpLeiBie").val() !== '' && $("#inpLeiBie").val() === editLeiBie.mc) {
+        wuZiZiDian.wzlb_id = editLeiBie.id;
+    }else{
+        return alert("请选择物资类别");
     }
     wuZiZiDian.mc = $("#inpMc").val();
     wuZiZiDian.dm = $("#inpDm").val();
