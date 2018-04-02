@@ -35,16 +35,17 @@ and open the template in the editor.
             <div id="list1" class="table-responsive" style="height: 678px;width:100%;padding-top: 5px;">
                 <table id="data_table" class="table table-hover">
                     <thead>
-                    <tr>
-                        <th style="width:18%">名称</th>
-                        <th style="width:10%">代码</th>
-                        <th style="width:18%">编码</th>
-                        <th style="width:10%">单位</th>
-                        <th>操作</th>
-                    </tr>
+                        <tr>
+                            <th style="width:15%">名称</th>
+                            <th style="width:10%">代码</th>
+                            <th style="width:10%">编码</th>
+                            <th style="width:10%">单位</th>
+                            <th style="width:10%">型号规格</th>
+                            <th>操作</th>
+                        </tr>
                     </thead>
                     <tbody id='data_table_body'>
-                    <tr><td>请查询物资字典记录</td></tr>
+                        <tr><td>请查询物资字典记录</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -88,6 +89,74 @@ and open the template in the editor.
                     </div>
                     <div class="modal-footer" style="text-align: center;padding: 8px;">
                         <button type="submit" class="btn btn-primary" onclick="saveWuZiZiDian()">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="wuZiXhggModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div  id="wuZiXhggModalDlg" class="modal-dialog" style="width: 800px;">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #ace1ff;height: 40px;border-top-left-radius: 6px;border-top-right-radius: 6px;padding:10px">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="wuZiXhggModel_title">物资型号规格</h4>
+                    </div>
+                    <div class="modal-body" style="height: 400px;padding:0;">
+                        <div style="width: 100%;float:left;padding-top: 5px;padding-left: 5px;">
+                            <button type="button" class="btn btn-primary btn-sm" onclick="addWuZiXhgg();">新增规格</button>
+                            <button type="button" class="btn btn-primary btn-sm" onclick="calcWuZiXhgg();">更新数量</button>
+                        </div>
+                        <div class="content" style="width: 100%;float:left;padding-top: 5px;">
+                            <table id="tblWuZiXhgg" class="table table-hover">
+                                <thead>
+                                    <tr style="background: #e9f7ff;">
+                                        <th>名称</th>
+                                        <th>代码</th>
+                                        <th>数量</th>
+                                        <th>警报</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id='tblWuZiXhgg_body'>
+                                    <tr><td>无规格记录</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <ul id="example2"></ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="wuZiXhggEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #ace1ff;height: 40px;border-top-left-radius: 6px;border-top-right-radius: 6px;padding:10px">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="wuZiXhggEditModel_title">增加规格</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="content">
+                            <div class="form-group">
+                                <label for="inpWzmc">物资名称：</label>
+                                <input type="text" id="inpWzmc" disabled="disabled"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="inpGgmc">规格名称：</label>
+                                <input type="text" id="inpGgmc" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpGgdm">规格代码：</label>
+                                <input type="text" id="inpGgdm" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpGgjb">警&ensp;报&ensp;值：</label>
+                                <input type="text" id="inpGgjb" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="text-align: center;padding: 8px;">
+                        <button type="submit" class="btn btn-primary" onclick="saveWuZiXhgg()">保存</button>
                     </div>
                 </div>
             </div>
