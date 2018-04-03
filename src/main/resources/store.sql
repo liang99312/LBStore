@@ -143,4 +143,5 @@ CREATE TABLE `store`.`wuzixhgg` (
   `dm` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `sl` FLOAT(7,2) COLLATE utf8_unicode_ci DEFAULT NULL,
   `jb` FLOAT(7,2) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `bzq` FLOAT(7,2) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`))ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

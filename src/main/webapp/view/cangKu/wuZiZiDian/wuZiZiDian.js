@@ -206,6 +206,7 @@ function addWuZiXhgg() {
     $("#inpGgmc").val("");
     $("#inpGgdm").val("");
     $("#inpGgjb").val("0");
+    $("#inpGgbzq").val("0");
     $("#wuZiXhggEditModal").modal("show");
 }
 
@@ -226,6 +227,7 @@ function editWuZiXhgg(index) {
     $("#inpGgmc").val(wuZiXhgg.mc);
     $("#inpGgdm").val(wuZiXhgg.dm);
     $("#inpGgjb").val(wuZiXhgg.jb);
+    $("#inpGgbzq").val(wuZiXhgg.bzq);
     $("#wuZiXhggEditModal").modal("show");
 }
 
@@ -250,6 +252,7 @@ function saveWuZiXhgg() {
     wuZiXhgg.mc = $("#inpGgmc").val();
     wuZiXhgg.dm = $("#inpGgdm").val();
     wuZiXhgg.jb = parseFloat($("#inpGgjb").val());
+    wuZiXhgg.bzq = parseFloat($("#inpGgbzq").val());
     $.ajax({
         url: url,
         data: JSON.stringify(wuZiXhgg),

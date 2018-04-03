@@ -28,6 +28,7 @@ public class WuZiXhgg {
     private String dm;
     private Double sl = 0D;
     private Double jb = 0D;
+    private Double bzq = 0D;
 
     public WuZiXhgg() {
 
@@ -87,6 +88,14 @@ public class WuZiXhgg {
 
     public void setJb(Double jb) {
         this.jb = jb;
+    }
+
+    public Double getBzq() {
+        return bzq;
+    }
+
+    public void setBzq(Double bzq) {
+        this.bzq = bzq;
     }
 
     @Override
