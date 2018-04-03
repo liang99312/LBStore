@@ -34,6 +34,8 @@ public class RuKuDetail {
     private String pp;
     private String scc;
     private String txm;
+    private Date scrq;
+    private Double bzq;
     private Double dj;
     private String dw;    
     private String zldw;   
@@ -201,6 +203,22 @@ public class RuKuDetail {
 
     public void setZldw(String zldw) {
         this.zldw = zldw;
+    }
+
+    public Date getScrq() {
+        return scrq;
+    }
+
+    public void setScrq(Date scrq) {
+        this.scrq = scrq;
+    }
+
+    public Double getBzq() {
+        return bzq;
+    }
+
+    public void setBzq(Double bzq) {
+        this.bzq = bzq;
     }
 
     @Override
