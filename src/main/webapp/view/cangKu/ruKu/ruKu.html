@@ -53,9 +53,47 @@ and open the template in the editor.
                     </tbody>
                 </table>
             </div>
-
             <ul id="example"></ul>
         </div>
+        
+        <div class="modal fade" id="ruKuSelectModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #ace1ff;height: 40px;border-top-left-radius: 6px;border-top-right-radius: 6px;padding:10px">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="ruKuSelectModel_title">查询入库单</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="content">
+                            <div class="form-group">
+                                <label for="inpSelCk">仓&ensp;&ensp;库：</label>
+                                <input type="text" id="inpSelCk" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpSelWz">物&ensp;&ensp;资：</label>
+                                <input type="text" id="inpSelWz" />
+                            </div>
+                            <div class="form-group" style="border-bottom: 1px solid #bcbcbc;">
+                                <label for="inpSelKh">客&ensp;&ensp;户：</label>
+                                <input type="text" id="inpSelKh" />
+                            </div>
+                            <div class="form-group" style="border-bottom: 1px solid #bcbcbc;">
+                                <label for="inpSelGys">供应商：</label>
+                                <input type="text" id="inpSelGys" />
+                            </div>
+                            <div class="form-group" style="border-bottom: 1px solid #bcbcbc;">
+                                <label for="inpSelRq">日&ensp;&ensp;期：</label>
+                                <input type="text" id="inpSelRqq" />-<input type="text" id="inpSelRz" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="text-align: center;padding: 8px;">
+                        <button type="submit" class="btn btn-primary" onclick="selectRuKu()">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <div class="modal fade" id="ruKuModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -66,12 +104,28 @@ and open the template in the editor.
                     <div class="modal-body">
                         <div class="content">
                             <div class="form-group">
-                                <label for="inpMc">名称：</label>
-                                <input type="text" id="inpMc" />
+                                <label for="inpCk">仓库：</label>
+                                <input type="text" id="inpCk" />
                             </div>
                             <div class="form-group">
-                                <label for="inpDm">代码：</label>
-                                <input type="text" id="inpDm" />
+                                <label for="inpKh">客户：</label>
+                                <input type="text" id="inpKh" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpGys">供应商：</label>
+                                <input type="text" id="inpGys" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpDh">单号：</label>
+                                <input type="text" id="inpDh" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpSl">数量：</label>
+                                <input type="text" id="inpSl" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpJe">金额：</label>
+                                <input type="text" id="inpJe" />
                             </div>
                             <div class="form-group" style="border-bottom: 1px solid #bcbcbc;">
                                 <label for="inpBz">备注：</label>
@@ -81,25 +135,24 @@ and open the template in the editor.
                         </div>
                     </div>
                     <div class="modal-footer" style="text-align: center;padding: 8px;">
-                        <button type="button" class="btn btn-primary" onclick="addTeYouShuXing()">增加特有属性</button>
                         <button type="submit" class="btn btn-primary" onclick="saveRuKu()">保存</button>
                     </div>
                 </div>
             </div>
         </div>
         
-        <div class="modal fade" id="teYouShuXingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade" id="ruKeMingXiModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header" style="background: #ace1ff;height: 40px;border-top-left-radius: 6px;border-top-right-radius: 6px;padding:10px">
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title" id="ruKuModel_title">添加特有属性</h4>
+                        <h4 class="modal-title" id="ruKuMingXiModel_title">添加明细</h4>
                     </div>
                     <div class="modal-body">
                         <div class="content">
                             <div class="form-group">
-                                <label for="inpTsMc">名称：</label>
-                                <input type="text" id="inpTsMc" />
+                                <label for="inpMxWz">物资名称：</label>
+                                <input type="text" id="inpMxWz" />
                             </div>
                             <div class="form-group">
                                 <label for="inpTsType">类型：</label>
