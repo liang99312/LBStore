@@ -131,7 +131,19 @@ and open the template in the editor.
                                 <label for="inpBz">备注：</label>
                                 <input type="text" id="inpBz" style="width: 400px;"/>
                             </div>
-                            <div id='divTysx'></div>
+                            <table id="tblWuZiMingXi" class="table table-hover">
+                                <thead>
+                                    <tr style="background: #e9f7ff;">
+                                        <th>名称</th>
+                                        <th>品牌</th>
+                                        <th>型号规格</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id='tblWuZiMingXi_body'>
+                                    <tr><td>无明细记录</td></tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                     <div class="modal-footer" style="text-align: center;padding: 8px;">
@@ -155,17 +167,59 @@ and open the template in the editor.
                                 <input type="text" id="inpMxWz" />
                             </div>
                             <div class="form-group">
-                                <label for="inpTsType">类型：</label>
-                                <input type="text" id="inpTsType" />
+                                <label for="inpMxLb">物资类别：</label>
+                                <input type="text" id="inpMxLb" />
                             </div>
                             <div class="form-group">
-                                <label for="inpTsZiDian">字典：</label>
-                                <input type="text" id="inpTsZiDian" />
+                                <label for="inpMxPp">品牌：</label>
+                                <input type="text" id="inpMxPp" />
                             </div>
+                            <div class="form-group">
+                                <label for="inpMxXhgg">型号规格：</label>
+                                <input type="text" id="inpMxXhgg" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpMxScc">生产厂：</label>
+                                <input type="text" id="inpMxScc" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpMxTxm">条形码：</label>
+                                <input type="text" id="inpMxTxm" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpMxDj">单价：</label>
+                                <input type="text" id="inpMxDj" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpMxDw">单位：</label>
+                                <input type="text" id="inpMxDw" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpMxSl">数量：</label>
+                                <input type="text" id="inpMxSl" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpMxBzfs">包装方式：</label>
+                                <label><input type="checkbox" id="inpMxBzfs" />件装</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="inpMxBzgg">包装规格：</label>
+                                <input type="text" id="inpMxBzgg" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpMxZldw">总量单位：</label>
+                                <input type="text" id="inpMxZldw" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpMxZl">总量：</label>
+                                <input type="text" id="inpMxZl" />
+                            </div>
+                            <div id='divMxTysx'></div>
+                            <div id='divMxDymx'></div>
                         </div>
                     </div>
                     <div class="modal-footer" style="text-align: center;padding: 8px;">
-                        <button type="submit" class="btn btn-primary" onclick="saveTeYouShuXing()">保存</button>
+                        <button type="submit" class="btn btn-primary" onclick="saveMingXi()">保存</button>
                     </div>
                 </div>
             </div>

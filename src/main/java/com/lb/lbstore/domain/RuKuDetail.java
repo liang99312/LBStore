@@ -33,12 +33,15 @@ public class RuKuDetail {
     private String xhgg;
     private String pp;
     private String scc;
+    private String txm;
     private Double dj;
     private String dw;    
+    private String zldw;   
     private Double dbfx;
     private Double sl;
     private Double zl;
     private String tysx;
+    private String dymx;
     
     public Integer getId() {
         return id;
@@ -176,6 +179,29 @@ public class RuKuDetail {
         this.tysx = tysx;
     }
 
+    public String getTxm() {
+        return txm;
+    }
+
+    public void setTxm(String txm) {
+        this.txm = txm;
+    }
+
+    public String getDymx() {
+        return dymx;
+    }
+
+    public void setDymx(String dymx) {
+        this.dymx = dymx;
+    }
+
+    public String getZldw() {
+        return zldw;
+    }
+
+    public void setZldw(String zldw) {
+        this.zldw = zldw;
+    }
 
     @Override
     public int hashCode() {
