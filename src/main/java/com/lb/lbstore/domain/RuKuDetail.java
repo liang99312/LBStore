@@ -39,7 +39,7 @@ public class RuKuDetail {
     private Double dj;
     private String dw;    
     private String zldw;   
-    private Double dbfx;
+    private Double bzgg = 1.0D;
     private Double sl;
     private Double zl;
     private String tysx;
@@ -149,12 +149,12 @@ public class RuKuDetail {
         this.dw = dw;
     }
 
-    public Double getDbfx() {
-        return dbfx;
+    public Double getBzgg() {
+        return bzgg;
     }
 
-    public void setDbfx(Double dbfx) {
-        this.dbfx = dbfx;
+    public void setBzgg(Double bzgg) {
+        this.bzgg = bzgg;
     }
 
     public Double getSl() {
