@@ -29,6 +29,7 @@ public class RuKuDetail {
     private Integer gys_id;
     private Integer wzzd_id;
     private String wzmc;
+    private Integer wzlb_id;
     private Integer xhgg_id;
     private String xhgg;
     private String pp;
@@ -39,6 +40,7 @@ public class RuKuDetail {
     private Double dj;
     private String dw;    
     private String zldw;   
+    private String jlfs = "pt"; //普通记录(pt)；总量记录(zl)；单元明细(mx)
     private Double bzgg = 1.0D;
     private Double sl;
     private Double zl;
@@ -83,6 +85,14 @@ public class RuKuDetail {
 
     public void setGys_id(Integer gys_id) {
         this.gys_id = gys_id;
+    }
+
+    public Integer getWzlb_id() {
+        return wzlb_id;
+    }
+
+    public void setWzlb_id(Integer wzlb_id) {
+        this.wzlb_id = wzlb_id;
     }
 
     public Integer getWzzd_id() {
@@ -219,6 +229,14 @@ public class RuKuDetail {
 
     public void setBzq(Double bzq) {
         this.bzq = bzq;
+    }
+
+    public String getJlfs() {
+        return jlfs;
+    }
+
+    public void setJlfs(String jlfs) {
+        this.jlfs = jlfs;
     }
 
     @Override

@@ -7,7 +7,7 @@ var goWuZiLeiBie = "/LBStore/wuZiLeiBie/goWuZiLeiBie.do";
 var goWuZiZiDian = "/LBStore/wuZiZiDian/goWuZiZiDian.do";
 var goQingGou = "/LBStore/goQingGou.do";
 var goCaiGou = "/LBStore/goCaiGou.do";
-var goRuKuDan = "/LBStore/ruKu/goRuKuDan.do";
+var goRuKu = "/LBStore/ruKu/goRuKu.do";
 var goLingLiaoDan = "/LBStore/goLingLiaoDan.do";
 var goFaHuo = "/LBStore/goFaHuo.do";
 var goSunHao = "/LBStore/goSunHao.do";
@@ -34,7 +34,7 @@ var allMenu = {data: [
         {id: '5', text: '仓库管理', icon: 'icon-leaf', url: '', menus: [
 //                {id: '501', text: '申购管理', icon: 'icon-glass', url: goQingGou},
 //                {id: '502', text: '采购管理', icon: 'icon-glass', url: goCaiGou},
-                {id: '503', text: '入库管理', icon: 'icon-glass', url: goRuKuDan},
+                {id: '503', text: '入库管理', icon: 'icon-glass', url: goRuKu},
                 {id: '504', text: '领料管理', icon: 'icon-glass', url: goLingLiaoDan},
                 {id: '505', text: '发货管理', icon: 'icon-glass', url: goFaHuo},
                 {id: '506', text: '损耗管理', icon: 'icon-glass', url: goSunHao},
