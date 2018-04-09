@@ -9,11 +9,19 @@ var editMxIndex = -1;
 var tgIndex = 0;
 
 $(document).ready(function () {
-    getZiDianFenLeis(setTrager_fenLei);
+    getWuZiZiDians(setTrager_ziDian);
     $("#inpMxJlfs").click(function(){
         selectMxJlfs();
     });
 });
+
+function setTrager_ziDian(){
+    $('#selLeiBie').AutoComplete({'data': lb_wuZiZiDians, 'afterSelectedHandler': selectWuZiZiDian});
+}
+
+function selectWuZiZiDian(json){
+    
+}
 
 function selectMxJlfs(){
     var val = $("#inpMxJlfs").val();

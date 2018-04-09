@@ -6,12 +6,16 @@
 package com.lb.lbstore.controller;
 
 import com.lb.lbstore.domain.Page;
+import com.lb.lbstore.domain.WuZiLeiBie;
+import com.lb.lbstore.domain.WuZiXhgg;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.lb.lbstore.domain.WuZiZiDian;
+import com.lb.lbstore.service.WuZiLeiBieService;
+import com.lb.lbstore.service.WuZiXhggService;
 import com.lb.lbstore.service.WuZiZiDianService;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +32,10 @@ public class WuZiZiDianController extends BaseController {
 
     @Resource
     private WuZiZiDianService wuZiZiDianServiceImpl;
+    @Resource
+    private WuZiXhggService wuZiXhggServiceImpl;
+    @Resource
+    private WuZiLeiBieService wuZiLeiBieServiceImpl;
 
     @RequestMapping("goWuZiZiDian.do")
     public String goWuZiZiDian() {
@@ -119,6 +127,10 @@ public class WuZiZiDianController extends BaseController {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             WuZiZiDian wuZiZiDian = wuZiZiDianServiceImpl.getWuZiZiDianById(id);
+            List<WuZiXhgg> list = wuZiXhggServiceImpl.getWuZiXhgg4zd(id);
+            WuZiLeiBie wzlb = wuZiLeiBieServiceImpl.getWuZiLeiBieById(id);
+            wuZiZiDian.setWzlb(wzlb);
+            wuZiZiDian.setXhggs(list);
             map.put("result", 0);
             map.put("wuZiZiDian", wuZiZiDian);
         } catch (Exception e) {

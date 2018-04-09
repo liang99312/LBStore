@@ -6,6 +6,8 @@
 package com.lb.lbstore.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,6 +28,8 @@ public class WuZiZiDian {
     private String dw;
     private String bz;
     private Integer state;
+    private transient WuZiLeiBie wzlb;
+    private transient List<WuZiXhgg> xhggs = new ArrayList();
 
     public Integer getId() {
         return id;
@@ -97,6 +101,22 @@ public class WuZiZiDian {
 
     public void setState(Integer state) {
         this.state = state;
+    }
+
+    public WuZiLeiBie getWzlb() {
+        return wzlb;
+    }
+
+    public void setWzlb(WuZiLeiBie wzlb) {
+        this.wzlb = wzlb;
+    }
+
+    public List<WuZiXhgg> getXhggs() {
+        return xhggs;
+    }
+
+    public void setXhggs(List<WuZiXhgg> xhggs) {
+        this.xhggs = xhggs;
     }
 
     @Override
