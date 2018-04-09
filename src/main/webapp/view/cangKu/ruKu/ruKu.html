@@ -18,6 +18,7 @@ and open the template in the editor.
         <script src="/LBStore/content/bootstrap/js/bootstrap-paginator.js"></script>
         <script src="/LBStore/content/autocomplete/autocomplete.js"></script>
         <script src="/LBStore/view/common/common.js"></script>
+        <script src="/LBStore/view/common/detail.js"></script>
         <script src="/LBStore/view/cangKu/ruKu/ruKu.js"></script>
     </head>
     <body style='height:800px;'>
@@ -214,7 +215,10 @@ and open the template in the editor.
                                 <input type="text" id="inpMxZl" />
                             </div>
                             <div id='divMxTysx'></div>
-                            <div id='divMxDymx'></div>
+                            <div id='divMxDymx' class="form-group" style="overflow-y: auto;min-height: 50px;max-height: 250px; display: none;">
+                                <label for="tblMxDymx">单元明细：</label>
+                                <table id="tblMxDymx" cellspacing="0"></table>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer" style="text-align: center;padding: 8px;">

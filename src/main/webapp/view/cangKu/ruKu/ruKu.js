@@ -9,7 +9,6 @@ var editMxIndex = -1;
 var tgIndex = 0;
 
 $(document).ready(function () {
-    $('#inpMxType').AutoComplete({'data': tsType, 'paramName': 'editType'});
     getZiDianFenLeis(setTrager_fenLei);
     $("#inpMxJlfs").click(function(){
         selectMxJlfs();
@@ -27,6 +26,7 @@ function selectMxJlfs(){
     }else if(val === "mx"){
         $("#dvMxZl").show();
         $("#divMxDymx").show();
+        buildDymx([]);
     }
 }
 
@@ -169,7 +169,8 @@ function buildTysx(data) {
 
 function buildDymx(data){
     var opt = {data:data,yxData:[]};
-    $("#divMxDymx").setDetailTable(opt);
+    $("#tblMxDymx").setDetailTable(opt);
+    $("#tblMxDymx input:last").focus();
 }
 
 function addRuKuMingXi() {

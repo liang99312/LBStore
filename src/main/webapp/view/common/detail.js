@@ -4,7 +4,7 @@
             var tblId = $(this).attr("id");
             var yxData = opt.yxData;
             var ls = opt.ls ? opt.ls : 5;
-            var width = 100 / ls;
+            var width = 90 / ls;
             var unConfirm = opt.unConfirm ? opt.unConfirm : false;
             var type = opt.type ? opt.type : "num";
             width = width + "%";
@@ -27,32 +27,38 @@
                 var hs = parseInt((yxData.length - 1) / ls) + 1;
                 var flag = false;
                 $("#" + tblId + " tr").remove();
+                var bt = "<tr style='background: #e9f7ff;'><td style='width:10%;border: 1px solid #000; text-align: center;'>序号</td>";
+                for (var j = 0; j < ls; j++) {
+                    bt = bt + "<td style='width:" + width + ";border: 1px solid #000; text-align: center;'>" + (j+1) + "</td>";
+                }
+                bt = bt + "</tr>";
+                $("#" + tblId).append(bt);
                 for (var i = 0; i < hs; i++) {
-                    var str = "<tr>";
+                    var str = "<tr><td style='border: 1px solid #000; text-align: center;'>"+(i+1)+"</td>";
                     for (var j = 0; j < ls; j++) {
                         var s = "&ensp;";
                         if (yxData[i * ls + j]) {
-                            s = "<input type='text' style='width:99%' value='" + yxData[i * ls + j].val + "' />" + "<a href='#' id='" + tblId + "_a_" + i * ls + j + "' style='color:red; float: right; margin-right: 3px;text-decoration: none;'>X</a>";
+                            s = "<input type='text' style='width:85%;border-left:none;border-top:none;border-right:none;' value='" + yxData[i * ls + j].val + "' />" + "<a href='#' id='" + tblId + "_a_" + i * ls + j + "' style='color:red; float: right; margin-right: 3px;text-decoration: none;'>X</a>";
                         } else {
                             if (!flag) {
                                 flag = true;
-                                s = "<input type='text' style='width:99%' value='' />" + "<a href='#' id='" + tblId + "_a_" + i * ls + j + "' style='color:red; float: right; margin-right: 3px;text-decoration: none;'>X</a>";
+                                s = "<input type='text' style='width:85%;border-left:none;border-top:none;border-right:none;' value='' />" + "<a href='#' id='" + tblId + "_a_" + i * ls + j + "' style='color:red; float: right; margin-right: 3px;text-decoration: none;'>X</a>";
                             }
                         }
-                        str += "<td style='width:" + width + "'>" + s + "</td>";
+                        str += "<td style='width:" + width + ";border: 1px solid #000;'>" + s + "</td>";
                     }
                     str += "</tr>";
                     $("#" + tblId).append(str);
                 }
                 if (!flag) {
-                    var str = "<tr>";
+                    var str = "<tr><td style='border: 1px solid #000; text-align: center;'>"+(hs+1)+"</td>";
                     for (var j = 0; j < ls; j++) {
                         var s = "&ensp;";
                         if (!flag) {
                             flag = true;
-                            s = "<input type='text' style='width:99%' value='' />" + "<a href='#' id='" + tblId + "_a_" + (hs - 1) * ls + j + "' style='color:red; float: right; margin-right: 3px;text-decoration: none;'>X</a>";
+                            s = "<input type='text' style='width:85%;border-left:none;border-top:none;border-right:none;' value='' />" + "<a href='#' id='" + tblId + "_a_" + (hs - 1) * ls + j + "' style='color:red; float: right; margin-right: 3px;text-decoration: none;'>X</a>";
                         }
-                        str += "<td style='width:" + width + "'>" + s + "</td>";
+                        str += "<td style='width:" + width + ";border: 1px solid #000;'>" + s + "</td>";
                     }
                     str += "</tr>";
                     $("#" + tblId).append(str);
@@ -66,10 +72,11 @@
                     });
                 });
                 $('#' + tblId + ' input').each(function (i) {
-                    $(this).keydown(function (event) {
+                    $(this).keyup(function (event) {
                         if (event.keyCode === 13) {
                             resetTable(opt);
                             setInput();
+                            $("#"+tblId + " input:last").focus();
                         } else {
                             var obj = {id:i,val:"",state:"0"};
                             obj.val = $(this).val();
@@ -92,8 +99,14 @@
             var resetTable = function () {
                 var hs = parseInt((data.length - 1) / ls) + 1;
                 $("#" + tblId + " tr").remove();
+                var bt = "<tr style='background: #e9f7ff;'><td style='width:10%;border: 1px solid #000; text-align: center;'>序号</td>";
+                for (var j = 0; j < ls; j++) {
+                    bt = bt + "<td style='width:" + width + ";border: 1px solid #000; text-align: center;'>" + (j+1) + "</td>";
+                }
+                bt = bt + "</tr>";
+                $("#" + tblId).append(bt);
                 for (var i = 0; i < hs; i++) {
-                    var str = "<tr>";
+                    var str = "<tr><td style='border: 1px solid #000; text-align: center;'>"+(i+1)+"</td>";
                     for (var j = 0; j < ls; j++) {
                         var s = "&ensp;";
                         var d = data[i * ls + j];
