@@ -118,7 +118,7 @@ public class WuZiZiDianController extends BaseController {
         return map;
     }
     
-    @RequestMapping(value = "getWuZiZiDianById.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "getWuZiZiDianById.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String, Object> getWuZiZiDianById(@RequestParam Integer id) {
         if (!existsUser()) {
