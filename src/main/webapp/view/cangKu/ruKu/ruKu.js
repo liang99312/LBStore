@@ -9,14 +9,24 @@ var editMxIndex = -1;
 var tgIndex = 0;
 var selXhgg;
 var selLeiBie;
+var selCangKu;
+var editCangKu;
 
 $(document).ready(function () {
+    getCangKus(setTrager_cangKu);
     getWuZiZiDians(setTrager_ziDian);
     getWuZiLeiBies(setTrager_leiBie);
-    $("#inpMxJlfs").click(function () {
+    $("#inpMxJlfs").change(function () {
+        $("#tblMxDymx input:last").blur();
         selectMxJlfs();
     });
 });
+
+function setTrager_cangKu(){
+    $('#selCangKu').AutoComplete({'data': lb_cangKus, 'paramName': 'selCangKu'});
+    $('#inpSelCk').AutoComplete({'data': lb_cangKus, 'paramName': 'selCangKu'});
+    $('#inpCk').AutoComplete({'data': lb_cangKus, 'paramName': 'editCangKu'});
+}
 
 function setTrager_ziDian() {
     $('#inpMxWz').AutoComplete({'data': lb_wuZiZiDians, 'afterSelectedHandler': selectWuZiZiDian});
@@ -37,6 +47,10 @@ function selectWuZiLeiBie(json) {
     buildTysx(selLeiBie.tysx);
 }
 
+function selectRuKu_m(){
+    $("#ruKuSelectModal").modal("show");
+}
+
 function selectWuZiZiDian(json) {
     $.ajax({
         url: "/LBStore/wuZiZiDian/getWuZiZiDianById.do?id=" + json.id,
@@ -49,8 +63,8 @@ function selectWuZiZiDian(json) {
         },
         success: function (json) {
             if (json.result === 0) {
-                $('#inpMxXhgg').AutoComplete({'data': json.xhggs, 'paramName': 'selXhgg'});
-                selectWuZiLeiBie(json.wzlb);
+                $('#inpMxXhgg').AutoComplete({'data': json.wuZiZiDian.xhggs, 'paramName': 'selXhgg'});
+                selectWuZiLeiBie(json.wuZiZiDian.wzlb);
             }
         }
     });

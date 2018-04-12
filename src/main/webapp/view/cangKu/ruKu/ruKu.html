@@ -26,7 +26,8 @@ and open the template in the editor.
         <div style="float:left; width: 100%">
             <div style="width: 100%">
                 <div style="width: 100%;float:left; padding-top: 5px;">
-                    <span>&nbsp;流水号：</span><input id="selName" type="text" />
+                    <span>&nbsp;仓库：</span><input id="selCangKu" type="text" style="width: 120px;" />
+                    <span>&nbsp;流水号：</span><input id="selName" type="text" style="width: 120px;" />
                     <span>&nbsp;状态：</span>
                     <select id="selState" style="width: 100px; height: 26px;line-height: 26px;">
                         <option value="-9" selected = "selected">全部</option>
@@ -90,7 +91,7 @@ and open the template in the editor.
                         </div>
                     </div>
                     <div class="modal-footer" style="text-align: center;padding: 8px;">
-                        <button type="submit" class="btn btn-primary" onclick="selectRuKu()">确定</button>
+                        <button type="submit" class="btn btn-primary" onclick="selectRuKu(2)">确定</button>
                     </div>
                 </div>
             </div>
