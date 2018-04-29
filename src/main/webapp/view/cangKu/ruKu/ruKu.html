@@ -109,12 +109,18 @@ and open the template in the editor.
                             <div class="form-group">
                                 <label for="inpCk">仓&ensp;&ensp;库：</label>
                                 <input type="text" id="inpCk" />
-                                <label for="inpKh">客&ensp;&ensp;户：</label>
-                                <input type="text" id="inpKh" />
+                                <label for="inpLy">来&ensp;&ensp;源：</label>
+                                <select id="inpLy" style="width: 174px; height: 26px;line-height: 26px;">
+                                    <option value="供应商" selected="selected">供应商</option>
+                                    <option value="客户">客户</option>
+                                    <option value="生产">生产</option>
+                                </select>
                             </div>
                             <div class="form-group">
-                                <label for="inpGys">供应商：</label>
-                                <input type="text" id="inpGys" />
+                                <label class="rk_gys" for="inpGys">供应商：</label>
+                                <input class="rk_gys" type="text" id="inpGys" />
+                                <label class="rk_kh" for="inpKh">客&ensp;&ensp;户：</label>
+                                <input class="rk_kh" type="text" id="inpKh" />
                                 <label for="inpDh">单&ensp;&ensp;号：</label>
                                 <input type="text" id="inpDh" />
                             </div>

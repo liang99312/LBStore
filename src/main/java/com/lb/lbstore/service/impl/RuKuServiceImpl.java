@@ -35,25 +35,18 @@ public class RuKuServiceImpl implements RuKuService {
 
     @Override
     public boolean updateRuKu(RuKu ruKu) {
-        return ruKuDao.update(ruKu);
+        return ruKuDao.updateRuKu(ruKu);
     }
 
     @Override
     public RuKu saveRuKu(RuKu ruKu) {
-        int id = ruKuDao.save(ruKu);
+        int id = ruKuDao.saveRuKu(ruKu);
         return (RuKu) ruKuDao.findObjectById(RuKu.class, id);
     }
 
     @Override
     public boolean deleteRuKu(Integer id) {
-        RuKu ruKu = (RuKu) ruKuDao.findObjectById(RuKu.class, id);
-        if(ruKu.getState() == 0){
-            ruKu.setState(-1);
-            return ruKuDao.update(ruKu);
-        }else if(ruKu.getState() == -1){
-            return ruKuDao.deleteObjById("ruKu", id);
-        }
-        return false;
+        return ruKuDao.deleteRuKu(id);
     }
 
     @Override

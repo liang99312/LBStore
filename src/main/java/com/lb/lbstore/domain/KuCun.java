@@ -26,12 +26,17 @@ public class KuCun {
     private Integer qy_id;
     private Integer ck_id;
     private Integer rk_id;
+    private Integer kh_id;
     private Integer gys_id;
     private Integer wzzd_id;
     private String wzmc;
     private Integer wzlb_id;
     private Integer xhgg_id;
+    private Integer rkr_id;
+    private Integer spr_id;
     private String xhgg;
+    private String ly; //供应商；客户；生产
+    private String dh; //单号
     private String pp;
     private String scc;
     private String txm;
@@ -118,6 +123,22 @@ public class KuCun {
 
     public void setXhgg_id(Integer xhgg_id) {
         this.xhgg_id = xhgg_id;
+    }
+
+    public Integer getRkr_id() {
+        return rkr_id;
+    }
+
+    public void setRkr_id(Integer rkr_id) {
+        this.rkr_id = rkr_id;
+    }
+
+    public Integer getSpr_id() {
+        return spr_id;
+    }
+
+    public void setSpr_id(Integer spr_id) {
+        this.spr_id = spr_id;
     }
 
     public String getXhgg() {
@@ -246,6 +267,30 @@ public class KuCun {
 
     public void setJlfs(String jlfs) {
         this.jlfs = jlfs;
+    }
+
+    public Integer getKh_id() {
+        return kh_id;
+    }
+
+    public void setKh_id(Integer kh_id) {
+        this.kh_id = kh_id;
+    }
+
+    public String getLy() {
+        return ly;
+    }
+
+    public void setLy(String ly) {
+        this.ly = ly;
+    }
+
+    public String getDh() {
+        return dh;
+    }
+
+    public void setDh(String dh) {
+        this.dh = dh;
     }
 
     @Override

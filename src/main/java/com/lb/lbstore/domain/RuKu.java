@@ -32,14 +32,15 @@ public class RuKu {
     private Integer gys_id;
     private Integer rkr_id;
     private Integer spr_id;
+    private String ly; //供应商；客户；生产
     private String wz;
     private Date sj;
     private String dh;
     private Double sl = 0D;
     private Double je = 0D;
     private String bz;
-    private Integer state;
-    private transient List<RuKuDetail> kws = new ArrayList();
+    private Integer state;//0:未办理；1：已办理
+    private transient List<RuKuDetail> details = new ArrayList();
 
     public Integer getId() {
         return id;
@@ -161,12 +162,20 @@ public class RuKu {
         this.wz = wz;
     }
 
-    public List<RuKuDetail> getKws() {
-        return kws;
+    public String getLy() {
+        return ly;
     }
 
-    public void setKws(List<RuKuDetail> kws) {
-        this.kws = kws;
+    public void setLy(String ly) {
+        this.ly = ly;
+    }
+
+    public List<RuKuDetail> getDetails() {
+        return details;
+    }
+
+    public void setDetails(List<RuKuDetail> details) {
+        this.details = details;
     }
 
     @Override

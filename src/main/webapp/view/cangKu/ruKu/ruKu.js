@@ -20,6 +20,19 @@ $(document).ready(function () {
         $("#tblMxDymx input:last").blur();
         selectMxJlfs();
     });
+    $(".rk_kh").hide();
+    $("#inpLy").change(function(){
+        if($("#inpLy").val() === "供应商"){
+            $(".rk_gys").removeAttr("disabled").show();
+            $(".rk_kh").hide();
+        }else if($("#inpLy").val() === "客户"){
+            $(".rk_gys").hide();
+            $(".rk_kh").show();
+        }else{
+            $(".rk_gys").val("").attr("disabled","disabled").show();
+            $(".rk_kh").hide();
+        }
+    });
 });
 
 function setTrager_cangKu(){

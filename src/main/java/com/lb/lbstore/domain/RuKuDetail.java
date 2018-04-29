@@ -26,12 +26,15 @@ public class RuKuDetail {
     private Integer qy_id;
     private Integer ck_id;
     private Integer rk_id;
+    private Integer kh_id;
     private Integer gys_id;
     private Integer wzzd_id;
     private String wzmc;
     private Integer wzlb_id;
     private Integer xhgg_id;
     private String xhgg;
+    private String ly; //供应商；客户；生产
+    private String dh; //单号
     private String pp;
     private String scc;
     private String txm;
@@ -41,7 +44,7 @@ public class RuKuDetail {
     private String dw;    
     private String zldw;   
     private String jlfs = "pt"; //普通记录(pt)；总量记录(zl)；单元明细(mx)
-    private Double bzgg = 1.0D;
+    private Double bzgg = 1.0D; //包装规格
     private Double sl;
     private Double zl;
     private String tysx;
@@ -77,6 +80,14 @@ public class RuKuDetail {
 
     public void setRk_id(Integer rk_id) {
         this.rk_id = rk_id;
+    }
+
+    public Integer getKh_id() {
+        return kh_id;
+    }
+
+    public void setKh_id(Integer kh_id) {
+        this.kh_id = kh_id;
     }
 
     public Integer getGys_id() {
@@ -125,6 +136,22 @@ public class RuKuDetail {
 
     public void setXhgg(String xhgg) {
         this.xhgg = xhgg;
+    }
+
+    public String getLy() {
+        return ly;
+    }
+
+    public void setLy(String ly) {
+        this.ly = ly;
+    }
+
+    public String getDh() {
+        return dh;
+    }
+
+    public void setDh(String dh) {
+        this.dh = dh;
     }
 
     public String getPp() {
