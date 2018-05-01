@@ -10,10 +10,16 @@ var tgIndex = 0;
 var selXhgg;
 var selLeiBie;
 var selCangKu;
+var selKeHu;
+var editKeHu;
+var selGongYingShang;
+var editGongYingShang;
 var editCangKu;
 
 $(document).ready(function () {
     getCangKus(setTrager_cangKu);
+    getKeHus(setTrager_keHu);
+    getGongYingShangs(setTrager_gongYingShang);
     getWuZiZiDians(setTrager_ziDian);
     getWuZiLeiBies(setTrager_leiBie);
     $("#inpMxJlfs").change(function () {
@@ -39,6 +45,16 @@ function setTrager_cangKu(){
     $('#selCangKu').AutoComplete({'data': lb_cangKus, 'paramName': 'selCangKu'});
     $('#inpSelCk').AutoComplete({'data': lb_cangKus, 'paramName': 'selCangKu'});
     $('#inpCk').AutoComplete({'data': lb_cangKus, 'paramName': 'editCangKu'});
+}
+
+function setTrager_keHu() {
+    $('#inpSelKh').AutoComplete({'data': lb_keHus, 'paramName':'selKeHu'});
+    $('#inpKh').AutoComplete({'data': lb_keHus, 'paramName':'editKeHu'});
+}
+
+function setTrager_gongYingShang() {
+    $('#inpSelGys').AutoComplete({'data': lb_gongYingShangs, 'paramName':'selGongYingShang'});
+    $('#inpGys').AutoComplete({'data': lb_gongYingShangs, 'paramName':'editGongYingShang'});
 }
 
 function setTrager_ziDian() {

@@ -27,6 +27,11 @@ public class RuKuServiceImpl implements RuKuService {
     public RuKu getRuKuById(Integer id) {
         return (RuKu) ruKuDao.findObjectById(RuKu.class, id);
     }
+    
+    @Override
+    public RuKu getRuKuDetailById(Integer id) {
+        return  ruKuDao.getRuKuDetailById(id);
+    }
 
     @Override
     public List<RuKu> getAllRuKus(Integer qy_id) {
@@ -71,6 +76,11 @@ public class RuKuServiceImpl implements RuKuService {
             hql += " and state = " + map.get("state");
         }
         return ruKuDao.getPageList(hql, null, 1, 20);
+    }
+
+    @Override
+    public boolean dealRuKu(RuKu ruKu,Integer a01_id) {
+        return ruKuDao.dealRuKu(ruKu, a01_id);
     }
 
 }

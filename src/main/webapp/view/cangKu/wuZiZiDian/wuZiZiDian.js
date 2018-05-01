@@ -157,6 +157,7 @@ function deleteWuZiZiDian(index) {
 }
 
 function chkXhgg(index){
+    $("#tblWuZiXhgg_body tr").remove();
     if (wuZiZiDians[index] === undefined) {
         return alert("请选择物资字典");
     }

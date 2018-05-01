@@ -64,6 +64,7 @@ function addWuZiLeiBie() {
     $("#inpMc").val("");
     $("#inpDm").val("");
     $("#inpBz").val("");
+    buildTysx(tysx);
     $("#wuZiLeiBieModal").modal("show");
 }
 

@@ -17,9 +17,13 @@ public interface RuKuService {
 
     public RuKu getRuKuById(Integer id);
     
+    public RuKu getRuKuDetailById(Integer id);
+    
     public List<RuKu> getAllRuKus(Integer qy_id);
     
     public boolean updateRuKu(RuKu ruKu);
+    
+    public boolean dealRuKu(RuKu ruKu,Integer a01_id);
     
     public RuKu saveRuKu(RuKu ruKu);
     

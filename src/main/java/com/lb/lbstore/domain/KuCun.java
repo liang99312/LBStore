@@ -35,7 +35,7 @@ public class KuCun {
     private Integer rkr_id;
     private Integer spr_id;
     private String xhgg;
-    private String ly; //供应商；客户；生产
+    private String ly; //供应商；客户；生产；
     private String dh; //单号
     private String pp;
     private String scc;
@@ -49,7 +49,9 @@ public class KuCun {
     private String jlfs = "pt"; //普通记录(pt)；总量记录(zl)；单元明细(mx)
     private Double bzgg = 1.0D;
     private Double sl;
+    private Double syl;
     private Double zl;
+    private Double syzl;
     private String tysx;
     private String dymx;
     
@@ -291,6 +293,22 @@ public class KuCun {
 
     public void setDh(String dh) {
         this.dh = dh;
+    }
+
+    public Double getSyl() {
+        return syl;
+    }
+
+    public void setSyl(Double syl) {
+        this.syl = syl;
+    }
+
+    public Double getSyzl() {
+        return syzl;
+    }
+
+    public void setSyzl(Double syzl) {
+        this.syzl = syzl;
     }
 
     @Override

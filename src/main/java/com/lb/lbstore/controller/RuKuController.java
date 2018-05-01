@@ -15,7 +15,6 @@ import com.lb.lbstore.domain.RuKu;
 import com.lb.lbstore.service.RuKuService;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -56,6 +55,24 @@ public class RuKuController extends BaseController {
         }
         return map;
     }
+    
+    @RequestMapping(value = "getRuKuDetailById.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> getRuKuDetailById(@RequestParam Integer id) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            RuKu ruKu = ruKuServiceImpl.getRuKuDetailById(id);
+            map.put("result", 0);
+            map.put("ruKu", ruKu);
+        } catch (Exception e) {
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
+    }
 
     @RequestMapping(value = "updateRuKu.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
@@ -65,7 +82,34 @@ public class RuKuController extends BaseController {
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
+            if(model.getState() != 0){
+                map.put("result", -1);
+                map.put("msg", "已办理入库单不能修改！");
+                return map;
+            }
             boolean result = ruKuServiceImpl.updateRuKu(model);
+            map.put("result", result? 0:-1);
+        } catch (Exception e) {
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
+    }
+    
+    @RequestMapping(value = "dealRuKu.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> dealRuKu(@RequestBody RuKu model) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            if(model.getState() != 0){
+                map.put("result", -1);
+                map.put("msg", "入库单已办理！");
+                return map;
+            }
+            boolean result = ruKuServiceImpl.dealRuKu(model,getDlA01().getId());
             map.put("result", result? 0:-1);
         } catch (Exception e) {
             map.put("result", -1);
@@ -82,6 +126,12 @@ public class RuKuController extends BaseController {
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
+            RuKu model = ruKuServiceImpl.getRuKuById(id);
+            if(model.getState() != 0){
+                map.put("result", -1);
+                map.put("msg", "已办理入库单不能删除！");
+                return map;
+            }
             boolean result = ruKuServiceImpl.deleteRuKu(id);
             map.put("result", result? 0:-1);
         } catch (Exception e) {

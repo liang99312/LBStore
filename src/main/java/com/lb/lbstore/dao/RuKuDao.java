@@ -16,6 +16,29 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class RuKuDao extends BaseDao {
+    
+    public RuKu getRuKuDetailById(Integer id){
+        RuKu ruKu = null;
+        Session session = null;
+        try {
+            session = getSessionFactory().openSession();
+            ruKu = (RuKu) session.createQuery("from RuKu where id=" + id);
+            List<RuKuDetail> details = session.createQuery("from RuKuDetail where rk_id=" + id).list();
+            ruKu.setDetails(details);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (session != null) {
+                    session.close();
+                }
+            } catch (Exception he) {
+                he.printStackTrace();
+            }
+        }
+        return ruKu;
+    }
+    
     public Integer saveRuKu(RuKu ruKu){
         Integer result = -1;
         Session session = null;
@@ -166,6 +189,8 @@ public class RuKuDao extends BaseDao {
                 kc.setXhgg_id(d.getXhgg_id());
                 kc.setZl(d.getZl());
                 kc.setZldw(d.getZldw());
+                kc.setSyl(kc.getSl());
+                kc.setSyzl(kc.getZl());
                 
                 session.save(kc);
             }
