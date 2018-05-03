@@ -1,14 +1,15 @@
 var ruKus;
 var optFlag = 1;
 var editIndex = -1;
-var editFenLei;
 var editType;
 var rkmx = [];
 var optMxFlag = 1;
 var editMxIndex = -1;
 var tgIndex = 0;
-var selXhgg;
-var selLeiBie;
+var selWzzd;
+var editWzzd;
+var editXhgg;
+var editLeiBie;
 var selCangKu;
 var selKeHu;
 var editKeHu;
@@ -60,6 +61,7 @@ function setTrager_gongYingShang() {
 }
 
 function setTrager_ziDian() {
+    $('#inpSelWz').AutoComplete({'data': lb_wuZiZiDians, 'paramName': 'selWzzd'});
     $('#inpMxWz').AutoComplete({'data': lb_wuZiZiDians, 'afterSelectedHandler': selectWuZiZiDian});
 }
 
@@ -68,14 +70,14 @@ function setTrager_leiBie() {
 }
 
 function selectWuZiLeiBie(json) {
-    selLeiBie = json;
-    $("#inpMxLb").val(selLeiBie.mc);
-    if (selLeiBie.tysx && selLeiBie.tysx !== null && selLeiBie.tysx !== "") {
-        selLeiBie.tysx = JSON.parse(selLeiBie.tysx);
+    editLeiBie = json;
+    $("#inpMxLb").val(editLeiBie.mc);
+    if (editLeiBie.tysx && editLeiBie.tysx !== null && editLeiBie.tysx !== "") {
+        editLeiBie.tysx = JSON.parse(editLeiBie.tysx);
     } else {
-        selLeiBie.tysx = [];
+        editLeiBie.tysx = [];
     }
-    buildTysx(selLeiBie.tysx);
+    buildTysx(editLeiBie.tysx);
 }
 
 function selectRuKu_m() {
@@ -94,7 +96,7 @@ function selectWuZiZiDian(json) {
         },
         success: function (json) {
             if (json.result === 0) {
-                $('#inpMxXhgg').AutoComplete({'data': json.wuZiZiDian.xhggs, 'paramName': 'selXhgg'});
+                $('#inpMxXhgg').AutoComplete({'data': json.wuZiZiDian.xhggs, 'paramName': 'editXhgg'});
                 selectWuZiLeiBie(json.wuZiZiDian.wzlb);
             }
         }
@@ -114,10 +116,6 @@ function selectMxJlfs() {
         $("#divMxDymx").show();
         buildDymx();
     }
-}
-
-function setTrager_fenLei() {
-    $('#inpMxZiDian').AutoComplete({'data': lb_ziDianFenLeis, 'paramName': 'editFenLei'});
 }
 
 function jxRuKu(json) {
@@ -144,11 +142,35 @@ function jxRuKu(json) {
 function selectRuKu() {
     var ruKu = {};
     var tj = {"pageSize": 20, "currentPage": 1};
-    if ($("#selName").val() !== "") {
-        ruKu.mc = $("#selName").val();
+    if ($("#selLsh").val() !== "") {
+        ruKu.lsh = $("#selLsh").val();
     }
     if ($("#selState").val() !== '' && $("#selState").val() !== "-9") {
         ruKu.state = $("#selState").val();
+    }
+    if($("#selCangKu").val() !== "" && $("#selCangKu").val() === selCangKu.mc){
+        ruKu.ck_id = selCangKu.id;
+    }
+    tj.paramters = ruKu;
+    var options = {};
+    options.url = "/LBStore/ruKu/listRuKusByPage.do";
+    options.tj = tj;
+    options.func = jxRuKu;
+    options.ul = "#example";
+    queryPaginator(options);
+}
+
+function selectRuKu_m() {
+    var ruKu = {};
+    var tj = {"pageSize": 20, "currentPage": 1};
+    if ($("#inpSelWz").val() !== "") {
+        ruKu.mc = $("#inpSelWz").val();
+    }
+    if ($("#selState").val() !== '' && $("#selState").val() !== "-9") {
+        ruKu.state = $("#selState").val();
+    }
+    if($("#inpSelCk").val() !== "" && $("#inpSelCk").val() === selCangKu.mc){
+        ruKu.ck_id = selCangKu.id;
     }
     tj.paramters = ruKu;
     var options = {};
@@ -261,6 +283,7 @@ function buildDymx() {
 function addRuKuMingXi() {
     optMxFlag = 1;
     dymx_opt = {data: [], yxData: []};
+    editLeiBie = null;
     $("#ruKuMingXiModal_title").html("增加明细");
     $("#inpMxWz").val("");
     $("#inpMxLb").val("");
@@ -325,6 +348,9 @@ function delRuKuMingXi(index) {
 
 function saveRuKuMingXi() {
     if (optMxFlag === 1) {
+        if(!editLeiBie || editLeiBie === null){
+            return alert("物资类别不能为空");
+        }
         var mx = {};
         mx.wzmc = $("#inpMxWz").val();
         mx.wzlb = $("#inpMxLb").val();
@@ -345,18 +371,7 @@ function saveRuKuMingXi() {
         mx.tysx = tysx_opt.data;
         rkmx.push(ts);
     } else if (optMxFlag === 2) {
-        var ts = {};
-        ts.mc = $("#inpMxMc").val();
-        ts.type = $("#inpMxType").val();
-        if (editFenLei && editFenLei !== null) {
-            ts.zdfl = editFenLei.id;
-            ts.zdfl_mc = editFenLei.mc;
-        }
-        rkmx.splice(editMxIndex, 1, ts);
+        
     }
-    for (var i = 0; i < rkmx.length; i++) {
-        rkmx[i].id = i;
-    }
-    buildTysx(rkmx);
     $("#ruKuMingXiModal").modal("hide");
 }
