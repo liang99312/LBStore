@@ -15,6 +15,8 @@ var editKeHu;
 var selGongYingShang;
 var editGongYingShang;
 var editCangKu;
+var dymx_opt = {data: [], yxData: []};
+var tysx_opt = {data: [], ls: 2, lw: 70};
 
 $(document).ready(function () {
     getCangKus(setTrager_cangKu);
@@ -27,34 +29,34 @@ $(document).ready(function () {
         selectMxJlfs();
     });
     $(".rk_kh").hide();
-    $("#inpLy").change(function(){
-        if($("#inpLy").val() === "供应商"){
+    $("#inpLy").change(function () {
+        if ($("#inpLy").val() === "供应商") {
             $(".rk_gys").removeAttr("disabled").show();
             $(".rk_kh").hide();
-        }else if($("#inpLy").val() === "客户"){
+        } else if ($("#inpLy").val() === "客户") {
             $(".rk_gys").hide();
             $(".rk_kh").show();
-        }else{
-            $(".rk_gys").val("").attr("disabled","disabled").show();
+        } else {
+            $(".rk_gys").val("").attr("disabled", "disabled").show();
             $(".rk_kh").hide();
         }
     });
 });
 
-function setTrager_cangKu(){
+function setTrager_cangKu() {
     $('#selCangKu').AutoComplete({'data': lb_cangKus, 'paramName': 'selCangKu'});
     $('#inpSelCk').AutoComplete({'data': lb_cangKus, 'paramName': 'selCangKu'});
     $('#inpCk').AutoComplete({'data': lb_cangKus, 'paramName': 'editCangKu'});
 }
 
 function setTrager_keHu() {
-    $('#inpSelKh').AutoComplete({'data': lb_keHus, 'paramName':'selKeHu'});
-    $('#inpKh').AutoComplete({'data': lb_keHus, 'paramName':'editKeHu'});
+    $('#inpSelKh').AutoComplete({'data': lb_keHus, 'paramName': 'selKeHu'});
+    $('#inpKh').AutoComplete({'data': lb_keHus, 'paramName': 'editKeHu'});
 }
 
 function setTrager_gongYingShang() {
-    $('#inpSelGys').AutoComplete({'data': lb_gongYingShangs, 'paramName':'selGongYingShang'});
-    $('#inpGys').AutoComplete({'data': lb_gongYingShangs, 'paramName':'editGongYingShang'});
+    $('#inpSelGys').AutoComplete({'data': lb_gongYingShangs, 'paramName': 'selGongYingShang'});
+    $('#inpGys').AutoComplete({'data': lb_gongYingShangs, 'paramName': 'editGongYingShang'});
 }
 
 function setTrager_ziDian() {
@@ -76,7 +78,7 @@ function selectWuZiLeiBie(json) {
     buildTysx(selLeiBie.tysx);
 }
 
-function selectRuKu_m(){
+function selectRuKu_m() {
     $("#ruKuSelectModal").modal("show");
 }
 
@@ -110,7 +112,7 @@ function selectMxJlfs() {
     } else if (val === "mx") {
         $("#dvMxZl").show();
         $("#divMxDymx").show();
-        buildDymx([]);
+        buildDymx();
     }
 }
 
@@ -246,21 +248,36 @@ function buildTysx(data) {
         $("#divMxTysx").hide();
         return;
     }
+    tysx_opt.data = data;
     $("#divMxTysx").empty();
-    var opt = {data: data, ls: 2,lw:70};
-    $("#divMxTysx").setTysxDiv(opt);
+    $("#divMxTysx").setTysxDiv(tysx_opt);
 }
 
-function buildDymx(data) {
-    var opt = {data: data, yxData: []};
-    $("#tblMxDymx").setDetailTable(opt);
+function buildDymx() {
+    $("#tblMxDymx").setDetailTable(dymx_opt);
     $("#tblMxDymx input:last").focus();
 }
 
 function addRuKuMingXi() {
     optMxFlag = 1;
+    dymx_opt = {data: [], yxData: []};
     $("#ruKuMingXiModal_title").html("增加明细");
-
+    $("#inpMxWz").val("");
+    $("#inpMxLb").val("");
+    $("#inpMxPp").val("");
+    $("#inpMxXhgg").val("");
+    $("#inpMxScc").val("");
+    $("#inpMxTxm").val("");
+    $("#inpMxScrq").val("");
+    $("#inpMxBzq").val("");
+    $("#inpMxDj").val("");
+    $("#inpMxDw").val("");
+    $("#inpMxSl").val("");
+    $("#inpMxJlfs").val("");
+    $("#inpMxBzgg").val("");
+    $("#inpMxZldw").val("");
+    $("#inpMxZl").val("");
+    buildTysx([]);
     $("#ruKuMingXiModal").modal("show");
 }
 
@@ -268,15 +285,35 @@ function editRuKuMingXi(index) {
     if (rkmx[index]) {
         optMxFlag = 2;
         editMxIndex = index;
+        var m = rkmx[index];
+        dymx_opt = {data: [], yxData: m.dymx};
         $("#ruKuMingXiModal_title").html("修改明细");
-
+        $("#inpMxWz").val(m.wzmc);
+        $("#inpMxLb").val(m.wzlb);
+        $("#inpMxPp").val(m.pp);
+        $("#inpMxXhgg").val(m.xhgg);
+        $("#inpMxScc").val(m.scc);
+        $("#inpMxTxm").val(m.txm);
+        $("#inpMxScrq").val(m.scrq);
+        $("#inpMxBzq").val(m.bzq);
+        $("#inpMxDj").val(m.dj);
+        $("#inpMxDw").val(m.dw);
+        $("#inpMxSl").val(m.sl);
+        $("#inpMxJlfs").val(m.jlfs);
+        $("#inpMxBzgg").val(m.bzgg);
+        $("#inpMxZldw").val(m.zldw);
+        $("#inpMxZl").val(m.zl);
+        buildTysx(m.tysx);
+        if (rkmx[index].jlfs === "mx") {
+            buildDymx();
+        }
         $("#ruKuMingXiModal").modal("show");
     }
 }
 
 function delRuKuMingXi(index) {
     if (rkmx[index]) {
-        if (confirm("确定删除特有属性：" + rkmx[index].mc + "?")) {
+        if (confirm("确定删除明细?")) {
             rkmx.splice(index, 1);
             for (var i = 0; i < rkmx.length; i++) {
                 rkmx[i].id = i;
@@ -288,14 +325,24 @@ function delRuKuMingXi(index) {
 
 function saveRuKuMingXi() {
     if (optMxFlag === 1) {
-        var ts = {};
-        ts.id = rkmx.length;
-        ts.mc = $("#inpMxMc").val();
-        ts.type = $("#inpMxType").val();
-        if (editFenLei && editFenLei !== null) {
-            ts.zdfl = editFenLei.id;
-            ts.zdfl_mc = editFenLei.mc;
-        }
+        var mx = {};
+        mx.wzmc = $("#inpMxWz").val();
+        mx.wzlb = $("#inpMxLb").val();
+        mx.pp = $("#inpMxPp").val();
+        mx.xhgg = $("#inpMxXhgg").val();
+        mx.scc = $("#inpMxScc").val();
+        mx.txm = $("#inpMxTxm").val();
+        mx.scrq = $("#inpMxScrq").val();
+        mx.bzq = $("#inpMxBzq").val();
+        mx.dj = $("#inpMxDj").val();
+        mx.dw = $("#inpMxDw").val();
+        mx.sl = $("#inpMxSl").val();
+        mx.jlfs = $("#inpMxJlfs").val();
+        mx.bzgg = $("#inpMxBzgg").val();
+        mx.zldw = $("#inpMxZldw").val();
+        mx.zl = $("#inpMxZl").val();
+        mx.dymx = dymx_opt.yxData;
+        mx.tysx = tysx_opt.data;
         rkmx.push(ts);
     } else if (optMxFlag === 2) {
         var ts = {};

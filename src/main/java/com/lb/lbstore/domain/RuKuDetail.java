@@ -31,6 +31,7 @@ public class RuKuDetail {
     private Integer wzzd_id;
     private String wzmc;
     private Integer wzlb_id;
+    private transient String wzlb;
     private Integer xhgg_id;
     private String xhgg;
     private String ly; //供应商；客户；生产
@@ -45,8 +46,8 @@ public class RuKuDetail {
     private String zldw;   
     private String jlfs = "pt"; //普通记录(pt)；总量记录(zl)；单元明细(mx)
     private Double bzgg = 1.0D; //包装规格
-    private Double sl;
-    private Double zl;
+    private Double sl = 1.0D;
+    private Double zl = 1.0D;
     private String tysx;
     private String dymx;
     
@@ -104,6 +105,14 @@ public class RuKuDetail {
 
     public void setWzlb_id(Integer wzlb_id) {
         this.wzlb_id = wzlb_id;
+    }
+
+    public String getWzlb() {
+        return wzlb;
+    }
+
+    public void setWzlb(String wzlb) {
+        this.wzlb = wzlb;
     }
 
     public Integer getWzzd_id() {

@@ -5,8 +5,6 @@
  */
 package com.lb.lbstore.dao;
 
-import com.lb.lbstore.domain.A01;
-import com.lb.lbstore.domain.QiYe;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;

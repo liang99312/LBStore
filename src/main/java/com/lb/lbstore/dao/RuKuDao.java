@@ -23,7 +23,7 @@ public class RuKuDao extends BaseDao {
         try {
             session = getSessionFactory().openSession();
             ruKu = (RuKu) session.createQuery("from RuKu where id=" + id);
-            List<RuKuDetail> details = session.createQuery("from RuKuDetail where rk_id=" + id).list();
+            List<RuKuDetail> details = session.createQuery("select d.*,l.mc as wzlb from RuKuDetail d left join WuZiLeiBie l on d.wzlb_id=l.id where d.rk_id=" + id).list();
             ruKu.setDetails(details);
         } catch (Exception e) {
             e.printStackTrace();
