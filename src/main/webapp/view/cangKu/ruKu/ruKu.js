@@ -148,7 +148,7 @@ function selectRuKu() {
     if ($("#selState").val() !== '' && $("#selState").val() !== "-9") {
         ruKu.state = $("#selState").val();
     }
-    if($("#selCangKu").val() !== "" && $("#selCangKu").val() === selCangKu.mc){
+    if ($("#selCangKu").val() !== "" && $("#selCangKu").val() === selCangKu.mc) {
         ruKu.ck_id = selCangKu.id;
     }
     tj.paramters = ruKu;
@@ -169,7 +169,7 @@ function selectRuKu_m() {
     if ($("#selState").val() !== '' && $("#selState").val() !== "-9") {
         ruKu.state = $("#selState").val();
     }
-    if($("#inpSelCk").val() !== "" && $("#inpSelCk").val() === selCangKu.mc){
+    if ($("#inpSelCk").val() !== "" && $("#inpSelCk").val() === selCangKu.mc) {
         ruKu.ck_id = selCangKu.id;
     }
     tj.paramters = ruKu;
@@ -183,10 +183,12 @@ function selectRuKu_m() {
 
 function addRuKu() {
     optFlag = 1;
+    rkmx = [];
     $("#ruKuModel_title").html("新增入库单");
     $("#inpMc").val("");
     $("#inpDm").val("");
     $("#inpBz").val("");
+    jxRuKuMingXi();
     $("#ruKuModal").modal("show");
 }
 
@@ -198,10 +200,12 @@ function editRuKu(index) {
     }
     var ruKu = ruKus[index];
     editIndex = index;
+    rkmx = ruKu.details;
     $("#ruKuModel_title").html("修改入库单");
     $("#inpMc").val(ruKu.mc);
     $("#inpDm").val(ruKu.dm);
     $("#inpBz").val(ruKu.bz);
+    jxRuKuMingXi();
     $("#ruKuModal").modal("show");
 }
 
@@ -280,6 +284,24 @@ function buildDymx() {
     $("#tblMxDymx input:last").focus();
 }
 
+function jxRuKuMingXi() {
+    $("#tblWuZiMingXi_body tr").remove();
+    $.each(rkmx, function (index, item) { //遍历返回的json
+        if (item.tysx && item.tysx !== null && item.tysx !== "" && typeof item.tysx === 'string') {
+            item.tysx = JSON.parse(item.tysx);
+        } else if (item.tysx && typeof item.tysx === 'object') {
+
+        } else {
+            item.tysx = [];
+        }
+        var je = parseFloat(item.sl) * parseFloat(item.dj);
+        var trStr = '<tr><td>' + item.wzmc + '</td><td>' + item.pp + '</td><td>' + item.xhgg + '</td><td>' + item.sl + '</td><td>' + je + '</td><td>'
+                + '<button class="btn btn-info btn-xs icon-edit" onclick="editRuKuMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;'
+                + '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteRuKuMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button></td></tr>';
+        $("#tblWuZiMingXi_body").append(trStr);
+    });
+}
+
 function addRuKuMingXi() {
     optMxFlag = 1;
     dymx_opt = {data: [], yxData: []};
@@ -293,10 +315,10 @@ function addRuKuMingXi() {
     $("#inpMxTxm").val("");
     $("#inpMxScrq").val("");
     $("#inpMxBzq").val("");
-    $("#inpMxDj").val("");
+    $("#inpMxDj").val("1");
     $("#inpMxDw").val("");
-    $("#inpMxSl").val("");
-    $("#inpMxJlfs").val("");
+    $("#inpMxSl").val("0");
+    $("#inpMxJlfs").val("pt");
     $("#inpMxBzgg").val("");
     $("#inpMxZldw").val("");
     $("#inpMxZl").val("");
@@ -311,9 +333,12 @@ function editRuKuMingXi(index) {
         var m = rkmx[index];
         dymx_opt = {data: [], yxData: m.dymx};
         $("#ruKuMingXiModal_title").html("修改明细");
+        editWzzd = {"id":m.wzzd_id,"mc":m.wzmc};
         $("#inpMxWz").val(m.wzmc);
+        editLeiBie = {"id": m.wzlb_id, "mc": m.wzlb};
         $("#inpMxLb").val(m.wzlb);
         $("#inpMxPp").val(m.pp);
+        editXhgg = {"id":m.xhgg_id,"mc":m.xhgg};
         $("#inpMxXhgg").val(m.xhgg);
         $("#inpMxScc").val(m.scc);
         $("#inpMxTxm").val(m.txm);
@@ -334,44 +359,63 @@ function editRuKuMingXi(index) {
     }
 }
 
-function delRuKuMingXi(index) {
+function deleteRuKuMingXi(index) {
     if (rkmx[index]) {
-        if (confirm("确定删除明细?")) {
+        if (confirm("确定删除明细：" + rkmx[index].wzmc + "?")) {
             rkmx.splice(index, 1);
-            for (var i = 0; i < rkmx.length; i++) {
-                rkmx[i].id = i;
-            }
-            buildTysx(rkmx);
+            jxRuKuMingXi();
         }
     }
 }
 
 function saveRuKuMingXi() {
-    if (optMxFlag === 1) {
-        if(!editLeiBie || editLeiBie === null){
-            return alert("物资类别不能为空");
-        }
-        var mx = {};
-        mx.wzmc = $("#inpMxWz").val();
-        mx.wzlb = $("#inpMxLb").val();
-        mx.pp = $("#inpMxPp").val();
-        mx.xhgg = $("#inpMxXhgg").val();
-        mx.scc = $("#inpMxScc").val();
-        mx.txm = $("#inpMxTxm").val();
-        mx.scrq = $("#inpMxScrq").val();
-        mx.bzq = $("#inpMxBzq").val();
-        mx.dj = $("#inpMxDj").val();
-        mx.dw = $("#inpMxDw").val();
-        mx.sl = $("#inpMxSl").val();
-        mx.jlfs = $("#inpMxJlfs").val();
-        mx.bzgg = $("#inpMxBzgg").val();
-        mx.zldw = $("#inpMxZldw").val();
-        mx.zl = $("#inpMxZl").val();
-        mx.dymx = dymx_opt.yxData;
-        mx.tysx = tysx_opt.data;
-        rkmx.push(ts);
-    } else if (optMxFlag === 2) {
-        
+    if (!editLeiBie || editLeiBie === null) {
+        return alert("物资类别不能为空");
     }
+    if ($("#inpMxSl").val() === "") {
+        return alert("请输入物资名称");
+    }
+    var mx = {};
+    if ($("#inpMxWz").val() === "") {
+        return alert("请输入物资名称");
+    } else {
+        if ($("#inpMxWz").val() !== editWzzd.mc) {
+            mx.wzzd_id = -1;
+        } else {
+            mx.wzzd_id = editWzzd.id;
+        }
+    }
+    mx.wzmc = $("#inpMxWz").val();
+    mx.wzlb = $("#inpMxLb").val();
+    mx.pp = $("#inpMxPp").val();
+    if ($("#inpMxXhgg").val() === "") {
+        return alert("请输入物资型号规格");
+    } else {
+        if ($("#inpMxXhgg").val() !== editXhgg.mc) {
+            mx.xhgg_id = -1;
+        } else {
+            mx.xhgg_id = editXhgg.id;
+        }
+    }
+    mx.xhgg = $("#inpMxXhgg").val();
+    mx.scc = $("#inpMxScc").val();
+    mx.txm = $("#inpMxTxm").val();
+    mx.scrq = $("#inpMxScrq").val();
+    mx.bzq = $("#inpMxBzq").val();
+    mx.dj = parseFloat($("#inpMxDj").val());
+    mx.dw = $("#inpMxDw").val();
+    mx.sl = parseFloat($("#inpMxSl").val());
+    mx.jlfs = $("#inpMxJlfs").val();
+    mx.bzgg = $("#inpMxBzgg").val();
+    mx.zldw = $("#inpMxZldw").val();
+    mx.zl = $("#inpMxZl").val();
+    mx.dymx = dymx_opt.yxData;
+    mx.tysx = tysx_opt.data;
+    if (optMxFlag === 1) {
+        rkmx.push(mx);
+    } else if (optMxFlag === 2) {
+        rkmx[editMxIndex] = mx;
+    }
+    jxRuKuMingXi();
     $("#ruKuMingXiModal").modal("hide");
 }
