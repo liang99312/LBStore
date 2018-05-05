@@ -41,6 +41,8 @@ public class RuKu {
     private String bz;
     private Integer state;//0:未办理；1：已办理
     private transient List<RuKuDetail> details = new ArrayList();
+    private transient Date qrq;
+    private transient Date zrq;
 
     public Integer getId() {
         return id;
@@ -176,6 +178,22 @@ public class RuKu {
 
     public void setDetails(List<RuKuDetail> details) {
         this.details = details;
+    }
+
+    public Date getQrq() {
+        return qrq;
+    }
+
+    public void setQrq(Date qrq) {
+        this.qrq = qrq;
+    }
+
+    public Date getZrq() {
+        return zrq;
+    }
+
+    public void setZrq(Date zrq) {
+        this.zrq = zrq;
     }
 
     @Override

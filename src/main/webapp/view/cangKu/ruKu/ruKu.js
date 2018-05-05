@@ -164,13 +164,25 @@ function selectRuKu_m() {
     var ruKu = {};
     var tj = {"pageSize": 20, "currentPage": 1};
     if ($("#inpSelWz").val() !== "") {
-        ruKu.mc = $("#inpSelWz").val();
+        ruKu.wzmc = $("#inpSelWz").val();
     }
     if ($("#selState").val() !== '' && $("#selState").val() !== "-9") {
         ruKu.state = $("#selState").val();
     }
     if ($("#inpSelCk").val() !== "" && $("#inpSelCk").val() === selCangKu.mc) {
         ruKu.ck_id = selCangKu.id;
+    }
+    if ($("#inpSelKh").val() !== "" && $("#inpSelKh").val() === selKeHu.mc) {
+        ruKu.kh_id = selKeHu.id;
+    }
+    if ($("#inpSelGys").val() !== "" && $("#inpSelGys").val() === selGongYingShang.mc) {
+        ruKu.gys_id = selGongYingShang.id;
+    }
+    if ($("#inpSelQrq").val() !== "") {
+        ruKu.qrq = $("#inpSelQrq").val();
+    }
+    if ($("#inpSelZrq").val() !== "") {
+        ruKu.zrq = $("#inpSelZrq").val();
     }
     tj.paramters = ruKu;
     var options = {};

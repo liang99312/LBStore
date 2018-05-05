@@ -45,20 +45,20 @@ and open the template in the editor.
             <div id="list1" class="table-responsive" style="height: 678px;width:100%;padding-top: 5px;">
                 <table id="data_table" class="table table-hover">
                     <thead>
-                    <tr>
-                        <th style="width:18%">名称</th>
-                        <th style="width:18%">代码</th>
-                        <th>操作</th>
-                    </tr>
+                        <tr>
+                            <th style="width:18%">名称</th>
+                            <th style="width:18%">代码</th>
+                            <th>操作</th>
+                        </tr>
                     </thead>
                     <tbody id='data_table_body'>
-                    <tr><td>请查询入库单记录</td></tr>
+                        <tr><td>请查询入库单记录</td></tr>
                     </tbody>
                 </table>
             </div>
             <ul id="example"></ul>
         </div>
-        
+
         <div class="modal fade" id="ruKuSelectModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -71,6 +71,15 @@ and open the template in the editor.
                             <div class="form-group">
                                 <label for="inpSelCk">仓&ensp;&ensp;库：</label>
                                 <input type="text" id="inpSelCk" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpSelState">状&ensp;&ensp;态：</label>
+                                <select id="inpSelState" style="width: 170px; height: 26px;line-height: 26px;">
+                                    <option value="-9" selected = "selected">全部</option>
+                                    <option value="0">未入库</option>
+                                    <option value="2">已入库</option>
+                                    <option value="-1">已删除</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="inpSelWz">物&ensp;&ensp;资：</label>
@@ -86,7 +95,7 @@ and open the template in the editor.
                             </div>
                             <div class="form-group" style="border-bottom: 1px solid #bcbcbc;">
                                 <label for="inpSelRq">日&ensp;&ensp;期：</label>
-                                <input type="text" id="inpSelRqq" />-<input type="text" id="inpSelRz" />
+                                <input type="text" id="inpSelQrq" />-<input type="text" id="inpSelZrq" />
                             </div>
                         </div>
                     </div>
@@ -96,7 +105,7 @@ and open the template in the editor.
                 </div>
             </div>
         </div>
-        
+
         <div class="modal fade" id="ruKuModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog" style="width: 800px;">
                 <div class="modal-content">
@@ -162,7 +171,7 @@ and open the template in the editor.
                 </div>
             </div>
         </div>
-        
+
         <div class="modal fade" id="ruKuMingXiModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
