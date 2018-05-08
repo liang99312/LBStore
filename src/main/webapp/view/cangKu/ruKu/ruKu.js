@@ -196,9 +196,13 @@ function selectRuKu_m() {
 function addRuKu() {
     optFlag = 1;
     rkmx = [];
+    editCangKu = {};
+    editGongYingShang = {};
+    editKeHu = {};
     $("#ruKuModel_title").html("新增入库单");
-    $("#inpMc").val("");
-    $("#inpDm").val("");
+    $("#inpGys").val("");
+    $("#inpKh").val("");
+    $("#inpDh").val("");
     $("#inpBz").val("");
     jxRuKuMingXi();
     $("#ruKuModal").modal("show");
@@ -214,14 +218,23 @@ function editRuKu(index) {
     editIndex = index;
     rkmx = ruKu.details;
     $("#ruKuModel_title").html("修改入库单");
-    $("#inpMc").val(ruKu.mc);
-    $("#inpDm").val(ruKu.dm);
+    if("供应商" === ruKu.ly){
+        $("#inpGys").val(ruKu.gys);
+        editGongYingShang = {"id":ruKu.gys_id,"mc":ruKu.gys};
+    }else if("客户" === ruKu.ly){
+        $("#inpKh").val(ruKu.kh);
+        editKeHu = {"id":ruKu.kh_id,"mc":ruKu.kh};
+    } 
+    $("#inpDh").val(ruKu.dh);
     $("#inpBz").val(ruKu.bz);
     jxRuKuMingXi();
     $("#ruKuModal").modal("show");
 }
 
 function saveRuKu() {
+    if(rkmx.length < 1){
+        return alert("请增加入库明细！");
+    }
     var ruKu = {};
     var url = "";
     if (optFlag === 2) {
@@ -233,9 +246,47 @@ function saveRuKu() {
     } else if (optFlag === 1) {
         url = "/LBStore/ruKu/saveRuKu.do";
     }
-    ruKu.mc = $("#inpMc").val();
-    ruKu.dm = $("#inpDm").val();
+    if ($("#inpCk").val() === "") {
+        return alert("请输入仓库信息");
+    } else {
+        if ($("#inpCk").val() !== editCangKu.mc) {
+            return alert("请输入仓库信息");
+        } else {
+            ruKu.ck_id = editCangKu.id;
+        }
+    }
+    ruKu.ly = $("#inpLy").val();
+    if("供应商" === $("#inpLy").val()){
+        if ($("#inpGys").val() === "") {
+            return alert("请输入供应商信息");
+        } else {
+            if ($("#inpGys").val() !== editGongYingShang.mc) {
+                return alert("请输入供应商信息");
+            } else {
+                ruKu.gys_id = editGongYingShang.id;
+            }
+        }
+    }else if("客户" === $("#inpLy").val()){
+        if ($("#inpKh").val() === "") {
+            return alert("请输入客户信息");
+        } else {
+            if ($("#inpKh").val() !== editGongYingShang.mc) {
+                return alert("请输入客户信息");
+            } else {
+                ruKu.kh_id = editKeHu.id;
+            }
+        }
+    } 
+    var wz = "";
+    for(var i=0;i<rkmx.length;i++){
+        var e = rkmx[i];
+        wz += e.wzmc + ";";
+    }
+    ruKu.details = rkmx;
+    ruKu.wz = wz;
+    ruKu.dh = $("#inpDh").val();
     ruKu.bz = $("#inpBz").val();
+    ruKu.state = 0;
     $.ajax({
         url: url,
         data: JSON.stringify(ruKu),
