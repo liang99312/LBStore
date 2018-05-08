@@ -85,22 +85,27 @@ function selectRuKu_m() {
 }
 
 function selectWuZiZiDian(json) {
-    $.ajax({
-        url: "/LBStore/wuZiZiDian/getWuZiZiDianById.do?id=" + json.id,
-        contentType: "application/json",
-        type: "get",
-        dataType: "json",
-        cache: false,
-        error: function (msg, textStatus) {
+    editWzzd = json;
+    if(json.id > -1){
+        $.ajax({
+            url: "/LBStore/wuZiZiDian/getWuZiZiDianById.do?id=" + json.id,
+            contentType: "application/json",
+            type: "get",
+            dataType: "json",
+            cache: false,
+            error: function (msg, textStatus) {
 
-        },
-        success: function (json) {
-            if (json.result === 0) {
-                $('#inpMxXhgg').AutoComplete({'data': json.wuZiZiDian.xhggs, 'paramName': 'editXhgg'});
-                selectWuZiLeiBie(json.wuZiZiDian.wzlb);
+            },
+            success: function (json) {
+                if (json.result === 0) {
+                    $('#inpMxXhgg').AutoComplete({'data': json.wuZiZiDian.xhggs, 'paramName': 'editXhgg'});
+                    selectWuZiLeiBie(json.wuZiZiDian.wzlb);
+                }
             }
-        }
-    });
+        });
+    }else{
+        $('#inpMxXhgg').AutoComplete({'data': [], 'paramName': 'editXhgg'});
+    }
 }
 
 function selectMxJlfs() {
@@ -204,6 +209,8 @@ function addRuKu() {
     $("#inpKh").val("");
     $("#inpDh").val("");
     $("#inpBz").val("");
+    $("#inpSl").val(0);
+    $("#inpJe").val(0);
     jxRuKuMingXi();
     $("#ruKuModal").modal("show");
 }
@@ -227,6 +234,8 @@ function editRuKu(index) {
     } 
     $("#inpDh").val(ruKu.dh);
     $("#inpBz").val(ruKu.bz);
+    $("#inpSl").val(ruKu.sl);
+    $("#inpJe").val(ruKu.je);
     jxRuKuMingXi();
     $("#ruKuModal").modal("show");
 }
@@ -386,6 +395,9 @@ function addRuKuMingXi() {
     $("#inpMxZldw").val("");
     $("#inpMxZl").val("");
     buildTysx([]);
+    buildDymx();
+    $("#divMxDymx").hide();
+    $("#dvMxZl").hide();
     $("#ruKuMingXiModal").modal("show");
 }
 
@@ -415,8 +427,11 @@ function editRuKuMingXi(index) {
         $("#inpMxZldw").val(m.zldw);
         $("#inpMxZl").val(m.zl);
         buildTysx(m.tysx);
+        buildDymx();
         if (rkmx[index].jlfs === "mx") {
-            buildDymx();
+            $("#divMxDymx").show();
+        }else{
+            $("#divMxDymx").hide();
         }
         $("#ruKuMingXiModal").modal("show");
     }
@@ -442,7 +457,7 @@ function saveRuKuMingXi() {
     if ($("#inpMxWz").val() === "") {
         return alert("请输入物资名称");
     } else {
-        if ($("#inpMxWz").val() !== editWzzd.mc) {
+        if (!editWzzd || $("#inpMxWz").val() !== editWzzd.mc) {
             mx.wzzd_id = -1;
         } else {
             mx.wzzd_id = editWzzd.id;
@@ -454,7 +469,7 @@ function saveRuKuMingXi() {
     if ($("#inpMxXhgg").val() === "") {
         return alert("请输入物资型号规格");
     } else {
-        if ($("#inpMxXhgg").val() !== editXhgg.mc) {
+        if (!editXhgg || $("#inpMxXhgg").val() !== editXhgg.mc) {
             mx.xhgg_id = -1;
         } else {
             mx.xhgg_id = editXhgg.id;
@@ -480,5 +495,14 @@ function saveRuKuMingXi() {
         rkmx[editMxIndex] = mx;
     }
     jxRuKuMingXi();
+    var zsl = 0;
+    var zje = 0;
+    for(var i = 0;i<rkmx.length;i++){
+        var e = rkmx[i];
+        zsl = e.sl + zsl;
+        zje = e.sl*e.dj + zje;
+    }
+    $("#inpSl").val(zsl);
+    $("#inpJe").val(zje.toFixed(3));
     $("#ruKuMingXiModal").modal("hide");
 }
