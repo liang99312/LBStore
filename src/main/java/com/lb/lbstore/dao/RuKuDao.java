@@ -8,6 +8,8 @@ package com.lb.lbstore.dao;
 import com.lb.lbstore.domain.KuCun;
 import com.lb.lbstore.domain.RuKu;
 import com.lb.lbstore.domain.RuKuDetail;
+import com.lb.lbstore.domain.WuZiXhgg;
+import com.lb.lbstore.domain.WuZiZiDian;
 import java.util.Calendar;
 import java.util.List;
 import org.hibernate.Session;
@@ -155,6 +157,37 @@ public class RuKuDao extends BaseDao {
             String sql = "from RuKuDetail where rk_id="+ruKu.getId();
             List<RuKuDetail> list = session.createQuery(sql).list();
             for(RuKuDetail d:list){
+                boolean flag = false;
+                Integer zd_id = d.getWzzd_id();
+                if(d.getWzzd_id() < 1){
+                    WuZiZiDian zd = new WuZiZiDian();
+                    zd.setDw(d.getDw());
+                    zd.setMc(d.getWzmc());
+                    zd.setQy_id(ruKu.getQy_id());
+                    zd.setState(0);
+                    zd.setWzlb_id(d.getWzlb_id());
+                    zd_id = (Integer) session.save(zd);
+                    session.flush();
+                    d.setWzzd_id(zd_id);
+                    flag = true;
+                }
+                Integer xhgg_id = d.getXhgg_id();
+                if(d.getXhgg_id() < 1){
+                    WuZiXhgg xhgg = new WuZiXhgg();
+                    xhgg.setBzq(d.getBzq());
+                    xhgg.setMc(d.getXhgg());
+                    xhgg.setQy_id(ruKu.getQy_id());
+                    xhgg.setWzzd_id(zd_id);
+                    xhgg_id = (Integer) session.save(xhgg);
+                    session.flush();
+                    d.setXhgg_id(xhgg_id);
+                    flag = true;
+                } 
+                if(flag){
+                    session.update(d);
+                    session.flush();
+                }
+                
                 Calendar c = Calendar.getInstance();
                 c.setTime(d.getScrq());
                 c.add(Calendar.DATE, Integer.parseInt("" + d.getBzq()));
@@ -184,9 +217,9 @@ public class RuKuDao extends BaseDao {
                 kc.setTysx(d.getTysx());
                 kc.setWzlb_id(d.getWzlb_id());
                 kc.setWzmc(d.getWzmc());
-                kc.setWzzd_id(d.getWzzd_id());
+                kc.setWzzd_id(zd_id);
                 kc.setXhgg(d.getXhgg());
-                kc.setXhgg_id(d.getXhgg_id());
+                kc.setXhgg_id(xhgg_id);
                 kc.setZl(d.getZl());
                 kc.setZldw(d.getZldw());
                 kc.setSyl(kc.getSl());

@@ -25,6 +25,7 @@ $(document).ready(function () {
     getGongYingShangs(setTrager_gongYingShang);
     getWuZiZiDians(setTrager_ziDian);
     getWuZiLeiBies(setTrager_leiBie);
+    $("#inpMxScrq").datetimepicker({language:  'zh-CN',format: 'yyyy-mm-dd',weekStart: 7,todayBtn:  1,autoclose: 1,todayHighlight: 1,minView : 2,startView: 2,forceParse: 0,showMeridian: 1});
     $("#inpMxJlfs").change(function () {
         $("#tblMxDymx input:last").blur();
         selectMxJlfs();
