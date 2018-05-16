@@ -20,6 +20,7 @@ var dymx_opt = {data: [], yxData: []};
 var tysx_opt = {data: [], ls: 2, lw: 70};
 
 $(document).ready(function () {
+    $('#inpSelQrq,#inpSelZrq,#inpMxScrq').datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, minView: 2, startView: 2, forceParse: 0, showMeridian: 1});
     getCangKus(setTrager_cangKu);
     getKeHus(setTrager_keHu);
     getGongYingShangs(setTrager_gongYingShang);
@@ -346,6 +347,7 @@ function buildTysx(data) {
         $("#divMxTysx").hide();
         return;
     }
+    $("#divMxTysx").show();
     tysx_opt.data = data;
     $("#divMxTysx").empty();
     $("#divMxTysx").setTysxDiv(tysx_opt);

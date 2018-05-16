@@ -75,6 +75,7 @@ CREATE TABLE `store`.`wuzileibie` (
 CREATE TABLE `store`.`wuzizidian` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `qy_id` INT NOT NULL,
+  `wzlb_id` INT NOT NULL,
   `mc` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `dm` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `bm` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,

@@ -128,7 +128,7 @@ public class WuZiZiDianController extends BaseController {
         try {
             WuZiZiDian wuZiZiDian = wuZiZiDianServiceImpl.getWuZiZiDianById(id);
             List<WuZiXhgg> list = wuZiXhggServiceImpl.getWuZiXhgg4zd(id);
-            WuZiLeiBie wzlb = wuZiLeiBieServiceImpl.getWuZiLeiBieById(id);
+            WuZiLeiBie wzlb = wuZiLeiBieServiceImpl.getWuZiLeiBieById(wuZiZiDian.getWzlb_id());
             wuZiZiDian.setWzlb(wzlb);
             wuZiZiDian.setXhggs(list);
             map.put("result", 0);

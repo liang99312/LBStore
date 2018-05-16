@@ -70,6 +70,7 @@
                                 var e = yxData[i];
                                 if (e.id === json.id) {
                                     alert("对象已选！");
+                                    $('#' + tblId + ' input').val("");
                                     return;
                                 }
                             }
