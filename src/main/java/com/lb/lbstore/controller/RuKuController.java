@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.lb.lbstore.domain.RuKu;
 import com.lb.lbstore.service.RuKuService;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,6 +47,7 @@ public class RuKuController extends BaseController {
         try {
             model.setQy_id(getDlA01().getQy_id());
             model.setState(0);
+            model.setSj(new Date());
             RuKu ruKu = ruKuServiceImpl.saveRuKu(model);
             map.put("result", 0);
             map.put("ruKu", ruKu);
@@ -87,6 +89,7 @@ public class RuKuController extends BaseController {
                 map.put("msg", "已办理入库单不能修改！");
                 return map;
             }
+            model.setSj(new Date());
             boolean result = ruKuServiceImpl.updateRuKu(model);
             map.put("result", result? 0:-1);
         } catch (Exception e) {

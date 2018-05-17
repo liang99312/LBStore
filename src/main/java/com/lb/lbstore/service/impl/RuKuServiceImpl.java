@@ -68,14 +68,7 @@ public class RuKuServiceImpl implements RuKuService {
 
     @Override
     public List<RuKu> queryRuKusByPage(HashMap map) {
-        String hql = "from RuKu where qy_id="+map.get("qy_id");
-        if (map.containsKey("mc")) {
-            hql += " and mc like '%" + map.get("mc") + "%'";
-        }
-        if (map.containsKey("state")) {
-            hql += " and state = " + map.get("state");
-        }
-        return ruKuDao.getPageList(hql, null, 1, 20);
+        return ruKuDao.queryRuKusByPage(map);
     }
 
     @Override

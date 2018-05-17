@@ -5,6 +5,7 @@
  */
 package com.lb.lbstore.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 import java.util.Objects;
@@ -12,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -39,6 +41,8 @@ public class RuKuDetail {
     private String pp;
     private String scc;
     private String txm;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
     private Date scrq;
     private Double bzq;
     private Double dj;
@@ -50,6 +54,7 @@ public class RuKuDetail {
     private Double zl = 1.0D;
     private String tysx;
     private String dymx;
+    private String kw;
     
     public Integer getId() {
         return id;
@@ -273,6 +278,14 @@ public class RuKuDetail {
 
     public void setJlfs(String jlfs) {
         this.jlfs = jlfs;
+    }
+
+    public String getKw() {
+        return kw;
+    }
+
+    public void setKw(String kw) {
+        this.kw = kw;
     }
 
     @Override

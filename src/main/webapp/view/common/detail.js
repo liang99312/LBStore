@@ -7,6 +7,7 @@
             var width = 90 / ls;
             var unConfirm = opt.unConfirm ? opt.unConfirm : false;
             var type = opt.type ? opt.type : "num";
+            var func = opt.func;
             width = width + "%";
             var delYx = function (index) {
                 if (yxData[index]) {
@@ -81,6 +82,9 @@
                             var obj = {id:i,val:"",state:"0"};
                             obj.val = $(this).val();
                             yxData.splice(i,1,obj);
+                        }
+                        if(func){
+                            func();
                         }
                     });
                 });

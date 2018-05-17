@@ -5,6 +5,7 @@
  */
 package com.lb.lbstore.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,6 +15,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -34,7 +36,12 @@ public class RuKu {
     private Integer spr_id;
     private String ly; //供应商；客户；生产
     private String wz;
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm",timezone = "GMT+8")
     private Date sj;
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm",timezone = "GMT+8")
+    private Date spsj;
     private String dh;
     private Double sl = 0D;
     private Double je = 0D;
@@ -43,6 +50,9 @@ public class RuKu {
     private transient List<RuKuDetail> details = new ArrayList();
     private transient Date qrq;
     private transient Date zrq;
+    private transient String ckmc;
+    private transient String khmc;
+    private transient String gysmc;
 
     public Integer getId() {
         return id;
@@ -132,6 +142,14 @@ public class RuKu {
         this.sj = sj;
     }
 
+    public Date getSpsj() {
+        return spsj;
+    }
+
+    public void setSpsj(Date spsj) {
+        this.spsj = spsj;
+    }
+
     public String getDh() {
         return dh;
     }
@@ -194,6 +212,30 @@ public class RuKu {
 
     public void setZrq(Date zrq) {
         this.zrq = zrq;
+    }
+
+    public String getCkmc() {
+        return ckmc;
+    }
+
+    public void setCkmc(String ckmc) {
+        this.ckmc = ckmc;
+    }
+
+    public String getKhmc() {
+        return khmc;
+    }
+
+    public void setKhmc(String khmc) {
+        this.khmc = khmc;
+    }
+
+    public String getGysmc() {
+        return gysmc;
+    }
+
+    public void setGysmc(String gysmc) {
+        this.gysmc = gysmc;
     }
 
     @Override

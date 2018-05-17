@@ -16,7 +16,7 @@ var editKeHu;
 var selGongYingShang;
 var editGongYingShang;
 var editCangKu;
-var dymx_opt = {data: [], yxData: []};
+var dymx_opt = {data: [], yxData: [], func:calcDymx};
 var tysx_opt = {data: [], ls: 2, lw: 70};
 
 $(document).ready(function () {
@@ -139,7 +139,10 @@ function jxRuKu(json) {
         } else {
             item.tysx = [];
         }
-        var trStr = '<tr' + classStr + '><td>' + item.mc + '</td><td>' + item.dm + '</td><td>'
+        item.lsh = item.lsh === undefined || item.lsh === null? "":item.lsh;
+        item.gysmc = item.gysmc === undefined || item.gysmc === null? "":item.gysmc;
+        item.khmc = item.khmc === undefined || item.khmc === null? "":item.khmc;
+        var trStr = '<tr' + classStr + '><td>' + item.ckmc + '</td><td>' + item.lsh + '</td><td>' + item.gysmc + '</td><td>' + item.khmc + '</td><td>' + item.wz + '</td><td>' + item.sj + '</td><td>' + item.sl + '</td><td>'
                 + '<button class="btn btn-info btn-xs icon-edit" onclick="editRuKu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;'
                 + '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteRuKu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button></td></tr>';
         $("#data_table_body").append(trStr);
@@ -289,9 +292,20 @@ function saveRuKu() {
         }
     } 
     var wz = "";
+    var wzs = [];
     for(var i=0;i<rkmx.length;i++){
         var e = rkmx[i];
-        wz += e.wzmc + ";";
+        e.dymx = JSON.stringify(e.dymx);
+        e.tysx = JSON.stringify(e.tysx);
+        if(wzs.indexOf(e.wzmc) > -1){
+            continue;
+        }else{
+            wzs.push(e.wzmc);
+        }
+    }
+    for(var i=0;i<wzs.length;i++){
+        var e = wzs[i];
+        wz += e + ";";
     }
     ruKu.details = rkmx;
     ruKu.wz = wz;
@@ -344,19 +358,35 @@ function deleteRuKu(index) {
 }
 
 function buildTysx(data) {
-    if (data.length === 0) {
-        $("#divMxTysx").hide();
-        return;
+    if(data && "" !== data){
+        if(typeof data === "string"){
+            data = JSON.parse(data);
+        }
+        if (data.length === 0) {
+            $("#divMxTysx").hide();
+            return;
+        }
+        $("#divMxTysx").show();
+        tysx_opt.data = data;
+        $("#divMxTysx").empty();
+        $("#divMxTysx").setTysxDiv(tysx_opt);
     }
-    $("#divMxTysx").show();
-    tysx_opt.data = data;
-    $("#divMxTysx").empty();
-    $("#divMxTysx").setTysxDiv(tysx_opt);
 }
 
 function buildDymx() {
     $("#tblMxDymx").setDetailTable(dymx_opt);
     $("#tblMxDymx input:last").focus();
+}
+
+function calcDymx(){
+    if(dymx_opt.yxData){
+        var zl = 0;
+        for(var i=0;i<dymx_opt.yxData.length;i++){
+            zl += parseFloat(dymx_opt.yxData[i].val);
+        }
+        $("#inpMxSl").val(dymx_opt.yxData.length);
+        $("#inpMxZl").val(zl.toFixed(3));
+    }
 }
 
 function jxRuKuMingXi() {
@@ -379,7 +409,7 @@ function jxRuKuMingXi() {
 
 function addRuKuMingXi() {
     optMxFlag = 1;
-    dymx_opt = {data: [], yxData: []};
+    dymx_opt = {data: [], yxData: [], func:calcDymx};
     editLeiBie = null;
     $("#ruKuMingXiModal_title").html("增加明细");
     $("#inpMxWz").val("");
@@ -409,7 +439,10 @@ function editRuKuMingXi(index) {
         optMxFlag = 2;
         editMxIndex = index;
         var m = rkmx[index];
-        dymx_opt = {data: [], yxData: m.dymx};
+        if(typeof m.dymx === "string"){
+            m.dymx = JSON.parse(m.dymx);
+        }
+        dymx_opt = {data: [], yxData: m.dymx, func:calcDymx};
         $("#ruKuMingXiModal_title").html("修改明细");
         editWzzd = {"id":m.wzzd_id,"mc":m.wzmc};
         $("#inpMxWz").val(m.wzmc);
@@ -466,6 +499,7 @@ function saveRuKuMingXi() {
             mx.wzzd_id = editWzzd.id;
         }
     }
+    mx.wzlb_id = editLeiBie.id;
     mx.wzmc = $("#inpMxWz").val();
     mx.wzlb = $("#inpMxLb").val();
     mx.pp = $("#inpMxPp").val();
@@ -490,8 +524,8 @@ function saveRuKuMingXi() {
     mx.bzgg = $("#inpMxBzgg").val();
     mx.zldw = $("#inpMxZldw").val();
     mx.zl = $("#inpMxZl").val();
-    mx.dymx = dymx_opt.yxData;
-    mx.tysx = tysx_opt.data;
+    mx.dymx = JSON.stringify(dymx_opt.yxData);
+    mx.tysx = JSON.stringify(tysx_opt.data);
     if (optMxFlag === 1) {
         rkmx.push(mx);
     } else if (optMxFlag === 2) {

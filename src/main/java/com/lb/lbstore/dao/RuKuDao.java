@@ -10,10 +10,17 @@ import com.lb.lbstore.domain.RuKu;
 import com.lb.lbstore.domain.RuKuDetail;
 import com.lb.lbstore.domain.WuZiXhgg;
 import com.lb.lbstore.domain.WuZiZiDian;
+import com.lb.lbstore.util.LshUtil;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.type.StandardBasicTypes;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -25,7 +32,19 @@ public class RuKuDao extends BaseDao {
         try {
             session = getSessionFactory().openSession();
             ruKu = (RuKu) session.createQuery("from RuKu where id=" + id);
-            List<RuKuDetail> details = session.createQuery("select d.*,l.mc as wzlb from RuKuDetail d left join WuZiLeiBie l on d.wzlb_id=l.id where d.rk_id=" + id).list();
+            
+            String sql = "select {d.*},l.mc as wzlb from RuKuDetail d left join WuZiLeiBie l on d.wzlb_id=l.id where d.rk_id=" + id;  
+            SQLQuery navtiveSQL = session.createSQLQuery(sql);  
+            navtiveSQL.addEntity("d",RuKuDetail.class).addScalar("wzlb", StandardBasicTypes.STRING);             
+            List<RuKuDetail> details = new ArrayList(); 
+            List list = navtiveSQL.list();
+            for(Object obj:list){
+                Object[] objs = (Object[]) obj;
+                RuKuDetail rkd = (RuKuDetail) objs[0];
+                String wzlb = (String) objs[1];
+                rkd.setWzlb(wzlb);
+                details.add(rkd);
+            }
             ruKu.setDetails(details);
         } catch (Exception e) {
             e.printStackTrace();
@@ -41,6 +60,48 @@ public class RuKuDao extends BaseDao {
         return ruKu;
     }
     
+    public List<RuKu> queryRuKusByPage(HashMap map){
+        List<RuKu> result = new ArrayList();
+        Session session = null;
+        try {
+            session = getSessionFactory().openSession();
+            String sql = "select {rk.*},kh.mc as khmc,gys.mc as gysmc,ck.mc as ckmc from RuKu rk "
+                    + "left join CangKu ck on rk.ck_id=ck.id left join KeHu kh on rk.kh_id=kh.id left join GongYingShang gys on rk.gys_id=gys.id "
+                    + "where rk.qy_id="+map.get("qy_id");
+            if (map.containsKey("mc")) {
+                sql += " and rk.wz like '%" + map.get("mc") + "%'";
+            }
+            if (map.containsKey("state")) {
+                sql += " and rk.state = " + map.get("state");
+            }
+            SQLQuery navtiveSQL = session.createSQLQuery(sql);  
+            navtiveSQL.addEntity("rk", RuKu.class).addScalar("khmc", StandardBasicTypes.STRING).addScalar("gysmc", StandardBasicTypes.STRING).addScalar("ckmc", StandardBasicTypes.STRING);  
+            List list = navtiveSQL.list();
+            for(Object obj:list){
+                Object[] objs = (Object[]) obj;
+                RuKu rk = (RuKu) objs[0];
+                String khmc = (String) objs[1];
+                String gysmc = (String) objs[2];
+                String ckmc = (String) objs[3];
+                rk.setKhmc(khmc);
+                rk.setCkmc(ckmc);
+                rk.setGysmc(gysmc);
+                result.add(rk);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (session != null) {
+                    session.close();
+                }
+            } catch (Exception he) {
+                he.printStackTrace();
+            }
+        }
+        return result;
+    }
+    
     public Integer saveRuKu(RuKu ruKu){
         Integer result = -1;
         Session session = null;
@@ -51,6 +112,30 @@ public class RuKuDao extends BaseDao {
             Integer id = (Integer) session.save(ruKu);
             session.flush();
             for(RuKuDetail detail:ruKu.getDetails()){
+                Integer zd_id = detail.getWzzd_id();
+                if(detail.getWzzd_id() < 1){
+                    WuZiZiDian zd = new WuZiZiDian();
+                    zd.setDw(detail.getDw());
+                    zd.setMc(detail.getWzmc());
+                    zd.setQy_id(ruKu.getQy_id());
+                    zd.setState(0);
+                    zd.setWzlb_id(detail.getWzlb_id());
+                    zd_id = (Integer) session.save(zd);
+                    session.flush();
+                    detail.setWzzd_id(zd_id);
+                }
+                Integer xhgg_id = detail.getXhgg_id();
+                if(detail.getXhgg_id() < 1){
+                    WuZiXhgg xhgg = new WuZiXhgg();
+                    xhgg.setBzq(detail.getBzq());
+                    xhgg.setMc(detail.getXhgg());
+                    xhgg.setQy_id(ruKu.getQy_id());
+                    xhgg.setWzzd_id(zd_id);
+                    xhgg_id = (Integer) session.save(xhgg);
+                    session.flush();
+                    detail.setXhgg_id(xhgg_id);
+                } 
+                
                 detail.setCk_id(ruKu.getCk_id());
                 detail.setDh(ruKu.getDh());
                 detail.setGys_id(ruKu.getGys_id());
@@ -91,6 +176,30 @@ public class RuKuDao extends BaseDao {
             session.createSQLQuery(deleteDetail).executeUpdate();
             session.flush();
             for(RuKuDetail detail:ruKu.getDetails()){
+                Integer zd_id = detail.getWzzd_id();
+                if(detail.getWzzd_id() < 1){
+                    WuZiZiDian zd = new WuZiZiDian();
+                    zd.setDw(detail.getDw());
+                    zd.setMc(detail.getWzmc());
+                    zd.setQy_id(ruKu.getQy_id());
+                    zd.setState(0);
+                    zd.setWzlb_id(detail.getWzlb_id());
+                    zd_id = (Integer) session.save(zd);
+                    session.flush();
+                    detail.setWzzd_id(zd_id);
+                }
+                Integer xhgg_id = detail.getXhgg_id();
+                if(detail.getXhgg_id() < 1){
+                    WuZiXhgg xhgg = new WuZiXhgg();
+                    xhgg.setBzq(detail.getBzq());
+                    xhgg.setMc(detail.getXhgg());
+                    xhgg.setQy_id(ruKu.getQy_id());
+                    xhgg.setWzzd_id(zd_id);
+                    xhgg_id = (Integer) session.save(xhgg);
+                    session.flush();
+                    detail.setXhgg_id(xhgg_id);
+                } 
+                
                 detail.setCk_id(ruKu.getCk_id());
                 detail.setDh(ruKu.getDh());
                 detail.setGys_id(ruKu.getGys_id());
@@ -157,36 +266,18 @@ public class RuKuDao extends BaseDao {
             String sql = "from RuKuDetail where rk_id="+ruKu.getId();
             List<RuKuDetail> list = session.createQuery(sql).list();
             for(RuKuDetail d:list){
-                boolean flag = false;
-                Integer zd_id = d.getWzzd_id();
-                if(d.getWzzd_id() < 1){
-                    WuZiZiDian zd = new WuZiZiDian();
-                    zd.setDw(d.getDw());
-                    zd.setMc(d.getWzmc());
-                    zd.setQy_id(ruKu.getQy_id());
-                    zd.setState(0);
-                    zd.setWzlb_id(d.getWzlb_id());
-                    zd_id = (Integer) session.save(zd);
-                    session.flush();
-                    d.setWzzd_id(zd_id);
-                    flag = true;
+                RuKuDetail detail = null;
+                for(RuKuDetail e:ruKu.getDetails()){
+                    if(Objects.equals(e.getId(), d.getId())){
+                        detail = e;
+                        break;
+                    }
                 }
-                Integer xhgg_id = d.getXhgg_id();
-                if(d.getXhgg_id() < 1){
-                    WuZiXhgg xhgg = new WuZiXhgg();
-                    xhgg.setBzq(d.getBzq());
-                    xhgg.setMc(d.getXhgg());
-                    xhgg.setQy_id(ruKu.getQy_id());
-                    xhgg.setWzzd_id(zd_id);
-                    xhgg_id = (Integer) session.save(xhgg);
-                    session.flush();
-                    d.setXhgg_id(xhgg_id);
-                    flag = true;
-                } 
-                if(flag){
-                    session.update(d);
-                    session.flush();
+                if(detail == null){
+                    continue;
                 }
+                d.setKw(detail.getKw());
+                d.setDj(detail.getDj());
                 
                 Calendar c = Calendar.getInstance();
                 c.setTime(d.getScrq());
@@ -217,9 +308,9 @@ public class RuKuDao extends BaseDao {
                 kc.setTysx(d.getTysx());
                 kc.setWzlb_id(d.getWzlb_id());
                 kc.setWzmc(d.getWzmc());
-                kc.setWzzd_id(zd_id);
+                kc.setWzzd_id(d.getWzzd_id());
                 kc.setXhgg(d.getXhgg());
-                kc.setXhgg_id(xhgg_id);
+                kc.setXhgg_id(d.getXhgg_id());
                 kc.setZl(d.getZl());
                 kc.setZldw(d.getZldw());
                 kc.setSyl(kc.getSl());
@@ -228,8 +319,12 @@ public class RuKuDao extends BaseDao {
                 session.save(kc);
             }
             session.flush();
-            String updateRk = "update RuKu set state=1,spr_id="+a01_id+" where id=" + ruKu.getId();
-            session.createSQLQuery(updateRk).executeUpdate();
+            ruKu = (RuKu) session.load(RuKu.class, ruKu.getId());
+            ruKu.setState(1);
+            ruKu.setSpr_id(a01_id);
+            ruKu.setSpsj(new Date());
+            ruKu.setLsh(LshUtil.getRkdLsh());
+            session.update(ruKu);
             session.flush();
             tx.commit();
             result = true;

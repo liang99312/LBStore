@@ -5,6 +5,7 @@
  */
 package com.lb.lbstore.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 import java.util.Objects;
@@ -12,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -26,6 +28,7 @@ public class KuCun {
     private Integer qy_id;
     private Integer ck_id;
     private Integer rk_id;
+    private Integer rkd_id;
     private Integer kh_id;
     private Integer gys_id;
     private Integer wzzd_id;
@@ -40,10 +43,18 @@ public class KuCun {
     private String pp;
     private String scc;
     private String txm;
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm",timezone = "GMT+8")
+    private Date rksj;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
     private Date scrq;
     private Double bzq;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
     private Date bzrq;
     private Double dj;
+    private Double ckdj;
     private String dw;    
     private String zldw;   
     private String jlfs = "pt"; //普通记录(pt)；总量记录(zl)；单元明细(mx)
@@ -54,6 +65,7 @@ public class KuCun {
     private Double syzl;
     private String tysx;
     private String dymx;
+    private String kw;
     
     public Integer getId() {
         return id;
@@ -309,6 +321,38 @@ public class KuCun {
 
     public void setSyzl(Double syzl) {
         this.syzl = syzl;
+    }
+
+    public String getKw() {
+        return kw;
+    }
+
+    public void setKw(String kw) {
+        this.kw = kw;
+    }
+
+    public Integer getRkd_id() {
+        return rkd_id;
+    }
+
+    public void setRkd_id(Integer rkd_id) {
+        this.rkd_id = rkd_id;
+    }
+
+    public Date getRksj() {
+        return rksj;
+    }
+
+    public void setRksj(Date rksj) {
+        this.rksj = rksj;
+    }
+
+    public Double getCkdj() {
+        return ckdj;
+    }
+
+    public void setCkdj(Double ckdj) {
+        this.ckdj = ckdj;
     }
 
     @Override
