@@ -279,6 +279,8 @@ public class RuKuDao extends BaseDao {
                 d.setKw(detail.getKw());
                 d.setDj(detail.getDj());
                 
+                session.update(d);
+                
                 Calendar c = Calendar.getInstance();
                 c.setTime(d.getScrq());
                 c.add(Calendar.DATE, Integer.parseInt("" + d.getBzq()));
