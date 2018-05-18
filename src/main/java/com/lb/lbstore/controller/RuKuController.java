@@ -58,7 +58,7 @@ public class RuKuController extends BaseController {
         return map;
     }
     
-    @RequestMapping(value = "getRuKuDetailById.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "getRuKuDetailById.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String, Object> getRuKuDetailById(@RequestParam Integer id) {
         if (!existsUser()) {
@@ -144,7 +144,7 @@ public class RuKuController extends BaseController {
         return map;
     }
     
-    @RequestMapping(value = "getRuKuById.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "getRuKuById.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String, Object> getRuKuById(@RequestParam Integer id) {
         if (!existsUser()) {

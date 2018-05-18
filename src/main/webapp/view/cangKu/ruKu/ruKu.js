@@ -184,7 +184,7 @@ function jxRuKu(json) {
     });
 }
 
-function showSelectRuKu(){
+function showSelectRuKu() {
     $("#ruKuSelectModal").modal("show");
 }
 
@@ -267,28 +267,47 @@ function editRuKu(index) {
         optFlag = 1;
         return alert("请选择入库单");
     }
-    var ruKu = ruKus[index];
-    editIndex = index;
-    rkmx = ruKu.details;
     $("#ruKuModel_title").html("修改入库单");
     $("#btnOk").html("保存");
     $("#divXzmx").show();
-    if ("供应商" === ruKu.ly) {
-        $("#inpGys").val(ruKu.gysmc);
-        editGongYingShang = {"id": ruKu.gys_id, "mc": ruKu.gysmc};
-    } else if ("客户" === ruKu.ly) {
-        $("#inpKh").val(ruKu.khmc);
-        editKeHu = {"id": ruKu.kh_id, "mc": ruKu.khmc};
-    }
-    $("#inpCk").val(ruKu.ckmc);
-    editCangKu = {"id": ruKu.ck_id, "mc": ruKu.ckmc};
-    selectCangKu(editCangKu);
-    $("#inpDh").val(ruKu.dh);
-    $("#inpBz").val(ruKu.bz);
-    $("#inpSl").val(ruKu.sl);
-    $("#inpJe").val(ruKu.je);
-    jxRuKuMingXi();
-    $("#ruKuModal").modal("show");
+    var ruKu = ruKus[index];
+    editIndex = index;
+    selectRuKuDetail(ruKu.id);
+}
+
+function selectRuKuDetail(id) {
+    $.ajax({
+        url: "/LBStore/ruKu/getRuKuDetailById.do?id=" + id,
+        contentType: "application/json",
+        type: "get",
+        cache: false,
+        error: function (msg, textStatus) {
+            alert("获取入库单信息失败");
+        },
+        success: function (json) {
+            if (json.result === 0) {
+                var ruKu = json.ruKu;
+                rkmx = ruKu.details;
+                if ("供应商" === ruKu.ly) {
+                    $("#inpGys").val(ruKu.gysmc);
+                    editGongYingShang = {"id": ruKu.gys_id, "mc": ruKu.gysmc};
+                } else if ("客户" === ruKu.ly) {
+                    $("#inpKh").val(ruKu.khmc);
+                    editKeHu = {"id": ruKu.kh_id, "mc": ruKu.khmc};
+                }
+                $("#inpCk").val(ruKu.ckmc);
+                editCangKu = {"id": ruKu.ck_id, "mc": ruKu.ckmc};
+                selectCangKu(editCangKu);
+                $("#inpDh").val(ruKu.dh);
+                $("#inpBz").val(ruKu.bz);
+                $("#inpSl").val(ruKu.sl);
+                $("#inpJe").val(ruKu.je);
+                jxRuKuMingXi();
+                $("#ruKuModal").modal("show");
+            } else
+                alert("获取入库单信息失败:" + json.msg !== undefined ? json.msg : "");
+        }
+    });
 }
 
 function dealRuKu(index) {
@@ -297,28 +316,12 @@ function dealRuKu(index) {
         optFlag = 1;
         return alert("请选择入库单");
     }
-    var ruKu = ruKus[index];
-    editIndex = index;
-    rkmx = ruKu.details;
     $("#ruKuModel_title").html("办理入库单");
     $("#btnOk").html("办理");
     $("#divXzmx").hide();
-    if ("供应商" === ruKu.ly) {
-        $("#inpGys").val(ruKu.gysmc);
-        editGongYingShang = {"id": ruKu.gys_id, "mc": ruKu.gysmc};
-    } else if ("客户" === ruKu.ly) {
-        $("#inpKh").val(ruKu.kh);
-        editKeHu = {"id": ruKu.kh_id, "mc": ruKu.kh};
-    }
-    $("#inpCk").val(ruKu.ckmc);
-    editCangKu = {"id": ruKu.ck_id, "mc": ruKu.ckmc};
-    selectCangKu(editCangKu);
-    $("#inpDh").val(ruKu.dh);
-    $("#inpBz").val(ruKu.bz);
-    $("#inpSl").val(ruKu.sl);
-    $("#inpJe").val(ruKu.je);
-    jxRuKuMingXi();
-    $("#ruKuModal").modal("show");
+    var ruKu = ruKus[index];
+    editIndex = index;
+    selectRuKuDetail(ruKu.id);
 }
 
 function saveRuKu() {
@@ -401,6 +404,8 @@ function saveRuKu() {
     ruKu.wz = wz;
     ruKu.dh = $("#inpDh").val();
     ruKu.bz = $("#inpBz").val();
+    ruKu.sl = $("#inpSl").val();
+    ruKu.je = $("#inpJe").val();
     ruKu.state = 0;
     var tsStr = optFlag === 3 ? "办理" : "保存";
     $.ajax({
@@ -491,9 +496,10 @@ function jxRuKuMingXi() {
             item.tysx = [];
         }
         var je = parseFloat(item.sl) * parseFloat(item.dj);
+        var cz = optFlag === 3? '':'&nbsp;<button class="btn btn-danger btn-xs icon-remove" onclick="deleteRuKuMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>';
         var trStr = '<tr><td>' + item.wzmc + '</td><td>' + item.pp + '</td><td>' + item.xhgg + '</td><td>' + item.sl + '</td><td>' + je + '</td><td>'
                 + '<button class="btn btn-info btn-xs icon-edit" onclick="editRuKuMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;'
-                + '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteRuKuMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button></td></tr>';
+                + cz + '</td></tr>';
         $("#tblWuZiMingXi_body").append(trStr);
     });
 }

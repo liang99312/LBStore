@@ -31,14 +31,35 @@ public class RuKuDao extends BaseDao {
         Session session = null;
         try {
             session = getSessionFactory().openSession();
-            ruKu = (RuKu) session.createQuery("from RuKu where id=" + id);
-            
-            String sql = "select {d.*},l.mc as wzlb from RuKuDetail d left join WuZiLeiBie l on d.wzlb_id=l.id where d.rk_id=" + id;  
+            String sql = "select {rk.*},kh.mc as khmc,gys.mc as gysmc,ck.mc as ckmc from RuKu rk "
+                    + "left join CangKu ck on rk.ck_id=ck.id left join KeHu kh on rk.kh_id=kh.id left join GongYingShang gys on rk.gys_id=gys.id "
+                    + "where rk.id="+id;
             SQLQuery navtiveSQL = session.createSQLQuery(sql);  
-            navtiveSQL.addEntity("d",RuKuDetail.class).addScalar("wzlb", StandardBasicTypes.STRING);             
-            List<RuKuDetail> details = new ArrayList(); 
+            navtiveSQL.addEntity("rk", RuKu.class).addScalar("khmc", StandardBasicTypes.STRING).addScalar("gysmc", StandardBasicTypes.STRING).addScalar("ckmc", StandardBasicTypes.STRING);  
             List list = navtiveSQL.list();
+            List<RuKu> list_rk = new ArrayList();
             for(Object obj:list){
+                Object[] objs = (Object[]) obj;
+                RuKu rk = (RuKu) objs[0];
+                String khmc = (String) objs[1];
+                String gysmc = (String) objs[2];
+                String ckmc = (String) objs[3];
+                rk.setKhmc(khmc);
+                rk.setCkmc(ckmc);
+                rk.setGysmc(gysmc);
+                list_rk.add(rk);
+            }
+            if(list_rk.isEmpty()){
+                return null;
+            }
+            ruKu = list_rk.get(0);
+            
+            String sql_d = "select {d.*},l.mc as wzlb from RuKuDetail d left join WuZiLeiBie l on d.wzlb_id=l.id where d.rk_id=" + id;  
+            SQLQuery navtiveSQL_d = session.createSQLQuery(sql_d);  
+            navtiveSQL_d.addEntity("d",RuKuDetail.class).addScalar("wzlb", StandardBasicTypes.STRING);             
+            List<RuKuDetail> details = new ArrayList(); 
+            List list_d = navtiveSQL_d.list();
+            for(Object obj:list_d){
                 Object[] objs = (Object[]) obj;
                 RuKuDetail rkd = (RuKuDetail) objs[0];
                 String wzlb = (String) objs[1];
