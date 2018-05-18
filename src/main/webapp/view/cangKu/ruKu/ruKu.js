@@ -13,10 +13,11 @@ var editLeiBie;
 var selCangKu;
 var selKeHu;
 var editKeHu;
+var selKuWei;
 var selGongYingShang;
 var editGongYingShang;
 var editCangKu;
-var dymx_opt = {data: [], yxData: [], func:calcDymx};
+var dymx_opt = {data: [], yxData: [], func: calcDymx};
 var tysx_opt = {data: [], ls: 2, lw: 70};
 
 $(document).ready(function () {
@@ -26,7 +27,7 @@ $(document).ready(function () {
     getGongYingShangs(setTrager_gongYingShang);
     getWuZiZiDians(setTrager_ziDian);
     getWuZiLeiBies(setTrager_leiBie);
-    $("#inpMxScrq").datetimepicker({language:  'zh-CN',format: 'yyyy-mm-dd',weekStart: 7,todayBtn:  1,autoclose: 1,todayHighlight: 1,minView : 2,startView: 2,forceParse: 0,showMeridian: 1});
+    $("#inpMxScrq").datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, minView: 2, startView: 2, forceParse: 0, showMeridian: 1});
     $("#inpMxJlfs").change(function () {
         $("#tblMxDymx input:last").blur();
         selectMxJlfs();
@@ -49,7 +50,7 @@ $(document).ready(function () {
 function setTrager_cangKu() {
     $('#selCangKu').AutoComplete({'data': lb_cangKus, 'paramName': 'selCangKu'});
     $('#inpSelCk').AutoComplete({'data': lb_cangKus, 'paramName': 'selCangKu'});
-    $('#inpCk').AutoComplete({'data': lb_cangKus, 'paramName': 'editCangKu'});
+    $('#inpCk').AutoComplete({'data': lb_cangKus, 'afterSelectedHandler': selectCangKu});
 }
 
 function setTrager_keHu() {
@@ -88,7 +89,7 @@ function selectRuKu_m() {
 
 function selectWuZiZiDian(json) {
     editWzzd = json;
-    if(json.id > -1){
+    if (json.id > -1) {
         $.ajax({
             url: "/LBStore/wuZiZiDian/getWuZiZiDianById.do?id=" + json.id,
             contentType: "application/json",
@@ -105,9 +106,42 @@ function selectWuZiZiDian(json) {
                 }
             }
         });
-    }else{
+    } else {
         $('#inpMxXhgg').AutoComplete({'data': [], 'paramName': 'editXhgg'});
     }
+}
+
+function selectCangKu(json) {
+    var id = json.id;
+    $.ajax({
+        url: "/LBStore/cangKu/getCangKuById.do?id=" + id,
+        contentType: "application/json",
+        type: "get",
+        cache: false,
+        error: function (msg, textStatus) {
+            alert("获取仓库信息失败");
+        },
+        success: function (json) {
+            if (json.result === 0) {
+                editCangKu = json.cangKu;
+                setCangKuKuWei();
+            }
+        }
+    });
+}
+
+function setCangKuKuWei() {
+    for (var i = 0; i < editCangKu.kws.length; i++) {
+        var e = editCangKu.kws[i];
+        e.id = i + 1;
+    }
+    selKuWei = null;
+    $('#inpMxKw').AutoComplete({'data': editCangKu.kws, 'paramName': 'selKuWei', 'afterSelectedHandler': setKuWeiHao});
+}
+
+function setKuWeiHao(json) {
+    var array = getKuWeiHao(json.mc, json.qsh, json.jsh);
+    $('#inpMxKwh').AutoComplete({'data': array});
 }
 
 function selectMxJlfs() {
@@ -139,14 +173,19 @@ function jxRuKu(json) {
         } else {
             item.tysx = [];
         }
-        item.lsh = item.lsh === undefined || item.lsh === null? "":item.lsh;
-        item.gysmc = item.gysmc === undefined || item.gysmc === null? "":item.gysmc;
-        item.khmc = item.khmc === undefined || item.khmc === null? "":item.khmc;
+        item.lsh = item.lsh === undefined || item.lsh === null ? "" : item.lsh;
+        item.gysmc = item.gysmc === undefined || item.gysmc === null ? "" : item.gysmc;
+        item.khmc = item.khmc === undefined || item.khmc === null ? "" : item.khmc;
         var trStr = '<tr' + classStr + '><td>' + item.ckmc + '</td><td>' + item.lsh + '</td><td>' + item.gysmc + '</td><td>' + item.khmc + '</td><td>' + item.wz + '</td><td>' + item.sj + '</td><td>' + item.sl + '</td><td>'
                 + '<button class="btn btn-info btn-xs icon-edit" onclick="editRuKu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;'
+                + '<button class="btn btn-info btn-xs icon-legal" onclick="dealRuKu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;'
                 + '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteRuKu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button></td></tr>';
         $("#data_table_body").append(trStr);
     });
+}
+
+function showSelectRuKu(){
+    $("#ruKuSelectModal").modal("show");
 }
 
 function selectRuKu() {
@@ -210,6 +249,8 @@ function addRuKu() {
     editGongYingShang = {};
     editKeHu = {};
     $("#ruKuModel_title").html("新增入库单");
+    $("#btnOk").html("保存");
+    $("#divXzmx").show();
     $("#inpGys").val("");
     $("#inpKh").val("");
     $("#inpDh").val("");
@@ -230,13 +271,42 @@ function editRuKu(index) {
     editIndex = index;
     rkmx = ruKu.details;
     $("#ruKuModel_title").html("修改入库单");
-    if("供应商" === ruKu.ly){
+    $("#btnOk").html("保存");
+    $("#divXzmx").show();
+    if ("供应商" === ruKu.ly) {
         $("#inpGys").val(ruKu.gys);
-        editGongYingShang = {"id":ruKu.gys_id,"mc":ruKu.gys};
-    }else if("客户" === ruKu.ly){
+        editGongYingShang = {"id": ruKu.gys_id, "mc": ruKu.gys};
+    } else if ("客户" === ruKu.ly) {
         $("#inpKh").val(ruKu.kh);
-        editKeHu = {"id":ruKu.kh_id,"mc":ruKu.kh};
-    } 
+        editKeHu = {"id": ruKu.kh_id, "mc": ruKu.kh};
+    }
+    $("#inpDh").val(ruKu.dh);
+    $("#inpBz").val(ruKu.bz);
+    $("#inpSl").val(ruKu.sl);
+    $("#inpJe").val(ruKu.je);
+    jxRuKuMingXi();
+    $("#ruKuModal").modal("show");
+}
+
+function dealRuKu(index) {
+    optFlag = 3;
+    if (ruKus[index] === undefined) {
+        optFlag = 1;
+        return alert("请选择入库单");
+    }
+    var ruKu = ruKus[index];
+    editIndex = index;
+    rkmx = ruKu.details;
+    $("#ruKuModel_title").html("办理入库单");
+    $("#btnOk").html("办理");
+    $("#divXzmx").hide();
+    if ("供应商" === ruKu.ly) {
+        $("#inpGys").val(ruKu.gys);
+        editGongYingShang = {"id": ruKu.gys_id, "mc": ruKu.gys};
+    } else if ("客户" === ruKu.ly) {
+        $("#inpKh").val(ruKu.kh);
+        editKeHu = {"id": ruKu.kh_id, "mc": ruKu.kh};
+    }
     $("#inpDh").val(ruKu.dh);
     $("#inpBz").val(ruKu.bz);
     $("#inpSl").val(ruKu.sl);
@@ -246,12 +316,18 @@ function editRuKu(index) {
 }
 
 function saveRuKu() {
-    if(rkmx.length < 1){
+    if (rkmx.length < 1) {
         return alert("请增加入库明细！");
     }
     var ruKu = {};
     var url = "";
-    if (optFlag === 2) {
+    if (optFlag === 3) {
+        if (ruKus[editIndex] === undefined) {
+            return;
+        }
+        ruKu = ruKus[editIndex];
+        url = "/LBStore/ruKu/dealRuKu.do";
+    } else if (optFlag === 2) {
         if (ruKus[editIndex] === undefined) {
             return;
         }
@@ -270,7 +346,7 @@ function saveRuKu() {
         }
     }
     ruKu.ly = $("#inpLy").val();
-    if("供应商" === $("#inpLy").val()){
+    if ("供应商" === $("#inpLy").val()) {
         if ($("#inpGys").val() === "") {
             return alert("请输入供应商信息");
         } else {
@@ -280,7 +356,7 @@ function saveRuKu() {
                 ruKu.gys_id = editGongYingShang.id;
             }
         }
-    }else if("客户" === $("#inpLy").val()){
+    } else if ("客户" === $("#inpLy").val()) {
         if ($("#inpKh").val() === "") {
             return alert("请输入客户信息");
         } else {
@@ -290,20 +366,25 @@ function saveRuKu() {
                 ruKu.kh_id = editKeHu.id;
             }
         }
-    } 
+    }
     var wz = "";
     var wzs = [];
-    for(var i=0;i<rkmx.length;i++){
+    for (var i = 0; i < rkmx.length; i++) {
         var e = rkmx[i];
+        if (optFlag === 3) {
+            if (e.kw === undefind || e.kw === null || e.kw === "") {
+                return alert("入库单明细需要设置库位！");
+            }
+        }
         e.dymx = JSON.stringify(e.dymx);
         e.tysx = JSON.stringify(e.tysx);
-        if(wzs.indexOf(e.wzmc) > -1){
+        if (wzs.indexOf(e.wzmc) > -1) {
             continue;
-        }else{
+        } else {
             wzs.push(e.wzmc);
         }
     }
-    for(var i=0;i<wzs.length;i++){
+    for (var i = 0; i < wzs.length; i++) {
         var e = wzs[i];
         wz += e + ";";
     }
@@ -312,6 +393,7 @@ function saveRuKu() {
     ruKu.dh = $("#inpDh").val();
     ruKu.bz = $("#inpBz").val();
     ruKu.state = 0;
+    var tsStr = optFlag === 3 ? "办理" : "保存";
     $.ajax({
         url: url,
         data: JSON.stringify(ruKu),
@@ -319,14 +401,14 @@ function saveRuKu() {
         type: "post",
         cache: false,
         error: function (msg, textStatus) {
-            alert("保存失败");
+            alert(tsStr + "失败");
         },
         success: function (json) {
             if (json.result === 0) {
                 $("#ruKuModal").modal("hide");
                 selectRuKu();
             } else {
-                alert("保存失败:" + json.msg ? json.msg : "");
+                alert(tsStr + "失败:" + json.msg ? json.msg : "");
             }
         }
     });
@@ -358,8 +440,8 @@ function deleteRuKu(index) {
 }
 
 function buildTysx(data) {
-    if(data && "" !== data){
-        if(typeof data === "string"){
+    if (data && "" !== data) {
+        if (typeof data === "string") {
             data = JSON.parse(data);
         }
         if (data.length === 0) {
@@ -378,10 +460,10 @@ function buildDymx() {
     $("#tblMxDymx input:last").focus();
 }
 
-function calcDymx(){
-    if(dymx_opt.yxData){
+function calcDymx() {
+    if (dymx_opt.yxData) {
         var zl = 0;
-        for(var i=0;i<dymx_opt.yxData.length;i++){
+        for (var i = 0; i < dymx_opt.yxData.length; i++) {
             zl += parseFloat(dymx_opt.yxData[i].val);
         }
         $("#inpMxSl").val(dymx_opt.yxData.length);
@@ -409,7 +491,7 @@ function jxRuKuMingXi() {
 
 function addRuKuMingXi() {
     optMxFlag = 1;
-    dymx_opt = {data: [], yxData: [], func:calcDymx};
+    dymx_opt = {data: [], yxData: [], func: calcDymx};
     editLeiBie = null;
     $("#ruKuMingXiModal_title").html("增加明细");
     $("#inpMxWz").val("");
@@ -439,17 +521,17 @@ function editRuKuMingXi(index) {
         optMxFlag = 2;
         editMxIndex = index;
         var m = rkmx[index];
-        if(typeof m.dymx === "string"){
+        if (typeof m.dymx === "string") {
             m.dymx = JSON.parse(m.dymx);
         }
-        dymx_opt = {data: [], yxData: m.dymx, func:calcDymx};
+        dymx_opt = {data: [], yxData: m.dymx, func: calcDymx};
         $("#ruKuMingXiModal_title").html("修改明细");
-        editWzzd = {"id":m.wzzd_id,"mc":m.wzmc};
+        editWzzd = {"id": m.wzzd_id, "mc": m.wzmc};
         $("#inpMxWz").val(m.wzmc);
         editLeiBie = {"id": m.wzlb_id, "mc": m.wzlb};
         $("#inpMxLb").val(m.wzlb);
         $("#inpMxPp").val(m.pp);
-        editXhgg = {"id":m.xhgg_id,"mc":m.xhgg};
+        editXhgg = {"id": m.xhgg_id, "mc": m.xhgg};
         $("#inpMxXhgg").val(m.xhgg);
         $("#inpMxScc").val(m.scc);
         $("#inpMxTxm").val(m.txm);
@@ -462,11 +544,12 @@ function editRuKuMingXi(index) {
         $("#inpMxBzgg").val(m.bzgg);
         $("#inpMxZldw").val(m.zldw);
         $("#inpMxZl").val(m.zl);
+        $("#inpMxKwh").val(m.kw);
         buildTysx(m.tysx);
         buildDymx();
         if (rkmx[index].jlfs === "mx") {
             $("#divMxDymx").show();
-        }else{
+        } else {
             $("#divMxDymx").hide();
         }
         $("#ruKuMingXiModal").modal("show");
@@ -524,6 +607,7 @@ function saveRuKuMingXi() {
     mx.bzgg = $("#inpMxBzgg").val();
     mx.zldw = $("#inpMxZldw").val();
     mx.zl = $("#inpMxZl").val();
+    mx.kw = $("#inpMxKwh").val();
     mx.dymx = JSON.stringify(dymx_opt.yxData);
     mx.tysx = JSON.stringify(tysx_opt.data);
     if (optMxFlag === 1) {
@@ -534,10 +618,10 @@ function saveRuKuMingXi() {
     jxRuKuMingXi();
     var zsl = 0;
     var zje = 0;
-    for(var i = 0;i<rkmx.length;i++){
+    for (var i = 0; i < rkmx.length; i++) {
         var e = rkmx[i];
         zsl = e.sl + zsl;
-        zje = e.sl*e.dj + zje;
+        zje = e.sl * e.dj + zje;
     }
     $("#inpSl").val(zsl);
     $("#inpJe").val(zje.toFixed(3));

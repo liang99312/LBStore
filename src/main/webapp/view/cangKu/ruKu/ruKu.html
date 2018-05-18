@@ -39,7 +39,7 @@ and open the template in the editor.
                         <option value="-1">已删除</option>
                     </select>
                     <button type="button" class="btn btn-primary btn-sm" onclick="selectRuKu();" style="margin-left: 2px;">查找</button>
-                    <button type="button" class="btn btn-primary btn-sm" onclick="selectRuKu_m();" style="margin-left: 2px;">更多查找</button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="showSelectRuKu();" style="margin-left: 2px;">更多查找</button>
                 </div>
                 <div style="width: 100%;float:left; padding-top: 5px;">
                     <button type="button" class="btn btn-primary btn-sm" onclick="addRuKu();">新增入库单</button>
@@ -93,22 +93,22 @@ and open the template in the editor.
                                 <label for="inpSelWz">物&ensp;&ensp;资：</label>
                                 <input type="text" id="inpSelWz" />
                             </div>
-                            <div class="form-group" style="border-bottom: 1px solid #bcbcbc;">
+                            <div class="form-group">
                                 <label for="inpSelKh">客&ensp;&ensp;户：</label>
                                 <input type="text" id="inpSelKh" />
                             </div>
-                            <div class="form-group" style="border-bottom: 1px solid #bcbcbc;">
+                            <div class="form-group">
                                 <label for="inpSelGys">供应商：</label>
                                 <input type="text" id="inpSelGys" />
                             </div>
-                            <div class="form-group" style="border-bottom: 1px solid #bcbcbc;">
+                            <div class="form-group">
                                 <label for="inpSelRq">日&ensp;&ensp;期：</label>
                                 <input type="text" id="inpSelQrq" />-<input type="text" id="inpSelZrq" />
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer" style="text-align: center;padding: 8px;">
-                        <button type="submit" class="btn btn-primary" onclick="selectRuKu(2)">确定</button>
+                        <button type="submit" class="btn btn-primary" onclick="selectRuKu_m()">确定</button>
                     </div>
                 </div>
             </div>
@@ -151,7 +151,7 @@ and open the template in the editor.
                                 <label for="inpBz">备&ensp;&ensp;注：</label>
                                 <input type="text" id="inpBz" style="width: 415px;"/>
                             </div>
-                            <div class="form-group">
+                            <div id="divXzmx" class="form-group">
                                 <button type="button" class="btn btn-primary btn-sm" onclick="addRuKuMingXi();">新增明细</button>
                             </div>
                             <div style="min-height: 100px;max-height: 300px;overflow-y: auto;">
@@ -174,7 +174,7 @@ and open the template in the editor.
                         </div>
                     </div>
                     <div class="modal-footer" style="text-align: center;padding: 8px;">
-                        <button type="submit" class="btn btn-primary" onclick="saveRuKu()">保存</button>
+                        <button id="btnOk" type="submit" class="btn btn-primary" onclick="saveRuKu()">保存</button>
                     </div>
                 </div>
             </div>
@@ -228,6 +228,11 @@ and open the template in the editor.
                                     <option value="zl">总量记录</option>
                                     <option value="mx">单元明细</option>
                                 </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="inpMxKw">库&ensp;&ensp;&ensp;&ensp;位：</label>
+                                <input type="text" id="inpMxKw" />
+                                <input type="text" id="inpMxKwh" />
                             </div>
                             <div id="dvMxBzgg" class="form-group" style="display: none;">
                                 <label for="inpMxBzgg">包装规格：</label>

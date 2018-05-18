@@ -315,6 +315,7 @@ public class RuKuDao extends BaseDao {
                 kc.setZldw(d.getZldw());
                 kc.setSyl(kc.getSl());
                 kc.setSyzl(kc.getZl());
+                kc.setKw(d.getKw());
                 
                 session.save(kc);
             }
