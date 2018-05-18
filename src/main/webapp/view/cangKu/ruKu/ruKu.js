@@ -274,12 +274,15 @@ function editRuKu(index) {
     $("#btnOk").html("保存");
     $("#divXzmx").show();
     if ("供应商" === ruKu.ly) {
-        $("#inpGys").val(ruKu.gys);
-        editGongYingShang = {"id": ruKu.gys_id, "mc": ruKu.gys};
+        $("#inpGys").val(ruKu.gysmc);
+        editGongYingShang = {"id": ruKu.gys_id, "mc": ruKu.gysmc};
     } else if ("客户" === ruKu.ly) {
-        $("#inpKh").val(ruKu.kh);
-        editKeHu = {"id": ruKu.kh_id, "mc": ruKu.kh};
+        $("#inpKh").val(ruKu.khmc);
+        editKeHu = {"id": ruKu.kh_id, "mc": ruKu.khmc};
     }
+    $("#inpCk").val(ruKu.ckmc);
+    editCangKu = {"id": ruKu.ck_id, "mc": ruKu.ckmc};
+    selectCangKu(editCangKu);
     $("#inpDh").val(ruKu.dh);
     $("#inpBz").val(ruKu.bz);
     $("#inpSl").val(ruKu.sl);
@@ -301,12 +304,15 @@ function dealRuKu(index) {
     $("#btnOk").html("办理");
     $("#divXzmx").hide();
     if ("供应商" === ruKu.ly) {
-        $("#inpGys").val(ruKu.gys);
-        editGongYingShang = {"id": ruKu.gys_id, "mc": ruKu.gys};
+        $("#inpGys").val(ruKu.gysmc);
+        editGongYingShang = {"id": ruKu.gys_id, "mc": ruKu.gysmc};
     } else if ("客户" === ruKu.ly) {
         $("#inpKh").val(ruKu.kh);
         editKeHu = {"id": ruKu.kh_id, "mc": ruKu.kh};
     }
+    $("#inpCk").val(ruKu.ckmc);
+    editCangKu = {"id": ruKu.ck_id, "mc": ruKu.ckmc};
+    selectCangKu(editCangKu);
     $("#inpDh").val(ruKu.dh);
     $("#inpBz").val(ruKu.bz);
     $("#inpSl").val(ruKu.sl);
@@ -374,6 +380,9 @@ function saveRuKu() {
         if (optFlag === 3) {
             if (e.kw === undefind || e.kw === null || e.kw === "") {
                 return alert("入库单明细需要设置库位！");
+            }
+            if (e.dj === undefind || e.dj === null || e.dj === "") {
+                return alert("入库单明细需要设置单价！");
             }
         }
         e.dymx = JSON.stringify(e.dymx);
