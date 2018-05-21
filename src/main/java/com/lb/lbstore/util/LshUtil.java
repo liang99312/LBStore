@@ -22,7 +22,8 @@ public class LshUtil {
     private static HashMap<String,Integer> lshMap = new HashMap<String,Integer>();
     
     public static String getRkdLsh(){
-        String result = DateUtil.DateToStr(new Date());
+        String dateStr = DateUtil.DateToStr(new Date());
+        String result = DateUtil.DateToStr(new Date(), "yyyyMMdd");
         String key = "rkd" + DateUtil.DateToStr(new Date());
         Integer i = 0;
         if(lshMap.get(key) == null){
@@ -32,14 +33,18 @@ public class LshUtil {
                     lshMap.remove(k);
                 }
             }
-            String sql = "select max(lsh) from ruku where lsh like '"+result+"%'";
+            String sql = "select max(lsh) from ruku where lsh like '"+dateStr+"%'";
             CommonDao commonDao = (CommonDao) ApplicationUtil.getBean("commonDao");
             List list = commonDao.getSqlResult(sql);
             if(list.isEmpty()){
                 i = 1;
             }else{
                 Object obj = list.get(0);
-                i = Integer.valueOf(obj.toString().substring(10)) + 1;
+                if(obj == null){
+                    i=1;
+                }else{
+                    i = Integer.valueOf(obj.toString().substring(10)) + 1;
+                }
             }
         }else{
             i = lshMap.get(key) + 1;
@@ -50,7 +55,8 @@ public class LshUtil {
     }
     
     public static String getKcLsh(){
-        String result = DateUtil.DateToStr(new Date());
+        String dateStr = DateUtil.DateToStr(new Date());
+        String result = DateUtil.DateToStr(new Date(), "yyyyMMdd");
         String key = "kc" + DateUtil.DateToStr(new Date());
         Integer i = 0;
         if(lshMap.get(key) == null){
@@ -60,7 +66,7 @@ public class LshUtil {
                     lshMap.remove(k);
                 }
             }
-            String sql = "select max(lsh) from ckkc where lsh like '"+result+"%'";
+            String sql = "select max(lsh) from ckkc where lsh like '"+dateStr+"%'";
             CommonDao commonDao = (CommonDao) ApplicationUtil.getBean("commonDao");
             List list = commonDao.getSqlResult(sql);
             if(list.isEmpty()){
@@ -80,7 +86,7 @@ public class LshUtil {
     public static String getNewNumber(Integer i,int len){
         String result = i.toString();
         while(result.length() < len){
-            result += "0";
+            result = "0" + result;
         }
         return result;
     }

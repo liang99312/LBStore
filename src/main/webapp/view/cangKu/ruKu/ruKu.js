@@ -17,11 +17,13 @@ var selKuWei;
 var selGongYingShang;
 var editGongYingShang;
 var editCangKu;
+var editA01;
 var dymx_opt = {data: [], yxData: [], func: calcDymx};
 var tysx_opt = {data: [], ls: 2, lw: 70};
 
 $(document).ready(function () {
     $('#inpSelQrq,#inpSelZrq,#inpMxScrq').datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, minView: 2, startView: 2, forceParse: 0, showMeridian: 1});
+    getAllA01s(setTrager_a01);
     getCangKus(setTrager_cangKu);
     getKeHus(setTrager_keHu);
     getGongYingShangs(setTrager_gongYingShang);
@@ -46,6 +48,10 @@ $(document).ready(function () {
         }
     });
 });
+
+function setTrager_a01() {
+    $('#inpRkr').AutoComplete({'data': lb_allA01s, 'paramName': 'editA01'});
+}
 
 function setTrager_cangKu() {
     $('#selCangKu').AutoComplete({'data': lb_cangKus, 'paramName': 'selCangKu'});
@@ -168,18 +174,16 @@ function jxRuKu(json) {
         if (item.state === -1) {
             classStr = ' class="danger"';
         }
-        if (item.tysx && item.tysx !== null && item.tysx !== "") {
-            item.tysx = JSON.parse(item.tysx);
-        } else {
-            item.tysx = [];
-        }
         item.lsh = item.lsh === undefined || item.lsh === null ? "" : item.lsh;
         item.gysmc = item.gysmc === undefined || item.gysmc === null ? "" : item.gysmc;
         item.khmc = item.khmc === undefined || item.khmc === null ? "" : item.khmc;
+        var editStr = '<button class="btn btn-info btn-xs icon-edit" onclick="editRuKu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
+        var dealStr = '<button class="btn btn-info btn-xs icon-legal" onclick="dealRuKu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
+        var delStr = '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteRuKu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>';
         var trStr = '<tr' + classStr + '><td>' + item.ckmc + '</td><td>' + item.lsh + '</td><td>' + item.gysmc + '</td><td>' + item.khmc + '</td><td>' + item.wz + '</td><td>' + item.sj + '</td><td>' + item.sl + '</td><td>'
-                + '<button class="btn btn-info btn-xs icon-edit" onclick="editRuKu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;'
-                + '<button class="btn btn-info btn-xs icon-legal" onclick="dealRuKu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;'
-                + '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteRuKu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button></td></tr>';
+                + (item.state===0?editStr:"")
+                + (item.state===0?dealStr:"")
+                + (item.state===0||item.state===-1?delStr:"") +'</td></tr>';
         $("#data_table_body").append(trStr);
     });
 }
@@ -297,6 +301,8 @@ function selectRuKuDetail(id) {
                 }
                 $("#inpCk").val(ruKu.ckmc);
                 editCangKu = {"id": ruKu.ck_id, "mc": ruKu.ckmc};
+                $("#inpRkr").val(ruKu.rkrmc);
+                editA01 = {"id": ruKu.rkr_id, "mc": ruKu.rkrmc};
                 selectCangKu(editCangKu);
                 $("#inpDh").val(ruKu.dh);
                 $("#inpBz").val(ruKu.bz);
@@ -332,6 +338,9 @@ function saveRuKu() {
     var url = "";
     if (optFlag === 3) {
         if (ruKus[editIndex] === undefined) {
+            return;
+        }
+        if (!confirm("确定办理入库单?")) {
             return;
         }
         ruKu = ruKus[editIndex];
@@ -376,15 +385,24 @@ function saveRuKu() {
             }
         }
     }
+    if ($("#inpRkr").val() === "") {
+        return alert("请输入入库人信息");
+    } else {
+        if ($("#inpRkr").val() !== editA01.mc) {
+            return alert("请输入入库人信息");
+        } else {
+            ruKu.rkr_id = editA01.id;
+        }
+    }
     var wz = "";
     var wzs = [];
     for (var i = 0; i < rkmx.length; i++) {
         var e = rkmx[i];
         if (optFlag === 3) {
-            if (e.kw === undefind || e.kw === null || e.kw === "") {
+            if (e.kw === undefined || e.kw === null || e.kw === "") {
                 return alert("入库单明细需要设置库位！");
             }
-            if (e.dj === undefind || e.dj === null || e.dj === "") {
+            if (e.dj === undefined || e.dj === null || e.dj === "") {
                 return alert("入库单明细需要设置单价！");
             }
         }
@@ -496,7 +514,7 @@ function jxRuKuMingXi() {
             item.tysx = [];
         }
         var je = parseFloat(item.sl) * parseFloat(item.dj);
-        var cz = optFlag === 3? '':'&nbsp;<button class="btn btn-danger btn-xs icon-remove" onclick="deleteRuKuMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>';
+        var cz = optFlag === 3 ? '' : '&nbsp;<button class="btn btn-danger btn-xs icon-remove" onclick="deleteRuKuMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>';
         var trStr = '<tr><td>' + item.wzmc + '</td><td>' + item.pp + '</td><td>' + item.xhgg + '</td><td>' + item.sl + '</td><td>' + je + '</td><td>'
                 + '<button class="btn btn-info btn-xs icon-edit" onclick="editRuKuMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;'
                 + cz + '</td></tr>';

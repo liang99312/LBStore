@@ -35,7 +35,7 @@ and open the template in the editor.
                     <select id="selState" style="width: 100px; height: 26px;line-height: 26px;">
                         <option value="-9" selected = "selected">全部</option>
                         <option value="0">未入库</option>
-                        <option value="2">已入库</option>
+                        <option value="1">已入库</option>
                         <option value="-1">已删除</option>
                     </select>
                     <button type="button" class="btn btn-primary btn-sm" onclick="selectRuKu();" style="margin-left: 2px;">查找</button>
@@ -85,7 +85,7 @@ and open the template in the editor.
                                 <select id="inpSelState" style="width: 170px; height: 26px;line-height: 26px;">
                                     <option value="-9" selected = "selected">全部</option>
                                     <option value="0">未入库</option>
-                                    <option value="2">已入库</option>
+                                    <option value="1">已入库</option>
                                     <option value="-1">已删除</option>
                                 </select>
                             </div>
@@ -146,6 +146,10 @@ and open the template in the editor.
                                 <input type="text" id="inpSl" />
                                 <label for="inpJe">金&ensp;&ensp;额：</label>
                                 <input type="text" id="inpJe" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpRkr">入库人：</label>
+                                <input type="text" id="inpRkr" />
                             </div>
                             <div class="form-group">
                                 <label for="inpBz">备&ensp;&ensp;注：</label>

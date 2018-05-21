@@ -144,7 +144,7 @@ CREATE TABLE `store`.`wuzixhgg` (
   `dm` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `sl` FLOAT(7,2) COLLATE utf8_unicode_ci DEFAULT NULL,
   `jb` FLOAT(7,2) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `bzq` FLOAT(7,2) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `bzq` INT DEFAULT 0,
   PRIMARY KEY (`id`))ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `store`.`ruku` (
@@ -185,7 +185,7 @@ CREATE TABLE `store`.`rukudetail` (
   `scc` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `txm` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `scrq` datetime DEFAULT NULL,
-  `bzq` FLOAT(7,2) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `bzq` INT DEFAULT 0,
   `dj` FLOAT(7,2) COLLATE utf8_unicode_ci DEFAULT NULL,
   `dw` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `zldw` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -220,8 +220,8 @@ CREATE TABLE `store`.`kucun` (
   `txm` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `rksj` datetime DEFAULT NULL,
   `scrq` datetime DEFAULT NULL,
-  `bzq` FLOAT(7,2) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `scrq` datetime DEFAULT NULL,
+  `bzq` INT DEFAULT 0,
+  `bzrq` datetime DEFAULT NULL,
   `dj` FLOAT(7,2) COLLATE utf8_unicode_ci DEFAULT NULL,
   `ckdj` FLOAT(7,2) COLLATE utf8_unicode_ci DEFAULT NULL,
   `dw` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,

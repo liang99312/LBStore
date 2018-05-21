@@ -28,7 +28,7 @@ public class WuZiXhgg {
     private String dm;
     private Double sl = 0D;
     private Double jb = 0D;
-    private Double bzq = 0D;
+    private Integer bzq = 0;
 
     public WuZiXhgg() {
 
@@ -90,11 +90,11 @@ public class WuZiXhgg {
         this.jb = jb;
     }
 
-    public Double getBzq() {
+    public Integer getBzq() {
         return bzq;
     }
 
-    public void setBzq(Double bzq) {
+    public void setBzq(Integer bzq) {
         this.bzq = bzq;
     }
 

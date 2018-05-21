@@ -44,7 +44,7 @@ public class RuKuDetail {
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
     private Date scrq;
-    private Double bzq;
+    private Integer bzq;
     private Double dj;
     private String dw;    
     private String zldw;   
@@ -264,11 +264,11 @@ public class RuKuDetail {
         this.scrq = scrq;
     }
 
-    public Double getBzq() {
+    public Integer getBzq() {
         return bzq;
     }
 
-    public void setBzq(Double bzq) {
+    public void setBzq(Integer bzq) {
         this.bzq = bzq;
     }
 

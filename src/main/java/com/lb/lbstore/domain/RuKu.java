@@ -53,6 +53,7 @@ public class RuKu {
     private transient String ckmc;
     private transient String khmc;
     private transient String gysmc;
+    private transient String rkrmc;
 
     public Integer getId() {
         return id;
@@ -236,6 +237,14 @@ public class RuKu {
 
     public void setGysmc(String gysmc) {
         this.gysmc = gysmc;
+    }
+
+    public String getRkrmc() {
+        return rkrmc;
+    }
+
+    public void setRkrmc(String rkrmc) {
+        this.rkrmc = rkrmc;
     }
 
     @Override

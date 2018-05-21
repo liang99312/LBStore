@@ -31,11 +31,11 @@ public class RuKuDao extends BaseDao {
         Session session = null;
         try {
             session = getSessionFactory().openSession();
-            String sql = "select {rk.*},kh.mc as khmc,gys.mc as gysmc,ck.mc as ckmc from RuKu rk "
-                    + "left join CangKu ck on rk.ck_id=ck.id left join KeHu kh on rk.kh_id=kh.id left join GongYingShang gys on rk.gys_id=gys.id "
+            String sql = "select {rk.*},kh.mc as khmc,gys.mc as gysmc,ck.mc as ckmc,a01.mc as rkrmc from RuKu rk "
+                    + "left join CangKu ck on rk.ck_id=ck.id left join KeHu kh on rk.kh_id=kh.id left join GongYingShang gys on rk.gys_id=gys.id left join A01 a01 on rk.rkr_id=a01.id "
                     + "where rk.id="+id;
             SQLQuery navtiveSQL = session.createSQLQuery(sql);  
-            navtiveSQL.addEntity("rk", RuKu.class).addScalar("khmc", StandardBasicTypes.STRING).addScalar("gysmc", StandardBasicTypes.STRING).addScalar("ckmc", StandardBasicTypes.STRING);  
+            navtiveSQL.addEntity("rk", RuKu.class).addScalar("khmc", StandardBasicTypes.STRING).addScalar("gysmc", StandardBasicTypes.STRING).addScalar("ckmc", StandardBasicTypes.STRING).addScalar("rkrmc", StandardBasicTypes.STRING);  
             List list = navtiveSQL.list();
             List<RuKu> list_rk = new ArrayList();
             for(Object obj:list){
@@ -44,9 +44,11 @@ public class RuKuDao extends BaseDao {
                 String khmc = (String) objs[1];
                 String gysmc = (String) objs[2];
                 String ckmc = (String) objs[3];
+                String rkrmc = (String) objs[4];
                 rk.setKhmc(khmc);
                 rk.setCkmc(ckmc);
                 rk.setGysmc(gysmc);
+                rk.setRkrmc(rkrmc);
                 list_rk.add(rk);
             }
             if(list_rk.isEmpty()){
@@ -323,6 +325,7 @@ public class RuKuDao extends BaseDao {
                 kc.setPp(d.getPp());
                 kc.setQy_id(d.getQy_id());
                 kc.setRk_id(d.getRk_id());
+                kc.setRkd_id(d.getId());
                 kc.setScc(d.getScc());
                 kc.setScrq(d.getScrq());
                 kc.setSl(d.getSl());
