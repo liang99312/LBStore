@@ -31,11 +31,20 @@ public class RuKuDao extends BaseDao {
         Session session = null;
         try {
             session = getSessionFactory().openSession();
-            String sql = "select {rk.*},kh.mc as khmc,gys.mc as gysmc,ck.mc as ckmc,a01.mc as rkrmc from RuKu rk "
-                    + "left join CangKu ck on rk.ck_id=ck.id left join KeHu kh on rk.kh_id=kh.id left join GongYingShang gys on rk.gys_id=gys.id left join A01 a01 on rk.rkr_id=a01.id "
+            String sql = "select {rk.*},kh.mc as khmc,gys.mc as gysmc,ck.mc as ckmc,a01.mc as rkrmc,a02.mc as sprmc from RuKu rk "
+                    + "left join CangKu ck on rk.ck_id=ck.id "
+                    + "left join KeHu kh on rk.kh_id=kh.id "
+                    + "left join GongYingShang gys on rk.gys_id=gys.id "
+                    + "left join A01 a01 on rk.rkr_id=a01.id "
+                    + "left join A01 a02 on rk.spr_id=a02.id "
                     + "where rk.id="+id;
             SQLQuery navtiveSQL = session.createSQLQuery(sql);  
-            navtiveSQL.addEntity("rk", RuKu.class).addScalar("khmc", StandardBasicTypes.STRING).addScalar("gysmc", StandardBasicTypes.STRING).addScalar("ckmc", StandardBasicTypes.STRING).addScalar("rkrmc", StandardBasicTypes.STRING);  
+            navtiveSQL.addEntity("rk", RuKu.class)
+                    .addScalar("khmc", StandardBasicTypes.STRING)
+                    .addScalar("gysmc", StandardBasicTypes.STRING)
+                    .addScalar("ckmc", StandardBasicTypes.STRING)
+                    .addScalar("rkrmc", StandardBasicTypes.STRING)
+                    .addScalar("sprmc", StandardBasicTypes.STRING);  
             List list = navtiveSQL.list();
             List<RuKu> list_rk = new ArrayList();
             for(Object obj:list){
@@ -45,10 +54,12 @@ public class RuKuDao extends BaseDao {
                 String gysmc = (String) objs[2];
                 String ckmc = (String) objs[3];
                 String rkrmc = (String) objs[4];
+                String sprmc = (String) objs[5];
                 rk.setKhmc(khmc);
                 rk.setCkmc(ckmc);
                 rk.setGysmc(gysmc);
                 rk.setRkrmc(rkrmc);
+                rk.setSprmc(sprmc);
                 list_rk.add(rk);
             }
             if(list_rk.isEmpty()){
@@ -311,7 +322,9 @@ public class RuKuDao extends BaseDao {
                 KuCun kc = new KuCun();
                 kc.setBzgg(d.getBzgg());
                 kc.setBzq(d.getBzq());
-                kc.setBzrq(c.getTime());
+                if(d.getBzq() > 0){
+                    kc.setBzrq(c.getTime());
+                }
                 kc.setCk_id(d.getCk_id());
                 kc.setDh(d.getDh());
                 kc.setDj(d.getDj());
@@ -342,6 +355,7 @@ public class RuKuDao extends BaseDao {
                 kc.setSyl(kc.getSl());
                 kc.setSyzl(kc.getZl());
                 kc.setKw(d.getKw());
+                kc.setRksj(new Date());
                 
                 session.save(kc);
             }
