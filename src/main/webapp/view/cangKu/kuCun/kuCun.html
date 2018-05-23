@@ -11,11 +11,14 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="/LBStore/content/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
         <link href="/LBStore/content/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/LBStore/content/bootstrap/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
         <link href="/LBStore/content/autocomplete/autocomplete.css" rel="stylesheet" />
         <script src="/LBStore/js/jquery2.js"></script>
         <script src="/LBStore/js/jquery.form.js"></script>
         <script src="/LBStore/content/bootstrap/js/bootstrap.min.js"></script>
         <script src="/LBStore/content/bootstrap/js/bootstrap-paginator.js"></script>
+        <script src="/LBStore/content/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+        <script src="/LBStore/content/bootstrap/js/bootstrap-datetimepicker.zh-CN.js"></script>
         <script src="/LBStore/content/autocomplete/autocomplete.js"></script>
         <script src="/LBStore/view/common/common.js"></script>
         <script src="/LBStore/view/cangKu/kuCun/kuCun.js"></script>
@@ -25,13 +28,9 @@ and open the template in the editor.
             <div style="width: 100%">
                 <div style="width: 100%;float:left; padding-top: 5px;">
                     <span>&nbsp;名称：</span><input id="selName" type="text" />
-                    <span>&nbsp;状态：</span>
-                    <select id="selState" style="width: 100px; height: 26px;line-height: 26px;">
-                        <option value="-9" selected = "selected">全部</option>
-                        <option value="0">有效</option>
-                        <option value="-1">无效</option>
-                    </select>
+                    <span>&nbsp;条形码：</span><input id="selTxm" type="text" />
                     <button type="button" class="btn btn-primary btn-sm" onclick="selectKuCun();" style="margin-left: 2px;">查找</button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="showSelectKuCun();" style="margin-left: 2px;">更多查找</button>
                 </div>
             </div>
             <div id="list1" class="table-responsive" style="height: 678px;width:100%;padding-top: 5px;">
@@ -72,6 +71,10 @@ and open the template in the editor.
                                 <input type="text" id="inpSelCk" />
                             </div>
                             <div class="form-group">
+                                <label for="inpSelWzlb">类&ensp;&ensp;别：</label>
+                                <input type="text" id="inpSelWzlb" />
+                            </div>
+                            <div class="form-group">
                                 <label for="inpSelWz">物&ensp;&ensp;资：</label>
                                 <input type="text" id="inpSelWz" />
                             </div>
@@ -86,6 +89,10 @@ and open the template in the editor.
                             <div class="form-group">
                                 <label for="inpSelGys">供应商：</label>
                                 <input type="text" id="inpSelGys" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpSelRkr">入库人：</label>
+                                <input type="text" id="inpSelRkr" />
                             </div>
                             <div class="form-group">
                                 <label for="inpSelRq">日&ensp;&ensp;期：</label>

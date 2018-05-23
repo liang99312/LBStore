@@ -1,24 +1,60 @@
 var kuCuns;
 var optFlag = 1;
 var editIndex = -1;
+var selA01;
+var selCangKu;
+var selKeHu;
+var selGongYingShang;
+var selWzlb;
 
 $(document).ready(function () {
+    $('#inpSelQrq,#inpSelZrq').datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, minView: 2, startView: 2, forceParse: 0, showMeridian: 1});
+    getAllA01s(setTrager_a01);
+    getCangKus(setTrager_cangKu);
+    getKeHus(setTrager_keHu);
+    getGongYingShangs(setTrager_gongYingShang);
+    getWuZiZiDians(setTrager_ziDian);
+    getWuZiLeiBies(setTrager_leiBie);
 });
+
+function setTrager_a01() {
+    $('#inpSelRkr').AutoComplete({'data': lb_allA01s, 'paramName': 'selA01'});
+}
+
+function setTrager_cangKu() {
+    $('#inpSelCk').AutoComplete({'data': lb_cangKus, 'paramName': 'selCangKu'});
+}
+
+function setTrager_keHu() {
+    $('#inpSelKh').AutoComplete({'data': lb_keHus, 'paramName': 'selKeHu'});
+}
+
+function setTrager_gongYingShang() {
+    $('#inpSelGys').AutoComplete({'data': lb_gongYingShangs, 'paramName': 'selGongYingShang'});
+}
+
+function setTrager_ziDian() {
+    $('#inpSelWz,#selName').AutoComplete({'data': lb_wuZiZiDians});
+}
+
+function setTrager_leiBie() {
+    $('#inpSelWzlb').AutoComplete({'data': lb_wuZiLeiBies, 'paramName': 'selWzlb'});
+}
 
 function jxKuCun(json) {
     $("#data_table_body tr").remove();
     kuCuns = [];
     kuCuns = json.list;
     $.each(json.list, function (index, item) { //遍历返回的json
-        var classStr = '';
-        if(item.state === -1){
-            classStr = ' class="danger"';
-        }
-        var trStr = '<tr'+classStr+'><td>' + item.mc + '</td><td>' + item.dm + '</td><td>' + item.lxr + '</td><td>' + item.lxdh + '</td><td>'
+        var trStr = '<tr><td>' + item.ckmc + '</td><td>' + item.wzmc + '</td><td>' + item.pp + '</td><td>' + item.xhgg + '</td><td>' + item.zl + '</td><td>' + item.syzl + '</td><td>' + item.kw + '</td><td>' + item.rksj + '</td><td>'
                 + '<button class="btn btn-info btn-xs icon-file-alt" onclick="readKuCun(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;'
-                + '<button class="btn btn-danger btn-xs icon-edit" onclick="editKuCun(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button></td></tr>';
+                + '<button class="btn btn-info btn-xs icon-edit" onclick="editKuCun(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button></td></tr>';
         $("#data_table_body").append(trStr);
     });
+}
+
+function showSelectKuCun() {
+    $("#kuCunSelectModal").modal("show");
 }
 
 function selectKuCun() {
@@ -27,8 +63,8 @@ function selectKuCun() {
     if ($("#selName").val() !== "") {
         kuCun.mc = $("#selName").val();
     }
-    if ($("#selState").val() !== '' && $("#selState").val() !== "-9") {
-        kuCun.state = $("#selState").val();
+    if ($("#selTxm").val() !== '') {
+        kuCun.txm = $("#selTxm").val();
     }
     tj.paramters = kuCun;
     var options = {};
@@ -44,6 +80,15 @@ function selectKuCun_m() {
     var tj = {"pageSize": 20, "currentPage": 1};
     if ($("#inpSelWz").val() !== "") {
         ruKu.wzmc = $("#inpSelWz").val();
+    }
+    if ($("#inpSelXhgg").val() !== "") {
+        ruKu.xhgg = $("#inpSelXhgg").val();
+    }
+    if ($("#inpSelWzlb").val() !== "" && $("#inpSelWzlb").val() === selWzlb.mc) {
+        ruKu.wzlb_id = selWzlb.id;
+    }
+    if ($("#inpSelRkr").val() !== "" && $("#inpSelRkr").val() === selA01.mc) {
+        ruKu.rkr_id = selA01.id;
     }
     if ($("#inpSelCk").val() !== "" && $("#inpSelCk").val() === selCangKu.mc) {
         ruKu.ck_id = selCangKu.id;
@@ -67,6 +112,7 @@ function selectKuCun_m() {
     options.func = jxKuCun;
     options.ul = "#example";
     queryPaginator(options);
+    $("#kuCunSelectModal").modal("hide");
 }
 
 function editKuCun(index) {

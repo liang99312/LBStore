@@ -41,11 +41,32 @@ public class KuCunServiceImpl implements KuCunService {
     @Override
     public int queryRows(HashMap map) {
         String sql = "select (1) from KuCun where qy_id="+map.get("qy_id");
-        if (map.containsKey("mc")) {
-            sql += " and mc like '%" + map.get("mc") + "%'";
+        if (map.containsKey("wzmc")) {
+            sql += " and wzmc like '%" + map.get("wzmc") + "%'";
         }
-        if (map.containsKey("state")) {
-            sql += " and state = " + map.get("state");
+        if (map.containsKey("xhgg")) {
+            sql += " and xhgg like '%" + map.get("xhgg") + "%'";
+        }
+        if (map.containsKey("wzlb_id")) {
+            sql += " and wzlb_id = " + map.get("wzlb_id");
+        }
+        if (map.containsKey("rkr_id")) {
+            sql += " and rkr_id = " + map.get("rkr_id");
+        }
+        if (map.containsKey("ck_id")) {
+            sql += " and ck_id = " + map.get("ck_id");
+        }
+        if (map.containsKey("kh_id")) {
+            sql += " and kh_id = " + map.get("kh_id");
+        }
+        if (map.containsKey("gys_id")) {
+            sql += " and gys_id = " + map.get("gys_id");
+        }
+        if (map.containsKey("qrq")) {
+            sql += " and rksj > '" + map.get("qrq") + "'";
+        }
+        if (map.containsKey("zrq")) {
+            sql += " and rksj <= '" + map.get("zrq") + " 23:59:59'";
         }
         return kuCunDao.getCount(sql, null);
     }

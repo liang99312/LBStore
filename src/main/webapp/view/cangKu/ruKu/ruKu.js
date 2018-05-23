@@ -247,6 +247,7 @@ function selectRuKu_m() {
     options.func = jxRuKu;
     options.ul = "#example";
     queryPaginator(options);
+    $("#ruKuSelectModal").modal("hide");
 }
 
 function addRuKu() {

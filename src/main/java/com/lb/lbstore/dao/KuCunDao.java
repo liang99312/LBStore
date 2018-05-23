@@ -123,11 +123,32 @@ public class KuCunDao extends BaseDao {
                     + "left join A01 a02 on kc.spr_id=a02.id "
                     + "left join WuZiLeiBie wzlb on kc.wzlb_id=wzlb.id "
                     + "where kc.qy_id=" + map.get("qy_id");
-            if (map.containsKey("mc")) {
-                sql += " and kc.wz like '%" + map.get("mc") + "%'";
+            if (map.containsKey("wzmc")) {
+                sql += " and kc.wzmc like '%" + map.get("wzmc") + "%'";
             }
-            if (map.containsKey("state")) {
-                sql += " and kc.state = " + map.get("state");
+            if (map.containsKey("xhgg")) {
+                sql += " and kc.xhgg like '%" + map.get("xhgg") + "%'";
+            }
+            if (map.containsKey("wzlb_id")) {
+                sql += " and kc.wzlb_id = " + map.get("wzlb_id");
+            }
+            if (map.containsKey("rkr_id")) {
+                sql += " and kc.rkr_id = " + map.get("rkr_id");
+            }
+            if (map.containsKey("ck_id")) {
+                sql += " and kc.ck_id = " + map.get("ck_id");
+            }
+            if (map.containsKey("kh_id")) {
+                sql += " and kc.kh_id = " + map.get("kh_id");
+            }
+            if (map.containsKey("gys_id")) {
+                sql += " and kc.gys_id = " + map.get("gys_id");
+            }
+            if (map.containsKey("qrq")) {
+                sql += " and kc.rksj > '" + map.get("qrq") + "'";
+            }
+            if (map.containsKey("zrq")) {
+                sql += " and kc.rksj <= '" + map.get("zrq") + " 23:59:59'";
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);            
             navtiveSQL.addEntity("kc", KuCun.class)

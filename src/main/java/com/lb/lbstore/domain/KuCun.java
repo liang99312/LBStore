@@ -66,6 +66,8 @@ public class KuCun {
     private String tysx;
     private String dymx;
     private String kw;
+    private transient Date qrq;
+    private transient Date zrq;
     private transient String ckmc;
     private transient String khmc;
     private transient String gysmc;
@@ -407,6 +409,22 @@ public class KuCun {
 
     public void setWzlb(String wzlb) {
         this.wzlb = wzlb;
+    }
+
+    public Date getQrq() {
+        return qrq;
+    }
+
+    public void setQrq(Date qrq) {
+        this.qrq = qrq;
+    }
+
+    public Date getZrq() {
+        return zrq;
+    }
+
+    public void setZrq(Date zrq) {
+        this.zrq = zrq;
     }
 
     @Override
