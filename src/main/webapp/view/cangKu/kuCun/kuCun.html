@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="/LBStore/content/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="/LBStore/content/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/LBStore/content/autocomplete/autocomplete.css" rel="stylesheet" />
+        <script src="/LBStore/js/jquery2.js"></script>
+        <script src="/LBStore/js/jquery.form.js"></script>
+        <script src="/LBStore/content/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/LBStore/content/bootstrap/js/bootstrap-paginator.js"></script>
+        <script src="/LBStore/content/autocomplete/autocomplete.js"></script>
+        <script src="/LBStore/view/common/common.js"></script>
+        <script src="/LBStore/view/cangKu/kuCun/kuCun.js"></script>
+    </head>
+    <body style='height:800px;'>
+        <div style="float:left; width: 100%">
+            <div style="width: 100%">
+                <div style="width: 100%;float:left; padding-top: 5px;">
+                    <span>&nbsp;名称：</span><input id="selName" type="text" />
+                    <span>&nbsp;状态：</span>
+                    <select id="selState" style="width: 100px; height: 26px;line-height: 26px;">
+                        <option value="-9" selected = "selected">全部</option>
+                        <option value="0">有效</option>
+                        <option value="-1">无效</option>
+                    </select>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="selectKuCun();" style="margin-left: 2px;">查找</button>
+                </div>
+            </div>
+            <div id="list1" class="table-responsive" style="height: 678px;width:100%;padding-top: 5px;">
+                <table id="data_table" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width:10%">仓库</th>
+                            <th style="width:15%">名称</th>
+                            <th style="width:10%">品牌</th>
+                            <th style="width:10%">型号规格</th>
+                            <th style="width:10%">入库数量</th>
+                            <th style="width:10%">剩余量</th>
+                            <th style="width:10%">库位</th>
+                            <th style="width:10%">入库时间</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id='data_table_body'>
+                        <tr><td>请查询库存记录</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <ul id="example"></ul>
+        </div>
+
+        <div class="modal fade" id="kuCunSelectModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #ace1ff;height: 40px;border-top-left-radius: 6px;border-top-right-radius: 6px;padding:10px">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="kuCunSelectModel_title">查询库存</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="content">
+                            <div class="form-group">
+                                <label for="inpSelCk">仓&ensp;&ensp;库：</label>
+                                <input type="text" id="inpSelCk" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpSelWz">物&ensp;&ensp;资：</label>
+                                <input type="text" id="inpSelWz" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpSelXhgg">规&ensp;&ensp;格：</label>
+                                <input type="text" id="inpSelXhgg" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpSelKh">客&ensp;&ensp;户：</label>
+                                <input type="text" id="inpSelKh" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpSelGys">供应商：</label>
+                                <input type="text" id="inpSelGys" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpSelRq">日&ensp;&ensp;期：</label>
+                                <input type="text" id="inpSelQrq" />-<input type="text" id="inpSelZrq" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="text-align: center;padding: 8px;">
+                        <button type="submit" class="btn btn-primary" onclick="selectKuCun_m()">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="kuCunModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #ace1ff;height: 40px;border-top-left-radius: 6px;border-top-right-radius: 6px;padding:10px">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="kuCunModel_title">修改库存</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="content">
+                            <div class="form-group">
+                                <label for="inpMxWz">物资名称：</label>
+                                <input type="text" id="inpMxWz" />
+                                <label for="inpMxLb">物资类别：</label>
+                                <input type="text" id="inpMxLb" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpMxPp">品&ensp;&ensp;&ensp;&ensp;牌：</label>
+                                <input type="text" id="inpMxPp" />
+                                <label for="inpMxXhgg">型号规格：</label>
+                                <input type="text" id="inpMxXhgg" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpMxScc">生&ensp;产&ensp;厂：</label>
+                                <input type="text" id="inpMxScc" />
+                                <label for="inpMxTxm">条&ensp;形&ensp;码：</label>
+                                <input type="text" id="inpMxTxm" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpMxScc">生产日期：</label>
+                                <input type="text" id="inpMxScrq" />
+                                <label for="inpMxTxm">保质天数：</label>
+                                <input type="text" id="inpMxBzq" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpMxDj">单&ensp;&ensp;&ensp;&ensp;价：</label>
+                                <input type="text" id="inpMxDj" />
+                                <label for="inpMxDw">单&ensp;&ensp;&ensp;&ensp;位：</label>
+                                <input type="text" id="inpMxDw" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpMxSl">数&ensp;&ensp;&ensp;&ensp;量：</label>
+                                <input type="text" id="inpMxSl" />
+                                <label for="inpMxJlfs">记录方式：</label>
+                                <select id = "inpMxJlfs" style="width: 174px;height: 26px;">
+                                    <option value="pt">普通记录</option>
+                                    <option value="zl">总量记录</option>
+                                    <option value="mx">单元明细</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="inpMxKw">库&ensp;&ensp;&ensp;&ensp;位：</label>
+                                <input type="text" id="inpMxKw" />
+                                <input type="text" id="inpMxKwh" />
+                            </div>
+                            <div id="dvMxBzgg" class="form-group" style="display: none;">
+                                <label for="inpMxBzgg">包装规格：</label>
+                                <input type="text" id="inpMxBzgg" />
+                                <label for="inpMxZldw">总量单位：</label>
+                                <input type="text" id="inpMxZldw" />
+                            </div>
+                            <div id="dvMxZl" class="form-group" style="display: none;">
+                                <label for="inpMxZl">总&ensp;&ensp;&ensp;&ensp;量：</label>
+                                <input type="text" id="inpMxZl" />
+                            </div>
+                            <div id='divMxTysx'></div>
+                            <div id='divMxDymx' class="form-group" style="overflow-y: auto;min-height: 50px;max-height: 250px; display: none;">
+                                <label for="tblMxDymx">单元明细：</label>
+                                <table id="tblMxDymx" cellspacing="0"></table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="text-align: center;padding: 8px;">
+                        <button type="submit" class="btn btn-primary" onclick="saveKuCun()">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

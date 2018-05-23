@@ -12,7 +12,7 @@ var goLingLiaoDan = "/LBStore/goLingLiaoDan.do";
 var goFaHuo = "/LBStore/goFaHuo.do";
 var goSunHao = "/LBStore/goSunHao.do";
 var goHuanKu = "/LBStore/goHuanKu.do";
-var goKunCun = "/LBStore/goKunCun.do";
+var goKuCun = "/LBStore/kuCun/goKuCun.do";
 var goTongJi = "/LBStore/goTongJi.do";
 var goBaoBiao = "/LBStore/baoBiao/goBaoBiao.do";
 var goZiDianLeiBie = "/LBStore/ziDianFenLei/goZiDianFenLei.do";
@@ -39,7 +39,7 @@ var allMenu = {data: [
                 {id: '505', text: '发货管理', icon: 'icon-glass', url: goFaHuo},
                 {id: '506', text: '损耗管理', icon: 'icon-glass', url: goSunHao},
                 {id: '507', text: '还库管理', icon: 'icon-glass', url: goHuanKu},
-                {id: '508', text: '库存管理', icon: 'icon-glass', url: goHuanKu},
+                {id: '508', text: '库存管理', icon: 'icon-glass', url: goKuCun},
                 {id: '509', text: '统计分析', icon: 'icon-glass', url: goTongJi}]},
         {id: '7', text: '企业字典', icon: 'icon-leaf', url: '', menus: [
                 {id: '701', text: '字典类别', icon: 'icon-glass', url: goZiDianLeiBie},

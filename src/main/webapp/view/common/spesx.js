@@ -44,6 +44,9 @@
                             setInputEvent(data);
                         });
                     } else {
+                        $("#tysx_inp_" + e.id).keyup(function () {
+                            e.value = $(this).val();
+                        });
                         tysxIndex++;
                         setInputEvent(data);
                     }

@@ -66,6 +66,12 @@ public class KuCun {
     private String tysx;
     private String dymx;
     private String kw;
+    private transient String ckmc;
+    private transient String khmc;
+    private transient String gysmc;
+    private transient String rkrmc;
+    private transient String sprmc;
+    private transient String wzlb;
     
     public Integer getId() {
         return id;
@@ -353,6 +359,54 @@ public class KuCun {
 
     public void setCkdj(Double ckdj) {
         this.ckdj = ckdj;
+    }
+
+    public String getCkmc() {
+        return ckmc;
+    }
+
+    public void setCkmc(String ckmc) {
+        this.ckmc = ckmc;
+    }
+
+    public String getKhmc() {
+        return khmc;
+    }
+
+    public void setKhmc(String khmc) {
+        this.khmc = khmc;
+    }
+
+    public String getGysmc() {
+        return gysmc;
+    }
+
+    public void setGysmc(String gysmc) {
+        this.gysmc = gysmc;
+    }
+
+    public String getRkrmc() {
+        return rkrmc;
+    }
+
+    public void setRkrmc(String rkrmc) {
+        this.rkrmc = rkrmc;
+    }
+
+    public String getSprmc() {
+        return sprmc;
+    }
+
+    public void setSprmc(String sprmc) {
+        this.sprmc = sprmc;
+    }
+
+    public String getWzlb() {
+        return wzlb;
+    }
+
+    public void setWzlb(String wzlb) {
+        this.wzlb = wzlb;
     }
 
     @Override
