@@ -21,6 +21,8 @@ and open the template in the editor.
         <script src="/LBStore/content/bootstrap/js/bootstrap-datetimepicker.zh-CN.js"></script>
         <script src="/LBStore/content/autocomplete/autocomplete.js"></script>
         <script src="/LBStore/view/common/common.js"></script>
+        <script src="/LBStore/view/common/detail.js"></script>
+        <script src="/LBStore/view/common/spesx.js"></script>
         <script src="/LBStore/view/cangKu/kuCun/kuCun.js"></script>
     </head>
     <body style='height:800px;'>
@@ -116,70 +118,80 @@ and open the template in the editor.
                     </div>
                     <div class="modal-body">
                         <div class="content">
-                            <div class="form-group">
+                            <div class="form-group form-uneditable">
                                 <label for="inpMxWz">物资名称：</label>
                                 <input type="text" id="inpMxWz" />
                                 <label for="inpMxLb">物资类别：</label>
                                 <input type="text" id="inpMxLb" />
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-uneditable">
                                 <label for="inpMxPp">品&ensp;&ensp;&ensp;&ensp;牌：</label>
                                 <input type="text" id="inpMxPp" />
                                 <label for="inpMxXhgg">型号规格：</label>
                                 <input type="text" id="inpMxXhgg" />
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-uneditable">
+                                <label for="inpMxLy">来&ensp;&ensp;&ensp;&ensp;源：</label>
+                                <input type="text" id="inpMxLy" />
+                                <label for="inpMxDh">单&ensp;&ensp;&ensp;&ensp;号：</label>
+                                <input type="text" id="inpMxDh" />
+                            </div>
+                            <div class="form-group form-uneditable">
+                                <label for="inpMxKh">客&ensp;&ensp;&ensp;&ensp;户：</label>
+                                <input type="text" id="inpMxKh" />
+                                <label for="inpMxGys">供&ensp;应&ensp;商：</label>
+                                <input type="text" id="inpMxGys" />
+                            </div>
+                            <div class="form-group form-uneditable">
                                 <label for="inpMxScc">生&ensp;产&ensp;厂：</label>
                                 <input type="text" id="inpMxScc" />
-                                <label for="inpMxTxm">条&ensp;形&ensp;码：</label>
-                                <input type="text" id="inpMxTxm" />
+                                <label for="inpMxRksj">入库时间：</label>
+                                <input type="text" id="inpMxRksj" />
                             </div>
-                            <div class="form-group">
-                                <label for="inpMxScc">生产日期：</label>
+                            <div class="form-group form-uneditable">
+                                <label for="inpMxScrq">生产日期：</label>
                                 <input type="text" id="inpMxScrq" />
-                                <label for="inpMxTxm">保质天数：</label>
+                                <label for="inpMxBzq">保质天数：</label>
                                 <input type="text" id="inpMxBzq" />
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-uneditable">
                                 <label for="inpMxDj">单&ensp;&ensp;&ensp;&ensp;价：</label>
                                 <input type="text" id="inpMxDj" />
-                                <label for="inpMxDw">单&ensp;&ensp;&ensp;&ensp;位：</label>
-                                <input type="text" id="inpMxDw" />
-                            </div>
-                            <div class="form-group">
                                 <label for="inpMxSl">数&ensp;&ensp;&ensp;&ensp;量：</label>
                                 <input type="text" id="inpMxSl" />
-                                <label for="inpMxJlfs">记录方式：</label>
-                                <select id = "inpMxJlfs" style="width: 174px;height: 26px;">
-                                    <option value="pt">普通记录</option>
-                                    <option value="zl">总量记录</option>
-                                    <option value="mx">单元明细</option>
-                                </select>
                             </div>
-                            <div class="form-group">
-                                <label for="inpMxKw">库&ensp;&ensp;&ensp;&ensp;位：</label>
-                                <input type="text" id="inpMxKw" />
-                                <input type="text" id="inpMxKwh" />
-                            </div>
-                            <div id="dvMxBzgg" class="form-group" style="display: none;">
+                            <div id="dvMxBzgg" class="form-group form-uneditable" style="display: none;">
                                 <label for="inpMxBzgg">包装规格：</label>
                                 <input type="text" id="inpMxBzgg" />
                                 <label for="inpMxZldw">总量单位：</label>
                                 <input type="text" id="inpMxZldw" />
                             </div>
-                            <div id="dvMxZl" class="form-group" style="display: none;">
+                            
+                            <div id="dvMxZl" class="form-group form-uneditable" style="display: none;">
                                 <label for="inpMxZl">总&ensp;&ensp;&ensp;&ensp;量：</label>
                                 <input type="text" id="inpMxZl" />
-                            </div>
-                            <div id='divMxTysx'></div>
-                            <div id='divMxDymx' class="form-group" style="overflow-y: auto;min-height: 50px;max-height: 250px; display: none;">
+                            </div>                            
+                            <div class="form-uneditable" id='divMxTysx'></div>
+                            <div id='divMxDymx' class="form-group form-uneditable" style="overflow-y: auto;min-height: 50px;max-height: 250px; display: none;">
                                 <label for="tblMxDymx">单元明细：</label>
                                 <table id="tblMxDymx" cellspacing="0"></table>
+                            </div>
+                            
+                            <div class="form-group form-editable">
+                                <label for="inpMxCkdj">出库单价：</label>
+                                <input type="text" id="inpMxCkdj" />
+                                <label for="inpMxTxm">条&ensp;形&ensp;码：</label>
+                                <input type="text" id="inpMxTxm" />
+                            </div>
+                            <div class="form-group form-editable">
+                                <label for="inpMxKw">库&ensp;&ensp;&ensp;&ensp;位：</label>
+                                <input type="text" id="inpMxKw" />
+                                <input type="text" id="inpMxKwh" />
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer" style="text-align: center;padding: 8px;">
-                        <button type="submit" class="btn btn-primary" onclick="saveKuCun()">保存</button>
+                        <button id="btnOk" type="submit" class="btn btn-primary" onclick="saveKuCun()">保存</button>
                     </div>
                 </div>
             </div>
