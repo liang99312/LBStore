@@ -66,6 +66,7 @@ public class KuCun {
     private String tysx;
     private String dymx;
     private String kw;
+    private String bz;
     private transient Date qrq;
     private transient Date zrq;
     private transient String ckmc;
@@ -425,6 +426,14 @@ public class KuCun {
 
     public void setZrq(Date zrq) {
         this.zrq = zrq;
+    }
+
+    public String getBz() {
+        return bz;
+    }
+
+    public void setBz(String bz) {
+        this.bz = bz;
     }
 
     @Override

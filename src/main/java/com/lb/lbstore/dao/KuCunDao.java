@@ -6,9 +6,6 @@
 package com.lb.lbstore.dao;
 
 import com.lb.lbstore.domain.KuCun;
-import com.lb.lbstore.domain.RuKuDetail;
-import com.lb.lbstore.domain.WuZiXhgg;
-import com.lb.lbstore.domain.WuZiZiDian;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,27 +17,30 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class KuCunDao extends BaseDao {
-    
-    public boolean updateRuKu(KuCun kuCun) {
+
+    public boolean updateKuCun(KuCun kuCun) {
         boolean result = false;
         Session session = null;
         Transaction tx = null;
         try {
             session = getSessionFactory().openSession();
-            KuCun updataKuCun = (KuCun) session.createQuery("from KuCun where id=" + kuCun.getId());
+            KuCun updataKuCun = (KuCun) session.load(KuCun.class, kuCun.getId());
             if (updataKuCun != null) {
                 tx = session.beginTransaction();
                 updataKuCun.setCkdj(kuCun.getCkdj());
                 updataKuCun.setKw(kuCun.getKw());
                 updataKuCun.setTxm(kuCun.getTxm());
+                updataKuCun.setBz(kuCun.getBz());
                 session.update(updataKuCun);
                 session.flush();
                 tx.commit();
             }
             result = true;
         } catch (Exception e) {
-            tx.rollback();
             e.printStackTrace();
+            if (tx != null) {
+                tx.rollback();
+            }
         } finally {
             try {
                 if (session != null) {
@@ -52,7 +52,7 @@ public class KuCunDao extends BaseDao {
         }
         return result;
     }
-    
+
     public KuCun getKuCunById(Integer id) {
         KuCun kuCun = null;
         Session session = null;
@@ -66,14 +66,14 @@ public class KuCunDao extends BaseDao {
                     + "left join A01 a02 on kc.spr_id=a02.id "
                     + "left join WuZiLeiBie wzlb on kc.wzlb_id=wzlb.id "
                     + "where kc.id=" + id;
-            SQLQuery navtiveSQL = session.createSQLQuery(sql);            
+            SQLQuery navtiveSQL = session.createSQLQuery(sql);
             navtiveSQL.addEntity("kc", KuCun.class)
                     .addScalar("khmc", StandardBasicTypes.STRING)
                     .addScalar("gysmc", StandardBasicTypes.STRING)
                     .addScalar("ckmc", StandardBasicTypes.STRING)
                     .addScalar("rkrmc", StandardBasicTypes.STRING)
                     .addScalar("sprmc", StandardBasicTypes.STRING)
-                    .addScalar("wzlb", StandardBasicTypes.STRING);            
+                    .addScalar("wzlb", StandardBasicTypes.STRING);
             List list = navtiveSQL.list();
             List<KuCun> list_kc = new ArrayList();
             for (Object obj : list) {
@@ -109,11 +109,11 @@ public class KuCunDao extends BaseDao {
         }
         return kuCun;
     }
-    
+
     public List<KuCun> queryKuCunsByPage(HashMap map) {
         List<KuCun> result = new ArrayList();
         Session session = null;
-        try {            
+        try {
             session = getSessionFactory().openSession();
             String sql = "select {kc.*},kh.mc as khmc,gys.mc as gysmc,ck.mc as ckmc,a01.mc as rkrmc,a02.mc as sprmc,wzlb.mc as wzlb from KuCun kc "
                     + "left join CangKu ck on kc.ck_id=ck.id "
@@ -150,14 +150,14 @@ public class KuCunDao extends BaseDao {
             if (map.containsKey("zrq")) {
                 sql += " and kc.rksj <= '" + map.get("zrq") + " 23:59:59'";
             }
-            SQLQuery navtiveSQL = session.createSQLQuery(sql);            
+            SQLQuery navtiveSQL = session.createSQLQuery(sql);
             navtiveSQL.addEntity("kc", KuCun.class)
                     .addScalar("khmc", StandardBasicTypes.STRING)
                     .addScalar("gysmc", StandardBasicTypes.STRING)
                     .addScalar("ckmc", StandardBasicTypes.STRING)
                     .addScalar("rkrmc", StandardBasicTypes.STRING)
                     .addScalar("sprmc", StandardBasicTypes.STRING)
-                    .addScalar("wzlb", StandardBasicTypes.STRING);            
+                    .addScalar("wzlb", StandardBasicTypes.STRING);
             List list = navtiveSQL.list();
             for (Object obj : list) {
                 Object[] objs = (Object[]) obj;

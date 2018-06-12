@@ -30,7 +30,7 @@ public class KuCunServiceImpl implements KuCunService {
 
     @Override
     public boolean updateKuCun(KuCun kuCun) {
-        return kuCunDao.updateRuKu(kuCun);
+        return kuCunDao.updateKuCun(kuCun);
     }
 
     @Override

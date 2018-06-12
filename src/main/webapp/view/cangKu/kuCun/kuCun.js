@@ -123,6 +123,7 @@ function editKuCun(index) {
         optFlag = 1;
         return alert("请选择库存");
     }
+    editIndex = index;
     $("#kuCunModal_title").html("修改库存记录");
     $("#btnOk").html("保存");
     var m = kuCuns[index];
@@ -140,15 +141,14 @@ function saveKuCun() {
         }
         kuCun = kuCuns[editIndex];
         url = "/LBStore/kuCun/updateKuCun.do";
-    } else if (optFlag === 1) {
-        url = "/LBStore/kuCun/saveKuCun.do";
+    } else if (optFlag === 0) {
+        $("#kuCunModal").modal("hide");
+        return;
     }
-    kuCun.mc = $("#inpMc").val();
-    kuCun.dm = $("#inpDm").val();
-    kuCun.dz = $("#inpDz").val();
-    kuCun.lxr = $("#inpLxr").val();
-    kuCun.lxdh = $("#inpLxdh").val();
-    kuCun.bz = $("#inpBz").val();
+    kuCun.ckdj = parseFloat($("#inpMxCkdj").val());
+    kuCun.txm = $("#inpMxTxm").val();
+    kuCun.kw = $("#inpMxKwh").val();
+    kuCun.bz = $("#inpMxBz").val();
     $.ajax({
         url: url,
         data: JSON.stringify(kuCun),
@@ -189,21 +189,29 @@ function setKuCunData(m){
     $("#inpMxWz").val(m.wzmc);
     selLeiBie = {"id": m.wzlb_id, "mc": m.wzlb};
     $("#inpMxLb").val(m.wzlb);
+    $("#inpMxRksj").val(m.rksj);
     $("#inpMxPp").val(m.pp);
     selXhgg = {"id": m.xhgg_id, "mc": m.xhgg};
     $("#inpMxXhgg").val(m.xhgg);
     $("#inpMxScc").val(m.scc);
-    $("#inpMxTxm").val(m.txm);
+    $("#inpMxLy").val(m.ly);
+    $("#inpMxDh").val(m.dh);
+    $("#inpMxGys").val(m.gysmc);
+    $("#inpMxKh").val(m.khmc);
     $("#inpMxScrq").val(m.scrq);
     $("#inpMxBzq").val(m.bzq);
     $("#inpMxDj").val(m.dj);
     $("#inpMxDw").val(m.dw);
     $("#inpMxSl").val(m.sl);
-    $("#inpMxJlfs").val(m.jlfs);
     $("#inpMxBzgg").val(m.bzgg);
     $("#inpMxZldw").val(m.zldw);
     $("#inpMxZl").val(m.zl);
+    
+    $("#inpMxCkdj").val(m.ckdj);
+    $("#inpMxTxm").val(m.txm);   
     $("#inpMxKwh").val(m.kw);
+    $("#inpMxBz").val(m.bz);
+    
     buildTysx(m.tysx);
     buildDymx();
     $("#kuCunModal").modal("show");

@@ -235,4 +235,5 @@ CREATE TABLE `store`.`kucun` (
   `tysx` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `dymx` varchar(4000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `kw` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `bz` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`))ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
