@@ -114,7 +114,7 @@
                     for (var j = 0; j < ls; j++) {
                         var s = "&ensp;";
                         if (yxData[i * ls + j]) {
-                            s = "<input type='text' style='width:85%;border-left:none;border-top:none;border-right:none;' value='" + yxData[i * ls + j].val + "' />" + "<a href='#' id='" + tblId + "_a_" + i * ls + j + "' style='color:red; float: right; margin-right: 3px;text-decoration: none;'>X</a>";
+                            s = "<input type='text' style='width:99%;border-left:none;border-top:none;border-right:none;' value='" + yxData[i * ls + j].val + "' />";
                         } else {
                             if (!flag) {
                                 flag = true;

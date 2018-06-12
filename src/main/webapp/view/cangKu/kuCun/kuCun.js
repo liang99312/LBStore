@@ -6,7 +6,7 @@ var selCangKu;
 var selKeHu;
 var selGongYingShang;
 var selWzlb;
-var tysx_opt = {data: [], ls: 2, lw: 70};
+var tysx_opt = {data: [], ls: 3, lw: 70};
 var dymx_opt = {data: [], yxData: [], func: calcDymx};
 
 $(document).ready(function () {
@@ -127,8 +127,8 @@ function editKuCun(index) {
     $("#btnOk").html("保存");
     var m = kuCuns[index];
     setKuCunData(m);
-    $(".form-uneditable input").attr("readonly","readonly");
-    $(".form-editable input").removeAttr("readonly");
+    $(".form-uneditable input").attr("readonly","readonly").attr("disabled","disabled");
+    $(".form-editable input").removeAttr("readonly").removeAttr("disabled");
 }
 
 function saveKuCun() {
@@ -179,12 +179,12 @@ function readKuCun(index){
     $("#btnOk").html("关闭");
     var m = kuCuns[index];
     setKuCunData(m);
-    $(".form-uneditable input").attr("readonly","readonly");
-    $(".form-editable input").attr("readonly","readonly");
+    $(".form-uneditable input").attr("readonly","readonly").attr("disabled","disabled");
+    $(".form-editable input").attr("readonly","readonly").attr("disabled","disabled");
 }
 
 function setKuCunData(m){
-    dymx_opt = {data: [], yxData: m.dymx, func: calcDymx};
+    dymx_opt = {data: [], yxData: JSON.parse(m.dymx), func: calcDymx};
     selWzzd = {"id": m.wzzd_id, "mc": m.wzmc};
     $("#inpMxWz").val(m.wzmc);
     selLeiBie = {"id": m.wzlb_id, "mc": m.wzlb};
@@ -226,8 +226,12 @@ function buildTysx(data) {
 }
 
 function buildDymx() {
+    if(dymx_opt.yxData && dymx_opt.yxData.length > 0){
+        $("#divMxDymx").show();
+    }else{
+        $("#divMxDymx").hide();
+    }
     $("#tblMxDymx").setDetailTableData(dymx_opt);
-    $("#tblMxDymx input:last").focus();
 }
 
 function calcDymx() {
