@@ -320,7 +320,6 @@ public class RuKuDao extends BaseDao {
                 c.add(Calendar.DATE, Integer.parseInt("" + d.getBzq()));
                 
                 KuCun kc = new KuCun();
-                kc.setBzgg(d.getBzgg());
                 kc.setBzq(d.getBzq());
                 if(d.getBzq() > 0){
                     kc.setBzrq(c.getTime());
@@ -350,6 +349,12 @@ public class RuKuDao extends BaseDao {
                 kc.setWzzd_id(d.getWzzd_id());
                 kc.setXhgg(d.getXhgg());
                 kc.setXhgg_id(d.getXhgg_id());
+                if("pt".equals(kc.getJlfs())){
+                    d.setZl(d.getSl());
+                    d.setZldw(d.getDw());
+                    d.setBzgg(1.0D);
+                }
+                kc.setBzgg(d.getBzgg());
                 kc.setZl(d.getZl());
                 kc.setZldw(d.getZldw());
                 kc.setSyl(kc.getSl());

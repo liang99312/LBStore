@@ -206,6 +206,14 @@ function setKuCunData(m){
     $("#inpMxBzgg").val(m.bzgg);
     $("#inpMxZldw").val(m.zldw);
     $("#inpMxZl").val(m.zl);
+    $("#divMxDymx").hide();
+    $("#dvMxBzgg").hide();
+    if (m.jlfs === "mx") {
+        $("#divMxDymx").show();
+        $("#dvMxBzgg").show();
+    } else if (m.jlfs === "zl"){
+        $("#dvMxBzgg").show();
+    }
     
     $("#inpMxCkdj").val(m.ckdj);
     $("#inpMxTxm").val(m.txm);   

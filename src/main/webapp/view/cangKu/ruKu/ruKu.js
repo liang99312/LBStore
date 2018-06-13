@@ -22,6 +22,7 @@ var dymx_opt = {data: [], yxData: [], func: calcDymx};
 var tysx_opt = {data: [], ls: 2, lw: 70};
 
 $(document).ready(function () {
+    $('#inpSj').val(dateFormat(new Date()));
     $('#inpSj').datetimepicker({language:  'zh-CN',format: 'yyyy-mm-dd hh:ii',weekStart: 7,todayBtn:  1,autoclose: 1,todayHighlight: 1,startView: 2,forceParse: 0,showMeridian: 1});
     $('#inpSelQrq,#inpSelZrq,#inpMxScrq').datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, minView: 2, startView: 2, forceParse: 0, showMeridian: 1});
     getAllA01s(setTrager_a01);
@@ -160,6 +161,7 @@ function selectMxJlfs() {
         $("#dvMxBzgg").show();
         $("#dvMxZl").show();
     } else if (val === "mx") {
+        $("#dvMxBzgg").show();
         $("#dvMxZl").show();
         $("#divMxDymx").show();
         buildDymx();
@@ -407,7 +409,7 @@ function saveRuKu() {
         if ($("#inpKh").val() === "") {
             return alert("请输入客户信息");
         } else {
-            if ($("#inpKh").val() !== editGongYingShang.mc) {
+            if ($("#inpKh").val() !== editKeHu.mc) {
                 return alert("请输入客户信息");
             } else {
                 ruKu.kh_id = editKeHu.id;

@@ -186,7 +186,7 @@ function dateFormat(longTypeDate) {
     datetimeType += date.getFullYear();   //年
     datetimeType += "-" + getMonth(date); //月
     datetimeType += "-" + getDay(date);   //日
-    datetimeType += "&nbsp;&nbsp;" + getHours(date);   //时
+    datetimeType += " " + getHours(date);   //时
     datetimeType += ":" + getMinutes(date);      //分
     datetimeType += ":" + getSeconds(date);      //分
     return datetimeType;
