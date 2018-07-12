@@ -2,7 +2,7 @@ var lingLiaos;
 var optFlag = 1;
 var editIndex = -1;
 var editType;
-var rkmx = [];
+var llmx = [];
 var optMxFlag = 1;
 var editMxIndex = -1;
 var tgIndex = 0;
@@ -10,74 +10,79 @@ var selWzzd;
 var editWzzd;
 var editXhgg;
 var editLeiBie;
+var selLeiBie;
 var selCangKu;
 var selKeHu;
 var editKeHu;
-var selKuWei;
 var selGongYingShang;
-var editGongYingShang;
+var selKuWei;
 var editCangKu;
 var editA01;
+var selA01;
 var dymx_opt = {data: [], yxData: [], func: calcDymx};
 var tysx_opt = {data: [], ls: 2, lw: 70};
 
 $(document).ready(function () {
     $('#inpSj').val(dateFormat(new Date()));
-    $('#inpSj').datetimepicker({language:  'zh-CN',format: 'yyyy-mm-dd hh:ii',weekStart: 7,todayBtn:  1,autoclose: 1,todayHighlight: 1,startView: 2,forceParse: 0,showMeridian: 1});
-    $('#inpSelQrq,#inpSelZrq,#inpMxScrq').datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, minView: 2, startView: 2, forceParse: 0, showMeridian: 1});
+    $('#inpSj').datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd hh:ii', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, startView: 2, forceParse: 0, showMeridian: 1});
+    $('#inpSelQrq,#inpSelZrq,#inpMxScrq,#inpKcSelQrq,#inpKcSelZrq').datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, minView: 2, startView: 2, forceParse: 0, showMeridian: 1});
     getAllA01s(setTrager_a01);
     getCangKus(setTrager_cangKu);
     getKeHus(setTrager_keHu);
-    getGongYingShangs(setTrager_gongYingShang);
     getWuZiZiDians(setTrager_ziDian);
     getWuZiLeiBies(setTrager_leiBie);
+    getGongYingShangs(setTrager_gongYingShang);
     $("#inpMxScrq").datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, minView: 2, startView: 2, forceParse: 0, showMeridian: 1});
     $("#inpMxJlfs").change(function () {
         $("#tblMxDymx input:last").blur();
         selectMxJlfs();
     });
-    $(".rk_kh").hide();
+    $(".ll_kh").hide();
     $("#inpLy").change(function () {
         if ($("#inpLy").val() === "供应商") {
-            $(".rk_gys").removeAttr("disabled").show();
-            $(".rk_kh").hide();
+            $(".ll_gys").removeAttr("disabled").show();
+            $(".ll_kh").hide();
         } else if ($("#inpLy").val() === "客户") {
-            $(".rk_gys").hide();
-            $(".rk_kh").show();
+            $(".ll_gys").hide();
+            $(".ll_kh").show();
         } else {
-            $(".rk_gys").val("").attr("disabled", "disabled").show();
-            $(".rk_kh").hide();
+            $(".ll_gys").val("").attr("disabled", "disabled").show();
+            $(".ll_kh").hide();
         }
     });
 });
 
 function setTrager_a01() {
-    $('#inpRkr').AutoComplete({'data': lb_allA01s, 'paramName': 'editA01'});
+    $('#inpLlr').AutoComplete({'data': lb_allA01s, 'paramName': 'editA01'});
+    $('#inpKcSelRkr').AutoComplete({'data': lb_allA01s, 'paramName': 'selA01'});
 }
 
 function setTrager_cangKu() {
     $('#selCangKu').AutoComplete({'data': lb_cangKus, 'paramName': 'selCangKu'});
     $('#inpSelCk').AutoComplete({'data': lb_cangKus, 'paramName': 'selCangKu'});
     $('#inpCk').AutoComplete({'data': lb_cangKus, 'afterSelectedHandler': selectCangKu});
+    $("#inpKcSelCk").AutoComplete({'data': lb_cangKus, 'paramName': 'selCangKu'});
 }
 
 function setTrager_keHu() {
     $('#inpSelKh').AutoComplete({'data': lb_keHus, 'paramName': 'selKeHu'});
+    $('#inpKcSelKh').AutoComplete({'data': lb_keHus, 'paramName': 'selKeHu'});
     $('#inpKh').AutoComplete({'data': lb_keHus, 'paramName': 'editKeHu'});
-}
-
-function setTrager_gongYingShang() {
-    $('#inpSelGys').AutoComplete({'data': lb_gongYingShangs, 'paramName': 'selGongYingShang'});
-    $('#inpGys').AutoComplete({'data': lb_gongYingShangs, 'paramName': 'editGongYingShang'});
 }
 
 function setTrager_ziDian() {
     $('#inpSelWz').AutoComplete({'data': lb_wuZiZiDians, 'paramName': 'selWzzd'});
+    $('#inpKcSelWz').AutoComplete({'data': lb_wuZiZiDians, 'paramName': 'selWzzd'});
     $('#inpMxWz').AutoComplete({'data': lb_wuZiZiDians, 'afterSelectedHandler': selectWuZiZiDian});
 }
 
 function setTrager_leiBie() {
     $('#inpMxLb').AutoComplete({'data': lb_wuZiLeiBies, 'afterSelectedHandler': selectWuZiLeiBie});
+    $('#inpKcSelWzlb').AutoComplete({'data': lb_wuZiLeiBies, 'paramName': 'selLeiBie'});
+}
+
+function setTrager_gongYingShang(){
+    $('#inpKcSelGys').AutoComplete({'data': lb_gongYingShangs, 'paramName': 'selGongYingShang'});
 }
 
 function selectWuZiLeiBie(json) {
@@ -178,13 +183,11 @@ function jxLingLiao(json) {
             classStr = ' class="danger"';
         }
         item.lsh = item.lsh === undefined || item.lsh === null ? "" : item.lsh;
-        item.gysmc = item.gysmc === undefined || item.gysmc === null ? "" : item.gysmc;
-        item.khmc = item.khmc === undefined || item.khmc === null ? "" : item.khmc;
         var readStr = '<button class="btn btn-info btn-xs icon-file-alt" onclick="readLingLiao(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var editStr = '<button class="btn btn-info btn-xs icon-edit" onclick="editLingLiao(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var dealStr = '<button class="btn btn-info btn-xs icon-legal" onclick="dealLingLiao(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var delStr = '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteLingLiao(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>';
-        var trStr = '<tr' + classStr + '><td>' + item.ckmc + '</td><td>' + item.lsh + '</td><td>' + item.gysmc + '</td><td>' + item.khmc + '</td><td>' + item.wz + '</td><td>' + item.sj + '</td><td>' + item.sl + '</td><td>'
+        var trStr = '<tr' + classStr + '><td>' + item.ckmc + '</td><td>' + item.lsh + '</td><td>' + item.dh + '</td><td>' + item.wz + '</td><td>' + item.sj + '</td><td>' + item.sl + '</td><td>'
                 + readStr
                 + (item.state === 0 ? editStr : "")
                 + (item.state === 0 ? dealStr : "")
@@ -233,9 +236,6 @@ function selectLingLiao_m() {
     if ($("#inpSelKh").val() !== "" && $("#inpSelKh").val() === selKeHu.mc) {
         lingLiao.kh_id = selKeHu.id;
     }
-    if ($("#inpSelGys").val() !== "" && $("#inpSelGys").val() === selGongYingShang.mc) {
-        lingLiao.gys_id = selGongYingShang.id;
-    }
     if ($("#inpSelQrq").val() !== "") {
         lingLiao.qrq = $("#inpSelQrq").val();
     }
@@ -254,9 +254,8 @@ function selectLingLiao_m() {
 
 function addLingLiao() {
     optFlag = 1;
-    rkmx = [];
+    llmx = [];
     editCangKu = {};
-    editGongYingShang = {};
     editKeHu = {};
     $("#lingLiaoModel_title").html("新增领料单");
     $("#btnOk").html("保存");
@@ -314,18 +313,12 @@ function selectLingLiaoDetail(id) {
         success: function (json) {
             if (json.result === 0) {
                 var lingLiao = json.lingLiao;
-                rkmx = lingLiao.details;
-                if ("供应商" === lingLiao.ly) {
-                    $("#inpGys").val(lingLiao.gysmc);
-                    editGongYingShang = {"id": lingLiao.gys_id, "mc": lingLiao.gysmc};
-                } else if ("客户" === lingLiao.ly) {
-                    $("#inpKh").val(lingLiao.khmc);
-                    editKeHu = {"id": lingLiao.kh_id, "mc": lingLiao.khmc};
-                }
+                llmx = lingLiao.details;
+                $("#inpKh").val(lingLiao.khmc);
                 $("#inpCk").val(lingLiao.ckmc);
                 editCangKu = {"id": lingLiao.ck_id, "mc": lingLiao.ckmc};
-                $("#inpRkr").val(lingLiao.rkrmc);
-                editA01 = {"id": lingLiao.rkr_id, "mc": lingLiao.rkrmc};
+                $("#inpLlr").val(lingLiao.llrmc);
+                editA01 = {"id": lingLiao.llr_id, "mc": lingLiao.llrmc};
                 selectCangKu(editCangKu);
                 $("#inpDh").val(lingLiao.dh);
                 $("#inpBz").val(lingLiao.bz);
@@ -362,7 +355,7 @@ function saveLingLiao() {
         $("#lingLiaoModal").modal("hide");
         return;
     }
-    if (rkmx.length < 1) {
+    if (llmx.length < 1) {
         return alert("请增加领料明细！");
     }
     var lingLiao = {};
@@ -394,41 +387,28 @@ function saveLingLiao() {
             lingLiao.ck_id = editCangKu.id;
         }
     }
-    lingLiao.ly = $("#inpLy").val();
-    if ("供应商" === $("#inpLy").val()) {
-        if ($("#inpGys").val() === "") {
-            return alert("请输入供应商信息");
-        } else {
-            if ($("#inpGys").val() !== editGongYingShang.mc) {
-                return alert("请输入供应商信息");
-            } else {
-                lingLiao.gys_id = editGongYingShang.id;
-            }
-        }
-    } else if ("客户" === $("#inpLy").val()) {
-        if ($("#inpKh").val() === "") {
+    if ($("#inpKh").val() === "") {
+        return alert("请输入客户信息");
+    } else {
+        if ($("#inpKh").val() !== editKeHu.mc) {
             return alert("请输入客户信息");
         } else {
-            if ($("#inpKh").val() !== editKeHu.mc) {
-                return alert("请输入客户信息");
-            } else {
-                lingLiao.kh_id = editKeHu.id;
-            }
+            lingLiao.kh_id = editKeHu.id;
         }
     }
-    if ($("#inpRkr").val() === "") {
+    if ($("#inpLlr").val() === "") {
         return alert("请输入领料人信息");
     } else {
-        if ($("#inpRkr").val() !== editA01.mc) {
+        if ($("#inpLlr").val() !== editA01.mc) {
             return alert("请输入领料人信息");
         } else {
-            lingLiao.rkr_id = editA01.id;
+            lingLiao.llr_id = editA01.id;
         }
     }
     var wz = "";
     var wzs = [];
-    for (var i = 0; i < rkmx.length; i++) {
-        var e = rkmx[i];
+    for (var i = 0; i < llmx.length; i++) {
+        var e = llmx[i];
         if (optFlag === 3) {
             if (e.kw === undefined || e.kw === null || e.kw === "") {
                 return alert("领料单明细需要设置库位！");
@@ -437,10 +417,10 @@ function saveLingLiao() {
                 return alert("领料单明细需要设置单价！");
             }
         }
-        if(typeof e.dymx !== "string"){
+        if (typeof e.dymx !== "string") {
             e.dymx = JSON.stringify(e.dymx);
         }
-        if(typeof e.tysx !== "string"){
+        if (typeof e.tysx !== "string") {
             e.tysx = JSON.stringify(e.tysx);
         }
         if (wzs.indexOf(e.wzmc) > -1) {
@@ -453,7 +433,7 @@ function saveLingLiao() {
         var e = wzs[i];
         wz += e + ";";
     }
-    lingLiao.details = rkmx;
+    lingLiao.details = llmx;
     lingLiao.wz = wz;
     lingLiao.dh = $("#inpDh").val();
     lingLiao.bz = $("#inpBz").val();
@@ -541,7 +521,7 @@ function calcDymx() {
 
 function jxLingLiaoMingXi() {
     $("#tblWuZiMingXi_body tr").remove();
-    $.each(rkmx, function (index, item) { //遍历返回的json
+    $.each(llmx, function (index, item) { //遍历返回的json
         if (item.tysx && item.tysx !== null && item.tysx !== "" && typeof item.tysx === 'string') {
             item.tysx = JSON.parse(item.tysx);
         } else if (item.tysx && typeof item.tysx === 'object') {
@@ -561,35 +541,18 @@ function jxLingLiaoMingXi() {
 }
 
 function addLingLiaoMingXi() {
+    if($("#inpCk").val() === "" || $("#inpCk").val() !== editCangKu.mc){
+        return alert("请选择领料仓库");
+    }
     optMxFlag = 1;
     dymx_opt = {data: [], yxData: [], func: calcDymx};
     editLeiBie = null;
     $("#lingLiaoMingXiModal_title").html("增加明细");
-    $("#btnMxOk").html("保存");
-    $("#inpMxWz").val("");
-    $("#inpMxLb").val("");
-    $("#inpMxPp").val("");
-    $("#inpMxXhgg").val("");
-    $("#inpMxScc").val("");
-    $("#inpMxTxm").val("");
-    $("#inpMxScrq").val("");
-    $("#inpMxBzq").val("");
-    $("#inpMxDj").val("1");
-    $("#inpMxDw").val("");
-    $("#inpMxSl").val("0");
-    $("#inpMxJlfs").val("pt");
-    $("#inpMxBzgg").val("");
-    $("#inpMxZldw").val("");
-    $("#inpMxZl").val("");
-    buildTysx([]);
-    buildDymx();
-    $("#divMxDymx").hide();
-    $("#dvMxZl").hide();
-    $("#lingLiaoMingXiModal").modal("show");
+    $("#selKuCunModal").modal("show");
 }
 
 function editLingLiaoMingXi(index) {
-    if (rkmx[index]) {
+    if (llmx[index]) {
         optMxFlag = 2;
         editMxIndex = index;
         $("#lingLiaoMingXiModal_title").html("修改明细");
@@ -599,7 +562,7 @@ function editLingLiaoMingXi(index) {
 }
 
 function readLingLiaoMingXi(index) {
-    if (rkmx[index]) {
+    if (llmx[index]) {
         optMxFlag = 4;
         editMxIndex = index;
         $("#lingLiaoMingXiModal_title").html("查看明细");
@@ -609,7 +572,7 @@ function readLingLiaoMingXi(index) {
 }
 
 function setLingLiaoMingXiData(index) {
-    var m = rkmx[index];
+    var m = llmx[index];
     if (typeof m.dymx === "string") {
         m.dymx = JSON.parse(m.dymx);
     }
@@ -635,7 +598,7 @@ function setLingLiaoMingXiData(index) {
     $("#inpMxKwh").val(m.kw);
     buildTysx(m.tysx);
     buildDymx();
-    if (rkmx[index].jlfs === "mx") {
+    if (llmx[index].jlfs === "mx") {
         $("#divMxDymx").show();
     } else {
         $("#divMxDymx").hide();
@@ -644,16 +607,16 @@ function setLingLiaoMingXiData(index) {
 }
 
 function deleteLingLiaoMingXi(index) {
-    if (rkmx[index]) {
-        if (confirm("确定删除明细：" + rkmx[index].wzmc + "?")) {
-            rkmx.splice(index, 1);
+    if (llmx[index]) {
+        if (confirm("确定删除明细：" + llmx[index].wzmc + "?")) {
+            llmx.splice(index, 1);
             jxLingLiaoMingXi();
         }
     }
 }
 
 function saveLingLiaoMingXi() {
-    if(optMxFlag === 4){
+    if (optMxFlag === 4) {
         $("#lingLiaoMingXiModal").modal("hide");
         return;
     }
@@ -702,19 +665,77 @@ function saveLingLiaoMingXi() {
     mx.dymx = JSON.stringify(dymx_opt.yxData);
     mx.tysx = JSON.stringify(tysx_opt.data);
     if (optMxFlag === 1) {
-        rkmx.push(mx);
+        llmx.push(mx);
     } else if (optMxFlag === 2) {
-        rkmx[editMxIndex] = mx;
+        llmx[editMxIndex] = mx;
     }
     jxLingLiaoMingXi();
     var zsl = 0;
     var zje = 0;
-    for (var i = 0; i < rkmx.length; i++) {
-        var e = rkmx[i];
+    for (var i = 0; i < llmx.length; i++) {
+        var e = llmx[i];
         zsl = e.sl + zsl;
         zje = e.sl * e.dj + zje;
     }
     $("#inpSl").val(zsl);
     $("#inpJe").val(zje.toFixed(3));
     $("#lingLiaoMingXiModal").modal("hide");
+}
+
+function cxKuCun(){
+    var kuCun = {};
+    kuCun.ck_id = editCangKu.id;
+    if ($("#inpKcSelWzlb").val() !== "" && $("#inpKcSelWzlb").val() === selLeiBie.mc) {
+        kuCun.wzlb_id = selLeiBie.id;
+    }
+    if ($("#inpKcSelWz").val() !== "") {
+        kuCun.wzmc = $("#inpKcSelWz").val();
+    }
+    if ($("#inpKcSelXhgg").val() !== "") {
+        kuCun.xhgg = $("#inpKcSelXhgg").val();
+    }
+    if ($("#inpKcSelKh").val() !== "" && $("#inpKcSelKh").val() === selKeHu.mc) {
+        kuCun.kh_id = selKeHu.id;
+    }
+    if ($("#inpKcSelGys").val() !== "" && $("#inpKcSelGys").val() === selGongYingShang.mc) {
+        kuCun.gys_id = selGongYingShang.id;
+    }
+    if ($("#inpKcSelRkr").val() !== "" && $("#inpKcSelRkr").val() === selA01.mc) {
+        kuCun.rkr_id = selA01.id;
+    }
+    if ($("#inpKcSelQrq").val() !== "") {
+        kuCun.qrq = $("#inpKcSelQrq").val();
+    }
+    if ($("#inpKcSelZrq").val() !== "") {
+        kuCun.zrq = $("#inpKcSelZrq").val();
+    }
+    $.ajax({
+        url: "/LBStore/kuCun/getKuCunTop100.do?",
+        data: JSON.stringify(kuCun),
+        contentType: "application/json",
+        type: "post",
+        cache: false,
+        error: function (msg, textStatus) {
+            alert("查询库存失败");
+        },
+        success: function (json) {
+            if (json.result === 0) {
+                var sz = json.sz;
+                jxKuCun(sz);
+            } else {
+                alert("查询库存失败:" + json.msg ? json.msg : "");
+            }
+        }
+    });
+}
+
+function jxKuCun(sz){
+    $("#tblKuCun_body tr").remove();
+    kuCuns = [];
+    kuCuns = sz;
+    $.each(sz, function (index, item) { //遍历返回的json
+        var trStr = '<tr><td>' + item.wzmc + '</td><td>' + item.pp + '</td><td>' + item.xhgg + '</td><td>' + item.zl + '</td><td>' + item.syzl + '</td><td>' + item.kw + '</td><td>' + item.rksj + '</td><td>'
+                + '<button class="btn btn-info btn-xs icon-plus" onclick="selKuCun(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button></td></tr>';
+        $("#tblKuCun_body").append(trStr);
+    });
 }

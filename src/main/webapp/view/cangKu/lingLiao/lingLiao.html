@@ -51,8 +51,7 @@ and open the template in the editor.
                         <tr>
                             <th style="width:8%">仓库</th>
                             <th style="width:10%">流水号</th>
-                            <th style="width:8%">供应商</th>
-                            <th style="width:8%">客户</th>
+                            <th style="width:8%">单号</th>
                             <th style="width:15%">物资</th>
                             <th style="width:10%">领料时间</th>
                             <th style="width:8%">数量</th>
@@ -98,10 +97,6 @@ and open the template in the editor.
                                 <input type="text" id="inpSelKh" />
                             </div>
                             <div class="form-group">
-                                <label for="inpSelGys">供应商：</label>
-                                <input type="text" id="inpSelGys" />
-                            </div>
-                            <div class="form-group">
                                 <label for="inpSelRq">日&ensp;&ensp;期：</label>
                                 <input type="text" id="inpSelQrq" />-<input type="text" id="inpSelZrq" />
                             </div>
@@ -126,18 +121,10 @@ and open the template in the editor.
                             <div class="form-group">
                                 <label for="inpCk">仓&ensp;&ensp;库：</label>
                                 <input type="text" id="inpCk" />
-                                <label for="inpLy">来&ensp;&ensp;源：</label>
-                                <select id="inpLy" style="width: 174px; height: 26px;line-height: 26px;">
-                                    <option value="供应商" selected="selected">供应商</option>
-                                    <option value="客户">客户</option>
-                                    <option value="生产">生产</option>
-                                </select>
                             </div>
                             <div class="form-group">
-                                <label class="rk_gys" for="inpGys">供应商：</label>
-                                <input class="rk_gys" type="text" id="inpGys" />
-                                <label class="rk_kh" for="inpKh">客&ensp;&ensp;户：</label>
-                                <input class="rk_kh" type="text" id="inpKh" />
+                                <label for="inpKh">客&ensp;&ensp;户：</label>
+                                <input type="text" id="inpKh" />
                                 <label for="inpDh">单&ensp;&ensp;号：</label>
                                 <input type="text" id="inpDh" />
                             </div>
@@ -148,8 +135,8 @@ and open the template in the editor.
                                 <input type="text" id="inpJe" />
                             </div>
                             <div class="form-group">
-                                <label for="inpRkr">领料人：</label>
-                                <input type="text" id="inpRkr" />
+                                <label for="inpLlr">领料人：</label>
+                                <input type="text" id="inpLlr" />
                                 <label for="inpSj">领料日：</label>
                                 <input type="text" id="inpSj" />
                             </div>
@@ -232,6 +219,11 @@ and open the template in the editor.
                                 <input type="text" id="inpMxDw" />
                             </div>
                             <div class="form-group">
+                                <label for="inpMxKw">库&ensp;&ensp;&ensp;&ensp;位：</label>
+                                <input type="text" id="inpMxKw" />
+                                <input type="text" id="inpMxKwh" />
+                            </div>
+                            <div class="form-group">
                                 <label for="inpMxSl">数&ensp;&ensp;&ensp;&ensp;量：</label>
                                 <input type="text" id="inpMxSl" />
                                 <label for="inpMxJlfs">记录方式：</label>
@@ -240,11 +232,6 @@ and open the template in the editor.
                                     <option value="zl">总量记录</option>
                                     <option value="mx">单元明细</option>
                                 </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="inpMxKw">库&ensp;&ensp;&ensp;&ensp;位：</label>
-                                <input type="text" id="inpMxKw" />
-                                <input type="text" id="inpMxKwh" />
                             </div>
                             <div id="dvMxBzgg" class="form-group" style="display: none;">
                                 <label for="inpMxBzgg">包装规格：</label>
@@ -269,5 +256,65 @@ and open the template in the editor.
                 </div>
             </div>
         </div>
+        
+        <div class="modal fade" id="selKuCunModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style="width: 800px;">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #ace1ff;height: 40px;border-top-left-radius: 6px;border-top-right-radius: 6px;padding:10px">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">选择库存</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="content">
+                            <div class="form-group">
+                                <label for="inpKcSelWzlb">类&ensp;&ensp;别：</label>
+                                <input type="text" id="inpKcSelWzlb" />
+                                <label for="inpKcSelWz">物&ensp;&ensp;资：</label>
+                                <input type="text" id="inpKcSelWz" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpKcSelXhgg">规&ensp;&ensp;格：</label>
+                                <input type="text" id="inpKcSelXhgg" />
+                                <label for="inpKcSelKh">客&ensp;&ensp;户：</label>
+                                <input type="text" id="inpKcSelKh" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpKcSelGys">供应商：</label>
+                                <input type="text" id="inpKcSelGys" />
+                                <label for="inpKcSelRkr">入库人：</label>
+                                <input type="text" id="inpKcSelRkr" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpKcSelRq">日&ensp;&ensp;期：</label>
+                                <input type="text" id="inpKcSelQrq" />-<input type="text" id="inpKcSelZrq" />
+                            </div>
+                            <div id="divXzmx" class="form-group">
+                                <button type="button" class="btn btn-primary btn-sm" onclick="cxKuCun();">查询库存</button>
+                            </div>
+                            <div style="min-height: 100px;max-height: 300px;overflow-y: auto;">
+                                <table id="tblKuCun" class="table table-hover">
+                                    <thead>
+                                        <tr style="background: #e9f7ff;">
+                                            <th style="width:20%">名称</th>
+                                            <th style="width:10%">品牌</th>
+                                            <th style="width:10%">型号规格</th>
+                                            <th style="width:10%">入库数量</th>
+                                            <th style="width:10%">剩余量</th>
+                                            <th style="width:10%">库位</th>
+                                            <th style="width:20%">入库时间</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id='tblKuCun_body'>
+                                        <tr><td>无明细记录</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     </body>
 </html>
