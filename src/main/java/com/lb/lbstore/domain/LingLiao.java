@@ -34,6 +34,7 @@ public class LingLiao {
     private Integer llr_id;
     private Integer spr_id;
     private String wz;
+    private String dh;
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm",timezone = "GMT+8")
     private Date sj;
@@ -154,6 +155,14 @@ public class LingLiao {
 
     public void setWz(String wz) {
         this.wz = wz;
+    }
+
+    public String getDh() {
+        return dh;
+    }
+
+    public void setDh(String dh) {
+        this.dh = dh;
     }
 
     public Date getQrq() {

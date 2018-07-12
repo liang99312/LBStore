@@ -5,6 +5,7 @@
  */
 package com.lb.lbstore.controller;
 
+import com.lb.lbstore.domain.A01;
 import com.lb.lbstore.domain.Page;
 import javax.annotation.Resource;
 
@@ -15,6 +16,7 @@ import com.lb.lbstore.domain.KuCun;
 import com.lb.lbstore.service.KuCunService;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -65,6 +67,26 @@ public class KuCunController extends BaseController {
             map.put("result", result? 0:-1);
         } catch (Exception e) {
             e.printStackTrace();
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
+    }
+    
+    @RequestMapping(value = "getKuCunTop100.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> getKuCunTop100(@RequestBody KuCun model) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            A01 loginA01 = getDlA01();
+            model.setQy_id(loginA01.getQy_id());
+            List<KuCun> list = kuCunServiceImpl.getKuCunTop100(model);
+            map.put("result", 0);
+            map.put("sz", list);
+        } catch (Exception e) {
             map.put("result", -1);
             map.put("msg", e.getMessage());
         }

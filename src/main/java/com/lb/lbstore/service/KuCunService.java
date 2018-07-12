@@ -17,6 +17,8 @@ public interface KuCunService {
 
     public KuCun getKuCunById(Integer id);
     
+    public List<KuCun> getKuCunTop100(KuCun kuCun);
+    
     public boolean updateKuCun(KuCun kuCun);
     
     public boolean deleteKuCun(Integer id);

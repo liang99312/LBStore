@@ -36,6 +36,7 @@ public class LingLiaoDetail {
     private transient String wzlb;
     private Integer xhgg_id;
     private String xhgg;
+    private String dh;
     private String pp;
     private String scc;
     private String txm;
@@ -43,7 +44,6 @@ public class LingLiaoDetail {
     @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
     private Date scrq;
     private Integer bzq;
-    private Double rkdj;
     private Double dj;
     private String dw;    
     private String zldw;   
@@ -271,12 +271,12 @@ public class LingLiaoDetail {
         this.kc_id = kc_id;
     }
 
-    public Double getRkdj() {
-        return rkdj;
+    public String getDh() {
+        return dh;
     }
 
-    public void setRkdj(Double rkdj) {
-        this.rkdj = rkdj;
+    public void setDh(String dh) {
+        this.dh = dh;
     }
 
     @Override
