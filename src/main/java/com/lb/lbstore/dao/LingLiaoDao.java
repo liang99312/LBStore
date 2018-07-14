@@ -304,12 +304,12 @@ public class LingLiaoDao extends BaseDao {
             for(KuCun kc:kcList){
                 LingLiaoDetail detail = detailTable.get(kc.getId());
                 if(detail != null){
-                    if(kc.getSyzl() < detail.getZl()){
+                    if(kc.getSyzl() < detail.getSlzl()){
                         tx.rollback();
                         result = false;
                         return result;
                     }
-                    kc.setSyzl(kc.getSyzl() - detail.getZl());
+                    kc.setSyzl(kc.getSyzl() - detail.getSlzl());
                     //处理库存
                     session.save(kc);
                 }

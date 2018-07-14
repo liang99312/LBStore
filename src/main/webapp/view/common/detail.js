@@ -30,12 +30,12 @@
                 $("#" + tblId + " tr").remove();
                 var bt = "<tr style='background: #e9f7ff;'><td style='width:10%;border: 1px solid #000; text-align: center;'>序号</td>";
                 for (var j = 0; j < ls; j++) {
-                    bt = bt + "<td style='width:" + width + ";border: 1px solid #000; text-align: center;'>" + (j+1) + "</td>";
+                    bt = bt + "<td style='width:" + width + ";border: 1px solid #000; text-align: center;'>" + (j + 1) + "</td>";
                 }
                 bt = bt + "</tr>";
                 $("#" + tblId).append(bt);
                 for (var i = 0; i < hs; i++) {
-                    var str = "<tr><td style='border: 1px solid #000; text-align: center;'>"+(i+1)+"</td>";
+                    var str = "<tr><td style='border: 1px solid #000; text-align: center;'>" + (i + 1) + "</td>";
                     for (var j = 0; j < ls; j++) {
                         var s = "&ensp;";
                         if (yxData[i * ls + j]) {
@@ -52,7 +52,7 @@
                     $("#" + tblId).append(str);
                 }
                 if (!flag) {
-                    var str = "<tr><td style='border: 1px solid #000; text-align: center;'>"+(hs+1)+"</td>";
+                    var str = "<tr><td style='border: 1px solid #000; text-align: center;'>" + (hs + 1) + "</td>";
                     for (var j = 0; j < ls; j++) {
                         var s = "&ensp;";
                         if (!flag) {
@@ -77,13 +77,13 @@
                         if (event.keyCode === 13) {
                             resetTable(opt);
                             setInput();
-                            $("#"+tblId + " input:last").focus();
+                            $("#" + tblId + " input:last").focus();
                         } else {
-                            var obj = {id:i,val:"",state:"0"};
+                            var obj = {id: i, val: "", state: "0"};
                             obj.val = $(this).val();
-                            yxData.splice(i,1,obj);
+                            yxData.splice(i, 1, obj);
                         }
-                        if(func){
+                        if (func) {
                             func();
                         }
                     });
@@ -92,7 +92,7 @@
             resetTable(opt);
             setInput();
         },
-        
+
         setDetailTableData: function (opt) {
             var tblId = $(this).attr("id");
             var yxData = opt.yxData;
@@ -105,12 +105,12 @@
                 $("#" + tblId + " tr").remove();
                 var bt = "<tr style='background: #e9f7ff;'><td style='width:10%;border: 1px solid #000; text-align: center;'>序号</td>";
                 for (var j = 0; j < ls; j++) {
-                    bt = bt + "<td style='width:" + width + ";border: 1px solid #000; text-align: center;'>" + (j+1) + "</td>";
+                    bt = bt + "<td style='width:" + width + ";border: 1px solid #000; text-align: center;'>" + (j + 1) + "</td>";
                 }
                 bt = bt + "</tr>";
                 $("#" + tblId).append(bt);
                 for (var i = 0; i < hs; i++) {
-                    var str = "<tr><td style='border: 1px solid #000; text-align: center;'>"+(i+1)+"</td>";
+                    var str = "<tr><td style='border: 1px solid #000; text-align: center;'>" + (i + 1) + "</td>";
                     for (var j = 0; j < ls; j++) {
                         var s = "&ensp;";
                         if (yxData[i * ls + j]) {
@@ -128,7 +128,7 @@
                     $("#" + tblId).append(str);
                 }
                 if (!flag) {
-                    var str = "<tr><td style='border: 1px solid #000; text-align: center;'>"+(hs+1)+"</td>";
+                    var str = "<tr><td style='border: 1px solid #000; text-align: center;'>" + (hs + 1) + "</td>";
                     for (var j = 0; j < ls; j++) {
                         var s = "&ensp;";
                         if (!flag) {
@@ -149,27 +149,35 @@
             var tblId = $(this).attr("id");
             var yxData = opt.yxData;
             var data = opt.data;
-            var ls = opt.ls ? opt.ls : 4;
-            var width = 100 / ls;
+            var ls = opt.ls ? opt.ls : 5;
+            var width = 90 / ls;
             width = width + "%";
             var resetTable = function () {
                 var hs = parseInt((data.length - 1) / ls) + 1;
                 $("#" + tblId + " tr").remove();
                 var bt = "<tr style='background: #e9f7ff;'><td style='width:10%;border: 1px solid #000; text-align: center;'>序号</td>";
                 for (var j = 0; j < ls; j++) {
-                    bt = bt + "<td style='width:" + width + ";border: 1px solid #000; text-align: center;'>" + (j+1) + "</td>";
+                    bt = bt + "<td style='width:" + width + ";border: 1px solid #000; text-align: center;'>" + (j + 1) + "</td>";
                 }
                 bt = bt + "</tr>";
                 $("#" + tblId).append(bt);
                 for (var i = 0; i < hs; i++) {
-                    var str = "<tr><td style='border: 1px solid #000; text-align: center;'>"+(i+1)+"</td>";
+                    var str = "<tr><td style='border: 1px solid #000; text-align: center;'>" + (i + 1) + "</td>";
                     for (var j = 0; j < ls; j++) {
                         var s = "&ensp;";
                         var d = data[i * ls + j];
                         if (d) {
-                            s = "<label><input type='checkbox' id='" + tblId + "_ck_" + d.id + "' />" + d.mc + "</label>";
+                            var checkStr = "";
+                            for (var m = 0; m < yxData.length; m++) {
+                                var y = yxData[m];
+                                if (y.id === d.id) {
+                                    checkStr = "checked='checked'";
+                                    break;
+                                }
+                            }
+                            s = "<label style='width:80%;margin-left:5px;'><input type='checkbox' id='" + tblId + "_ck_" + d.id + "' " + checkStr + " />" + d.val + "</label>";
                         }
-                        str += "<td style='width:" + width + "'>" + s + "</td>";
+                        str += "<td style='width:" + width + ";border: 1px solid #000;'>" + s + "</td>";
                     }
                     str += "</tr>";
                     $("#" + tblId).append(str);

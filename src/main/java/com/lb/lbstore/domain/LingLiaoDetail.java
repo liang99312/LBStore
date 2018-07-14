@@ -49,8 +49,8 @@ public class LingLiaoDetail {
     private String zldw;   
     private String jlfs = "pt"; //普通记录(pt)；总量记录(zl)；单元明细(mx)
     private Double bzgg = 1.0D; //包装规格
-    private Double sl = 1.0D;
-    private Double zl = 1.0D;
+    private Double sll = 1.0D;
+    private Double slzl = 1.0D;
     private String tysx;
     private String dymx;
     private String kw;
@@ -175,20 +175,20 @@ public class LingLiaoDetail {
         this.bzgg = bzgg;
     }
 
-    public Double getSl() {
-        return sl;
+    public Double getSll() {
+        return sll;
     }
 
-    public void setSl(Double sl) {
-        this.sl = sl;
+    public void setSll(Double sll) {
+        this.sll = sll;
     }
 
-    public Double getZl() {
-        return zl;
+    public Double getSlzl() {
+        return slzl;
     }
 
-    public void setZl(Double zl) {
-        this.zl = zl;
+    public void setSlzl(Double slzl) {
+        this.slzl = slzl;
     }
 
     public String getTysx() {
