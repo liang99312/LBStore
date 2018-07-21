@@ -21,7 +21,7 @@ var editA01;
 var selA01;
 var curKuCun;
 var dymx_opt = {data: [], yxData: [], func: calcDymx};
-var tysx_opt = {data: [], ls: 2, lw: 70};
+var tysx_opt = {data: [], ls: 3, lw: 70,upeditable: 1};
 
 $(document).ready(function () {
     $('#inpSj').val(dateFormat(new Date()));
@@ -34,10 +34,6 @@ $(document).ready(function () {
     getWuZiLeiBies(setTrager_leiBie);
     getGongYingShangs(setTrager_gongYingShang);
     $("#inpMxScrq").datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, minView: 2, startView: 2, forceParse: 0, showMeridian: 1});
-    $("#inpMxJlfs").change(function () {
-        $("#tblMxDymx input:last").blur();
-        selectMxJlfs();
-    });
     $(".ll_kh").hide();
     $("#inpLy").change(function () {
         if ($("#inpLy").val() === "供应商") {
@@ -86,6 +82,17 @@ function setTrager_gongYingShang(){
     $('#inpKcSelGys').AutoComplete({'data': lb_gongYingShangs, 'paramName': 'selGongYingShang'});
 }
 
+function selectCangKu(json){
+    if(json.id !== editCangKu.id){
+        if(llmx.length > 0){
+            $("#inpCk").val(editCangKu.mc);
+            return alert("已选择其他仓库的库存");
+        }
+        editCangKu = json;
+        $("#inpCk").val(editCangKu.mc);
+    }
+}
+
 function selectWuZiLeiBie(json) {
     editLeiBie = json;
     $("#inpMxLb").val(editLeiBie.mc);
@@ -125,49 +132,16 @@ function selectWuZiZiDian(json) {
     }
 }
 
-function selectCangKu(json) {
-    var id = json.id;
-    $.ajax({
-        url: "/LBStore/cangKu/getCangKuById.do?id=" + id,
-        contentType: "application/json",
-        type: "get",
-        cache: false,
-        error: function (msg, textStatus) {
-            alert("获取仓库信息失败");
-        },
-        success: function (json) {
-            if (json.result === 0) {
-                editCangKu = json.cangKu;
-                setCangKuKuWei();
-            }
-        }
-    });
-}
-
-function setCangKuKuWei() {
-    for (var i = 0; i < editCangKu.kws.length; i++) {
-        var e = editCangKu.kws[i];
-        e.id = i + 1;
-    }
-    selKuWei = null;
-    $('#inpMxKw').AutoComplete({'data': editCangKu.kws, 'paramName': 'selKuWei', 'afterSelectedHandler': setKuWeiHao});
-}
-
-function setKuWeiHao(json) {
-    var array = getKuWeiHao(json.mc, json.qsh, json.jsh);
-    $('#inpMxKwh').AutoComplete({'data': array});
-}
-
 function selectMxJlfs() {
     var val = $("#inpMxJlfs").val();
-    $("#dvMxBzgg").hide();
+    $(".form-MxBzgg").hide();
     $("#dvMxZl").hide();
     $("#divMxDymx").hide();
     if (val === "zl") {
-        $("#dvMxBzgg").show();
+        $(".form-MxBzgg").show();
         $("#dvMxZl").show();
     } else if (val === "mx") {
-        $("#dvMxBzgg").show();
+        $(".form-MxBzgg").show();
         $("#dvMxZl").show();
         $("#divMxDymx").show();
         buildDymx();
@@ -516,7 +490,7 @@ function calcDymx() {
             zl += parseFloat(dymx_opt.yxData[i].val);
         }
         $("#inpMxSll").val(dymx_opt.yxData.length);
-        $("#inpMxZl").val(zl.toFixed(3));
+        $("#inpMxSlzl").val(zl.toFixed(3));
     }
 }
 
@@ -729,7 +703,8 @@ function setKcCunData(kc,index) {
     }else{
         m.dymx = [];
     }
-    m.sl = m.sl? m.sl:0;
+    m.sll = m.sll? m.sll:0;
+    m.slzl = m.slzl? m.slzl:0;
     if (kc.dymx && typeof kc.dymx === "string") {
         kc.dymx = JSON.parse(kc.dymx);
     }
@@ -755,13 +730,15 @@ function setKcCunData(kc,index) {
     $("#inpMxKwh").val(kc.kw);
     buildTysx(kc.tysx);
     $("#inpMxSyl").val(kc.syl);
-    $("#inpMxSll").val(m.sl);
+    $("#inpMxSll").val(m.sll);
+    $("#inpMxSlzl").val(m.slzl);
     buildDymx();
     if (kc.jlfs === "mx") {
         $("#divMxDymx").show();
     } else {
         $("#divMxDymx").hide();
     }
+    selectMxJlfs();
     $("#selKuCunModal").modal("hide");
     $("#lingLiaoMingXiModal").modal("show");
 }

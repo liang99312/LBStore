@@ -98,6 +98,7 @@
             var yxData = opt.yxData;
             var ls = opt.ls ? opt.ls : 5;
             var width = 90 / ls;
+            var func = opt.func;
             width = width + "%";
             var resetTable = function () {
                 var hs = parseInt((yxData.length - 1) / ls) + 1;
@@ -152,6 +153,7 @@
             var ls = opt.ls ? opt.ls : 5;
             var width = 90 / ls;
             width = width + "%";
+            var func = opt.func;
             var resetTable = function () {
                 var hs = parseInt((data.length - 1) / ls) + 1;
                 $("#" + tblId + " tr").remove();
@@ -199,6 +201,9 @@
                             addXzData(data[i]);
                         } else {
                             delXzData(data[i]);
+                        }
+                        if (func) {
+                            func();
                         }
                     });
                 });

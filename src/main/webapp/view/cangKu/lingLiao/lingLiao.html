@@ -180,7 +180,7 @@ and open the template in the editor.
         </div>
 
         <div class="modal fade" id="lingLiaoMingXiModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog" style="width: 800px;">
                 <div class="modal-content">
                     <div class="modal-header" style="background: #ace1ff;height: 40px;border-top-left-radius: 6px;border-top-right-radius: 6px;padding:10px">
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -190,65 +190,58 @@ and open the template in the editor.
                         <div class="content">
                             <div class="form-group">
                                 <label for="inpMxWz">物资名称：</label>
-                                <input type="text" id="inpMxWz" />
+                                <input type="text" id="inpMxWz" disabled="disabled"/>
                                 <label for="inpMxLb">物资类别：</label>
-                                <input type="text" id="inpMxLb" />
-                            </div>
-                            <div class="form-group">
+                                <input type="text" id="inpMxLb" disabled="disabled"/>
                                 <label for="inpMxPp">品&ensp;&ensp;&ensp;&ensp;牌：</label>
-                                <input type="text" id="inpMxPp" />
-                                <label for="inpMxXhgg">型号规格：</label>
-                                <input type="text" id="inpMxXhgg" />
+                                <input type="text" id="inpMxPp" disabled="disabled"/>
                             </div>
                             <div class="form-group">
+                                <label for="inpMxXhgg">型号规格：</label>
+                                <input type="text" id="inpMxXhgg" disabled="disabled"/>
                                 <label for="inpMxScc">生&ensp;产&ensp;厂：</label>
-                                <input type="text" id="inpMxScc" />
+                                <input type="text" id="inpMxScc" disabled="disabled"/>
                                 <label for="inpMxTxm">条&ensp;形&ensp;码：</label>
-                                <input type="text" id="inpMxTxm" />
+                                <input type="text" id="inpMxTxm" disabled="disabled"/>
                             </div>
                             <div class="form-group">
                                 <label for="inpMxScc">生产日期：</label>
-                                <input type="text" id="inpMxScrq" />
+                                <input type="text" id="inpMxScrq" disabled="disabled"/>
                                 <label for="inpMxTxm">保质天数：</label>
-                                <input type="text" id="inpMxBzq" />
+                                <input type="text" id="inpMxBzq" disabled="disabled"/>
+                                <label for="inpMxKw">库&ensp;&ensp;&ensp;&ensp;位：</label>
+                                <input type="text" id="inpMxKwh" disabled="disabled"/>
                             </div>
                             <div class="form-group">
                                 <label for="inpMxDj">单&ensp;&ensp;&ensp;&ensp;价：</label>
-                                <input type="text" id="inpMxDj" />
+                                <input type="text" id="inpMxDj" disabled="disabled"/>
                                 <label for="inpMxDw">单&ensp;&ensp;&ensp;&ensp;位：</label>
-                                <input type="text" id="inpMxDw" />
-                            </div>
-                            <div class="form-group">
-                                <label for="inpMxKw">库&ensp;&ensp;&ensp;&ensp;位：</label>
-                                <input type="text" id="inpMxKw" />
-                                <input type="text" id="inpMxKwh" />
-                            </div>
-                            <div class="form-group">
+                                <input type="text" id="inpMxDw" disabled="disabled"/>
                                 <label for="inpMxSl">入库数量：</label>
-                                <input type="text" id="inpMxSl" />
+                                <input type="text" id="inpMxSl" disabled="disabled"/>
+                            </div>
+                            <div class="form-group">
                                 <label for="inpMxJlfs">记录方式：</label>
-                                <select id = "inpMxJlfs" style="width: 174px;height: 26px;">
+                                <select id = "inpMxJlfs" disabled="disabled" style="width: 174px;height: 26px;">
                                     <option value="pt">普通记录</option>
                                     <option value="zl">总量记录</option>
                                     <option value="mx">单元明细</option>
                                 </select>
-                            </div>
-                            <div id="dvMxBzgg" class="form-group" style="display: none;">
-                                <label for="inpMxBzgg">包装规格：</label>
-                                <input type="text" id="inpMxBzgg" />
-                                <label for="inpMxZldw">总量单位：</label>
-                                <input type="text" id="inpMxZldw" />
+                                <label class="form-MxBzgg" for="inpMxBzgg" style="display: none;">包装规格：</label>
+                                <input class="form-MxBzgg" type="text" id="inpMxBzgg" disabled="disabled" style="display: none;"/>
+                                <label class="form-MxBzgg" for="inpMxZldw" style="display: none;">总量单位：</label>
+                                <input class="form-MxBzgg" type="text" id="inpMxZldw" disabled="disabled" style="display: none;"/>
                             </div>
                             <div id='divMxTysx'></div>                            
                             <div class="form-group">
                                 <label for="inpMxSyl">剩&ensp;余&ensp;量：</label>
-                                <input type="text" id="inpMxSyl" />
+                                <input type="text" id="inpMxSyl" disabled="disabled"/>
                                 <label for="inpMxSll">申&ensp;领&ensp;量：</label>
                                 <input type="text" id="inpMxSll" />
                             </div>
                             <div id="dvMxZl" class="form-group" style="display: none;">
                                 <label for="inpMxZl">剩余总量：</label>
-                                <input type="text" id="inpMxZl" />
+                                <input type="text" id="inpMxZl" disabled="disabled"/>
                                 <label for="inpMxSlzl">申领总量：</label>
                                 <input type="text" id="inpMxSlzl" />
                             </div>

@@ -5,6 +5,7 @@
             var ls = opt.ls ? opt.ls : 1;
             var labelWidth = opt.lw? opt.lw:0;
             var labelStyle = "";
+            var upeditable = opt.upeditable? opt.upeditable:0;
             if(labelWidth > 0){
                 labelStyle = "style='width:"+labelWidth+"px;'";
             }
@@ -13,6 +14,10 @@
             var resetDiv = function () {
                 that.empty();
                 var hs = parseInt((data.length - 1) / ls) + 1;
+                var edit_str = "";
+                if(upeditable === 1){
+                    edit_str = "disabled='disabled'";
+                }
                 for (var i = 0; i < hs; i++) {
                     var str = "<div class='form-group'>\n";
                     for (var j = 0; j < ls; j++) {
@@ -23,7 +28,7 @@
                                 e.value = "";
                             }
                             s = "<label "+labelStyle+" for='tysx_inp_" + e.id + "'>" + e.mc + "：</label>\n\
-                                <input type='text' id='tysx_inp_" + e.id + "' value='" + e.value + "' />\n";
+                                <input type='text' id='tysx_inp_" + e.id + "' value='" + e.value + "' "+edit_str+" />\n";
                         }
                         str += s;
                     }
