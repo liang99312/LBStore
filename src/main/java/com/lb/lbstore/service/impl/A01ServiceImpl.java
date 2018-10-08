@@ -8,6 +8,7 @@ package com.lb.lbstore.service.impl;
 import com.lb.lbstore.dao.A01Dao;
 import com.lb.lbstore.domain.A01;
 import com.lb.lbstore.service.A01Service;
+import com.lb.lbstore.util.DataUtil;
 import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,11 @@ public class A01ServiceImpl implements A01Service {
     public List<A01> getAllA01s() {
         return a01Dao.getResult("from A01 a01", null);
     }
+    
+    @Override
+    public List<A01> getQyAllA01s(Integer qy_id) {
+        return a01Dao.getResult("from A01 a01 where qy_id=" + qy_id, null);
+    }
 
     @Override
     public boolean updateA01(A01 a01) {
@@ -41,6 +47,7 @@ public class A01ServiceImpl implements A01Service {
     @Override
     public A01 saveA01(A01 a01) {
         int id = a01Dao.save(a01);
+        DataUtil.getA01sFromDb();
         return (A01) a01Dao.findObjectById(A01.class, id);
     }
 

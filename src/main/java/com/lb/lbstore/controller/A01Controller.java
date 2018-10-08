@@ -46,16 +46,8 @@ public class A01Controller extends BaseController {
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            List<A01> a01List = new ArrayList<A01>();
-            if (DataUtil.a01s.isEmpty()) {
-                DataUtil.getA01sFromDb();
-            }
             int qy_id = getDlA01().getQy_id();
-            for(A01 a01:DataUtil.a01s){
-                if(a01.getQy_id() == qy_id){
-                    a01List.add(a01);
-                }
-            }
+            List<A01> a01List = a01ServiceImpl.getQyAllA01s(qy_id);
             map.put("result", 0);
             map.put("sz", a01List);
         } catch (Exception e) {

@@ -110,6 +110,24 @@ public class QiYeController extends BaseController {
         return map;
     }
     
+    @RequestMapping(value = "recoverQiYe.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> recoverQiYe(@RequestParam Integer id) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            boolean result = qiYeServiceImpl.recoverQiYe(id);
+            map.put("result", result? 0:-1);
+        } catch (Exception e) {
+            e.printStackTrace();
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
+    }
+    
     @RequestMapping(value = "getQiYeById.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String, Object> getQiYeById(@RequestParam Integer id) {

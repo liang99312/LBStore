@@ -59,10 +59,18 @@ public class LoginController extends BaseController {
             map.put("result", -1);
             map.put("msg","用户名或密码错误！");
         }else{
-            request.getSession().setAttribute("a01", a01);
-            ApplicationConstants.addLoginUser(a01, this.request.getSession().getId());
-            map.put("result", 0);
-            map.put("a01",a01);
+            if(a01.getState() == -9){
+                map.put("result", -1);
+                map.put("msg","企业已停用，请联系管理员！");
+            }else if(a01.getState() == -1){
+                map.put("result", -1);
+                map.put("msg","该用户已禁用，请联系管理员！");
+            }else{
+                request.getSession().setAttribute("a01", a01);
+                ApplicationConstants.addLoginUser(a01, this.request.getSession().getId());
+                map.put("result", 0);
+                map.put("a01",a01);
+            }
         }
         return map;
     }

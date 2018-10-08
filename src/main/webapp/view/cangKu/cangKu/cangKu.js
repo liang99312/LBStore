@@ -23,7 +23,7 @@ function jxCangKu(json) {
         if (item.state === -1) {
             classStr = ' class="danger"';
         }
-        var trStr = '<tr' + classStr + '><td>' + item.mc + '</td><td>' + item.dm + '</td><td>'
+        var trStr = '<tr' + classStr + '><td>' + item.mc + '</td><td>' + item.dm + '</td><td>' + item.lx + '</td><td>'
                 + '<button class="btn btn-info btn-xs icon-edit" onclick="editCangKu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;'
                 + '<button class="btn btn-info btn-xs icon-cog" onclick="setCangKu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;'
                 + '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteCangKu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button></td></tr>';
@@ -54,6 +54,7 @@ function addCangKu() {
     $("#cangKuModel_title").html("新增仓库");
     $("#inpMc").val("");
     $("#inpDm").val("");
+    $("#inpLx").val("");
     $("#inpBz").val("");
     $("#cangKuModal").modal("show");
 }
@@ -69,6 +70,7 @@ function editCangKu(index) {
     $("#cangKuModel_title").html("修改仓库");
     $("#inpMc").val(cangKu.mc);
     $("#inpDm").val(cangKu.dm);
+    $("#inpLx").val(cangKu.lx);
     $("#inpBz").val(cangKu.bz);
     $("#cangKuModal").modal("show");
 }
@@ -132,6 +134,7 @@ function saveCangKu() {
     }
     cangKu.mc = $("#inpMc").val();
     cangKu.dm = $("#inpDm").val();
+    cangKu.lx = $("#inpLx").val();
     cangKu.bz = $("#inpBz").val();
     $.ajax({
         url: url,

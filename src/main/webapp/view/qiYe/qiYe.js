@@ -16,7 +16,8 @@ function jxQiYe(json) {
         }
         var trStr = '<tr'+classStr+'><td>' + item.mc + '</td><td>' + item.dm + '</td><td>' + item.lxr + '</td><td>' + item.lxdh + '</td><td>' + item.gly + '</td><td>'
                 + '<button class="btn btn-info btn-xs icon-edit" onclick="editQiYe(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;'
-                + '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteQiYe(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button></td></tr>';
+                + '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteQiYe(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;'
+                + '<button class="btn btn-danger btn-xs icon-magnet" onclick="recoverQiYe(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button></td></tr>';
         $("#data_table_body").append(trStr);
     });
 }
@@ -115,7 +116,7 @@ function deleteQiYe(index) {
         return alert("请选择企业");
     }
     var qiYe = qiYes[index];
-    if (confirm("确定删除企业：" + qiYe.mc + "?")) {
+    if (confirm("删除企业后，该企业的用户将停用，确定删除企业：" + qiYe.mc + "?")) {
         $.ajax({
             url: "/LBStore/qiYe/deleteQiYe.do?id="+qiYe.id,
             contentType: "application/json",
@@ -132,5 +133,34 @@ function deleteQiYe(index) {
                     alert("删除失败:" + json.msg ? json.msg : "");
             }
         });
+    }
+}
+
+function recoverQiYe(index) {
+    if (qiYes[index] === undefined) {
+        return alert("请选择企业");
+    }
+    var qiYe = qiYes[index];
+    if(qiYe.state !== 0){
+        if (confirm("确定恢复企业：" + qiYe.mc + "?")) {
+            $.ajax({
+                url: "/LBStore/qiYe/recoverQiYe.do?id="+qiYe.id,
+                contentType: "application/json",
+                type: "get",
+                dataType: "json",
+                cache: false,
+                error: function (msg, textStatus) {
+                    alert("恢复失败");
+                },
+                success: function (json) {
+                    if (json.result === 0)
+                        selectQiYe();
+                    else
+                        alert("恢复失败:" + json.msg ? json.msg : "");
+                }
+            });
+        }
+    }else{
+        alert("企业不需要恢复");
     }
 }

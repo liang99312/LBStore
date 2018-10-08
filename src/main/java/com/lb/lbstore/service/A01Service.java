@@ -19,6 +19,8 @@ public interface A01Service {
     
     public List<A01> getAllA01s();
     
+    public List<A01> getQyAllA01s(Integer qy_id);
+    
     public boolean updateA01(A01 a01);
     
     public boolean updateA01Qx(A01 a01);

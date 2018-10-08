@@ -25,6 +25,8 @@ public interface QiYeService {
     
     public boolean deleteQiYe(Integer id);
     
+    public boolean recoverQiYe(Integer id);
+    
     public int queryRows(HashMap map);
     
     public List<QiYe> queryQiYesByPage(HashMap map);

@@ -80,4 +80,14 @@ public class QiYeServiceImpl implements QiYeService {
         return qiYeDao.getPageList(hql, null, 1, 20);
     }
 
+    @Override
+    public boolean recoverQiYe(Integer id) {
+        QiYe qiYe = (QiYe) qiYeDao.findObjectById(QiYe.class, id);
+        if(qiYe.getState() != 0){
+            qiYe.setState(0);
+            return qiYeDao.update(qiYe);
+        }
+        return false;
+    }
+
 }
