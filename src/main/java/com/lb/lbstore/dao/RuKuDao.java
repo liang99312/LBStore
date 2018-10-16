@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -92,6 +93,36 @@ public class RuKuDao extends BaseDao {
             }
         }
         return ruKu;
+    }
+    
+    public List<RuKuDetail> queryRuKuDetailTop100(Integer wzzd_id){
+        List<RuKuDetail> details = new ArrayList<>();
+        Session session = null;
+        try {
+            session = getSessionFactory().openSession();
+            String sql_d = "select {d.*},l.mc as wzlb from RuKuDetail d left join WuZiLeiBie l on d.wzlb_id=l.id where d.wzzd_id=" + wzzd_id + " order by d.id desc limit 0,100";  
+            SQLQuery navtiveSQL_d = session.createSQLQuery(sql_d);  
+            navtiveSQL_d.addEntity("d",RuKuDetail.class).addScalar("wzlb", StandardBasicTypes.STRING);             
+            List list_d = navtiveSQL_d.list();
+            for(Object obj:list_d){
+                Object[] objs = (Object[]) obj;
+                RuKuDetail rkd = (RuKuDetail) objs[0];
+                String wzlb = (String) objs[1];
+                rkd.setWzlb(wzlb);
+                details.add(rkd);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (session != null) {
+                    session.close();
+                }
+            } catch (Exception he) {
+                he.printStackTrace();
+            }
+        }
+        return details;
     }
     
     public List<RuKu> queryRuKusByPage(HashMap map){

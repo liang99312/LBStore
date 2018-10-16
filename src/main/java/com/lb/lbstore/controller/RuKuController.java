@@ -12,10 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.lb.lbstore.domain.RuKu;
+import com.lb.lbstore.domain.RuKuDetail;
 import com.lb.lbstore.service.RuKuService;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -155,6 +157,24 @@ public class RuKuController extends BaseController {
             RuKu ruKu = ruKuServiceImpl.getRuKuById(id);
             map.put("result", 0);
             map.put("ruKu", ruKu);
+        } catch (Exception e) {
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
+    }
+    
+    @RequestMapping(value = "getRuKuByWzid_100.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> getRuKuByWzid_100(@RequestParam Integer id) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            List<RuKuDetail> details = ruKuServiceImpl.getRuKuByWzid_100(id);
+            map.put("result", 0);
+            map.put("details", details);
         } catch (Exception e) {
             map.put("result", -1);
             map.put("msg", e.getMessage());

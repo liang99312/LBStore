@@ -6,6 +6,7 @@
 package com.lb.lbstore.service;
 
 import com.lb.lbstore.domain.RuKu;
+import com.lb.lbstore.domain.RuKuDetail;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,6 +21,8 @@ public interface RuKuService {
     public RuKu getRuKuDetailById(Integer id);
     
     public List<RuKu> getAllRuKus(Integer qy_id);
+    
+    public List<RuKuDetail> getRuKuByWzid_100(Integer wzzd_id);
     
     public boolean updateRuKu(RuKu ruKu);
     

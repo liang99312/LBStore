@@ -208,6 +208,12 @@ and open the template in the editor.
                                 <input type="text" id="inpMxLb" />
                             </div>
                             <div class="form-group">
+                                <label for="inpMxCkdh">参考单号：</label>
+                                <input type="text" id="inpMxCkdh" />
+                                <label for="inpMxZhu" style="color: red;">&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;注：</label>
+                                <label for="inpMxZhu" style="color: red;">选参考单号可获取相关信息</label>
+                            </div>
+                            <div class="form-group">
                                 <label for="inpMxPp">品&ensp;&ensp;&ensp;&ensp;牌：</label>
                                 <input type="text" id="inpMxPp" />
                                 <label for="inpMxXhgg">型号规格：</label>
@@ -264,6 +270,7 @@ and open the template in the editor.
                         </div>
                     </div>
                     <div class="modal-footer" style="text-align: center;padding: 8px;">
+                        <button id="btnMxReset" type="button" class="btn btn-primary" onclick="resetRuKuMingXi()">重置</button>
                         <button id="btnMxOk" type="submit" class="btn btn-primary" onclick="saveRuKuMingXi()">保存</button>
                     </div>
                 </div>

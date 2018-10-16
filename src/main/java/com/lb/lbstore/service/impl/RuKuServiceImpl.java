@@ -7,6 +7,7 @@ package com.lb.lbstore.service.impl;
 
 import com.lb.lbstore.dao.RuKuDao;
 import com.lb.lbstore.domain.RuKu;
+import com.lb.lbstore.domain.RuKuDetail;
 import com.lb.lbstore.service.RuKuService;
 import java.util.HashMap;
 import java.util.List;
@@ -74,6 +75,11 @@ public class RuKuServiceImpl implements RuKuService {
     @Override
     public boolean dealRuKu(RuKu ruKu,Integer a01_id) {
         return ruKuDao.dealRuKu(ruKu, a01_id);
+    }
+
+    @Override
+    public List<RuKuDetail> getRuKuByWzid_100(Integer wzzd_id) {
+        return ruKuDao.queryRuKuDetailTop100(wzzd_id);
     }
 
 }

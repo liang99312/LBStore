@@ -23,7 +23,7 @@ var tysx_opt = {data: [], ls: 2, lw: 70};
 
 $(document).ready(function () {
     $('#inpSj').val(dateFormat(new Date()));
-    $('#inpSj').datetimepicker({language:  'zh-CN',format: 'yyyy-mm-dd hh:ii',weekStart: 7,todayBtn:  1,autoclose: 1,todayHighlight: 1,startView: 2,forceParse: 0,showMeridian: 1});
+    $('#inpSj').datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd hh:ii', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, startView: 2, forceParse: 0, showMeridian: 1});
     $('#inpSelQrq,#inpSelZrq,#inpMxScrq').datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, minView: 2, startView: 2, forceParse: 0, showMeridian: 1});
     getAllA01s(setTrager_a01);
     getCangKus(setTrager_cangKu);
@@ -114,6 +114,8 @@ function selectWuZiZiDian(json) {
                 }
             }
         });
+        $('#inpMxCkdh').val("");
+        selectRuKuDetailsTop100(json.id);
     } else {
         $('#inpMxXhgg').AutoComplete({'data': [], 'paramName': 'editXhgg'});
     }
@@ -136,6 +138,60 @@ function selectCangKu(json) {
             }
         }
     });
+}
+
+function selectRuKuDetailsTop100(id) {
+    $.ajax({
+        url: "/LBStore/ruKu/getRuKuByWzid_100.do?id=" + id,
+        contentType: "application/json",
+        type: "get",
+        cache: false,
+        error: function (msg, textStatus) {
+            $('#inpMxCkdh').AutoComplete({'data': [], 'afterSelectedHandler': setDetails});
+        },
+        success: function (json) {
+            if (json.result === 0) {
+                var editDetails = [];
+                for (var i = 0; i < json.details.length; i++) {
+                    var e = json.details[i];
+                    e.mc = e.dh;
+                    editDetails.push(e);
+                }
+                $('#inpMxCkdh').AutoComplete({'data': editDetails, 'afterSelectedHandler': setDetails});
+            }
+        }
+    });
+}
+
+function setDetails(m) {
+    if (typeof m.dymx === "string") {
+        m.dymx = JSON.parse(m.dymx);
+    }
+    dymx_opt = {data: [], yxData: [], func: calcDymx};
+    editWzzd = {"id": m.wzzd_id, "mc": m.wzmc};
+    editLeiBie = {"id": m.wzlb_id, "mc": m.wzlb};
+    $("#inpMxPp").val(m.pp);
+    editXhgg = {"id": m.xhgg_id, "mc": m.xhgg};
+    $("#inpMxXhgg").val(m.xhgg);
+    $("#inpMxScc").val(m.scc);
+    $("#inpMxTxm").val(m.txm);
+    $("#inpMxScrq").val(m.scrq);
+    $("#inpMxBzq").val(m.bzq);
+    $("#inpMxDj").val(m.dj);
+    $("#inpMxDw").val(m.dw);
+    $("#inpMxSl").val(m.sl);
+    $("#inpMxJlfs").val(m.jlfs);
+    $("#inpMxBzgg").val(m.bzgg);
+    $("#inpMxZldw").val(m.zldw);
+    $("#inpMxZl").val(m.zl);
+    $("#inpMxKwh").val(m.kw);
+    buildTysx(m.tysx);
+    buildDymx();
+    if (m.jlfs === "mx") {
+        $("#divMxDymx").show();
+    } else {
+        $("#divMxDymx").hide();
+    }
 }
 
 function setCangKuKuWei() {
@@ -437,10 +493,10 @@ function saveRuKu() {
                 return alert("入库单明细需要设置单价！");
             }
         }
-        if(typeof e.dymx !== "string"){
+        if (typeof e.dymx !== "string") {
             e.dymx = JSON.stringify(e.dymx);
         }
-        if(typeof e.tysx !== "string"){
+        if (typeof e.tysx !== "string") {
             e.tysx = JSON.stringify(e.tysx);
         }
         if (wzs.indexOf(e.wzmc) > -1) {
@@ -652,8 +708,12 @@ function deleteRuKuMingXi(index) {
     }
 }
 
+function resetRuKuMingXi(){
+    addRuKuMingXi();
+}
+
 function saveRuKuMingXi() {
-    if(optMxFlag === 4){
+    if (optMxFlag === 4) {
         $("#ruKuMingXiModal").modal("hide");
         return;
     }
