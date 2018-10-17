@@ -317,6 +317,7 @@ function addRuKu() {
     $("#ruKuModel_title").html("新增入库单");
     $("#btnOk").html("保存");
     $("#divXzmx").show();
+    $("#dvMxCanKao").show();
     $("#divSpr").hide();
     $("#inpGys").val("");
     $("#inpKh").val("");
@@ -337,6 +338,7 @@ function editRuKu(index) {
     $("#ruKuModel_title").html("修改入库单");
     $("#btnOk").html("保存");
     $("#divXzmx").show();
+    $("#dvMxCanKao").show();
     $("#divSpr").hide();
     var ruKu = ruKus[index];
     editIndex = index;
@@ -355,6 +357,7 @@ function readRuKu(index) {
     $("#divSpr").show();
     var ruKu = ruKus[index];
     editIndex = index;
+    $("#dvMxCanKao").hide();
     selectRuKuDetail(ruKu.id);
 }
 
@@ -408,6 +411,7 @@ function dealRuKu(index) {
     $("#btnOk").html("办理");
     $("#divXzmx").hide();
     $("#divSpr").hide();
+    $("#dvMxCanKao").hide();
     var ruKu = ruKus[index];
     editIndex = index;
     selectRuKuDetail(ruKu.id);
@@ -640,6 +644,7 @@ function addRuKuMingXi() {
     buildTysx([]);
     buildDymx();
     $("#divMxDymx").hide();
+    $("#dvMxBzgg").hide();
     $("#dvMxZl").hide();
     $("#ruKuMingXiModal").modal("show");
 }
@@ -696,6 +701,13 @@ function setRuKuMingXiData(index) {
     } else {
         $("#divMxDymx").hide();
     }
+    if(m.jlfs === "zl"){
+        $("#dvMxBzgg").show();
+        $("#dvMxZl").show();
+    }else{
+        $("#dvMxBzgg").hide();
+        $("#dvMxZl").hide();
+    }
     $("#ruKuMingXiModal").modal("show");
 }
 
@@ -724,6 +736,9 @@ function saveRuKuMingXi() {
         return alert("请输入物资名称");
     }
     var mx = {};
+    if (optFlag === 3){
+        mx = rkmx[editMxIndex];
+    }
     if ($("#inpMxWz").val() === "") {
         return alert("请输入物资名称");
     } else {
