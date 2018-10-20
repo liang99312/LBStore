@@ -279,9 +279,10 @@ CREATE TABLE `store`.`lingliaodetail` (
   `zldw` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `jlfs` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `bzgg` FLOAT(7,2) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `sl` FLOAT(7,2) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `zl` FLOAT(7,2) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `sll` FLOAT(7,2) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `slzl` FLOAT(7,2) COLLATE utf8_unicode_ci DEFAULT NULL,
   `tysx` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `dymx` varchar(4000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `kw` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `kc_id` INT NOT NULL,
   PRIMARY KEY (`id`))ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

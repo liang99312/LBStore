@@ -442,7 +442,7 @@ function deleteLingLiao(index) {
         return alert("请选择领料单");
     }
     var lingLiao = lingLiaos[index];
-    if (confirm("确定删除领料单：" + lingLiao.mc + "?")) {
+    if (confirm("确定删除领料单：" + lingLiao.dh + "?")) {
         $.ajax({
             url: "/LBStore/lingLiao/deleteLingLiao.do?id=" + lingLiao.id,
             contentType: "application/json",
@@ -504,7 +504,7 @@ function jxLingLiaoMingXi() {
         } else {
             item.tysx = [];
         }
-        var je = parseFloat(item.sl) * parseFloat(item.dj);
+        var je = parseFloat(item.sll) * parseFloat(item.dj);
         var bj = optFlag === 4 ? '' : '<button class="btn btn-info btn-xs icon-edit" onclick="editLingLiaoMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var cz = optFlag === 3 || optFlag === 4 ? '' : '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteLingLiaoMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>';
         var trStr = '<tr><td>' + item.wzmc + '</td><td>' + item.pp + '</td><td>' + item.xhgg + '</td><td>' + item.sll + '</td><td>' + je + '</td><td>'
@@ -597,11 +597,9 @@ function saveLingLiaoMingXi() {
     mx.bzq = $("#inpMxBzq").val();
     mx.dj = parseFloat($("#inpMxDj").val());
     mx.dw = $("#inpMxDw").val();
-    mx.sl = parseFloat($("#inpMxSl").val());
     mx.jlfs = $("#inpMxJlfs").val();
     mx.bzgg = $("#inpMxBzgg").val();
     mx.zldw = $("#inpMxZldw").val();
-    mx.zl = $("#inpMxZl").val();
     mx.kw = $("#inpMxKwh").val();
     mx.dymx = JSON.stringify(dymx_opt.yxData);
     mx.tysx = JSON.stringify(tysx_opt.data);
@@ -618,8 +616,8 @@ function saveLingLiaoMingXi() {
     var zje = 0;
     for (var i = 0; i < llmx.length; i++) {
         var e = llmx[i];
-        zsl = e.sl + zsl;
-        zje = e.sl * e.dj + zje;
+        zsl = e.sll + zsl;
+        zje = e.sll * e.dj + zje;
     }
     $("#inpSl").val(zsl);
     $("#inpJe").val(zje.toFixed(3));

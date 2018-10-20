@@ -50,10 +50,9 @@ public class LingLiaoDao extends BaseDao {
                 Object[] objs = (Object[]) obj;
                 LingLiao ll = (LingLiao) objs[0];
                 String khmc = (String) objs[1];
-                String gysmc = (String) objs[2];
-                String ckmc = (String) objs[3];
-                String llrmc = (String) objs[4];
-                String sprmc = (String) objs[5];
+                String ckmc = (String) objs[2];
+                String llrmc = (String) objs[3];
+                String sprmc = (String) objs[4];
                 ll.setKhmc(khmc);
                 ll.setCkmc(ckmc);
                 ll.setLlrmc(llrmc);
@@ -113,8 +112,7 @@ public class LingLiaoDao extends BaseDao {
                 Object[] objs = (Object[]) obj;
                 LingLiao ll = (LingLiao) objs[0];
                 String khmc = (String) objs[1];
-                String gysmc = (String) objs[2];
-                String ckmc = (String) objs[3];
+                String ckmc = (String) objs[2];
                 ll.setKhmc(khmc);
                 ll.setCkmc(ckmc);
                 result.add(ll);
@@ -171,6 +169,7 @@ public class LingLiaoDao extends BaseDao {
                 detail.setKh_id(lingLiao.getKh_id());
                 detail.setQy_id(lingLiao.getQy_id());
                 detail.setLl_id(id);
+                detail.setDh(lingLiao.getDh());
                 session.save(detail);
             }
             session.flush();
