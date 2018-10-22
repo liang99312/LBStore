@@ -80,4 +80,10 @@ public class WuZiZiDianServiceImpl implements WuZiZiDianService {
         return wuZiZiDianDao.getPageList(hql, null, 1, 20);
     }
 
+    @Override
+    public List<WuZiZiDian> getWuZiZiDianByWzlbId(Integer wzlb_id) {
+        String hql = "from WuZiZiDian where wzlb_id = "+wzlb_id;
+        return wuZiZiDianDao.getResult(hql, null);
+    }
+
 }

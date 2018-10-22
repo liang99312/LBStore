@@ -139,6 +139,24 @@ public class WuZiZiDianController extends BaseController {
         }
         return map;
     }
+    
+    @RequestMapping(value = "getWuZiZiDianByWzlbId.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> getWuZiZiDianByWzlbId(@RequestParam Integer id) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            List<WuZiZiDian> wuZiZiDian_list = wuZiZiDianServiceImpl.getWuZiZiDianByWzlbId(id);
+            map.put("result", 0);
+            map.put("sz", wuZiZiDian_list);
+        } catch (Exception e) {
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
+    }
 
     //分页查询
     @RequestMapping(value = "listWuZiZiDiansByPage.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")

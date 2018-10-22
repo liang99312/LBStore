@@ -47,6 +47,20 @@ $(document).ready(function () {
             $(".ll_kh").hide();
         }
     });
+    $("#inpMxSll").keyup(function(){
+        if(curKuCun && curKuCun.jlfs === "zl"){
+            var temp_sll = parseFloat($("#inpMxSll").val());
+            var temp_slzl = temp_sll*curKuCun.bzgg;
+            $("#inpMxSlzl").val(temp_slzl.toFixed(3));
+        }
+    });
+    $("#inpMxSlzl").keyup(function(){
+        if(curKuCun && curKuCun.jlfs === "zl"){
+            var temp_slzl = parseFloat($("#inpMxSlzl").val());
+            var temp_sll = temp_slzl/curKuCun.bzgg;
+            $("#inpMxSll").val(temp_sll.toFixed(3));
+        }
+    });
 });
 
 function setTrager_a01() {
@@ -58,7 +72,6 @@ function setTrager_cangKu() {
     $('#selCangKu').AutoComplete({'data': lb_cangKus, 'paramName': 'selCangKu'});
     $('#inpSelCk').AutoComplete({'data': lb_cangKus, 'paramName': 'selCangKu'});
     $('#inpCk').AutoComplete({'data': lb_cangKus, 'afterSelectedHandler': selectCangKu});
-    $("#inpKcSelCk").AutoComplete({'data': lb_cangKus, 'paramName': 'selCangKu'});
 }
 
 function setTrager_keHu() {
@@ -68,14 +81,11 @@ function setTrager_keHu() {
 }
 
 function setTrager_ziDian() {
-    $('#inpSelWz').AutoComplete({'data': lb_wuZiZiDians, 'paramName': 'selWzzd'});
-    $('#inpKcSelWz').AutoComplete({'data': lb_wuZiZiDians, 'paramName': 'selWzzd'});
-    $('#inpMxWz').AutoComplete({'data': lb_wuZiZiDians, 'afterSelectedHandler': selectWuZiZiDian});
+    $('#inpKcSelWz').AutoComplete({'data': lb_wuZiZiDians, 'afterSelectedHandler': selectWuZiZiDian});
 }
 
 function setTrager_leiBie() {
-    $('#inpMxLb').AutoComplete({'data': lb_wuZiLeiBies, 'afterSelectedHandler': selectWuZiLeiBie});
-    $('#inpKcSelWzlb').AutoComplete({'data': lb_wuZiLeiBies, 'paramName': 'selLeiBie'});
+    $('#inpKcSelWzlb').AutoComplete({'data': lb_wuZiLeiBies, 'afterSelectedHandler': selectWuZiLeiBie});
 }
 
 function setTrager_gongYingShang(){
@@ -94,14 +104,26 @@ function selectCangKu(json){
 }
 
 function selectWuZiLeiBie(json) {
-    editLeiBie = json;
-    $("#inpMxLb").val(editLeiBie.mc);
-    if (editLeiBie.tysx && editLeiBie.tysx !== null && editLeiBie.tysx !== "") {
-        editLeiBie.tysx = JSON.parse(editLeiBie.tysx);
+    selLeiBie = json;
+    if (json.id > -1) {
+        $.ajax({
+            url: "/LBStore/wuZiZiDian/getWuZiZiDianByWzlbId.do?id=" + json.id,
+            contentType: "application/json",
+            type: "get",
+            dataType: "json",
+            cache: false,
+            error: function (msg, textStatus) {
+
+            },
+            success: function (json) {
+                if (json.result === 0) {
+                    $('#inpKcSelWz').AutoComplete({'data': json.sz, 'afterSelectedHandler': selectWuZiZiDian});
+                }
+            }
+        });
     } else {
-        editLeiBie.tysx = [];
+        $('#inpKcSelWz').AutoComplete({'data': [], 'afterSelectedHandler': selectWuZiZiDian});
     }
-    buildTysx(editLeiBie.tysx);
 }
 
 function selectLingLiao_m() {
@@ -109,7 +131,7 @@ function selectLingLiao_m() {
 }
 
 function selectWuZiZiDian(json) {
-    editWzzd = json;
+    selWzzd = json;
     if (json.id > -1) {
         $.ajax({
             url: "/LBStore/wuZiZiDian/getWuZiZiDianById.do?id=" + json.id,
@@ -123,7 +145,10 @@ function selectWuZiZiDian(json) {
             success: function (json) {
                 if (json.result === 0) {
                     $('#inpMxXhgg').AutoComplete({'data': json.wuZiZiDian.xhggs, 'paramName': 'editXhgg'});
-                    selectWuZiLeiBie(json.wuZiZiDian.wzlb);
+                    if($('#inpKcSelWzlb').val() !== json.wuZiZiDian.wzlb.mc){
+                        selectWuZiLeiBie(json.wuZiZiDian.wzlb);
+                        $('#inpKcSelWzlb').val(json.wuZiZiDian.wzlb.mc);
+                    }
                 }
             }
         });
