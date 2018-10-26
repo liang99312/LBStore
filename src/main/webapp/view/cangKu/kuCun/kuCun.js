@@ -48,7 +48,7 @@ function jxKuCun(json) {
     kuCuns = [];
     kuCuns = json.list;
     $.each(json.list, function (index, item) { //遍历返回的json
-        var trStr = '<tr><td>' + item.ckmc + '</td><td>' + item.wzmc + '</td><td>' + item.pp + '</td><td>' + item.xhgg + '</td><td>' + item.zl + '</td><td>' + item.syzl + '</td><td>' + item.kw + '</td><td>' + item.rksj + '</td><td>'
+        var trStr = '<tr><td>' + item.ckmc + '</td><td>' + item.wzmc + '</td><td>' + item.pp + '</td><td>' + item.xhgg + '</td><td>' + item.sl + '</td><td>' + item.syl + '</td><td>' + item.kw + '</td><td>' + item.rksj + '</td><td>'
                 + '<button class="btn btn-info btn-xs icon-file-alt" onclick="readKuCun(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;'
                 + '<button class="btn btn-info btn-xs icon-edit" onclick="editKuCun(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button></td></tr>';
         $("#data_table_body").append(trStr);

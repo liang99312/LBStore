@@ -169,7 +169,10 @@ public class LingLiaoDao extends BaseDao {
                 detail.setKh_id(lingLiao.getKh_id());
                 detail.setQy_id(lingLiao.getQy_id());
                 detail.setLl_id(id);
-                detail.setDh(lingLiao.getDh());
+                detail.setDh(lingLiao.getDh());                
+                if("pt".equals(detail.getJlfs())){
+                    detail.setSlzl(detail.getSll());
+                }
                 session.save(detail);
             }
             session.flush();
@@ -295,7 +298,7 @@ public class LingLiaoDao extends BaseDao {
             for(LingLiaoDetail e:lingLiao.getDetails()){
                 detailTable.put(e.getKc_id(), e);
                 sb.append(",");
-                sb.append(e.getId());
+                sb.append(e.getKc_id());
             }
             sb.append(")");
             String kcSql = "from KuCun where id in "+sb.toString();
@@ -309,6 +312,7 @@ public class LingLiaoDao extends BaseDao {
                         return result;
                     }
                     kc.setSyzl(kc.getSyzl() - detail.getSlzl());
+                    kc.setSyl(kc.getSyl() - detail.getSll());
                     //处理库存
                     session.save(kc);
                 }

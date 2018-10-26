@@ -317,6 +317,7 @@ function selectLingLiaoDetail(id) {
                 $("#inpKh").val(lingLiao.khmc);
                 $("#inpCk").val(lingLiao.ckmc);
                 editCangKu = {"id": lingLiao.ck_id, "mc": lingLiao.ckmc};
+                editKeHu = {"id": lingLiao.kh_id, "mc": lingLiao.khmc};
                 $("#inpLlr").val(lingLiao.llrmc);
                 editA01 = {"id": lingLiao.llr_id, "mc": lingLiao.llrmc};
                 selectCangKu(editCangKu);
@@ -530,7 +531,7 @@ function jxLingLiaoMingXi() {
             item.tysx = [];
         }
         var je = parseFloat(item.sll) * parseFloat(item.dj);
-        var bj = optFlag === 4 ? '' : '<button class="btn btn-info btn-xs icon-edit" onclick="editLingLiaoMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
+        var bj = optFlag === 3 || optFlag === 4 ? '' : '<button class="btn btn-info btn-xs icon-edit" onclick="editLingLiaoMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var cz = optFlag === 3 || optFlag === 4 ? '' : '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteLingLiaoMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>';
         var trStr = '<tr><td>' + item.wzmc + '</td><td>' + item.pp + '</td><td>' + item.xhgg + '</td><td>' + item.sll + '</td><td>' + je + '</td><td>'
                 + '<button class="btn btn-info btn-xs icon-file-alt" onclick="readLingLiaoMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;'
@@ -568,6 +569,7 @@ function readLingLiaoMingXi(index) {
         editMxIndex = index;
         $("#lingLiaoMingXiModal_title").html("查看明细");
         $("#btnMxOk").html("关闭");
+        var temp = llmx[index];
         cxKuCunById(temp.kc_id,index);
     }
 }
@@ -630,6 +632,9 @@ function saveLingLiaoMingXi() {
     mx.tysx = JSON.stringify(tysx_opt.data);
     mx.sll = parseFloat($("#inpMxSll").val());
     mx.slzl = parseFloat($("#inpMxSlzl").val());
+    if(mx.slzl === undefined || mx.slzl === "" || mx.slzl < 0.001){
+        mx.slzl = mx.sll;
+    }
     mx.kc_id = curKuCun.id;
     if (optMxFlag === 1) {
         llmx.push(mx);
