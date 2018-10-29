@@ -220,6 +220,9 @@ function selectMxJlfs() {
         $("#dvMxBzgg").show();
         $("#dvMxZl").show();
         $("#divMxDymx").show();
+        if($("#dvMxBzgg").val() === ""){
+            $("#dvMxBzgg").val(1);
+        }
         buildDymx();
     }
 }
@@ -701,7 +704,7 @@ function setRuKuMingXiData(index) {
     } else {
         $("#divMxDymx").hide();
     }
-    if(m.jlfs === "zl"){
+    if(m.jlfs === "zl" || m.jlfs === "mx"){
         $("#dvMxBzgg").show();
         $("#dvMxZl").show();
     }else{

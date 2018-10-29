@@ -113,9 +113,13 @@
                 for (var i = 0; i < hs; i++) {
                     var str = "<tr><td style='border: 1px solid #000; text-align: center;'>" + (i + 1) + "</td>";
                     for (var j = 0; j < ls; j++) {
+                        var selectedColor = "";
                         var s = "&ensp;";
                         if (yxData[i * ls + j]) {
-                            s = "<input type='text' style='width:99%;border-left:none;border-top:none;border-right:none;' value='" + yxData[i * ls + j].val + "' />";
+                            if (yxData[i * ls + j].state === 1) {
+                                selectedColor = "background-color:red;";
+                            }
+                            s = "<input type='text' style='" + selectedColor + "width:99%;border:none;' value='" + yxData[i * ls + j].val + "' />";
                         } else {
                             if (!flag) {
                                 flag = true;
@@ -123,7 +127,7 @@
 //                                s = "<input type='text' style='width:85%;border-left:none;border-top:none;border-right:none;' value='' />" + "<a href='#' id='" + tblId + "_a_" + i * ls + j + "' style='color:red; float: right; margin-right: 3px;text-decoration: none;'>X</a>";
                             }
                         }
-                        str += "<td style='width:" + width + ";border: 1px solid #000;'>" + s + "</td>";
+                        str += "<td style='" + selectedColor + "width:" + width + ";border: 1px solid #000;'>" + s + "</td>";
                     }
                     str += "</tr>";
                     $("#" + tblId).append(str);
@@ -166,6 +170,8 @@
                 for (var i = 0; i < hs; i++) {
                     var str = "<tr><td style='border: 1px solid #000; text-align: center;'>" + (i + 1) + "</td>";
                     for (var j = 0; j < ls; j++) {
+                        var selectedFlag = "";
+                        var selectedColor = "";
                         var s = "&ensp;";
                         var d = data[i * ls + j];
                         if (d) {
@@ -177,9 +183,13 @@
                                     break;
                                 }
                             }
-                            s = "<label style='width:80%;margin-left:5px;'><input type='checkbox' id='" + tblId + "_ck_" + d.id + "' " + checkStr + " />" + d.val + "</label>";
+                            if(d.state === 1){
+                                selectedFlag = "disabled='disabled'";
+                                selectedColor = "background-color:#ecebe6;";
+                            }
+                            s = "<label style='width:80%;margin-left:5px;'><input type='checkbox' "+selectedFlag+" id='" + tblId + "_ck_" + d.id + "' " + checkStr + " />" + d.val + "</label>";
                         }
-                        str += "<td style='width:" + width + ";border: 1px solid #000;'>" + s + "</td>";
+                        str += "<td style='"+selectedColor+"width:" + width + ";border: 1px solid #000;'>" + s + "</td>";
                     }
                     str += "</tr>";
                     $("#" + tblId).append(str);

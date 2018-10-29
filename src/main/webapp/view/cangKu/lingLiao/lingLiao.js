@@ -410,6 +410,9 @@ function saveLingLiao() {
     var wzs = [];
     for (var i = 0; i < llmx.length; i++) {
         var e = llmx[i];
+        if(e.ck_id !== lingLiao.ck_id){
+            return alert("领料明细仓库和领料单仓库不匹配！");
+        }
         if (optFlag === 3) {
             if (e.kw === undefined || e.kw === null || e.kw === "") {
                 return alert("领料单明细需要设置库位！");
@@ -636,6 +639,7 @@ function saveLingLiaoMingXi() {
         mx.slzl = mx.sll;
     }
     mx.kc_id = curKuCun.id;
+    mx.ck_id = curKuCun.ck_id;
     if (optMxFlag === 1) {
         llmx.push(mx);
     } else if (optMxFlag === 2) {
