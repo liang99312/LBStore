@@ -84,6 +84,9 @@ function saveQiYe() {
     } else if (optFlag === 1) {
         url = "/LBStore/qiYe/saveQiYe.do";
     }
+    if($("#inpMc").val() === ""){
+        return alert("请输入企业名称");
+    }
     qiYe.gly = $("#inpGly").val();
     qiYe.mc = $("#inpMc").val();
     qiYe.dm = $("#inpDm").val();

@@ -19,6 +19,8 @@ public interface ZiDianFenLeiService {
     
     public List<ZiDianFenLei> getAllZiDianFenLeis(Integer qy_id);
     
+    public boolean existZiDianFenLei(Integer qy_id, Integer id, String mc);
+    
     public boolean updateZiDianFenLei(ZiDianFenLei ziDianFenLei);
     
     public ZiDianFenLei saveZiDianFenLei(ZiDianFenLei ziDianFenLei);

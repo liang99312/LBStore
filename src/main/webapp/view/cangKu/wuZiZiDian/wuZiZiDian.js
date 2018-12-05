@@ -106,6 +106,9 @@ function saveWuZiZiDian() {
     } else {
         return alert("请选择物资类别");
     }
+    if($("#inpMc").val() === ""){
+        return alert("请输入物资名称");
+    }
     wuZiZiDian.mc = $("#inpMc").val();
     wuZiZiDian.dm = $("#inpDm").val();
     wuZiZiDian.bm = $("#inpBm").val();

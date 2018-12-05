@@ -19,6 +19,8 @@ public interface QiYeService {
     
     public List<QiYe> getAllQiYes();
     
+    public boolean existQiYe(Integer id, String mc);
+    
     public boolean updateQiYe(QiYe qiYe);
     
     public QiYe saveQiYe(QiYe qiYe);

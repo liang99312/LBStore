@@ -19,6 +19,8 @@ public interface KeHuService {
     
     public List<KeHu> getAllKeHus(Integer qy_id);
     
+    public boolean existKeHu(Integer qy_id, Integer id, String mc);
+    
     public boolean updateKeHu(KeHu keHu);
     
     public KeHu saveKeHu(KeHu keHu);

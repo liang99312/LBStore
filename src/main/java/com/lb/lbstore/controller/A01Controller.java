@@ -66,9 +66,14 @@ public class A01Controller extends BaseController {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             model.setQy_id(getDlA01().getQy_id());
-            A01 a01 = a01ServiceImpl.saveA01(model);
-            map.put("result", 0);
-            map.put("a01", a01);
+            if(a01ServiceImpl.existA01(model.getQy_id(), -1, model.getMc(), model.getBh())){
+                map.put("result", -1);
+                map.put("msg", "姓名或者编号已存在");
+            }else{
+                A01 a01 = a01ServiceImpl.saveA01(model);
+                map.put("result", 0);
+                map.put("a01", a01);
+            }
         } catch (Exception e) {
             map.put("result", -1);
             map.put("msg", e.getMessage());
@@ -84,8 +89,13 @@ public class A01Controller extends BaseController {
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            boolean result = a01ServiceImpl.updateA01(model);
-            map.put("result", result? 0:-1);
+            if(a01ServiceImpl.existA01(model.getQy_id(), model.getId(), model.getMc(), model.getBh())){
+                map.put("result", -1);
+                map.put("msg", "姓名或者编号已存在");
+            }else{
+                boolean result = a01ServiceImpl.updateA01(model);
+                map.put("result", result? 0:-1);
+            }
         } catch (Exception e) {
             map.put("result", -1);
             map.put("msg", e.getMessage());

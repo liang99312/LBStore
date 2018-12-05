@@ -19,6 +19,8 @@ public interface ZiDianService {
     
     public List<ZiDian> getAllZiDians4fl(Integer qy_id,Integer zdfl_id);
     
+    public boolean existZiDian(Integer qy_id, Integer id, String mc);
+    
     public boolean updateZiDian(ZiDian ziDian);
     
     public ZiDian saveZiDian(ZiDian ziDian);

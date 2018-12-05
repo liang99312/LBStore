@@ -65,10 +65,15 @@ public class KeHuController extends BaseController {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             model.setQy_id(getDlA01().getQy_id());
-            model.setState(0);
-            KeHu keHu = keHuServiceImpl.saveKeHu(model);
-            map.put("result", 0);
-            map.put("keHu", keHu);
+            if(keHuServiceImpl.existKeHu(model.getQy_id(), -1, model.getMc())){
+                map.put("result", -1);
+                map.put("msg", "客户名称已存在");
+            }else{
+                model.setState(0);
+                KeHu keHu = keHuServiceImpl.saveKeHu(model);
+                map.put("result", 0);
+                map.put("keHu", keHu);
+            }
         } catch (Exception e) {
             map.put("result", -1);
             map.put("msg", e.getMessage());
@@ -84,8 +89,13 @@ public class KeHuController extends BaseController {
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            boolean result = keHuServiceImpl.updateKeHu(model);
-            map.put("result", result? 0:-1);
+            if(keHuServiceImpl.existKeHu(model.getQy_id(), model.getId(), model.getMc())){
+                map.put("result", -1);
+                map.put("msg", "客户名称已存在");
+            }else{
+                boolean result = keHuServiceImpl.updateKeHu(model);
+                map.put("result", result? 0:-1);
+            }
         } catch (Exception e) {
             map.put("result", -1);
             map.put("msg", e.getMessage());

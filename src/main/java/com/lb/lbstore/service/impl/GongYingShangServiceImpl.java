@@ -80,4 +80,9 @@ public class GongYingShangServiceImpl implements GongYingShangService {
         return gongYingShangDao.getPageList(hql, null, 1, 20);
     }
 
+    @Override
+    public boolean existGongYingShang(Integer qy_id, Integer id, String mc) {
+        return gongYingShangDao.existGongYingShang(qy_id, id, mc);
+    }
+
 }

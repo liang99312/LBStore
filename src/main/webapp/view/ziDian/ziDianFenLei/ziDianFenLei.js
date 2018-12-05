@@ -68,6 +68,9 @@ function saveZiDianFenLei() {
     } else if (optFlag === 1) {
         url = "/LBStore/ziDianFenLei/saveZiDianFenLei.do";
     }
+    if($("#inpMc").val() === ""){
+        return alert("请输入字典分类名称");
+    }
     ziDianFenLei.mc = $("#inpMc").val();
     ziDianFenLei.dm = $("#inpDm").val();
     ziDianFenLei.bz = $("#inpBz").val();

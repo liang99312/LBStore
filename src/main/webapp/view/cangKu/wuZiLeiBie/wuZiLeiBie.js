@@ -102,6 +102,9 @@ function saveWuZiLeiBie() {
         url = "/LBStore/wuZiLeiBie/saveWuZiLeiBie.do";
     }
     wuZiLeiBie.tysx = JSON.stringify(tysx);
+    if($("#inpMc").val() === ""){
+        return alert("请输入物资类别名称");
+    }
     wuZiLeiBie.mc = $("#inpMc").val();
     wuZiLeiBie.dm = $("#inpDm").val();
     wuZiLeiBie.bz = $("#inpBz").val();

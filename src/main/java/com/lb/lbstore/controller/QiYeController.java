@@ -64,10 +64,15 @@ public class QiYeController extends BaseController {
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            model.setState(0);
-            QiYe qiYe = qiYeServiceImpl.saveQiYe(model);
-            map.put("result", 0);
-            map.put("qiYe", qiYe);
+            if(qiYeServiceImpl.existQiYe(-1, model.getMc())){
+                map.put("result", -1);
+                map.put("msg", "企业名称已存在");
+            }else{
+                model.setState(0);
+                QiYe qiYe = qiYeServiceImpl.saveQiYe(model);
+                map.put("result", 0);
+                map.put("qiYe", qiYe);
+            }
         } catch (Exception e) {
             map.put("result", -1);
             map.put("msg", e.getMessage());
@@ -83,8 +88,13 @@ public class QiYeController extends BaseController {
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            boolean result = qiYeServiceImpl.updateQiYe(model);
-            map.put("result", result? 0:-1);
+            if(qiYeServiceImpl.existQiYe(model.getId(), model.getMc())){
+                map.put("result", -1);
+                map.put("msg", "企业名称已存在");
+            }else{
+                boolean result = qiYeServiceImpl.updateQiYe(model);
+                map.put("result", result? 0:-1);
+            }
         } catch (Exception e) {
             map.put("result", -1);
             map.put("msg", e.getMessage());

@@ -80,4 +80,9 @@ public class BuMenServiceImpl implements BuMenService {
         return buMenDao.getPageList(hql, null, 1, 20);
     }
 
+    @Override
+    public boolean existBuMen(Integer qy_id, Integer id, String mc) {
+        return buMenDao.existBuMen(qy_id, id, mc);
+    }
+
 }

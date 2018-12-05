@@ -106,6 +106,12 @@ function saveA01() {
         url = "/LBStore/a01/saveA01.do";
         a01.a01qx = "901;";
     }
+    if($("#inpMc").val() === ""){
+        return alert("请输入姓名");
+    }
+    if($("#inpBh").val() === ""){
+        return alert("请输入编号");
+    }
     a01.bh = $("#inpBh").val();
     a01.mc = $("#inpMc").val();
     a01.dm = $("#inpDm").val();

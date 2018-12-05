@@ -74,4 +74,9 @@ public class ZiDianServiceImpl implements ZiDianService {
         return ziDianDao.getPageList(hql, null, 1, 20);
     }
 
+    @Override
+    public boolean existZiDian(Integer qy_id, Integer id, String mc) {
+        return ziDianDao.existZiDian(qy_id, id, mc);
+    }
+
 }

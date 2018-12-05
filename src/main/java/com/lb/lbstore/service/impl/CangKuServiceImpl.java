@@ -106,4 +106,9 @@ public class CangKuServiceImpl implements CangKuService {
         String hql = "from A01 where id in(select a01_id from CangKuA01 where ck_id="+id +")";
         return cangKuDao.getResult(hql, null);
     }
+
+    @Override
+    public boolean existCangKu(Integer qy_id, Integer id, String mc) {
+        return cangKuDao.existCangKu(qy_id, id, mc);
+    }
 }

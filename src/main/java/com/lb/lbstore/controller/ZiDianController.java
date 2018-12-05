@@ -65,9 +65,14 @@ public class ZiDianController extends BaseController {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             model.setQy_id(getDlA01().getQy_id());
-            ZiDian ziDian = ziDianServiceImpl.saveZiDian(model);
-            map.put("result", 0);
-            map.put("ziDian", ziDian);
+            if(ziDianServiceImpl.existZiDian(model.getQy_id(), -1, model.getMc())){
+                map.put("result", -1);
+                map.put("msg", "字典名称已存在");
+            }else{
+                ZiDian ziDian = ziDianServiceImpl.saveZiDian(model);
+                map.put("result", 0);
+                map.put("ziDian", ziDian);
+            }
         } catch (Exception e) {
             map.put("result", -1);
             map.put("msg", e.getMessage());
@@ -83,8 +88,13 @@ public class ZiDianController extends BaseController {
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            boolean result = ziDianServiceImpl.updateZiDian(model);
-            map.put("result", result? 0:-1);
+            if(ziDianServiceImpl.existZiDian(model.getQy_id(), model.getId(), model.getMc())){
+                map.put("result", -1);
+                map.put("msg", "字典名称已存在");
+            }else{
+                boolean result = ziDianServiceImpl.updateZiDian(model);
+                map.put("result", result? 0:-1);
+            }
         } catch (Exception e) {
             map.put("result", -1);
             map.put("msg", e.getMessage());

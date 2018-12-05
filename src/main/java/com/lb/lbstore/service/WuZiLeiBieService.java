@@ -19,6 +19,8 @@ public interface WuZiLeiBieService {
     
     public List<WuZiLeiBie> getAllWuZiLeiBies(Integer qy_id);
     
+    public boolean existWuZiLeiBie(Integer qy_id, Integer id, String mc);
+    
     public boolean updateWuZiLeiBie(WuZiLeiBie wuZiLeiBie);
     
     public WuZiLeiBie saveWuZiLeiBie(WuZiLeiBie wuZiLeiBie);

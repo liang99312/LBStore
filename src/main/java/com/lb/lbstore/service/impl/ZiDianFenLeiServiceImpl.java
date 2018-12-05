@@ -67,4 +67,9 @@ public class ZiDianFenLeiServiceImpl implements ZiDianFenLeiService {
         return ziDianFenLeiDao.getPageList(hql, null, 1, 20);
     }
 
+    @Override
+    public boolean existZiDianFenLei(Integer qy_id, Integer id, String mc) {
+        return ziDianFenLeiDao.existZiDianFenLei(qy_id, id, mc);
+    }
+
 }

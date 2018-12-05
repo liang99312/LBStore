@@ -65,9 +65,14 @@ public class ZiDianFenLeiController extends BaseController {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             model.setQy_id(getDlA01().getQy_id());
-            ZiDianFenLei ziDianFenLei = ziDianFenLeiServiceImpl.saveZiDianFenLei(model);
-            map.put("result", 0);
-            map.put("ziDianFenLei", ziDianFenLei);
+            if(ziDianFenLeiServiceImpl.existZiDianFenLei(model.getQy_id(), -1, model.getMc())){
+                map.put("result", -1);
+                map.put("msg", "字典分类名称已存在");
+            }else{
+                ZiDianFenLei ziDianFenLei = ziDianFenLeiServiceImpl.saveZiDianFenLei(model);
+                map.put("result", 0);
+                map.put("ziDianFenLei", ziDianFenLei);
+            }
         } catch (Exception e) {
             map.put("result", -1);
             map.put("msg", e.getMessage());
@@ -83,8 +88,13 @@ public class ZiDianFenLeiController extends BaseController {
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            boolean result = ziDianFenLeiServiceImpl.updateZiDianFenLei(model);
-            map.put("result", result? 0:-1);
+            if(ziDianFenLeiServiceImpl.existZiDianFenLei(model.getQy_id(), model.getId(), model.getMc())){
+                map.put("result", -1);
+                map.put("msg", "字典分类名称已存在");
+            }else{
+                boolean result = ziDianFenLeiServiceImpl.updateZiDianFenLei(model);
+                map.put("result", result? 0:-1);
+            }
         } catch (Exception e) {
             map.put("result", -1);
             map.put("msg", e.getMessage());

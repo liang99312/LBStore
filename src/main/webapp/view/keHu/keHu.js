@@ -81,6 +81,9 @@ function saveKeHu() {
     } else if (optFlag === 1) {
         url = "/LBStore/keHu/saveKeHu.do";
     }
+    if($("#inpMc").val() === ""){
+        return alert("请输入客户名称");
+    }
     keHu.mc = $("#inpMc").val();
     keHu.dm = $("#inpDm").val();
     keHu.dz = $("#inpDz").val();

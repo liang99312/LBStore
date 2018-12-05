@@ -22,6 +22,8 @@ public interface CangKuService {
     
     public List<CangKu> getAllCangKus(Integer qy_id);
     
+    public boolean existCangKu(Integer qy_id, Integer id, String mc);
+    
     public boolean updateCangKu(CangKu cangKu);
     
     public CangKu saveCangKu(CangKu cangKu);

@@ -73,10 +73,15 @@ public class WuZiZiDianController extends BaseController {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             model.setQy_id(getDlA01().getQy_id());
-            model.setState(0);
-            WuZiZiDian wuZiZiDian = wuZiZiDianServiceImpl.saveWuZiZiDian(model);
-            map.put("result", 0);
-            map.put("wuZiZiDian", wuZiZiDian);
+            if(wuZiZiDianServiceImpl.existWuZiZiDian(model.getQy_id(), -1, model.getMc())){
+                map.put("result", -1);
+                map.put("msg", "物资字典名称已存在");
+            }else{
+                model.setState(0);
+                WuZiZiDian wuZiZiDian = wuZiZiDianServiceImpl.saveWuZiZiDian(model);
+                map.put("result", 0);
+                map.put("wuZiZiDian", wuZiZiDian);
+            }
         } catch (Exception e) {
             map.put("result", -1);
             map.put("msg", e.getMessage());
@@ -92,8 +97,13 @@ public class WuZiZiDianController extends BaseController {
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            boolean result = wuZiZiDianServiceImpl.updateWuZiZiDian(model);
-            map.put("result", result? 0:-1);
+            if(wuZiZiDianServiceImpl.existWuZiZiDian(model.getQy_id(), model.getId(), model.getMc())){
+                map.put("result", -1);
+                map.put("msg", "物资字典名称已存在");
+            }else{
+                boolean result = wuZiZiDianServiceImpl.updateWuZiZiDian(model);
+                map.put("result", result? 0:-1);
+            }
         } catch (Exception e) {
             map.put("result", -1);
             map.put("msg", e.getMessage());

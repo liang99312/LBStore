@@ -90,6 +90,9 @@ function saveZiDian() {
     } else if (optFlag === 1) {
         url = "/LBStore/ziDian/saveZiDian.do";
     }
+    if($("#inpMc").val() === ""){
+        return alert("请输入字典名称");
+    }
     ziDian.mc = $("#inpMc").val();
     ziDian.dm = $("#inpDm").val();
     ziDian.bz = $("#inpBz").val();

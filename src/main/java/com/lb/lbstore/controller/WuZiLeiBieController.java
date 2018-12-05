@@ -65,10 +65,15 @@ public class WuZiLeiBieController extends BaseController {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             model.setQy_id(getDlA01().getQy_id());
-            model.setState(0);
-            WuZiLeiBie wuZiLeiBie = wuZiLeiBieServiceImpl.saveWuZiLeiBie(model);
-            map.put("result", 0);
-            map.put("wuZiLeiBie", wuZiLeiBie);
+            if(wuZiLeiBieServiceImpl.existWuZiLeiBie(model.getQy_id(), -1, model.getMc())){
+                map.put("result", -1);
+                map.put("msg", "物资类别名称已存在");
+            }else{
+                model.setState(0);
+                WuZiLeiBie wuZiLeiBie = wuZiLeiBieServiceImpl.saveWuZiLeiBie(model);
+                map.put("result", 0);
+                map.put("wuZiLeiBie", wuZiLeiBie);
+            }
         } catch (Exception e) {
             map.put("result", -1);
             map.put("msg", e.getMessage());
@@ -84,8 +89,13 @@ public class WuZiLeiBieController extends BaseController {
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            boolean result = wuZiLeiBieServiceImpl.updateWuZiLeiBie(model);
-            map.put("result", result? 0:-1);
+            if(wuZiLeiBieServiceImpl.existWuZiLeiBie(model.getQy_id(), model.getId(), model.getMc())){
+                map.put("result", -1);
+                map.put("msg", "物资类别名称已存在");
+            }else{
+                boolean result = wuZiLeiBieServiceImpl.updateWuZiLeiBie(model);
+                map.put("result", result? 0:-1);
+            }
         } catch (Exception e) {
             map.put("result", -1);
             map.put("msg", e.getMessage());

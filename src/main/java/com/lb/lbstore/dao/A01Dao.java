@@ -23,12 +23,12 @@ public class A01Dao extends BaseDao {
                     List qyList = this.getResult("from QiYe where id=" + a01.getQy_id(), null);
                     if (!qyList.isEmpty()) {
                         QiYe qy = (QiYe) qyList.get(0);
-                        if(qy.getState() == -1){
+                        if (qy.getState() == -1) {
                             A01 r = new A01();
                             r.setState(-9);
                             return r;
                         }
-                    }else{
+                    } else {
                         A01 r = new A01();
                         r.setState(-9);
                         return r;
@@ -51,5 +51,16 @@ public class A01Dao extends BaseDao {
     public boolean changeQuanXian(int id, String qx) {
         String sql = "update a01 set a01qx='" + qx + "' where id=" + id;
         return this.excuteSql(sql);
+    }
+
+    public boolean existA01(Integer qy_id, Integer id, String mc, String bh) {
+        String sql = "";
+        if (id > -1) {
+            sql = "select 1 from a01 where qy_id=" + qy_id + " and id!=" + id + " and (mc ='" + mc + "' or bh ='" + bh + "')";
+        } else {
+            sql = "select 1 from a01 where qy_id=" + qy_id + " and (mc ='" + mc + "' or bh ='" + bh + "')";
+        }
+        List list = this.getSqlResult(sql);
+        return !list.isEmpty();
     }
 }

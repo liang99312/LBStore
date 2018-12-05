@@ -19,6 +19,8 @@ public interface GongYingShangService {
     
     public List<GongYingShang> getAllGongYingShangs(Integer qy_id);
     
+    public boolean existGongYingShang(Integer qy_id, Integer id, String mc);
+    
     public boolean updateGongYingShang(GongYingShang gongYingShang);
     
     public GongYingShang saveGongYingShang(GongYingShang gongYingShang);

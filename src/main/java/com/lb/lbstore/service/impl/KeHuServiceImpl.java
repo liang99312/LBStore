@@ -80,4 +80,9 @@ public class KeHuServiceImpl implements KeHuService {
         return keHuDao.getPageList(hql, null, 1, 20);
     }
 
+    @Override
+    public boolean existKeHu(Integer qy_id, Integer id, String mc) {
+        return keHuDao.existKeHu(qy_id, id, mc);
+    }
+
 }

@@ -65,10 +65,15 @@ public class BuMenController extends BaseController {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             model.setQy_id(getDlA01().getQy_id());
-            model.setState(0);
-            BuMen buMen = buMenServiceImpl.saveBuMen(model);
-            map.put("result", 0);
-            map.put("buMen", buMen);
+            if(buMenServiceImpl.existBuMen(model.getQy_id(), -1, model.getMc())){
+                map.put("result", -1);
+                map.put("msg", "部门名称已存在");
+            }else{
+                model.setState(0);
+                BuMen buMen = buMenServiceImpl.saveBuMen(model);
+                map.put("result", 0);
+                map.put("buMen", buMen);
+            }
         } catch (Exception e) {
             map.put("result", -1);
             map.put("msg", e.getMessage());
@@ -84,8 +89,13 @@ public class BuMenController extends BaseController {
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            boolean result = buMenServiceImpl.updateBuMen(model);
-            map.put("result", result? 0:-1);
+            if(buMenServiceImpl.existBuMen(model.getQy_id(), model.getId(), model.getMc())){
+                map.put("result", -1);
+                map.put("msg", "部门名称已存在");
+            }else{
+                boolean result = buMenServiceImpl.updateBuMen(model);
+                map.put("result", result? 0:-1);
+            }
         } catch (Exception e) {
             map.put("result", -1);
             map.put("msg", e.getMessage());

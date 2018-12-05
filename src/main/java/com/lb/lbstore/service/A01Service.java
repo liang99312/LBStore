@@ -27,6 +27,8 @@ public interface A01Service {
     
     public A01 saveA01(A01 a01);
     
+    public boolean existA01(Integer qy_id, Integer id, String mc, String bh);
+    
     public boolean deleteA01(Integer id);
     
     public A01 checkLogin(String bh,String password);

@@ -75,6 +75,9 @@ function saveBuMen() {
     } else if (optFlag === 1) {
         url = "/LBStore/buMen/saveBuMen.do";
     }
+    if($("#inpMc").val() === ""){
+        return alert("请输入部门名称");
+    }
     buMen.mc = $("#inpMc").val();
     buMen.dm = $("#inpDm").val();
     buMen.bz = $("#inpBz").val();

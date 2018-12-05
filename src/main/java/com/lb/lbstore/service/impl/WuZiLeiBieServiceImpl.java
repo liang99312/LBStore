@@ -80,4 +80,9 @@ public class WuZiLeiBieServiceImpl implements WuZiLeiBieService {
         return wuZiLeiBieDao.getPageList(hql, null, 1, 20);
     }
 
+    @Override
+    public boolean existWuZiLeiBie(Integer qy_id, Integer id, String mc) {
+        return wuZiLeiBieDao.existWuZiLeiBie(qy_id, id, mc);
+    }
+
 }

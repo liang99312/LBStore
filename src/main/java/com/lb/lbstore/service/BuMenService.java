@@ -19,6 +19,8 @@ public interface BuMenService {
     
     public List<BuMen> getAllBuMens(Integer qy_id);
     
+    public boolean existBuMen(Integer qy_id, Integer id, String mc);
+    
     public boolean updateBuMen(BuMen buMen);
     
     public BuMen saveBuMen(BuMen buMen);

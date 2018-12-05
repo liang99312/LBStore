@@ -81,6 +81,9 @@ function saveGongYingShang() {
     } else if (optFlag === 1) {
         url = "/LBStore/gongYingShang/saveGongYingShang.do";
     }
+    if($("#inpMc").val() === ""){
+        return alert("请输入供应商名称");
+    }
     gongYingShang.mc = $("#inpMc").val();
     gongYingShang.dm = $("#inpDm").val();
     gongYingShang.dz = $("#inpDz").val();

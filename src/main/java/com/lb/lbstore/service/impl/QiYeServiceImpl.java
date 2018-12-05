@@ -90,4 +90,9 @@ public class QiYeServiceImpl implements QiYeService {
         return false;
     }
 
+    @Override
+    public boolean existQiYe(Integer id, String mc) {
+        return qiYeDao.existQiYe(id, mc);
+    }
+
 }

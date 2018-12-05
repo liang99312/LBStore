@@ -109,4 +109,9 @@ public class A01ServiceImpl implements A01Service {
         return a01Dao.changeQuanXian(a01.getId(),a01.getA01qx());
     }
 
+    @Override
+    public boolean existA01(Integer qy_id, Integer id, String mc, String bh) {
+        return a01Dao.existA01(qy_id, id, mc, bh);
+    }
+
 }

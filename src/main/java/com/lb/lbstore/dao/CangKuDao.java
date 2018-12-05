@@ -50,4 +50,15 @@ public class CangKuDao extends BaseDao {
         }
         return result;
     }
+    
+    public boolean existCangKu(Integer qy_id, Integer id, String mc) {
+        String sql = "";
+        if (id > -1) {
+            sql = "select 1 from cangku where qy_id=" + qy_id + " and id!=" + id + " and mc ='" + mc + "'";
+        } else {
+            sql = "select 1 from cangku where qy_id=" + qy_id + " and mc ='" + mc + "'";
+        }
+        List list = this.getSqlResult(sql);
+        return !list.isEmpty();
+    }
 }

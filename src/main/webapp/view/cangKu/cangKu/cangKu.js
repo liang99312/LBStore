@@ -132,6 +132,12 @@ function saveCangKu() {
     } else if (optFlag === 1) {
         url = "/LBStore/cangKu/saveCangKu.do";
     }
+    if($("#inpMc").val() === ""){
+        return alert("请输入仓库名称");
+    }
+    if($("#inpLx").val() === ""){
+        return alert("请选择仓库类型");
+    }
     cangKu.mc = $("#inpMc").val();
     cangKu.dm = $("#inpDm").val();
     cangKu.lx = $("#inpLx").val();
@@ -219,6 +225,9 @@ function delKw() {
 }
 
 function saveKuWei() {
+    if($("#inpKwMc").val() === ""){
+        return alert("请输入库位名称");
+    }
     if (optKwFlag === 1) {
         var kw = {};
         kw.mc = $("#inpKwMc").val();
