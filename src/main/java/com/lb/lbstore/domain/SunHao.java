@@ -30,7 +30,6 @@ public class SunHao {
     private String lsh;
     private Integer qy_id;
     private Integer ck_id;
-    private Integer kh_id;
     private Integer shr_id;
     private Integer spr_id;
     private String wz;
@@ -49,7 +48,6 @@ public class SunHao {
     private transient Date qrq;
     private transient Date zrq;
     private transient String ckmc;
-    private transient String khmc;
     private transient String shrmc;
     private transient String sprmc;
 
@@ -99,14 +97,6 @@ public class SunHao {
 
     public void setCk_id(Integer ck_id) {
         this.ck_id = ck_id;
-    }
-
-    public Integer getKh_id() {
-        return kh_id;
-    }
-
-    public void setKh_id(Integer kh_id) {
-        this.kh_id = kh_id;
     }
 
     public Integer getSpr_id() {
@@ -187,14 +177,6 @@ public class SunHao {
 
     public void setCkmc(String ckmc) {
         this.ckmc = ckmc;
-    }
-
-    public String getKhmc() {
-        return khmc;
-    }
-
-    public void setKhmc(String khmc) {
-        this.khmc = khmc;
     }
 
     public String getSprmc() {

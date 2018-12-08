@@ -52,7 +52,7 @@ $(document).ready(function () {
 });
 
 function setTrager_a01() {
-    $('#inpLlr').AutoComplete({'data': lb_allA01s, 'paramName': 'editA01'});
+    $('#inpFhr').AutoComplete({'data': lb_allA01s, 'paramName': 'editA01'});
     $('#inpKcSelRkr').AutoComplete({'data': lb_allA01s, 'paramName': 'selA01'});
 }
 
@@ -306,8 +306,8 @@ function selectFaHuoDetail(id) {
                 $("#inpCk").val(faHuo.ckmc);
                 editCangKu = {"id": faHuo.ck_id, "mc": faHuo.ckmc};
                 editKeHu = {"id": faHuo.kh_id, "mc": faHuo.khmc};
-                $("#inpLlr").val(faHuo.llrmc);
-                editA01 = {"id": faHuo.llr_id, "mc": faHuo.llrmc};
+                $("#inpFhr").val(faHuo.fhrmc);
+                editA01 = {"id": faHuo.fhr_id, "mc": faHuo.fhrmc};
                 selectCangKu(editCangKu);
                 $("#inpDh").val(faHuo.dh);
                 $("#inpBz").val(faHuo.bz);
@@ -385,13 +385,13 @@ function saveFaHuo() {
             faHuo.kh_id = editKeHu.id;
         }
     }
-    if ($("#inpLlr").val() === "") {
+    if ($("#inpFhr").val() === "") {
         return alert("请输入发货人信息");
     } else {
-        if ($("#inpLlr").val() !== editA01.mc) {
+        if ($("#inpFhr").val() !== editA01.mc) {
             return alert("请输入发货人信息");
         } else {
-            faHuo.llr_id = editA01.id;
+            faHuo.fhr_id = editA01.id;
         }
     }
     var wz = "";
@@ -583,7 +583,7 @@ function saveFaHuoMingXi() {
         return alert("物资类别不能为空");
     }
     if ($("#inpMxSll").val() === "") {
-        return alert("请输入申领数量");
+        return alert("请输入发货数量");
     }
     var mx = {};
     if ($("#inpMxWz").val() === "") {

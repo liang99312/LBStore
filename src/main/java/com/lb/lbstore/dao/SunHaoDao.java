@@ -32,15 +32,13 @@ public class SunHaoDao extends BaseDao {
         Session session = null;
         try {
             session = getSessionFactory().openSession();
-            String sql = "select {sh.*},kh.mc as khmc,ck.mc as ckmc,a01.mc as shrmc,a02.mc as sprmc from SunHao sh "
+            String sql = "select {sh.*},ck.mc as ckmc,a01.mc as shrmc,a02.mc as sprmc from SunHao sh "
                     + "left join CangKu ck on sh.ck_id=ck.id "
-                    + "left join KeHu kh on sh.kh_id=kh.id "
                     + "left join A01 a01 on sh.shr_id=a01.id "
                     + "left join A01 a02 on sh.spr_id=a02.id "
                     + "where sh.id=" + id;
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
             navtiveSQL.addEntity("sh", SunHao.class)
-                    .addScalar("khmc", StandardBasicTypes.STRING)
                     .addScalar("ckmc", StandardBasicTypes.STRING)
                     .addScalar("shrmc", StandardBasicTypes.STRING)
                     .addScalar("sprmc", StandardBasicTypes.STRING);
@@ -49,11 +47,9 @@ public class SunHaoDao extends BaseDao {
             for (Object obj : list) {
                 Object[] objs = (Object[]) obj;
                 SunHao sh = (SunHao) objs[0];
-                String khmc = (String) objs[1];
-                String ckmc = (String) objs[2];
-                String shrmc = (String) objs[3];
-                String sprmc = (String) objs[4];
-                sh.setKhmc(khmc);
+                String ckmc = (String) objs[1];
+                String shrmc = (String) objs[2];
+                String sprmc = (String) objs[3];
                 sh.setCkmc(ckmc);
                 sh.setShrmc(shrmc);
                 sh.setSprmc(sprmc);
@@ -96,8 +92,8 @@ public class SunHaoDao extends BaseDao {
         Session session = null;
         try {
             session = getSessionFactory().openSession();
-            String sql = "select {sh.*},kh.mc as khmc,ck.mc as ckmc from SunHao sh "
-                    + "left join CangKu ck on sh.ck_id=ck.id left join KeHu kh on sh.kh_id=kh.id "
+            String sql = "select {sh.*},ck.mc as ckmc from SunHao sh "
+                    + "left join CangKu ck on sh.ck_id=ck.id "
                     + "where sh.qy_id=" + map.get("qy_id");
             if (map.containsKey("mc")) {
                 sql += " and sh.wz like '%" + map.get("mc") + "%'";
@@ -106,14 +102,12 @@ public class SunHaoDao extends BaseDao {
                 sql += " and sh.state = " + map.get("state");
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
-            navtiveSQL.addEntity("sh", SunHao.class).addScalar("khmc", StandardBasicTypes.STRING).addScalar("ckmc", StandardBasicTypes.STRING);
+            navtiveSQL.addEntity("sh", SunHao.class).addScalar("ckmc", StandardBasicTypes.STRING);
             List list = navtiveSQL.list();
             for (Object obj : list) {
                 Object[] objs = (Object[]) obj;
                 SunHao sh = (SunHao) objs[0];
-                String khmc = (String) objs[1];
-                String ckmc = (String) objs[2];
-                sh.setKhmc(khmc);
+                String ckmc = (String) objs[1];
                 sh.setCkmc(ckmc);
                 result.add(sh);
             }
@@ -166,7 +160,6 @@ public class SunHaoDao extends BaseDao {
                 }
 
                 detail.setCk_id(sunHao.getCk_id());
-                detail.setKh_id(sunHao.getKh_id());
                 detail.setQy_id(sunHao.getQy_id());
                 detail.setSh_id(id);
                 detail.setDh(sunHao.getDh());
@@ -231,7 +224,6 @@ public class SunHaoDao extends BaseDao {
                 }
 
                 detail.setCk_id(sunHao.getCk_id());
-                detail.setKh_id(sunHao.getKh_id());
                 detail.setQy_id(sunHao.getQy_id());
                 detail.setSh_id(sunHao.getId());
                 session.save(detail);

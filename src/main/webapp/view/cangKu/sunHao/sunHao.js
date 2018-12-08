@@ -13,7 +13,6 @@ var editLeiBie;
 var selLeiBie;
 var selCangKu;
 var selKeHu;
-var editKeHu;
 var selGongYingShang;
 var selKuWei;
 var editCangKu;
@@ -52,7 +51,7 @@ $(document).ready(function () {
 });
 
 function setTrager_a01() {
-    $('#inpLlr').AutoComplete({'data': lb_allA01s, 'paramName': 'editA01'});
+    $('#inpShr').AutoComplete({'data': lb_allA01s, 'paramName': 'editA01'});
     $('#inpKcSelRkr').AutoComplete({'data': lb_allA01s, 'paramName': 'selA01'});
 }
 
@@ -65,7 +64,6 @@ function setTrager_cangKu() {
 function setTrager_keHu() {
     $('#inpSelKh').AutoComplete({'data': lb_keHus, 'paramName': 'selKeHu'});
     $('#inpKcSelKh').AutoComplete({'data': lb_keHus, 'paramName': 'selKeHu'});
-    $('#inpKh').AutoComplete({'data': lb_keHus, 'paramName': 'editKeHu'});
 }
 
 function setTrager_ziDian() {
@@ -244,13 +242,11 @@ function addSunHao() {
     optFlag = 1;
     shmx = [];
     editCangKu = {};
-    editKeHu = {};
     $("#sunHaoModel_title").html("新增损耗单");
     $("#btnOk").html("保存");
     $("#divXzmx").show();
     $("#divSpr").hide();
     $("#inpGys").val("");
-    $("#inpKh").val("");
     $("#inpDh").val("");
     $("#inpBz").val("");
     $("#inpSl").val(0);
@@ -302,12 +298,10 @@ function selectSunHaoDetail(id) {
             if (json.result === 0) {
                 var sunHao = json.sunHao;
                 shmx = sunHao.details;
-                $("#inpKh").val(sunHao.khmc);
                 $("#inpCk").val(sunHao.ckmc);
                 editCangKu = {"id": sunHao.ck_id, "mc": sunHao.ckmc};
-                editKeHu = {"id": sunHao.kh_id, "mc": sunHao.khmc};
-                $("#inpLlr").val(sunHao.llrmc);
-                editA01 = {"id": sunHao.llr_id, "mc": sunHao.llrmc};
+                $("#inpShr").val(sunHao.shrmc);
+                editA01 = {"id": sunHao.shr_id, "mc": sunHao.shrmc};
                 selectCangKu(editCangKu);
                 $("#inpDh").val(sunHao.dh);
                 $("#inpBz").val(sunHao.bz);
@@ -376,22 +370,13 @@ function saveSunHao() {
             sunHao.ck_id = editCangKu.id;
         }
     }
-    if ($("#inpKh").val() === "") {
-        return alert("请输入客户信息");
-    } else {
-        if ($("#inpKh").val() !== editKeHu.mc) {
-            return alert("请输入客户信息");
-        } else {
-            sunHao.kh_id = editKeHu.id;
-        }
-    }
-    if ($("#inpLlr").val() === "") {
+    if ($("#inpShr").val() === "") {
         return alert("请输入损耗人信息");
     } else {
-        if ($("#inpLlr").val() !== editA01.mc) {
+        if ($("#inpShr").val() !== editA01.mc) {
             return alert("请输入损耗人信息");
         } else {
-            sunHao.llr_id = editA01.id;
+            sunHao.shr_id = editA01.id;
         }
     }
     var wz = "";
@@ -583,7 +568,7 @@ function saveSunHaoMingXi() {
         return alert("物资类别不能为空");
     }
     if ($("#inpMxSll").val() === "") {
-        return alert("请输入申领数量");
+        return alert("请输入损耗数量");
     }
     var mx = {};
     if ($("#inpMxWz").val() === "") {
