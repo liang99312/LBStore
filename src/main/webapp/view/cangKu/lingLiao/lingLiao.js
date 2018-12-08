@@ -21,7 +21,7 @@ var editA01;
 var selA01;
 var curKuCun;
 var dymx_opt = {data: [], yxData: [], func: calcDymx};
-var tysx_opt = {data: [], ls: 3, lw: 70,upeditable: 1};
+var tysx_opt = {data: [], ls: 3, lw: 70, upeditable: 1};
 
 $(document).ready(function () {
     $('#inpSj').val(dateFormat(new Date()));
@@ -34,18 +34,18 @@ $(document).ready(function () {
     getWuZiLeiBies(setTrager_leiBie);
     getGongYingShangs(setTrager_gongYingShang);
     $("#inpMxScrq").datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, minView: 2, startView: 2, forceParse: 0, showMeridian: 1});
-    
-    $("#inpMxSll").keyup(function(){
-        if(curKuCun && curKuCun.jlfs === "zl"){
+
+    $("#inpMxSll").keyup(function () {
+        if (curKuCun && curKuCun.jlfs === "zl") {
             var temp_sll = parseFloat($("#inpMxSll").val());
-            var temp_slzl = temp_sll*curKuCun.bzgg;
+            var temp_slzl = temp_sll * curKuCun.bzgg;
             $("#inpMxSlzl").val(temp_slzl.toFixed(3));
         }
     });
-    $("#inpMxSlzl").keyup(function(){
-        if(curKuCun && curKuCun.jlfs === "zl"){
+    $("#inpMxSlzl").keyup(function () {
+        if (curKuCun && curKuCun.jlfs === "zl") {
             var temp_slzl = parseFloat($("#inpMxSlzl").val());
-            var temp_sll = temp_slzl/curKuCun.bzgg;
+            var temp_sll = temp_slzl / curKuCun.bzgg;
             $("#inpMxSll").val(temp_sll.toFixed(3));
         }
     });
@@ -76,13 +76,13 @@ function setTrager_leiBie() {
     $('#inpKcSelWzlb').AutoComplete({'data': lb_wuZiLeiBies, 'afterSelectedHandler': selectWuZiLeiBie});
 }
 
-function setTrager_gongYingShang(){
+function setTrager_gongYingShang() {
     $('#inpKcSelGys').AutoComplete({'data': lb_gongYingShangs, 'paramName': 'selGongYingShang'});
 }
 
-function selectCangKu(json){
-    if(json.id !== editCangKu.id){
-        if(llmx.length > 0){
+function selectCangKu(json) {
+    if (json.id !== editCangKu.id) {
+        if (llmx.length > 0) {
             $("#inpCk").val(editCangKu.mc);
             return alert("已选择其他仓库的库存");
         }
@@ -133,7 +133,7 @@ function selectWuZiZiDian(json) {
             success: function (json) {
                 if (json.result === 0) {
                     $('#inpMxXhgg').AutoComplete({'data': json.wuZiZiDian.xhggs, 'paramName': 'editXhgg'});
-                    if($('#inpKcSelWzlb').val() !== json.wuZiZiDian.wzlb.mc){
+                    if ($('#inpKcSelWzlb').val() !== json.wuZiZiDian.wzlb.mc) {
                         selectWuZiLeiBie(json.wuZiZiDian.wzlb);
                         $('#inpKcSelWzlb').val(json.wuZiZiDian.wzlb.mc);
                     }
@@ -398,7 +398,7 @@ function saveLingLiao() {
     var wzs = [];
     for (var i = 0; i < llmx.length; i++) {
         var e = llmx[i];
-        if(e.ck_id !== lingLiao.ck_id){
+        if (e.ck_id !== lingLiao.ck_id) {
             return alert("领料明细仓库和领料单仓库不匹配！");
         }
         if (optFlag === 3) {
@@ -533,7 +533,7 @@ function jxLingLiaoMingXi() {
 }
 
 function addLingLiaoMingXi() {
-    if($("#inpCk").val() === "" || $("#inpCk").val() !== editCangKu.mc){
+    if ($("#inpCk").val() === "" || $("#inpCk").val() !== editCangKu.mc) {
         return alert("请选择领料仓库");
     }
     optMxFlag = 1;
@@ -550,7 +550,7 @@ function editLingLiaoMingXi(index) {
         $("#lingLiaoMingXiModal_title").html("修改明细");
         $("#btnMxOk").html("保存");
         var temp = llmx[index];
-        cxKuCunById(temp.kc_id,index);
+        cxKuCunById(temp.kc_id, index);
     }
 }
 
@@ -561,7 +561,7 @@ function readLingLiaoMingXi(index) {
         $("#lingLiaoMingXiModal_title").html("查看明细");
         $("#btnMxOk").html("关闭");
         var temp = llmx[index];
-        cxKuCunById(temp.kc_id,index);
+        cxKuCunById(temp.kc_id, index);
     }
 }
 
@@ -623,7 +623,7 @@ function saveLingLiaoMingXi() {
     mx.tysx = JSON.stringify(tysx_opt.data);
     mx.sll = parseFloat($("#inpMxSll").val());
     mx.slzl = parseFloat($("#inpMxSlzl").val());
-    if(mx.slzl === undefined || mx.slzl === "" || mx.slzl < 0.001){
+    if (mx.slzl === undefined || mx.slzl === "" || mx.slzl < 0.001) {
         mx.slzl = mx.sll;
     }
     mx.kc_id = curKuCun.id;
@@ -647,7 +647,7 @@ function saveLingLiaoMingXi() {
     curKuCun = null;
 }
 
-function cxKuCun(){
+function cxKuCun() {
     var kuCun = {};
     kuCun.ck_id = editCangKu.id;
     if ($("#inpKcSelWzlb").val() !== "" && $("#inpKcSelWzlb").val() === selLeiBie.mc) {
@@ -694,7 +694,7 @@ function cxKuCun(){
     });
 }
 
-function jxKuCun(sz){
+function jxKuCun(sz) {
     $("#tblKuCun_body tr").remove();
     kuCuns = [];
     kuCuns = sz;
@@ -705,26 +705,32 @@ function jxKuCun(sz){
     });
 }
 
-function selKuCun(index){
+function selKuCun(index) {
     curKuCun = null;
-    if(kuCuns.length <= index){
+    if (kuCuns.length <= index) {
         return;
     }
     var kc = kuCuns[index];
+    for (var i = 0; i < llmx.length; i++) {
+        var e = llmx[i];
+        if (e.kc_id === kc.id) {
+            return alert("该库存物资已选择");
+        }
+    }
     setKcCunData(kc);
 }
 
-function setKcCunData(kc,index) {
+function setKcCunData(kc, index) {
     curKuCun = kc;
     var m = llmx[index];
-    m = m? m:{};
+    m = m ? m : {};
     if (m.dymx && typeof m.dymx === "string") {
         m.dymx = JSON.parse(m.dymx);
-    }else{
+    } else {
         m.dymx = [];
     }
-    m.sll = m.sll? m.sll:0;
-    m.slzl = m.slzl? m.slzl:0;
+    m.sll = m.sll ? m.sll : 0;
+    m.slzl = m.slzl ? m.slzl : 0;
     if (kc.dymx && typeof kc.dymx === "string") {
         kc.dymx = JSON.parse(kc.dymx);
     }
@@ -763,9 +769,9 @@ function setKcCunData(kc,index) {
     $("#lingLiaoMingXiModal").modal("show");
 }
 
-function cxKuCunById(id,index){
+function cxKuCunById(id, index) {
     $.ajax({
-        url: "/LBStore/kuCun/getKuCunById.do?id="+id,
+        url: "/LBStore/kuCun/getKuCunById.do?id=" + id,
         contentType: "application/json",
         type: "post",
         cache: false,
@@ -775,7 +781,7 @@ function cxKuCunById(id,index){
         success: function (json) {
             if (json.result === 0) {
                 var kc = json.kuCun;
-                setKcCunData(kc,index);
+                setKcCunData(kc, index);
             } else {
                 alert("查询库存失败:" + json.msg ? json.msg : "");
             }
