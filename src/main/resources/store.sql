@@ -337,6 +337,16 @@ CREATE TABLE `store`.`fahuodetail` (
   `kc_id` INT NOT NULL,
   PRIMARY KEY (`id`))ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+CREATE TABLE `store`.`fahuofei` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `qy_id` INT NOT NULL,
+  `fh_id` INT NOT NULL,
+  `kh_id` INT NOT NULL,
+  `je` FLOAT(19,2) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `rq` datetime DEFAULT NULL,
+  `bz` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`))ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
 CREATE TABLE `store`.`sunhao` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `qy_id` INT NOT NULL,

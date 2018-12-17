@@ -10,6 +10,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.lb.lbstore.domain.KuCun;
 import com.lb.lbstore.domain.FaHuo;
 import com.lb.lbstore.domain.FaHuoDetail;
+import com.lb.lbstore.domain.FaHuoFei;
 import com.lb.lbstore.domain.WuZiXhgg;
 import com.lb.lbstore.domain.WuZiZiDian;
 import com.lb.lbstore.util.LshUtil;
@@ -265,6 +266,8 @@ public class FaHuoDao extends BaseDao {
             tx = session.beginTransaction();
             String deleteDetail = "delete from FaHuoDetail where fh_id=" + id;
             session.createSQLQuery(deleteDetail).executeUpdate();
+            String deleteFei = "delete from FaHuoFei where fh_id=" + id;
+            session.createSQLQuery(deleteFei).executeUpdate();
             String deleteLl = "delete from FaHuo where id=" + id;
             session.createSQLQuery(deleteLl).executeUpdate();
             session.flush();
@@ -345,6 +348,105 @@ public class FaHuoDao extends BaseDao {
             faHuo.setSpsj(new Date());
             faHuo.setLsh(LshUtil.getLldLsh());
             session.update(faHuo);
+            session.flush();
+            tx.commit();
+            result = true;
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            try {
+                if (session != null) {
+                    session.close();
+                }
+            } catch (Exception he) {
+                he.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    public boolean deleteFaHuoFei(Integer id, Integer fh_id) {
+        boolean result = false;
+        Session session = null;
+        Transaction tx = null;
+        try {
+            session = getSessionFactory().openSession();
+            tx = session.beginTransaction();
+            String deleteFei = "delete from FaHuoFei where id=" + id;
+            session.createSQLQuery(deleteFei).executeUpdate();
+            session.flush();
+            String updateFaHuo = "update fahuo set yfje = (select sum(f.je) from fahuofei f where f.fh_id = " + fh_id + ") where fahuo.id=" + fh_id;
+            session.createSQLQuery(updateFaHuo).executeUpdate();
+            session.flush();
+            updateFaHuo = "update fahuo set dfje = je - yfje where id=" + fh_id;
+            session.createSQLQuery(updateFaHuo).executeUpdate();
+            session.flush();
+            tx.commit();
+            result = true;
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            try {
+                if (session != null) {
+                    session.close();
+                }
+            } catch (Exception he) {
+                he.printStackTrace();
+            }
+        }
+        return result;
+    }
+    
+    public Integer saveFaHuoFei(FaHuoFei faHuoFei) {
+        Integer result = -1;
+        Session session = null;
+        Transaction tx = null;
+        try {
+            session = getSessionFactory().openSession();
+            tx = session.beginTransaction();
+            Integer id = (Integer) session.save(faHuoFei);
+            session.flush();
+            int fh_id = faHuoFei.getFh_id();
+            String updateFaHuo = "update fahuo set yfje = (select sum(f.je) from fahuofei f where f.fh_id = " + fh_id + ") where fahuo.id=" + fh_id;
+            session.createSQLQuery(updateFaHuo).executeUpdate();
+            session.flush();
+            updateFaHuo = "update fahuo set dfje = je - yfje where id=" + fh_id;
+            session.createSQLQuery(updateFaHuo).executeUpdate();
+            session.flush();
+            tx.commit();
+            result = id;
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            try {
+                if (session != null) {
+                    session.close();
+                }
+            } catch (Exception he) {
+                he.printStackTrace();
+            }
+        }
+        return result;
+    }
+    
+    public boolean updateFaHuoFei(FaHuoFei faHuoFei) {
+        boolean result = false;
+        Session session = null;
+        Transaction tx = null;
+        try {
+            session = getSessionFactory().openSession();
+            tx = session.beginTransaction();
+            session.update(faHuoFei);
+            session.flush();
+            int fh_id = faHuoFei.getFh_id();
+            String updateFaHuo = "update fahuo set yfje = (select sum(f.je) from fahuofei f where f.fh_id = " + fh_id + ") where fahuo.id=" + fh_id;
+            session.createSQLQuery(updateFaHuo).executeUpdate();
+            session.flush();
+            updateFaHuo = "update fahuo set dfje = je - yfje where id=" + fh_id;
+            session.createSQLQuery(updateFaHuo).executeUpdate();
             session.flush();
             tx.commit();
             result = true;

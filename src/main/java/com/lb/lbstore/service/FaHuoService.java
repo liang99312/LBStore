@@ -6,6 +6,7 @@
 package com.lb.lbstore.service;
 
 import com.lb.lbstore.domain.FaHuo;
+import com.lb.lbstore.domain.FaHuoFei;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,5 +31,12 @@ public interface FaHuoService {
     public int queryRows(HashMap map);
     
     public List<FaHuo> queryFaHuosByPage(HashMap map);
+    
+    public FaHuoFei getFaHuoFeiById(Integer id);
 
+     public boolean updateFaHuoFei(FaHuoFei faHuoFei);
+       
+    public FaHuoFei saveFaHuoFei(FaHuoFei faHuoFei);
+    
+    public boolean deleteFaHuoFei(Integer id,Integer fh_id);
 }

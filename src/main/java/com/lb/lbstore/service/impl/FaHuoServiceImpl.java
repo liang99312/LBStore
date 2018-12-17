@@ -7,6 +7,7 @@ package com.lb.lbstore.service.impl;
 
 import com.lb.lbstore.dao.FaHuoDao;
 import com.lb.lbstore.domain.FaHuo;
+import com.lb.lbstore.domain.FaHuoFei;
 import com.lb.lbstore.service.FaHuoService;
 import java.util.HashMap;
 import java.util.List;
@@ -69,6 +70,27 @@ public class FaHuoServiceImpl implements FaHuoService {
     @Override
     public boolean dealFaHuo(FaHuo faHuo,Integer a01_id) {
         return faHuoDao.dealFaHuo(faHuo, a01_id);
+    }
+
+    @Override
+    public FaHuoFei getFaHuoFeiById(Integer id) {
+        return (FaHuoFei) faHuoDao.findObjectById(FaHuoFei.class, id);
+    }
+
+    @Override
+    public boolean updateFaHuoFei(FaHuoFei faHuoFei) {
+        return faHuoDao.updateFaHuoFei(faHuoFei);
+    }
+
+    @Override
+    public FaHuoFei saveFaHuoFei(FaHuoFei faHuoFei) {
+        int id = faHuoDao.saveFaHuoFei(faHuoFei);
+        return (FaHuoFei) faHuoDao.findObjectById(FaHuoFei.class, id);
+    }
+
+    @Override
+    public boolean deleteFaHuoFei(Integer id,Integer fh_id) {
+        return faHuoDao.deleteFaHuoFei(id, fh_id);
     }
 
 }

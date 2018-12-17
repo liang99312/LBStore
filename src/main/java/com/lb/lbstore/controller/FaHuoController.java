@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.lb.lbstore.domain.FaHuo;
+import com.lb.lbstore.domain.FaHuoFei;
 import com.lb.lbstore.service.FaHuoService;
 import java.util.ArrayList;
 import java.util.Date;
@@ -189,6 +190,79 @@ public class FaHuoController extends BaseController {
         map.put("pageSize", model.getPageSize());
         model.setList(this.faHuoServiceImpl.queryFaHuosByPage(map));
         return model;
+    }
+    
+    
+    @RequestMapping(value = "saveFaHuoFei.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> saveFaHuoFei(@RequestBody FaHuoFei model) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            model.setQy_id(getDlA01().getQy_id());
+            model.setRq(new Date());
+            FaHuoFei faHuoFei = faHuoServiceImpl.saveFaHuoFei(model);
+            map.put("result", 0);
+            map.put("faHuoFei", faHuoFei);
+        } catch (Exception e) {
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
+    }
+    
+    @RequestMapping(value = "getFaHuoFeiById.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> getFaHuoFeiById(@RequestParam Integer id) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            FaHuoFei faHuoFei = faHuoServiceImpl.getFaHuoFeiById(id);
+            map.put("result", 0);
+            map.put("faHuoFei", faHuoFei);
+        } catch (Exception e) {
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
+    }
+
+    @RequestMapping(value = "updateFaHuoFei.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> updateFaHuoFei(@RequestBody FaHuoFei model) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            boolean result = faHuoServiceImpl.updateFaHuoFei(model);
+            map.put("result", result? 0:-1);
+        } catch (Exception e) {
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
+    }
+    
+    @RequestMapping(value = "deleteFaHuoFei.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> deleteFaHuoFei(@RequestParam Integer id,@RequestParam Integer fh_id) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            boolean result = faHuoServiceImpl.deleteFaHuoFei(id,fh_id);
+            map.put("result", result? 0:-1);
+        } catch (Exception e) {
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
     }
 
 }
