@@ -31,9 +31,11 @@ public class FaHuoFei {
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
     private Date rq;
-    private Double slzl = 0D;
+    private Double je = 0D;
+    private Integer skr_id;
     private String bz;
-
+    private transient String skrmc;
+    
     public Integer getId() {
         return id;
     }
@@ -74,20 +76,36 @@ public class FaHuoFei {
         this.rq = rq;
     }
 
-    public Double getSlzl() {
-        return slzl;
+    public Double getJe() {
+        return je;
     }
 
-    public void setSlzl(Double slzl) {
-        this.slzl = slzl;
+    public void setJe(Double je) {
+        this.je = je;
     }
-
+    
     public String getBz() {
         return bz;
     }
 
     public void setBz(String bz) {
         this.bz = bz;
+    }
+
+    public Integer getSkr_id() {
+        return skr_id;
+    }
+
+    public void setSkr_id(Integer skr_id) {
+        this.skr_id = skr_id;
+    }
+
+    public String getSkrmc() {
+        return skrmc;
+    }
+
+    public void setSkrmc(String skrmc) {
+        this.skrmc = skrmc;
     }
     
     @Override

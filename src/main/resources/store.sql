@@ -342,6 +342,7 @@ CREATE TABLE `store`.`fahuofei` (
   `qy_id` INT NOT NULL,
   `fh_id` INT NOT NULL,
   `kh_id` INT NOT NULL,
+  `skr_id` INT NOT NULL,
   `je` FLOAT(19,2) COLLATE utf8_unicode_ci DEFAULT NULL,
   `rq` datetime DEFAULT NULL,
   `bz` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,

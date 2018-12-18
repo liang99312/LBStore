@@ -32,6 +32,10 @@ public interface FaHuoService {
     
     public List<FaHuo> queryFaHuosByPage(HashMap map);
     
+    public int queryFeiRows(HashMap map);
+    
+    public List<FaHuoFei> queryFaHuoFeisByPage(HashMap map);
+    
     public FaHuoFei getFaHuoFeiById(Integer id);
 
      public boolean updateFaHuoFei(FaHuoFei faHuoFei);

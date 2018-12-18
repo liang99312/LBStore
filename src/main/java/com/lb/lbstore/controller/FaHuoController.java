@@ -265,4 +265,32 @@ public class FaHuoController extends BaseController {
         return map;
     }
 
+    //分页查询
+    @RequestMapping(value = "listFaHuoFeisByPage.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Page listFaHuoFeisByPage(@RequestBody Page model) {
+        HashMap map = model.getParamters();
+        if (map == null) {
+            map = new HashMap();
+        }
+        map.put("qy_id", getDlA01().getQy_id());
+        if (model.getRows() == 0) {
+            model.setRows(this.faHuoServiceImpl.queryRows(map));//查询记录数
+        }
+        if (model.getRows() == 0) {
+            model.setCurrentPage(1);
+            model.setList(new ArrayList());
+            model.setParamters(new HashMap());
+            model.setRows(0);
+            model.setTotalPage(0);
+            return model;
+        }
+        if (model.getTotalPage() == 0) {
+            model.setTotalPage(model.calcTotalPage());
+        }
+        map.put("beginRow", model.getBegin());
+        map.put("pageSize", model.getPageSize());
+        model.setList(this.faHuoServiceImpl.queryFaHuoFeisByPage(map));
+        return model;
+    }
 }

@@ -66,6 +66,17 @@ public class FaHuoServiceImpl implements FaHuoService {
     public List<FaHuo> queryFaHuosByPage(HashMap map) {
         return faHuoDao.queryFaHuosByPage(map);
     }
+    
+    @Override
+    public int queryFeiRows(HashMap map) {
+        String sql = "select (1) from FaHuoFei where fh_id="+map.get("fh_id");
+        return faHuoDao.getCount(sql, null);
+    }
+
+    @Override
+    public List<FaHuoFei> queryFaHuoFeisByPage(HashMap map) {
+        return faHuoDao.queryFaHuoFeisByPage(map);
+    }
 
     @Override
     public boolean dealFaHuo(FaHuo faHuo,Integer a01_id) {

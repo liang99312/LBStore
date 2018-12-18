@@ -1,4 +1,6 @@
 var faHuos;
+var faHuoFeis;
+var feiOptFlag = -1;
 var optFlag = 1;
 var editIndex = -1;
 var editType;
@@ -175,11 +177,13 @@ function jxFaHuo(json) {
         var editStr = '<button class="btn btn-info btn-xs icon-edit" onclick="editFaHuo(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var dealStr = '<button class="btn btn-info btn-xs icon-legal" onclick="dealFaHuo(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var delStr = '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteFaHuo(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>';
+        var feiStr = '<button class="btn btn-danger btn-xs icon-money" onclick="feiFaHuo(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>';
         var trStr = '<tr' + classStr + '><td>' + item.ckmc + '</td><td>' + item.lsh + '</td><td>' + item.dh + '</td><td>' + item.wz + '</td><td>' + item.sj + '</td><td>' + item.sl + '</td><td>'
                 + readStr
                 + (item.state === 0 ? editStr : "")
                 + (item.state === 0 ? dealStr : "")
-                + (item.state === 0 || item.state === -1 ? delStr : "") + '</td></tr>';
+                + (item.state === 0 || item.state === -1 ? delStr : "") +
+                + feiStr +'</td></tr>';
         $("#data_table_body").append(trStr);
     });
 }
@@ -787,4 +791,143 @@ function cxKuCunById(id, index) {
             }
         }
     });
+}
+
+function feiFaHuo(index){
+    $("#tblFaHuoFei_body tr").remove();
+    if (faHuos[index] === undefined) {
+        return alert("请选择发货单");
+    }
+    editIndex = index;
+    var faHuoFei = faHuos[index];
+    selectFaHuoFei(faHuoFei);
+}
+
+function jxFaHuoFei(json) {
+    $("#tblFaHuoFei_body tr").remove();
+    faHuoFeis = [];
+    faHuoFeis = json.list;
+    $.each(json.list, function (index, item) { //遍历返回的json
+        var trStr = '<tr><td>' + item.rq + '</td><td>' + item.je + '</td><td>' + item.skrmc + '</td><td>' + item.bz + '</td><td>'
+                + '<button class="btn btn-info btn-xs icon-edit" onclick="editFaHuoFei(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;'
+                + '<button class="btn btn-danger btn-xs icon-remove" onclick="delFaHuoFei(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button></td></tr>';
+        $("#tblFaHuoFei_body").append(trStr);
+    });
+}
+
+function selectFaHuoFei(json) {
+    var faHuoFei = {};
+    var tj = {"pageSize": 10, "currentPage": 1};
+    faHuoFei.fh_id = json.id;
+    tj.paramters = faHuoFei;
+    var options = {};
+    options.url = "/LBStore/faHuo/listFaHuoFeisByPage.do";
+    options.tj = tj;
+    options.func = jxFaHuoFei;
+    options.ul = "#example2";
+    queryPaginator(options);
+    $("#faHuoFeiModal").modal("show");
+}
+
+function addFaHuoFei() {
+    feiOptFlag = 1;
+    var faHuo = faHuos[editIndex];
+    if(!faHuo){
+        return;
+    }
+    $("#faHuoFeiEditModel_title").html("新增记录");
+    $("#inpFeiRq").val('');
+    $("#inpFeiJe").val(0);
+    $("#inpFeiSkr").val("");
+    $("#inpFeiBz").val("0");
+    $("#faHuoFeiEditModal").modal("show");
+}
+
+function editFaHuoFei(index) {
+    var faHuo = faHuos[editIndex];
+    if(!faHuo){
+        return;
+    }
+    feiOptFlag = 2;
+    if (faHuoFeis[index] === undefined) {
+        feiOptFlag = 1;
+        return alert("请选择记录");
+    }
+    var faHuoFei = faHuoFeis[index];
+    xhggEditIndex = index;
+    $("#faHuoFeiEditModel_title").html("修改记录");
+    $("#inpFeiRq").val(faHuoFei.rq);
+    $("#inpFeiJe").val(faHuoFei.je);
+    $("#inpFeiSkr").val(faHuoFei.skrmc);
+    $("#inpFeiBz").val(faHuoFei.bz);
+    $("#faHuoFeiEditModal").modal("show");
+}
+
+function saveFaHuoFei() {
+    var faHuo = faHuos[editIndex];
+    if(!faHuo){
+        return;
+    }
+    var faHuoFei = {};
+    var url = "";
+    if (feiOptFlag === 2) {
+        if (faHuoFeis[xhggEditIndex] === undefined) {
+            return;
+        }
+        faHuoFei = faHuoFeis[xhggEditIndex];
+        url = "/LBStore/faHuo/updateFaHuoFei.do";
+    } else if (feiOptFlag === 1) {
+        url = "/LBStore/faHuo/saveFaHuoFei.do";
+        faHuoFei.fh_id = faHuo.id;
+    }
+    faHuoFei.rq = $("#inpFeiRq").val();
+    faHuoFei.je = parseFloat($("#inpFeiJe").val());
+    faHuoFei.skr = parseFloat($("#inpFeiSkr").val());
+    faHuoFei.bz = parseFloat($("#inpFeiBz").val());
+    $.ajax({
+        url: url,
+        data: JSON.stringify(faHuoFei),
+        contentType: "application/json",
+        type: "post",
+        cache: false,
+        error: function (msg, textStatus) {
+            alert("保存失败");
+        },
+        success: function (json) {
+            if (json.result === 0) {
+                $("#faHuoFeiEditModal").modal("hide");
+                var faHuoFei = faHuos[editIndex];
+                selectFaHuoFei(faHuoFei);
+            } else {
+                alert("保存失败：" + json.msg ? json.msg : "");
+            }
+        }
+    });
+}
+
+function delFaHuoFei(index) {
+    if (faHuoFeis[index] === undefined) {
+        return alert("请选择记录");
+    }
+    var faHuoFei = faHuoFeis[index];
+    if (confirm("确定删除记录?")) {
+        $.ajax({
+            url: "/LBStore/faHuo/deleteFaHuoFei.do?id=" + faHuoFei.id,
+            contentType: "application/json",
+            type: "get",
+            dataType: "json",
+            cache: false,
+            error: function (msg, textStatus) {
+                alert("删除失败");
+            },
+            success: function (json) {
+                if (json.result === 0) {
+                    var faHuoFei = faHuos[editIndex];
+                    selectFaHuoFei(faHuoFei);
+                } else {
+                    alert("删除失败：" + json.msg ? json.msg : "");
+                }
+            }
+        });
+    }
 }

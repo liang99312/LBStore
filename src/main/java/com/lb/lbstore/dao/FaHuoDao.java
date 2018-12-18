@@ -133,6 +133,38 @@ public class FaHuoDao extends BaseDao {
         }
         return result;
     }
+    
+    public List<FaHuoFei> queryFaHuoFeisByPage(HashMap map) {
+        List<FaHuoFei> result = new ArrayList();
+        Session session = null;
+        try {
+            session = getSessionFactory().openSession();
+            String sql = "select {fhf.*},a01.mc as skrmc from FaHuoFei fhf "
+                    + "left join A01 a01 on fhf.skr_id=a01.id "
+                    + "where fh.fh_id=" + map.get("fh_id");
+            SQLQuery navtiveSQL = session.createSQLQuery(sql);
+            navtiveSQL.addEntity("fhf", FaHuoFei.class).addScalar("skrmc", StandardBasicTypes.STRING);
+            List list = navtiveSQL.list();
+            for (Object obj : list) {
+                Object[] objs = (Object[]) obj;
+                FaHuoFei fhf = (FaHuoFei) objs[0];
+                String skrmc = (String) objs[1];
+                fhf.setSkrmc(skrmc);
+                result.add(fhf);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (session != null) {
+                    session.close();
+                }
+            } catch (Exception he) {
+                he.printStackTrace();
+            }
+        }
+        return result;
+    }
 
     public Integer saveFaHuo(FaHuo faHuo) {
         Integer result = -1;
