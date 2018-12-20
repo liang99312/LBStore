@@ -383,6 +383,9 @@ function selectRuKuDetail(id) {
                 } else if ("客户" === ruKu.ly) {
                     $("#inpKh").val(ruKu.khmc);
                     editKeHu = {"id": ruKu.kh_id, "mc": ruKu.khmc};
+                }else if("生产" === ruKu.ly){
+                    $(".rk_gys").val("").attr("disabled", "disabled").show();
+                    $(".rk_kh").hide();
                 }
                 $("#inpCk").val(ruKu.ckmc);
                 editCangKu = {"id": ruKu.ck_id, "mc": ruKu.ckmc};

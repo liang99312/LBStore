@@ -73,4 +73,28 @@ public class BaoBiaoServiceImpl implements BaoBiaoService {
         return baoBiaoDao.getPageList(hql, null, 1, 20);
     }
 
+    @Override
+    public int queryMkRows(HashMap map) {
+        String sql = "select (1) from BaoBiao where qy_id="+map.get("qy_id") + " and mkdm='" + map.get("mkdm") + "'";
+        if (map.containsKey("mc")) {
+            sql += " and mc like '%" + map.get("mc") + "%'";
+        }
+        if (map.containsKey("state")) {
+            sql += " and state = " + map.get("state");
+        }
+        return baoBiaoDao.getCount(sql, null);
+    }
+
+    @Override
+    public List<BaoBiao> queryMkBaoBiaosByPage(HashMap map) {
+        String hql = "from BaoBiao where qy_id="+map.get("qy_id") + " and mkdm='" + map.get("mkdm") + "'";
+        if (map.containsKey("mc")) {
+            hql += " and mc like '%" + map.get("mc") + "%'";
+        }
+        if (map.containsKey("state")) {
+            hql += " and state = " + map.get("state");
+        }
+        return baoBiaoDao.getPageList(hql, null, 1, 20);
+    }
+
 }

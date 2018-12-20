@@ -28,5 +28,9 @@ public interface BaoBiaoService {
     public int queryRows(HashMap map);
     
     public List<BaoBiao> queryBaoBiaosByPage(HashMap map);
+    
+    public int queryMkRows(HashMap map);
+    
+    public List<BaoBiao> queryMkBaoBiaosByPage(HashMap map);
 
 }
