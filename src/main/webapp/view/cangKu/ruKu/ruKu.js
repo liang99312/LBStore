@@ -636,7 +636,7 @@ function addRuKuMingXi() {
     $("#inpMxScc").val("");
     $("#inpMxTxm").val("");
     $("#inpMxScrq").val("");
-    $("#inpMxBzq").val("");
+    $("#inpMxBzq").val("0");
     $("#inpMxDj").val("1");
     $("#inpMxDw").val("");
     $("#inpMxSl").val("0");
@@ -764,11 +764,18 @@ function saveRuKuMingXi() {
             mx.xhgg_id = editXhgg.id;
         }
     }
+    if($("#inpMxDw").val() === ''){
+        return alert("请输入单位");
+    }
+    if($("#inpMxBzq").val() === ''){        
+        mx.bzq = -1;
+    }else{        
+        mx.bzq = parseInt($("#inpMxBzq").val());
+    }
     mx.xhgg = $("#inpMxXhgg").val();
     mx.scc = $("#inpMxScc").val();
     mx.txm = $("#inpMxTxm").val();
     mx.scrq = $("#inpMxScrq").val();
-    mx.bzq = $("#inpMxBzq").val();
     mx.dj = parseFloat($("#inpMxDj").val());
     mx.dw = $("#inpMxDw").val();
     mx.sl = parseFloat($("#inpMxSl").val());

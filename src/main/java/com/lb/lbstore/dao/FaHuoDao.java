@@ -141,7 +141,7 @@ public class FaHuoDao extends BaseDao {
             session = getSessionFactory().openSession();
             String sql = "select {fhf.*},a01.mc as skrmc from FaHuoFei fhf "
                     + "left join A01 a01 on fhf.skr_id=a01.id "
-                    + "where fh.fh_id=" + map.get("fh_id");
+                    + "where fhf.fh_id=" + map.get("fh_id");
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
             navtiveSQL.addEntity("fhf", FaHuoFei.class).addScalar("skrmc", StandardBasicTypes.STRING);
             List list = navtiveSQL.list();
@@ -379,6 +379,7 @@ public class FaHuoDao extends BaseDao {
             faHuo.setSpr_id(a01_id);
             faHuo.setSpsj(new Date());
             faHuo.setLsh(LshUtil.getLldLsh());
+            faHuo.setDfje(faHuo.getJe() - faHuo.getYfje());
             session.update(faHuo);
             session.flush();
             tx.commit();

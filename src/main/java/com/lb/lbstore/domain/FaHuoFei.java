@@ -28,8 +28,8 @@ public class FaHuoFei {
     private Integer qy_id;
     private Integer fh_id;
     private Integer kh_id;
-    @DateTimeFormat(pattern="yyyy-MM-dd")
-    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm",timezone = "GMT+8")
     private Date rq;
     private Double je = 0D;
     private Integer skr_id;

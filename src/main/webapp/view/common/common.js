@@ -192,6 +192,28 @@ function dateFormat(longTypeDate) {
     return datetimeType;
 }
 
+function dateFormat_d(longTypeDate) {
+    var datetimeType = "";
+    var date = new Date();
+    date.setTime(longTypeDate);
+    datetimeType += date.getFullYear();   //年
+    datetimeType += "-" + getMonth(date); //月
+    datetimeType += "-" + getDay(date);   //日
+    return datetimeType;
+}
+
+function dateFormat_f(longTypeDate) {
+    var datetimeType = "";
+    var date = new Date();
+    date.setTime(longTypeDate);
+    datetimeType += date.getFullYear();   //年
+    datetimeType += "-" + getMonth(date); //月
+    datetimeType += "-" + getDay(date);   //日
+    datetimeType += " " + getHours(date);   //时
+    datetimeType += ":" + getMinutes(date);      //分
+    return datetimeType;
+}
+
 //返回 01-12 的月份值
 function getMonth(date) {
     var month = "";

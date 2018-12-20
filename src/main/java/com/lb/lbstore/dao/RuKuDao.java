@@ -348,6 +348,9 @@ public class RuKuDao extends BaseDao {
                 
                 Calendar c = Calendar.getInstance();
                 c.setTime(d.getScrq());
+                if(d.getBzq() == null){
+                    d.setBzq(-1);
+                }
                 c.add(Calendar.DATE, Integer.parseInt("" + d.getBzq()));
                 
                 KuCun kc = new KuCun();

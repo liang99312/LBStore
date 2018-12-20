@@ -7,6 +7,7 @@ var editType;
 var fhmx = [];
 var optMxFlag = 1;
 var editMxIndex = -1;
+var xhggEditIndex = -1;
 var tgIndex = 0;
 var selWzzd;
 var editWzzd;
@@ -20,14 +21,16 @@ var selGongYingShang;
 var selKuWei;
 var editCangKu;
 var editA01;
+var editFeiA01;
 var selA01;
 var curKuCun;
+var curFaHuo;
 var dymx_opt = {data: [], yxData: [], func: calcDymx};
 var tysx_opt = {data: [], ls: 3, lw: 70, upeditable: 1};
 
 $(document).ready(function () {
     $('#inpSj').val(dateFormat(new Date()));
-    $('#inpSj').datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd hh:ii', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, startView: 2, forceParse: 0, showMeridian: 1});
+    $('#inpSj,#inpFeiRq').datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd hh:ii', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, startView: 2, forceParse: 0, showMeridian: 1});
     $('#inpSelQrq,#inpSelZrq,#inpMxScrq,#inpKcSelQrq,#inpKcSelZrq').datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, minView: 2, startView: 2, forceParse: 0, showMeridian: 1});
     getAllA01s(setTrager_a01);
     getCangKus(setTrager_cangKu);
@@ -55,6 +58,7 @@ $(document).ready(function () {
 
 function setTrager_a01() {
     $('#inpFhr').AutoComplete({'data': lb_allA01s, 'paramName': 'editA01'});
+    $('#inpFeiSkr').AutoComplete({'data': lb_allA01s, 'paramName': 'editFeiA01'});
     $('#inpKcSelRkr').AutoComplete({'data': lb_allA01s, 'paramName': 'selA01'});
 }
 
@@ -177,13 +181,14 @@ function jxFaHuo(json) {
         var editStr = '<button class="btn btn-info btn-xs icon-edit" onclick="editFaHuo(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var dealStr = '<button class="btn btn-info btn-xs icon-legal" onclick="dealFaHuo(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var delStr = '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteFaHuo(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>';
-        var feiStr = '<button class="btn btn-danger btn-xs icon-money" onclick="feiFaHuo(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>';
+        var feiStr = '<button class="btn btn-info btn-xs icon-money" onclick="feiFaHuo(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>';
         var trStr = '<tr' + classStr + '><td>' + item.ckmc + '</td><td>' + item.lsh + '</td><td>' + item.dh + '</td><td>' + item.wz + '</td><td>' + item.sj + '</td><td>' + item.sl + '</td><td>'
                 + readStr
                 + (item.state === 0 ? editStr : "")
                 + (item.state === 0 ? dealStr : "")
-                + (item.state === 0 || item.state === -1 ? delStr : "") +
-                + feiStr +'</td></tr>';
+                + (item.state === 0 || item.state === -1 ? delStr : "")
+                + (item.state > 0 ? feiStr : "")
+                + '</td></tr>';
         $("#data_table_body").append(trStr);
     });
 }
@@ -290,10 +295,30 @@ function readFaHuo(index) {
     $("#divSpr").show();
     var faHuo = faHuos[index];
     editIndex = index;
-    selectFaHuoDetail(faHuo.id);
+    selectFaHuoDetail(faHuo.id, jxReadFaHuo);
 }
 
-function selectFaHuoDetail(id) {
+function jxReadFaHuo(faHuo) {
+    fhmx = faHuo.details;
+    $("#inpKh").val(faHuo.khmc);
+    $("#inpCk").val(faHuo.ckmc);
+    editCangKu = {"id": faHuo.ck_id, "mc": faHuo.ckmc};
+    editKeHu = {"id": faHuo.kh_id, "mc": faHuo.khmc};
+    $("#inpFhr").val(faHuo.fhrmc);
+    editA01 = {"id": faHuo.fhr_id, "mc": faHuo.fhrmc};
+    selectCangKu(editCangKu);
+    $("#inpDh").val(faHuo.dh);
+    $("#inpBz").val(faHuo.bz);
+    $("#inpSl").val(faHuo.sl);
+    $("#inpJe").val(faHuo.je);
+    $("#inpSj").val(faHuo.sj);
+    $("#inpSpr").val(faHuo.sprmc);
+    $("#inpSpsj").val(faHuo.spsj);
+    jxFaHuoMingXi();
+    $("#faHuoModal").modal("show");
+}
+
+function selectFaHuoDetail(id, func) {
     $.ajax({
         url: "/LBStore/faHuo/getFaHuoDetailById.do?id=" + id,
         contentType: "application/json",
@@ -304,24 +329,9 @@ function selectFaHuoDetail(id) {
         },
         success: function (json) {
             if (json.result === 0) {
-                var faHuo = json.faHuo;
-                fhmx = faHuo.details;
-                $("#inpKh").val(faHuo.khmc);
-                $("#inpCk").val(faHuo.ckmc);
-                editCangKu = {"id": faHuo.ck_id, "mc": faHuo.ckmc};
-                editKeHu = {"id": faHuo.kh_id, "mc": faHuo.khmc};
-                $("#inpFhr").val(faHuo.fhrmc);
-                editA01 = {"id": faHuo.fhr_id, "mc": faHuo.fhrmc};
-                selectCangKu(editCangKu);
-                $("#inpDh").val(faHuo.dh);
-                $("#inpBz").val(faHuo.bz);
-                $("#inpSl").val(faHuo.sl);
-                $("#inpJe").val(faHuo.je);
-                $("#inpSj").val(faHuo.sj);
-                $("#inpSpr").val(faHuo.sprmc);
-                $("#inpSpsj").val(faHuo.spsj);
-                jxFaHuoMingXi();
-                $("#faHuoModal").modal("show");
+                if (func) {
+                    func(json.faHuo);
+                }
             } else
                 alert("获取发货单信息失败:" + json.msg !== undefined ? json.msg : "");
         }
@@ -793,14 +803,14 @@ function cxKuCunById(id, index) {
     });
 }
 
-function feiFaHuo(index){
+function feiFaHuo(index) {
     $("#tblFaHuoFei_body tr").remove();
     if (faHuos[index] === undefined) {
         return alert("请选择发货单");
     }
     editIndex = index;
-    var faHuoFei = faHuos[index];
-    selectFaHuoFei(faHuoFei);
+    var faHuo = faHuos[index];
+    selectFaHuoDetail(faHuo.id, selectFaHuoFei);
 }
 
 function jxFaHuoFei(json) {
@@ -816,6 +826,9 @@ function jxFaHuoFei(json) {
 }
 
 function selectFaHuoFei(json) {
+    curFaHuo = json;
+    var jexx = "总金额：￥" + curFaHuo.je + "&ensp;&ensp;&ensp;&ensp;已付：￥" + curFaHuo.yfje + "&ensp;&ensp;&ensp;&ensp;待付：<span style='color:red'>￥" + curFaHuo.dfje + "</span>";
+    $("#faHuoJexx").html(jexx);
     var faHuoFei = {};
     var tj = {"pageSize": 10, "currentPage": 1};
     faHuoFei.fh_id = json.id;
@@ -829,23 +842,29 @@ function selectFaHuoFei(json) {
     $("#faHuoFeiModal").modal("show");
 }
 
-function addFaHuoFei() {
+function addFaHuoFei(type) {
     feiOptFlag = 1;
-    var faHuo = faHuos[editIndex];
-    if(!faHuo){
+    if (!curFaHuo) {
         return;
     }
+    editFeiA01 = undefined;
     $("#faHuoFeiEditModel_title").html("新增记录");
-    $("#inpFeiRq").val('');
-    $("#inpFeiJe").val(0);
-    $("#inpFeiSkr").val("");
-    $("#inpFeiBz").val("0");
+    if (type === 1) {
+        $("#inpFeiRq").val(dateFormat_f(new Date()));
+        $("#inpFeiJe").val(curFaHuo.dfje);
+        $("#inpFeiSkr").val("");
+        $("#inpFeiBz").val("");
+    } else {
+        $("#inpFeiRq").val(dateFormat_f(new Date()));
+        $("#inpFeiJe").val(0);
+        $("#inpFeiSkr").val("");
+        $("#inpFeiBz").val("");
+    }
     $("#faHuoFeiEditModal").modal("show");
 }
 
 function editFaHuoFei(index) {
-    var faHuo = faHuos[editIndex];
-    if(!faHuo){
+    if (!curFaHuo) {
         return;
     }
     feiOptFlag = 2;
@@ -855,6 +874,7 @@ function editFaHuoFei(index) {
     }
     var faHuoFei = faHuoFeis[index];
     xhggEditIndex = index;
+    editFeiA01 = {id: faHuoFei.skr_id, mc: faHuoFei.skrmc};
     $("#faHuoFeiEditModel_title").html("修改记录");
     $("#inpFeiRq").val(faHuoFei.rq);
     $("#inpFeiJe").val(faHuoFei.je);
@@ -863,13 +883,34 @@ function editFaHuoFei(index) {
     $("#faHuoFeiEditModal").modal("show");
 }
 
+function checkFei(type, index, je) {
+    var zje = 0;
+    if (type === 1) {
+        for (var i = 0; i < faHuoFeis.length; i++) {
+            zje = zje + faHuoFeis[i].je;
+        }
+    } else if (type === 2){
+        for (var i = 0; i < faHuoFeis.length; i++) {
+            if (i !== index) {
+                zje = zje + faHuoFeis[i].je;
+            }
+        }
+    }
+    zje = zje + je;
+    if (zje > curFaHuo.je) {
+        alert("付款金额超过了订单金额");
+        return false;
+    }
+    return true;
+}
+
 function saveFaHuoFei() {
-    var faHuo = faHuos[editIndex];
-    if(!faHuo){
+    if (!curFaHuo) {
         return;
     }
     var faHuoFei = {};
     var url = "";
+    var je = parseFloat($("#inpFeiJe").val());
     if (feiOptFlag === 2) {
         if (faHuoFeis[xhggEditIndex] === undefined) {
             return;
@@ -878,12 +919,20 @@ function saveFaHuoFei() {
         url = "/LBStore/faHuo/updateFaHuoFei.do";
     } else if (feiOptFlag === 1) {
         url = "/LBStore/faHuo/saveFaHuoFei.do";
-        faHuoFei.fh_id = faHuo.id;
+        faHuoFei.fh_id = curFaHuo.id;
+
+    }
+    if (!checkFei(feiOptFlag, xhggEditIndex, je)) {
+        return;
+    }
+    if (!editFeiA01 || editFeiA01.mc === '' || editFeiA01.mc !== $("#inpFeiSkr").val()) {
+        return alert("请选择收款人");
     }
     faHuoFei.rq = $("#inpFeiRq").val();
-    faHuoFei.je = parseFloat($("#inpFeiJe").val());
-    faHuoFei.skr = parseFloat($("#inpFeiSkr").val());
-    faHuoFei.bz = parseFloat($("#inpFeiBz").val());
+    faHuoFei.je = je;
+    faHuoFei.skr_id = editFeiA01.id;
+    faHuoFei.kh_id = curFaHuo.kh_id;
+    faHuoFei.bz = $("#inpFeiBz").val();
     $.ajax({
         url: url,
         data: JSON.stringify(faHuoFei),
@@ -896,8 +945,7 @@ function saveFaHuoFei() {
         success: function (json) {
             if (json.result === 0) {
                 $("#faHuoFeiEditModal").modal("hide");
-                var faHuoFei = faHuos[editIndex];
-                selectFaHuoFei(faHuoFei);
+                selectFaHuoDetail(curFaHuo.id, selectFaHuoFei);
             } else {
                 alert("保存失败：" + json.msg ? json.msg : "");
             }
@@ -912,7 +960,7 @@ function delFaHuoFei(index) {
     var faHuoFei = faHuoFeis[index];
     if (confirm("确定删除记录?")) {
         $.ajax({
-            url: "/LBStore/faHuo/deleteFaHuoFei.do?id=" + faHuoFei.id,
+            url: "/LBStore/faHuo/deleteFaHuoFei.do?id=" + faHuoFei.id + "&fh_id=" + curFaHuo.id,
             contentType: "application/json",
             type: "get",
             dataType: "json",
@@ -922,8 +970,7 @@ function delFaHuoFei(index) {
             },
             success: function (json) {
                 if (json.result === 0) {
-                    var faHuoFei = faHuos[editIndex];
-                    selectFaHuoFei(faHuoFei);
+                    selectFaHuoDetail(curFaHuo.id, selectFaHuoFei);
                 } else {
                     alert("删除失败：" + json.msg ? json.msg : "");
                 }
