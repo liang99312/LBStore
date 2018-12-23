@@ -23,14 +23,14 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 @Entity
 @JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
-public class SunHao {
+public class HuanKu {
     
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
     private String lsh;
     private Integer qy_id;
     private Integer ck_id;
-    private Integer shr_id;
+    private Integer hkr_id;
     private Integer spr_id;
     private String wz;
     private String dh;
@@ -44,11 +44,11 @@ public class SunHao {
     private Double je = 0D;
     private String bz;
     private Integer state;//0:未办理；1：已办理；
-    private transient List<SunHaoDetail> details = new ArrayList();
+    private transient List<HuanKuDetail> details = new ArrayList();
     private transient Date qrq;
     private transient Date zrq;
     private transient String ckmc;
-    private transient String shrmc;
+    private transient String hkrmc;
     private transient String sprmc;
 
     public Integer getId() {
@@ -59,36 +59,20 @@ public class SunHao {
         this.id = id;
     }
 
-    public Integer getQy_id() {
-        return qy_id;
-    }
-
-    public void setQy_id(Integer qy_id) {
-        this.qy_id = qy_id;
-    }
-
-    public String getBz() {
-        return bz;
-    }
-
-    public void setBz(String bz) {
-        this.bz = bz;
-    }
-
-    public Integer getState() {
-        return state;
-    }
-
-    public void setState(Integer state) {
-        this.state = state;
-    }
-
     public String getLsh() {
         return lsh;
     }
 
     public void setLsh(String lsh) {
         this.lsh = lsh;
+    }
+
+    public Integer getQy_id() {
+        return qy_id;
+    }
+
+    public void setQy_id(Integer qy_id) {
+        this.qy_id = qy_id;
     }
 
     public Integer getCk_id() {
@@ -99,12 +83,36 @@ public class SunHao {
         this.ck_id = ck_id;
     }
 
+    public Integer getHkr_id() {
+        return hkr_id;
+    }
+
+    public void setHkr_id(Integer hkr_id) {
+        this.hkr_id = hkr_id;
+    }
+
     public Integer getSpr_id() {
         return spr_id;
     }
 
     public void setSpr_id(Integer spr_id) {
         this.spr_id = spr_id;
+    }
+
+    public String getWz() {
+        return wz;
+    }
+
+    public void setWz(String wz) {
+        this.wz = wz;
+    }
+
+    public String getDh() {
+        return dh;
+    }
+
+    public void setDh(String dh) {
+        this.dh = dh;
     }
 
     public Date getSj() {
@@ -139,20 +147,28 @@ public class SunHao {
         this.je = je;
     }
 
-    public String getWz() {
-        return wz;
+    public String getBz() {
+        return bz;
     }
 
-    public void setWz(String wz) {
-        this.wz = wz;
+    public void setBz(String bz) {
+        this.bz = bz;
     }
 
-    public String getDh() {
-        return dh;
+    public Integer getState() {
+        return state;
     }
 
-    public void setDh(String dh) {
-        this.dh = dh;
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
+    public List<HuanKuDetail> getDetails() {
+        return details;
+    }
+
+    public void setDetails(List<HuanKuDetail> details) {
+        this.details = details;
     }
 
     public Date getQrq() {
@@ -179,36 +195,20 @@ public class SunHao {
         this.ckmc = ckmc;
     }
 
+    public String getHkrmc() {
+        return hkrmc;
+    }
+
+    public void setHkrmc(String hkrmc) {
+        this.hkrmc = hkrmc;
+    }
+
     public String getSprmc() {
         return sprmc;
     }
 
     public void setSprmc(String sprmc) {
         this.sprmc = sprmc;
-    }
-
-    public List<SunHaoDetail> getDetails() {
-        return details;
-    }
-
-    public void setDetails(List<SunHaoDetail> details) {
-        this.details = details;
-    }
-
-    public Integer getShr_id() {
-        return shr_id;
-    }
-
-    public void setShr_id(Integer shr_id) {
-        this.shr_id = shr_id;
-    }
-
-    public String getShrmc() {
-        return shrmc;
-    }
-
-    public void setShrmc(String shrmc) {
-        this.shrmc = shrmc;
     }
 
     @Override
@@ -226,7 +226,7 @@ public class SunHao {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final SunHao other = (SunHao) obj;
+        final HuanKu other = (HuanKu) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }

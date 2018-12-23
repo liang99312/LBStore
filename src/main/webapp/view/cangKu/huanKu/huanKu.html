@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="/LBStore/content/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="/LBStore/content/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/LBStore/content/bootstrap/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+        <link href="/LBStore/content/autocomplete/autocomplete.css" rel="stylesheet" />
+        <script src="/LBStore/js/jquery2.js"></script>
+        <script src="/LBStore/js/jquery.form.js"></script>
+        <script src="/LBStore/content/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/LBStore/content/bootstrap/js/bootstrap-paginator.js"></script>
+        <script src="/LBStore/content/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+        <script src="/LBStore/content/bootstrap/js/bootstrap-datetimepicker.zh-CN.js"></script>
+        <script src="/LBStore/content/autocomplete/autocomplete.js"></script>
+        <script src="/LBStore/view/common/common.js"></script>
+        <script src="/LBStore/view/common/detail.js"></script>
+        <script src="/LBStore/view/common/spesx.js"></script>
+        <script src="/LBStore/view/cangKu/huanKu/huanKu.js"></script>
+    </head>
+    <body style='height:800px;'>
+        <div style="float:left; width: 100%">
+            <div style="width: 100%">
+                <div style="width: 100%;float:left; padding-top: 5px;">
+                    <span>&nbsp;仓库：</span><input id="selCangKu" type="text" style="width: 120px;" />
+                    <span>&nbsp;流水号：</span><input id="selLsh" type="text" style="width: 120px;" />
+                    <span>&nbsp;状态：</span>
+                    <select id="selState" style="width: 100px; height: 26px;line-height: 26px;">
+                        <option value="-9" selected = "selected">全部</option>
+                        <option value="0">未处理</option>
+                        <option value="1">已处理</option>
+                        <option value="-1">已删除</option>
+                    </select>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="selectHuanKu();" style="margin-left: 2px;">查找</button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="showSelectHuanKu();" style="margin-left: 2px;">更多查找</button>
+                </div>
+                <div style="width: 100%;float:left; padding-top: 5px;">
+                    <button type="button" class="btn btn-primary btn-sm" onclick="addHuanKu();">新增还库单</button>
+                </div>
+            </div>
+            <div id="list1" class="table-responsive" style="height: 678px;width:100%;padding-top: 5px;">
+                <table id="data_table" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width:8%">仓库</th>
+                            <th style="width:10%">流水号</th>
+                            <th style="width:8%">单号</th>
+                            <th style="width:15%">物资</th>
+                            <th style="width:10%">还库时间</th>
+                            <th style="width:8%">数量</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id='data_table_body'>
+                        <tr><td>请查询还库单记录</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <ul id="example"></ul>
+        </div>
+
+        <div class="modal fade" id="huanKuSelectModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #ace1ff;height: 40px;border-top-left-radius: 6px;border-top-right-radius: 6px;padding:10px">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="huanKuSelectModel_title">查询还库单</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="content">
+                            <div class="form-group">
+                                <label for="inpSelCk">仓&ensp;&ensp;库：</label>
+                                <input type="text" id="inpSelCk" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpSelState">状&ensp;&ensp;态：</label>
+                                <select id="inpSelState" style="width: 170px; height: 26px;line-height: 26px;">
+                                    <option value="-9" selected = "selected">全部</option>
+                                    <option value="0">未处理</option>
+                                    <option value="1">已处理</option>
+                                    <option value="-1">已删除</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="inpSelWz">物&ensp;&ensp;资：</label>
+                                <input type="text" id="inpSelWz" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpSelRq">日&ensp;&ensp;期：</label>
+                                <input type="text" id="inpSelQrq" />-<input type="text" id="inpSelZrq" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="text-align: center;padding: 8px;">
+                        <button type="submit" class="btn btn-primary" onclick="selectHuanKu_m()">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="huanKuModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style="width: 800px;">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #ace1ff;height: 40px;border-top-left-radius: 6px;border-top-right-radius: 6px;padding:10px">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="huanKuModel_title">添加还库单</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="content">
+                            <div class="form-group">
+                                <label for="inpCk">仓&ensp;&ensp;库：</label>
+                                <input type="text" id="inpCk" />
+                                <label for="inpDh">单&ensp;&ensp;号：</label>
+                                <input type="text" id="inpDh" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpSl">数&ensp;&ensp;量：</label>
+                                <input type="text" id="inpSl" />
+                                <label for="inpJe">金&ensp;&ensp;额：</label>
+                                <input type="text" id="inpJe" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpShr">操作人：</label>
+                                <input type="text" id="inpShr" />
+                                <label for="inpSj">操作日：</label>
+                                <input type="text" id="inpSj" />
+                            </div>
+                            <div id="divSpr" class="form-group">
+                                <label for="inpSpr">审批人：</label>
+                                <input type="text" id="inpSpr" />
+                                <label for="inpSpsj">审批日：</label>
+                                <input type="text" id="inpSpsj" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpBz">备&ensp;&ensp;注：</label>
+                                <input type="text" id="inpBz" style="width: 415px;"/>
+                            </div>
+                            <div id="divXzmx" class="form-group">
+                                <button type="button" class="btn btn-primary btn-sm" onclick="addHuanKuMingXi();">新增明细</button>
+                            </div>
+                            <div style="min-height: 100px;max-height: 300px;overflow-y: auto;">
+                                <table id="tblWuZiMingXi" class="table table-hover">
+                                    <thead>
+                                        <tr style="background: #e9f7ff;">
+                                            <th style="width:25%">名称</th>
+                                            <th style="width:15%">品牌</th>
+                                            <th style="width:20%">型号规格</th>
+                                            <th style="width:12%">还库量</th>
+                                            <th style="width:12%">金额</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id='tblWuZiMingXi_body'>
+                                        <tr><td>无明细记录</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="text-align: center;padding: 8px;">
+                        <button id="btnOk" type="submit" class="btn btn-primary" onclick="saveHuanKu()">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="huanKuMingXiModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style="width: 800px;">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #ace1ff;height: 40px;border-top-left-radius: 6px;border-top-right-radius: 6px;padding:10px">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="huanKuMingXiModel_title">添加明细</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="content">
+                            <div class="form-group">
+                                <label for="inpMxWz">物资名称：</label>
+                                <input type="text" id="inpMxWz" disabled="disabled"/>
+                                <label for="inpMxLb">物资类别：</label>
+                                <input type="text" id="inpMxLb" disabled="disabled"/>
+                                <label for="inpMxPp">品&ensp;&ensp;&ensp;&ensp;牌：</label>
+                                <input type="text" id="inpMxPp" disabled="disabled"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="inpMxXhgg">型号规格：</label>
+                                <input type="text" id="inpMxXhgg" disabled="disabled"/>
+                                <label for="inpMxScc">生&ensp;产&ensp;厂：</label>
+                                <input type="text" id="inpMxScc" disabled="disabled"/>
+                                <label for="inpMxTxm">条&ensp;形&ensp;码：</label>
+                                <input type="text" id="inpMxTxm" disabled="disabled"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="inpMxScc">生产日期：</label>
+                                <input type="text" id="inpMxScrq" disabled="disabled"/>
+                                <label for="inpMxTxm">保质天数：</label>
+                                <input type="text" id="inpMxBzq" disabled="disabled"/>
+                                <label for="inpMxKw">库&ensp;&ensp;&ensp;&ensp;位：</label>
+                                <input type="text" id="inpMxKwh" disabled="disabled"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="inpMxDj">单&ensp;&ensp;&ensp;&ensp;价：</label>
+                                <input type="text" id="inpMxDj" disabled="disabled"/>
+                                <label for="inpMxDw">单&ensp;&ensp;&ensp;&ensp;位：</label>
+                                <input type="text" id="inpMxDw" disabled="disabled"/>
+                                <label for="inpMxSl">入库数量：</label>
+                                <input type="text" id="inpMxSl" disabled="disabled"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="inpMxJlfs">记录方式：</label>
+                                <select id = "inpMxJlfs" disabled="disabled" style="width: 174px;height: 26px;">
+                                    <option value="pt">普通记录</option>
+                                    <option value="zl">总量记录</option>
+                                    <option value="mx">单元明细</option>
+                                </select>
+                                <label class="form-MxBzgg" for="inpMxBzgg" style="display: none;">包装规格：</label>
+                                <input class="form-MxBzgg" type="text" id="inpMxBzgg" disabled="disabled" style="display: none;"/>
+                                <label class="form-MxBzgg" for="inpMxZldw" style="display: none;">总量单位：</label>
+                                <input class="form-MxBzgg" type="text" id="inpMxZldw" disabled="disabled" style="display: none;"/>
+                            </div>
+                            <div id='divMxTysx'></div>                            
+                            <div class="form-group">
+                                <label for="inpMxSyl">剩&ensp;余&ensp;量：</label>
+                                <input type="text" id="inpMxSyl" disabled="disabled"/>
+                                <label for="inpMxSll">损&ensp;耗&ensp;量：</label>
+                                <input type="text" id="inpMxSll" />
+                            </div>
+                            <div id="dvMxZl" class="form-group" style="display: none;">
+                                <label for="inpMxZl">剩余总量：</label>
+                                <input type="text" id="inpMxZl" disabled="disabled"/>
+                                <label for="inpMxSlzl">还库总量：</label>
+                                <input type="text" id="inpMxSlzl" />
+                            </div>
+                            <div id='divMxDymx' class="form-group" style="overflow-y: auto;min-height: 50px;max-height: 250px; display: none;">
+                                <label for="tblMxDymx">单元明细：</label>
+                                <table id="tblMxDymx" cellspacing="0" style="width: 100%"></table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="text-align: center;padding: 8px;">
+                        <button id="btnMxOk" type="submit" class="btn btn-primary" onclick="saveHuanKuMingXi()">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="selKuCunModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style="width: 800px;">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #ace1ff;height: 40px;border-top-left-radius: 6px;border-top-right-radius: 6px;padding:10px">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">选择库存</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="content">
+                            <div class="form-group">
+                                <label for="inpKcSelWzlb">类&ensp;&ensp;别：</label>
+                                <input type="text" id="inpKcSelWzlb" />
+                                <label for="inpKcSelWz">物&ensp;&ensp;资：</label>
+                                <input type="text" id="inpKcSelWz" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpKcSelXhgg">规&ensp;&ensp;格：</label>
+                                <input type="text" id="inpKcSelXhgg" />
+                                <label for="inpKcSelKh">客&ensp;&ensp;户：</label>
+                                <input type="text" id="inpKcSelKh" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpKcSelGys">供应商：</label>
+                                <input type="text" id="inpKcSelGys" />
+                                <label for="inpKcSelRkr">入库人：</label>
+                                <input type="text" id="inpKcSelRkr" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpKcSelRq">日&ensp;&ensp;期：</label>
+                                <input type="text" id="inpKcSelQrq" />-<input type="text" id="inpKcSelZrq" />
+                            </div>
+                            <div id="divXzmx" class="form-group">
+                                <button type="button" class="btn btn-primary btn-sm" onclick="cxKuCun();">查询库存</button>
+                            </div>
+                            <div style="min-height: 100px;max-height: 300px;overflow-y: auto;">
+                                <table id="tblKuCun" class="table table-hover">
+                                    <thead>
+                                        <tr style="background: #e9f7ff;">
+                                            <th style="width:20%">名称</th>
+                                            <th style="width:10%">品牌</th>
+                                            <th style="width:10%">型号规格</th>
+                                            <th style="width:10%">入库数量</th>
+                                            <th style="width:10%">剩余量</th>
+                                            <th style="width:10%">库位</th>
+                                            <th style="width:20%">入库时间</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id='tblKuCun_body'>
+                                        <tr><td>无明细记录</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </body>
+</html>
