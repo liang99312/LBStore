@@ -81,4 +81,9 @@ public class KuCunServiceImpl implements KuCunService {
         return kuCunDao.queryKuCunsTop100(kuCun);
     }
 
+    @Override
+    public List<KuCun> getYlKuCunTop100(KuCun kuCun) {
+        return kuCunDao.queryYlKuCunsTop100(kuCun);
+    }
+
 }

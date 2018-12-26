@@ -19,7 +19,7 @@ var editCangKu;
 var editA01;
 var selA01;
 var curKuCun;
-var dymx_opt = {data: [], yxData: [], func: calcDymx};
+var dymx_opt = {data: [], yxData: [], func: calcDymx, type:2};
 var tysx_opt = {data: [], ls: 3, lw: 70, upeditable: 1};
 
 $(document).ready(function () {
@@ -522,7 +522,7 @@ function addHuanKuMingXi() {
         return alert("请选择还库仓库");
     }
     optMxFlag = 1;
-    dymx_opt = {data: [], yxData: [], func: calcDymx};
+    dymx_opt = {data: [], yxData: [], func: calcDymx, type:2};
     editLeiBie = null;
     $("#huanKuMingXiModal_title").html("增加明细");
     $("#selKuCunModal").modal("show");
@@ -660,7 +660,7 @@ function cxKuCun() {
         kuCun.zrq = $("#inpKcSelZrq").val();
     }
     $.ajax({
-        url: "/LBStore/kuCun/getKuCunTop100.do?",
+        url: "/LBStore/kuCun/getYlKuCunTop100.do?",
         data: JSON.stringify(kuCun),
         contentType: "application/json",
         type: "post",
@@ -719,7 +719,7 @@ function setKcCunData(kc, index) {
     if (kc.dymx && typeof kc.dymx === "string") {
         kc.dymx = JSON.parse(kc.dymx);
     }
-    dymx_opt = {data: kc.dymx, yxData: m.dymx, func: calcDymx};
+    dymx_opt = {data: kc.dymx, yxData: m.dymx, func: calcDymx, type:2};
     editWzzd = {"id": kc.wzzd_id, "mc": kc.wzmc};
     $("#inpMxWz").val(kc.wzmc);
     editLeiBie = {"id": kc.wzlb_id, "mc": kc.wzlb};

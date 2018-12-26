@@ -270,4 +270,85 @@ public class KuCunDao extends BaseDao {
         }
         return result;
     }
+
+    public List<KuCun> queryYlKuCunsTop100(KuCun kuCun) {
+        List<KuCun> result = new ArrayList();
+        Session session = null;
+        try {
+            session = getSessionFactory().openSession();
+            String sql = "select {kc.*},kh.mc as khmc,gys.mc as gysmc,ck.mc as ckmc,a01.mc as rkrmc,a02.mc as sprmc,wzlb.mc as wzlb from KuCun kc "
+                    + "left join CangKu ck on kc.ck_id=ck.id "
+                    + "left join KeHu kh on kc.kh_id=kh.id "
+                    + "left join GongYingShang gys on kc.gys_id=gys.id "
+                    + "left join A01 a01 on kc.rkr_id=a01.id "
+                    + "left join A01 a02 on kc.spr_id=a02.id "
+                    + "left join WuZiLeiBie wzlb on kc.wzlb_id=wzlb.id "
+                    + "where kc.qy_id=" + kuCun.getQy_id() + " and kc.syzl < kc.zl";
+            if (kuCun.getWzmc() != null && !"".equals(kuCun.getWzmc())) {
+                sql += " and kc.wzmc like '%" + kuCun.getWzmc() + "%'";
+            }
+            if (kuCun.getXhgg() != null && !"".equals(kuCun.getXhgg())) {
+                sql += " and kc.xhgg like '%" + kuCun.getXhgg() + "%'";
+            }
+            if (kuCun.getWzlb_id() != null) {
+                sql += " and kc.wzlb_id = " + kuCun.getWzlb_id();
+            }
+            if (kuCun.getRkr_id() != null) {
+                sql += " and kc.rkr_id = " + kuCun.getRkr_id();
+            }
+            if (kuCun.getCk_id() != null) {
+                sql += " and kc.ck_id = " + kuCun.getCk_id();
+            }
+            if (kuCun.getKh_id() != null) {
+                sql += " and kc.kh_id = " + kuCun.getKh_id();
+            }
+            if (kuCun.getGys_id() != null) {
+                sql += " and kc.gys_id = " + kuCun.getGys_id();
+            }
+            if (kuCun.getQrq() != null) {
+                sql += " and kc.rksj > '" + kuCun.getQrq() + "'";
+            }
+            if (kuCun.getZrq() != null) {
+                sql += " and kc.rksj <= '" + kuCun.getZrq() + " 23:59:59'";
+            }
+            sql += " limit 100";
+            SQLQuery navtiveSQL = session.createSQLQuery(sql);
+            navtiveSQL.addEntity("kc", KuCun.class)
+                    .addScalar("khmc", StandardBasicTypes.STRING)
+                    .addScalar("gysmc", StandardBasicTypes.STRING)
+                    .addScalar("ckmc", StandardBasicTypes.STRING)
+                    .addScalar("rkrmc", StandardBasicTypes.STRING)
+                    .addScalar("sprmc", StandardBasicTypes.STRING)
+                    .addScalar("wzlb", StandardBasicTypes.STRING);
+            List list = navtiveSQL.list();
+            for (Object obj : list) {
+                Object[] objs = (Object[]) obj;
+                KuCun kc = (KuCun) objs[0];
+                String khmc = (String) objs[1];
+                String gysmc = (String) objs[2];
+                String ckmc = (String) objs[3];
+                String rkrmc = (String) objs[4];
+                String sprmc = (String) objs[5];
+                String wzlb = (String) objs[6];
+                kc.setKhmc(khmc);
+                kc.setCkmc(ckmc);
+                kc.setGysmc(gysmc);
+                kc.setRkrmc(rkrmc);
+                kc.setSprmc(sprmc);
+                kc.setWzlb(wzlb);
+                result.add(kc);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (session != null) {
+                    session.close();
+                }
+            } catch (Exception he) {
+                he.printStackTrace();
+            }
+        }
+        return result;
+    }
 }

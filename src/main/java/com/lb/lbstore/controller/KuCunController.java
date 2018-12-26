@@ -93,6 +93,26 @@ public class KuCunController extends BaseController {
         return map;
     }
     
+    @RequestMapping(value = "getYlKuCunTop100.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> getYlKuCunTop100(@RequestBody KuCun model) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            A01 loginA01 = getDlA01();
+            model.setQy_id(loginA01.getQy_id());
+            List<KuCun> list = kuCunServiceImpl.getYlKuCunTop100(model);
+            map.put("result", 0);
+            map.put("sz", list);
+        } catch (Exception e) {
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
+    }
+    
     @RequestMapping(value = "getKuCunById.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String, Object> getKuCunById(@RequestParam Integer id) {

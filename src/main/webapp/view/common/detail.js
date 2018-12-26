@@ -158,6 +158,10 @@
             var width = 90 / ls;
             width = width + "%";
             var func = opt.func;
+            var type = 1;
+            if(opt.type){
+                type = opt.type;
+            }
             var resetTable = function () {
                 var hs = parseInt((data.length - 1) / ls) + 1;
                 $("#" + tblId + " tr").remove();
@@ -183,9 +187,16 @@
                                     break;
                                 }
                             }
-                            if(d.state === 1){
-                                selectedFlag = "disabled='disabled'";
-                                selectedColor = "background-color:#ecebe6;";
+                            if(type === 1){
+                                if(d.state === 1){
+                                    selectedFlag = "disabled='disabled'";
+                                    selectedColor = "background-color:#ecebe6;";
+                                }
+                            }else if(type === 2){
+                                if(d.state === 0){
+                                    selectedFlag = "disabled='disabled'";
+                                    selectedColor = "background-color:#ecebe6;";
+                                }
                             }
                             s = "<label style='width:80%;margin-left:5px;'><input type='checkbox' "+selectedFlag+" id='" + tblId + "_ck_" + d.id + "' " + checkStr + " />" + d.val + "</label>";
                         }
@@ -220,6 +231,7 @@
             };
 
             var addXzData = function (d) {
+                d.state = 0;
                 yxData.push(d);
             };
             var delXzData = function (d) {
