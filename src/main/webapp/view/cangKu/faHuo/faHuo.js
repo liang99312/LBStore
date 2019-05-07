@@ -280,7 +280,7 @@ function editFaHuo(index) {
     $("#divSpr").hide();
     var faHuo = faHuos[index];
     editIndex = index;
-    selectFaHuoDetail(faHuo.id);
+    editFeiIndex(faHuo.id, jxReadFaHuo);
 }
 
 function readFaHuo(index) {
@@ -295,7 +295,7 @@ function readFaHuo(index) {
     $("#divSpr").show();
     var faHuo = faHuos[index];
     editIndex = index;
-    selectFaHuoDetail(faHuo.id, jxReadFaHuo);
+    editFeiIndex(faHuo.id, jxReadFaHuo);
 }
 
 function jxReadFaHuo(faHuo) {
@@ -318,7 +318,7 @@ function jxReadFaHuo(faHuo) {
     $("#faHuoModal").modal("show");
 }
 
-function selectFaHuoDetail(id, func) {
+function editFeiIndex(id, func) {
     $.ajax({
         url: "/LBStore/faHuo/getFaHuoDetailById.do?id=" + id,
         contentType: "application/json",
@@ -350,7 +350,7 @@ function dealFaHuo(index) {
     $("#divSpr").hide();
     var faHuo = faHuos[index];
     editIndex = index;
-    selectFaHuoDetail(faHuo.id);
+    editFeiIndex(faHuo.id, jxReadFaHuo);
 }
 
 function saveFaHuo() {
@@ -810,7 +810,7 @@ function feiFaHuo(index) {
     }
     editIndex = index;
     var faHuo = faHuos[index];
-    selectFaHuoDetail(faHuo.id, selectFaHuoFei);
+    editFeiIndex(faHuo.id, selectFaHuoFei);
 }
 
 function jxFaHuoFei(json) {
@@ -945,7 +945,7 @@ function saveFaHuoFei() {
         success: function (json) {
             if (json.result === 0) {
                 $("#faHuoFeiEditModal").modal("hide");
-                selectFaHuoDetail(curFaHuo.id, selectFaHuoFei);
+                editFeiIndex(curFaHuo.id, selectFaHuoFei);
             } else {
                 alert("保存失败：" + json.msg ? json.msg : "");
             }
@@ -970,7 +970,7 @@ function delFaHuoFei(index) {
             },
             success: function (json) {
                 if (json.result === 0) {
-                    selectFaHuoDetail(curFaHuo.id, selectFaHuoFei);
+                    editFeiIndex(curFaHuo.id, selectFaHuoFei);
                 } else {
                     alert("删除失败：" + json.msg ? json.msg : "");
                 }

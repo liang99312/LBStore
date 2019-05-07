@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.lb.lbstore.domain.RuKu;
 import com.lb.lbstore.domain.RuKuDetail;
+import com.lb.lbstore.domain.RuKuFei;
 import com.lb.lbstore.service.RuKuService;
 import java.util.ArrayList;
 import java.util.Date;
@@ -208,6 +209,107 @@ public class RuKuController extends BaseController {
         map.put("beginRow", model.getBegin());
         map.put("pageSize", model.getPageSize());
         model.setList(this.ruKuServiceImpl.queryRuKusByPage(map));
+        return model;
+    }
+    
+    @RequestMapping(value = "saveRuKuFei.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> saveRuKuFei(@RequestBody RuKuFei model) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            model.setQy_id(getDlA01().getQy_id());
+            model.setRq(new Date());
+            RuKuFei ruKuFei = ruKuServiceImpl.saveRuKuFei(model);
+            map.put("result", 0);
+            map.put("ruKuFei", ruKuFei);
+        } catch (Exception e) {
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
+    }
+    
+    @RequestMapping(value = "getRuKuFeiById.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> getRuKuFeiById(@RequestParam Integer id) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            RuKuFei ruKuFei = ruKuServiceImpl.getRuKuFeiById(id);
+            map.put("result", 0);
+            map.put("ruKuFei", ruKuFei);
+        } catch (Exception e) {
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
+    }
+
+    @RequestMapping(value = "updateRuKuFei.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> updateRuKuFei(@RequestBody RuKuFei model) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            boolean result = ruKuServiceImpl.updateRuKuFei(model);
+            map.put("result", result? 0:-1);
+        } catch (Exception e) {
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
+    }
+    
+    @RequestMapping(value = "deleteRuKuFei.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> deleteRuKuFei(@RequestParam Integer id,@RequestParam Integer rk_id) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            boolean result = ruKuServiceImpl.deleteRuKuFei(id,rk_id);
+            map.put("result", result? 0:-1);
+        } catch (Exception e) {
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
+    }
+
+    //分页查询
+    @RequestMapping(value = "listRuKuFeisByPage.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Page listRuKuFeisByPage(@RequestBody Page model) {
+        HashMap map = model.getParamters();
+        if (map == null) {
+            map = new HashMap();
+        }
+        map.put("qy_id", getDlA01().getQy_id());
+        if (model.getRows() == 0) {
+            model.setRows(this.ruKuServiceImpl.queryRows(map));//查询记录数
+        }
+        if (model.getRows() == 0) {
+            model.setCurrentPage(1);
+            model.setList(new ArrayList());
+            model.setParamters(new HashMap());
+            model.setRows(0);
+            model.setTotalPage(0);
+            return model;
+        }
+        if (model.getTotalPage() == 0) {
+            model.setTotalPage(model.calcTotalPage());
+        }
+        map.put("beginRow", model.getBegin());
+        map.put("pageSize", model.getPageSize());
+        model.setList(this.ruKuServiceImpl.queryRuKuFeisByPage(map));
         return model;
     }
 

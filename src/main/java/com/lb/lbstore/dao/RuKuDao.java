@@ -5,6 +5,7 @@
  */
 package com.lb.lbstore.dao;
 
+import com.lb.lbstore.domain.RuKuFei;
 import com.lb.lbstore.domain.KuCun;
 import com.lb.lbstore.domain.RuKu;
 import com.lb.lbstore.domain.RuKuDetail;
@@ -17,7 +18,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
-import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -404,12 +404,144 @@ public class RuKuDao extends BaseDao {
             ruKu.setSpr_id(a01_id);
             ruKu.setSpsj(new Date());
             ruKu.setLsh(LshUtil.getRkdLsh());
+            ruKu.setDfje(ruKu.getJe() - ruKu.getYfje());
             session.update(ruKu);
             session.flush();
             tx.commit();
             result = true;
         } catch (Exception e) {
             tx.rollback();
+            e.printStackTrace();
+        } finally {
+            try {
+                if (session != null) {
+                    session.close();
+                }
+            } catch (Exception he) {
+                he.printStackTrace();
+            }
+        }
+        return result;
+    }
+    
+    public boolean deleteRuKuFei(Integer id, Integer rk_id) {
+        boolean result = false;
+        Session session = null;
+        Transaction tx = null;
+        try {
+            session = getSessionFactory().openSession();
+            tx = session.beginTransaction();
+            String deleteFei = "delete from RuKuFei where id=" + id;
+            session.createSQLQuery(deleteFei).executeUpdate();
+            session.flush();
+            String updateRuKu = "update ruku set yfje = (select sum(f.je) from rukufei f where f.rk_id = " + rk_id + ") where ruku.id=" + rk_id;
+            session.createSQLQuery(updateRuKu).executeUpdate();
+            session.flush();
+            updateRuKu = "update ruku set dfje = je - yfje where id=" + rk_id;
+            session.createSQLQuery(updateRuKu).executeUpdate();
+            session.flush();
+            tx.commit();
+            result = true;
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            try {
+                if (session != null) {
+                    session.close();
+                }
+            } catch (Exception he) {
+                he.printStackTrace();
+            }
+        }
+        return result;
+    }
+    
+    public Integer saveRuKuFei(RuKuFei ruKuFei) {
+        Integer result = -1;
+        Session session = null;
+        Transaction tx = null;
+        try {
+            session = getSessionFactory().openSession();
+            tx = session.beginTransaction();
+            Integer id = (Integer) session.save(ruKuFei);
+            session.flush();
+            int rk_id = ruKuFei.getRk_id();
+            String updateRuKu = "update ruku set yfje = (select sum(f.je) from rukufei f where f.rk_id = " + rk_id + ") where ruku.id=" + rk_id;
+            session.createSQLQuery(updateRuKu).executeUpdate();
+            session.flush();
+            updateRuKu = "update ruku set dfje = je - yfje where id=" + rk_id;
+            session.createSQLQuery(updateRuKu).executeUpdate();
+            session.flush();
+            tx.commit();
+            result = id;
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            try {
+                if (session != null) {
+                    session.close();
+                }
+            } catch (Exception he) {
+                he.printStackTrace();
+            }
+        }
+        return result;
+    }
+    
+    public boolean updateRuKuFei(RuKuFei ruKuFei) {
+        boolean result = false;
+        Session session = null;
+        Transaction tx = null;
+        try {
+            session = getSessionFactory().openSession();
+            tx = session.beginTransaction();
+            session.update(ruKuFei);
+            session.flush();
+            int rk_id = ruKuFei.getRk_id();
+            String updateRuKu = "update ruku set yfje = (select sum(f.je) from rukufei f where f.rk_id = " + rk_id + ") where ruku.id=" + rk_id;
+            session.createSQLQuery(updateRuKu).executeUpdate();
+            session.flush();
+            updateRuKu = "update ruku set dfje = je - yfje where id=" + rk_id;
+            session.createSQLQuery(updateRuKu).executeUpdate();
+            session.flush();
+            tx.commit();
+            result = true;
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            try {
+                if (session != null) {
+                    session.close();
+                }
+            } catch (Exception he) {
+                he.printStackTrace();
+            }
+        }
+        return result;
+    }
+    
+    public List<RuKuFei> queryRuKuFeisByPage(HashMap map) {
+        List<RuKuFei> result = new ArrayList();
+        Session session = null;
+        try {
+            session = getSessionFactory().openSession();
+            String sql = "select {rkf.*},a01.mc as skrmc from RuKuFei rkf "
+                    + "left join A01 a01 on rkf.skr_id=a01.id "
+                    + "where rkf.rk_id=" + map.get("rk_id");
+            SQLQuery navtiveSQL = session.createSQLQuery(sql);
+            navtiveSQL.addEntity("rkf", RuKuFei.class).addScalar("skrmc", StandardBasicTypes.STRING);
+            List list = navtiveSQL.list();
+            for (Object obj : list) {
+                Object[] objs = (Object[]) obj;
+                RuKuFei rkf = (RuKuFei) objs[0];
+                String skrmc = (String) objs[1];
+                rkf.setSkrmc(skrmc);
+                result.add(rkf);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {

@@ -7,6 +7,8 @@ package com.lb.lbstore.service.impl;
 
 import com.lb.lbstore.dao.RuKuDao;
 import com.lb.lbstore.domain.RuKu;
+import com.lb.lbstore.domain.RuKuFei;
+import com.lb.lbstore.domain.RuKu;
 import com.lb.lbstore.domain.RuKuDetail;
 import com.lb.lbstore.service.RuKuService;
 import java.util.HashMap;
@@ -80,6 +82,38 @@ public class RuKuServiceImpl implements RuKuService {
     @Override
     public List<RuKuDetail> getRuKuByWzid_100(Integer wzzd_id) {
         return ruKuDao.queryRuKuDetailTop100(wzzd_id);
+    }
+    
+    @Override
+    public int queryFeiRows(HashMap map) {
+        String sql = "select (1) from RuKuFei where rk_id="+map.get("rk_id");
+        return ruKuDao.getCount(sql, null);
+    }
+
+    @Override
+    public List<RuKuFei> queryRuKuFeisByPage(HashMap map) {
+        return ruKuDao.queryRuKuFeisByPage(map);
+    }
+
+    @Override
+    public RuKuFei getRuKuFeiById(Integer id) {
+        return (RuKuFei) ruKuDao.findObjectById(RuKuFei.class, id);
+    }
+
+    @Override
+    public boolean updateRuKuFei(RuKuFei ruKuFei) {
+        return ruKuDao.updateRuKuFei(ruKuFei);
+    }
+
+    @Override
+    public RuKuFei saveRuKuFei(RuKuFei ruKuFei) {
+        int id = ruKuDao.saveRuKuFei(ruKuFei);
+        return (RuKuFei) ruKuDao.findObjectById(RuKuFei.class, id);
+    }
+
+    @Override
+    public boolean deleteRuKuFei(Integer id,Integer rk_id) {
+        return ruKuDao.deleteRuKuFei(id, rk_id);
     }
 
 }

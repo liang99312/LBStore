@@ -163,6 +163,8 @@ CREATE TABLE `store`.`ruku` (
   `bz` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `sl` FLOAT(19,2) COLLATE utf8_unicode_ci DEFAULT NULL,
   `je` FLOAT(19,2) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `yfje` FLOAT(19,2) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `dfje` FLOAT(19,2) COLLATE utf8_unicode_ci DEFAULT NULL,
   `sj` datetime DEFAULT NULL,
   `spsj` datetime DEFAULT NULL,
   `state` int(11) DEFAULT 0,
@@ -197,6 +199,18 @@ CREATE TABLE `store`.`rukudetail` (
   `tysx` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `dymx` varchar(4000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `kw` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`))ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `store`.`rukufei` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `qy_id` INT NOT NULL,
+  `rk_id` INT NOT NULL,
+  `kh_id` INT NULL,
+  `gys_id` INT NULL,
+  `skr_id` INT NOT NULL,
+  `je` FLOAT(19,2) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `rq` datetime DEFAULT NULL,
+  `bz` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`))ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `store`.`kucun` (

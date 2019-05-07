@@ -5,6 +5,7 @@
  */
 package com.lb.lbstore.service;
 
+import com.lb.lbstore.domain.RuKuFei;
 import com.lb.lbstore.domain.RuKu;
 import com.lb.lbstore.domain.RuKuDetail;
 import java.util.HashMap;
@@ -35,5 +36,17 @@ public interface RuKuService {
     public int queryRows(HashMap map);
     
     public List<RuKu> queryRuKusByPage(HashMap map);
+    
+    public int queryFeiRows(HashMap map);
+    
+    public List<RuKuFei> queryRuKuFeisByPage(HashMap map);
+    
+    public RuKuFei getRuKuFeiById(Integer id);
+
+     public boolean updateRuKuFei(RuKuFei ruKuFei);
+       
+    public RuKuFei saveRuKuFei(RuKuFei ruKuFei);
+    
+    public boolean deleteRuKuFei(Integer id,Integer rk_id);
 
 }
