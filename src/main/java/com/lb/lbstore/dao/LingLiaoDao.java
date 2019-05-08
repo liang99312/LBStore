@@ -132,6 +132,49 @@ public class LingLiaoDao extends BaseDao {
         }
         return result;
     }
+    
+    public List<LingLiaoDetail> queryLingLiaoDetailsByPage(HashMap map) {
+        List<LingLiaoDetail> result = new ArrayList();
+        Session session = null;
+        try {
+            session = getSessionFactory().openSession();
+            String sql = "select {lld.*},kh.mc as khmc,ck.mc as ckmc from LingLiaoDetail lld left join LingLiao ll on lld.ll_id=ll.id "
+                    + "left join CangKu ck on ll.ck_id=ck.id left join KeHu kh on ll.kh_id=kh.id "
+                    + "where ll.qy_id=" + map.get("qy_id");
+            if (map.containsKey("mc")) {
+                sql += " and ll.wz like '%" + map.get("mc") + "%'";
+            }
+            if (map.containsKey("state")) {
+                sql += " and ll.state = " + map.get("state");
+            }
+            if (map.containsKey("lsh")) {
+                sql += " and ll.lsh = " + map.get("lsh");
+            }
+            SQLQuery navtiveSQL = session.createSQLQuery(sql);
+            navtiveSQL.addEntity("lld", LingLiaoDetail.class).addScalar("khmc", StandardBasicTypes.STRING).addScalar("ckmc", StandardBasicTypes.STRING);
+            List list = navtiveSQL.list();
+            for (Object obj : list) {
+                Object[] objs = (Object[]) obj;
+                LingLiaoDetail lld = (LingLiaoDetail) objs[0];
+                String khmc = (String) objs[1];
+                String ckmc = (String) objs[2];
+                lld.setKhmc(khmc);
+                lld.setCkmc(ckmc);
+                result.add(lld);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (session != null) {
+                    session.close();
+                }
+            } catch (Exception he) {
+                he.printStackTrace();
+            }
+        }
+        return result;
+    }
 
     public Integer saveLingLiao(LingLiao lingLiao) {
         Integer result = -1;

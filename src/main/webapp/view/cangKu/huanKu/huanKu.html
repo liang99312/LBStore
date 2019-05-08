@@ -250,55 +250,60 @@ and open the template in the editor.
             </div>
         </div>
         
-        <div class="modal fade" id="selKuCunModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade" id="selLingLiaoDetailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog" style="width: 800px;">
                 <div class="modal-content">
                     <div class="modal-header" style="background: #ace1ff;height: 40px;border-top-left-radius: 6px;border-top-right-radius: 6px;padding:10px">
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title">选择库存</h4>
+                        <h4 class="modal-title">选择物资</h4>
                     </div>
                     <div class="modal-body">
                         <div class="content">
                             <div class="form-group">
-                                <label for="inpKcSelWzlb">类&ensp;&ensp;别：</label>
-                                <input type="text" id="inpKcSelWzlb" />
-                                <label for="inpKcSelWz">物&ensp;&ensp;资：</label>
-                                <input type="text" id="inpKcSelWz" />
+                                <label for="inpLldSelWzlb">类&ensp;&ensp;别：</label>
+                                <input type="text" id="inpLldSelWzlb" />
+                                <label for="inpLldSelWz">物&ensp;&ensp;资：</label>
+                                <input type="text" id="inpLldSelWz" />
                             </div>
                             <div class="form-group">
-                                <label for="inpKcSelXhgg">规&ensp;&ensp;格：</label>
-                                <input type="text" id="inpKcSelXhgg" />
-                                <label for="inpKcSelKh">客&ensp;&ensp;户：</label>
-                                <input type="text" id="inpKcSelKh" />
+                                <label for="inpLldSelXhgg">规&ensp;&ensp;格：</label>
+                                <input type="text" id="inpLldSelXhgg" />
+                                <label for="inpLldSelKh">客&ensp;&ensp;户：</label>
+                                <input type="text" id="inpLldSelKh" />
                             </div>
                             <div class="form-group">
-                                <label for="inpKcSelGys">供应商：</label>
-                                <input type="text" id="inpKcSelGys" />
-                                <label for="inpKcSelRkr">入库人：</label>
-                                <input type="text" id="inpKcSelRkr" />
+                                <label for="inpLldSelGys">供应商：</label>
+                                <input type="text" id="inpLldSelGys" />
+                                <label for="inpLldSelRkr">入库人：</label>
+                                <input type="text" id="inpLldSelRkr" />
                             </div>
                             <div class="form-group">
-                                <label for="inpKcSelRq">日&ensp;&ensp;期：</label>
-                                <input type="text" id="inpKcSelQrq" />-<input type="text" id="inpKcSelZrq" />
+                                <label for="inpLldSelLsh">领料单：</label>
+                                <input type="text" id="inpLldSelLsh" />
+                                <label for="inpLldSelTxm">条形码：</label>
+                                <input type="text" id="inpLldSelTxm" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpLldSelRq">日&ensp;&ensp;期：</label>
+                                <input type="text" id="inpLldSelQrq" />-<input type="text" id="inpLldSelZrq" />
                             </div>
                             <div id="divXzmx" class="form-group">
-                                <button type="button" class="btn btn-primary btn-sm" onclick="cxKuCun();">查询库存</button>
+                                <button type="button" class="btn btn-primary btn-sm" onclick="cxLingLiaoDetail();">查询领料</button>
                             </div>
                             <div style="min-height: 100px;max-height: 300px;overflow-y: auto;">
-                                <table id="tblKuCun" class="table table-hover">
+                                <table id="tblLingLiaoDetail" class="table table-hover">
                                     <thead>
                                         <tr style="background: #e9f7ff;">
+                                            <th style="width:20%">领料单号</th>
                                             <th style="width:20%">名称</th>
                                             <th style="width:10%">品牌</th>
                                             <th style="width:10%">型号规格</th>
-                                            <th style="width:10%">入库数量</th>
-                                            <th style="width:10%">剩余量</th>
-                                            <th style="width:10%">库位</th>
-                                            <th style="width:20%">入库时间</th>
+                                            <th style="width:10%">领取数量</th>
+                                            <th style="width:20%">领料时间</th>
                                             <th>操作</th>
                                         </tr>
                                     </thead>
-                                    <tbody id='tblKuCun_body'>
+                                    <tbody id='tblLingLiaoDetail_body'>
                                         <tr><td>无明细记录</td></tr>
                                     </tbody>
                                 </table>

@@ -6,6 +6,7 @@
 package com.lb.lbstore.service;
 
 import com.lb.lbstore.domain.LingLiao;
+import com.lb.lbstore.domain.LingLiaoDetail;
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,5 +33,9 @@ public interface LingLiaoService {
     public int queryRows(HashMap map);
     
     public List<LingLiao> queryLingLiaosByPage(HashMap map);
+    
+    public int queryDetailRows(HashMap map);
+    
+    public List<LingLiaoDetail> queryLingLiaoDetailsByPage(HashMap map);
 
 }

@@ -454,4 +454,5 @@ CREATE TABLE `store`.`huankudetail` (
   `dymx` varchar(4000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `kw` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `kc_id` INT NOT NULL,
+  `lld_id` INT NOT NULL,
   PRIMARY KEY (`id`))ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

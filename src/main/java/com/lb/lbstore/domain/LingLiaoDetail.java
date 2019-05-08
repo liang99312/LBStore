@@ -20,10 +20,11 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Jane
  */
 @Entity
-@JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler", "fieldHandler"})
 public class LingLiaoDetail {
-    
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private Integer qy_id;
     private Integer ck_id;
@@ -40,13 +41,13 @@ public class LingLiaoDetail {
     private String pp;
     private String scc;
     private String txm;
-    @DateTimeFormat(pattern="yyyy-MM-dd")
-    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date scrq;
     private Integer bzq;
     private Double dj;
-    private String dw;    
-    private String zldw;   
+    private String dw;
+    private String zldw;
     private String jlfs = "pt"; //普通记录(pt)；总量记录(zl)；单元明细(mx)
     private Double bzgg = 1.0D; //包装规格
     private Double sll = 1.0D;
@@ -54,7 +55,11 @@ public class LingLiaoDetail {
     private String tysx;
     private String dymx;
     private String kw;
-    
+    private transient String ckmc;
+    private transient String khmc;
+    private transient String llrmc;
+    private transient String sprmc;
+
     public Integer getId() {
         return id;
     }
@@ -134,7 +139,7 @@ public class LingLiaoDetail {
     public void setXhgg(String xhgg) {
         this.xhgg = xhgg;
     }
-    
+
     public String getPp() {
         return pp;
     }
@@ -300,9 +305,41 @@ public class LingLiaoDetail {
         }
         return true;
     }
-    
+
+    public String getCkmc() {
+        return ckmc;
+    }
+
+    public void setCkmc(String ckmc) {
+        this.ckmc = ckmc;
+    }
+
+    public String getKhmc() {
+        return khmc;
+    }
+
+    public void setKhmc(String khmc) {
+        this.khmc = khmc;
+    }
+
+    public String getLlrmc() {
+        return llrmc;
+    }
+
+    public void setLlrmc(String llrmc) {
+        this.llrmc = llrmc;
+    }
+
+    public String getSprmc() {
+        return sprmc;
+    }
+
+    public void setSprmc(String sprmc) {
+        this.sprmc = sprmc;
+    }
+
     @Override
-    public String toString(){
+    public String toString() {
         return wzmc;
     }
 }

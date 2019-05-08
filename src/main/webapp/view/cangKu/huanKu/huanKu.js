@@ -18,14 +18,14 @@ var selKuWei;
 var editCangKu;
 var editA01;
 var selA01;
-var curKuCun;
+var curLingLiaoDetail;
 var dymx_opt = {data: [], yxData: [], func: calcDymx, type:2};
 var tysx_opt = {data: [], ls: 3, lw: 70, upeditable: 1};
 
 $(document).ready(function () {
     $('#inpSj').val(dateFormat(new Date()));
     $('#inpSj').datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd hh:ii', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, startView: 2, forceParse: 0, showMeridian: 1});
-    $('#inpSelQrq,#inpSelZrq,#inpMxScrq,#inpKcSelQrq,#inpKcSelZrq').datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, minView: 2, startView: 2, forceParse: 0, showMeridian: 1});
+    $('#inpSelQrq,#inpSelZrq,#inpMxScrq,#inpLldSelQrq,#inpLldSelZrq').datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, minView: 2, startView: 2, forceParse: 0, showMeridian: 1});
     getAllA01s(setTrager_a01);
     getCangKus(setTrager_cangKu);
     getKeHus(setTrager_keHu);
@@ -35,16 +35,16 @@ $(document).ready(function () {
     $("#inpMxScrq").datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, minView: 2, startView: 2, forceParse: 0, showMeridian: 1});
 
     $("#inpMxSll").keyup(function () {
-        if (curKuCun && curKuCun.jlfs === "zl") {
+        if (curLingLiaoDetail && curLingLiaoDetail.jlfs === "zl") {
             var temp_sll = parseFloat($("#inpMxSll").val());
-            var temp_slzl = temp_sll * curKuCun.bzgg;
+            var temp_slzl = temp_sll * curLingLiaoDetail.bzgg;
             $("#inpMxSlzl").val(temp_slzl.toFixed(3));
         }
     });
     $("#inpMxSlzl").keyup(function () {
-        if (curKuCun && curKuCun.jlfs === "zl") {
+        if (curLingLiaoDetail && curLingLiaoDetail.jlfs === "zl") {
             var temp_slzl = parseFloat($("#inpMxSlzl").val());
-            var temp_sll = temp_slzl / curKuCun.bzgg;
+            var temp_sll = temp_slzl / curLingLiaoDetail.bzgg;
             $("#inpMxSll").val(temp_sll.toFixed(3));
         }
     });
@@ -52,7 +52,7 @@ $(document).ready(function () {
 
 function setTrager_a01() {
     $('#inpShr').AutoComplete({'data': lb_allA01s, 'paramName': 'editA01'});
-    $('#inpKcSelRkr').AutoComplete({'data': lb_allA01s, 'paramName': 'selA01'});
+    $('#inpLldSelRkr').AutoComplete({'data': lb_allA01s, 'paramName': 'selA01'});
 }
 
 function setTrager_cangKu() {
@@ -63,19 +63,19 @@ function setTrager_cangKu() {
 
 function setTrager_keHu() {
     $('#inpSelKh').AutoComplete({'data': lb_keHus, 'paramName': 'selKeHu'});
-    $('#inpKcSelKh').AutoComplete({'data': lb_keHus, 'paramName': 'selKeHu'});
+    $('#inpLldSelKh').AutoComplete({'data': lb_keHus, 'paramName': 'selKeHu'});
 }
 
 function setTrager_ziDian() {
-    $('#inpKcSelWz').AutoComplete({'data': lb_wuZiZiDians, 'afterSelectedHandler': selectWuZiZiDian});
+    $('#inpLldSelWz').AutoComplete({'data': lb_wuZiZiDians, 'afterSelectedHandler': selectWuZiZiDian});
 }
 
 function setTrager_leiBie() {
-    $('#inpKcSelWzlb').AutoComplete({'data': lb_wuZiLeiBies, 'afterSelectedHandler': selectWuZiLeiBie});
+    $('#inpLldSelWzlb').AutoComplete({'data': lb_wuZiLeiBies, 'afterSelectedHandler': selectWuZiLeiBie});
 }
 
 function setTrager_gongYingShang() {
-    $('#inpKcSelGys').AutoComplete({'data': lb_gongYingShangs, 'paramName': 'selGongYingShang'});
+    $('#inpLldSelGys').AutoComplete({'data': lb_gongYingShangs, 'paramName': 'selGongYingShang'});
 }
 
 function selectCangKu(json) {
@@ -103,12 +103,12 @@ function selectWuZiLeiBie(json) {
             },
             success: function (json) {
                 if (json.result === 0) {
-                    $('#inpKcSelWz').AutoComplete({'data': json.sz, 'afterSelectedHandler': selectWuZiZiDian});
+                    $('#inpLldSelWz').AutoComplete({'data': json.sz, 'afterSelectedHandler': selectWuZiZiDian});
                 }
             }
         });
     } else {
-        $('#inpKcSelWz').AutoComplete({'data': [], 'afterSelectedHandler': selectWuZiZiDian});
+        $('#inpLldSelWz').AutoComplete({'data': [], 'afterSelectedHandler': selectWuZiZiDian});
     }
 }
 
@@ -131,9 +131,9 @@ function selectWuZiZiDian(json) {
             success: function (json) {
                 if (json.result === 0) {
                     $('#inpMxXhgg').AutoComplete({'data': json.wuZiZiDian.xhggs, 'paramName': 'editXhgg'});
-                    if ($('#inpKcSelWzlb').val() !== json.wuZiZiDian.wzlb.mc) {
+                    if ($('#inpLldSelWzlb').val() !== json.wuZiZiDian.wzlb.mc) {
                         selectWuZiLeiBie(json.wuZiZiDian.wzlb);
-                        $('#inpKcSelWzlb').val(json.wuZiZiDian.wzlb.mc);
+                        $('#inpLldSelWzlb').val(json.wuZiZiDian.wzlb.mc);
                     }
                 }
             }
@@ -525,7 +525,7 @@ function addHuanKuMingXi() {
     dymx_opt = {data: [], yxData: [], func: calcDymx, type:2};
     editLeiBie = null;
     $("#huanKuMingXiModal_title").html("增加明细");
-    $("#selKuCunModal").modal("show");
+    $("#selLingLiaoDetailModal").modal("show");
 }
 
 function editHuanKuMingXi(index) {
@@ -535,7 +535,7 @@ function editHuanKuMingXi(index) {
         $("#huanKuMingXiModal_title").html("修改明细");
         $("#btnMxOk").html("保存");
         var temp = hkmx[index];
-        cxKuCunById(temp.kc_id, index);
+        cxLingLiaoDetailById(temp.lld_id, index);
     }
 }
 
@@ -546,7 +546,7 @@ function readHuanKuMingXi(index) {
         $("#huanKuMingXiModal_title").html("查看明细");
         $("#btnMxOk").html("关闭");
         var temp = hkmx[index];
-        cxKuCunById(temp.kc_id, index);
+        cxLingLiaoDetailById(temp.lld_id, index);
     }
 }
 
@@ -611,8 +611,9 @@ function saveHuanKuMingXi() {
     if (mx.slzl === undefined || mx.slzl === "" || mx.slzl < 0.001) {
         mx.slzl = mx.sll;
     }
-    mx.kc_id = curKuCun.id;
-    mx.ck_id = curKuCun.ck_id;
+    mx.lld_id = curLingLiaoDetail.id;
+    mx.kc_id = curLingLiaoDetail.kc_id;
+    mx.ck_id = curLingLiaoDetail.ck_id;
     if (optMxFlag === 1) {
         hkmx.push(mx);
     } else if (optMxFlag === 2) {
@@ -629,39 +630,45 @@ function saveHuanKuMingXi() {
     $("#inpSl").val(zsl);
     $("#inpJe").val(zje.toFixed(3));
     $("#huanKuMingXiModal").modal("hide");
-    curKuCun = null;
+    curLingLiaoDetail = null;
 }
 
-function cxKuCun() {
-    var kuCun = {};
-    kuCun.ck_id = editCangKu.id;
-    if ($("#inpKcSelWzlb").val() !== "" && $("#inpKcSelWzlb").val() === selLeiBie.mc) {
-        kuCun.wzlb_id = selLeiBie.id;
+function cxLingLiaoDetail() {
+    var lingLiaoDetail = {};
+    lingLiaoDetail.ck_id = editCangKu.id;
+    if ($("#inpLldSelWzlb").val() !== "" && $("#inpLldSelWzlb").val() === selLeiBie.mc) {
+        lingLiaoDetail.wzlb_id = selLeiBie.id;
     }
-    if ($("#inpKcSelWz").val() !== "") {
-        kuCun.wzmc = $("#inpKcSelWz").val();
+    if ($("#inpLldSelWz").val() !== "") {
+        lingLiaoDetail.wzmc = $("#inpLldSelWz").val();
     }
-    if ($("#inpKcSelXhgg").val() !== "") {
-        kuCun.xhgg = $("#inpKcSelXhgg").val();
+    if ($("#inpLldSelXhgg").val() !== "") {
+        lingLiaoDetail.xhgg = $("#inpLldSelXhgg").val();
     }
-    if ($("#inpKcSelKh").val() !== "" && $("#inpKcSelKh").val() === selKeHu.mc) {
-        kuCun.kh_id = selKeHu.id;
+    if ($("#inpLldSelKh").val() !== "" && $("#inpLldSelKh").val() === selKeHu.mc) {
+        lingLiaoDetail.kh_id = selKeHu.id;
     }
-    if ($("#inpKcSelGys").val() !== "" && $("#inpKcSelGys").val() === selGongYingShang.mc) {
-        kuCun.gys_id = selGongYingShang.id;
+    if ($("#inpLldSelGys").val() !== "" && $("#inpLldSelGys").val() === selGongYingShang.mc) {
+        lingLiaoDetail.gys_id = selGongYingShang.id;
     }
-    if ($("#inpKcSelRkr").val() !== "" && $("#inpKcSelRkr").val() === selA01.mc) {
-        kuCun.rkr_id = selA01.id;
+    if ($("#inpLldSelRkr").val() !== "" && $("#inpLldSelRkr").val() === selA01.mc) {
+        lingLiaoDetail.rkr_id = selA01.id;
     }
-    if ($("#inpKcSelQrq").val() !== "") {
-        kuCun.qrq = $("#inpKcSelQrq").val();
+    if ($("#inpLldSelQrq").val() !== "") {
+        lingLiaoDetail.qrq = $("#inpLldSelQrq").val();
     }
-    if ($("#inpKcSelZrq").val() !== "") {
-        kuCun.zrq = $("#inpKcSelZrq").val();
+    if ($("#inpLldSelZrq").val() !== "") {
+        lingLiaoDetail.zrq = $("#inpLldSelZrq").val();
+    }
+    if ($("#inpLldSelLsh").val() !== "") {
+        lingLiaoDetail.lsh = $("#inpLldSelLsh").val();
+    }
+    if ($("#inpLldSelTxm").val() !== "") {
+        lingLiaoDetail.txm = $("#inpLldSelTxm").val();
     }
     $.ajax({
-        url: "/LBStore/kuCun/getYlKuCunTop100.do?",
-        data: JSON.stringify(kuCun),
+        url: "/LBStore/lingLiaoDetail/getYlLingLiaoDetailTop100.do?",
+        data: JSON.stringify(lingLiaoDetail),
         contentType: "application/json",
         type: "post",
         cache: false,
@@ -671,7 +678,7 @@ function cxKuCun() {
         success: function (json) {
             if (json.result === 0) {
                 var sz = json.sz;
-                jxKuCun(sz);
+                jxLingLiaoDetail(sz);
             } else {
                 alert("查询库存失败:" + json.msg ? json.msg : "");
             }
@@ -679,34 +686,34 @@ function cxKuCun() {
     });
 }
 
-function jxKuCun(sz) {
-    $("#tblKuCun_body tr").remove();
-    kuCuns = [];
-    kuCuns = sz;
+function jxLingLiaoDetail(sz) {
+    $("#tblLingLiaoDetail_body tr").remove();
+    lingLiaoDetails = [];
+    lingLiaoDetails = sz;
     $.each(sz, function (index, item) { //遍历返回的json
         var trStr = '<tr><td>' + item.wzmc + '</td><td>' + item.pp + '</td><td>' + item.xhgg + '</td><td>' + item.zl + '</td><td>' + item.syzl + '</td><td>' + item.kw + '</td><td>' + item.rksj + '</td><td>'
-                + '<button class="btn btn-info btn-xs icon-plus" onclick="selKuCun(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button></td></tr>';
-        $("#tblKuCun_body").append(trStr);
+                + '<button class="btn btn-info btn-xs icon-plus" onclick="selLingLiaoDetail(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button></td></tr>';
+        $("#tblLingLiaoDetail_body").append(trStr);
     });
 }
 
-function selKuCun(index) {
-    curKuCun = null;
-    if (kuCuns.length <= index) {
+function selLingLiaoDetail(index) {
+    curLingLiaoDetail = null;
+    if (lingLiaoDetails.length <= index) {
         return;
     }
-    var kc = kuCuns[index];
+    var kc = lingLiaoDetails[index];
     for (var i = 0; i < hkmx.length; i++) {
         var e = hkmx[i];
         if (e.kc_id === kc.id) {
             return alert("该库存物资已选择");
         }
     }
-    setKcCunData(kc);
+    setLldCunData(kc);
 }
 
-function setKcCunData(kc, index) {
-    curKuCun = kc;
+function setLldCunData(kc, index) {
+    curLingLiaoDetail = kc;
     var m = hkmx[index];
     m = m ? m : {};
     if (m.dymx && typeof m.dymx === "string") {
@@ -750,13 +757,13 @@ function setKcCunData(kc, index) {
         $("#divMxDymx").hide();
     }
     selectMxJlfs();
-    $("#selKuCunModal").modal("hide");
+    $("#selLingLiaoDetailModal").modal("hide");
     $("#huanKuMingXiModal").modal("show");
 }
 
-function cxKuCunById(id, index) {
+function cxLingLiaoDetailById(id, index) {
     $.ajax({
-        url: "/LBStore/kuCun/getKuCunById.do?id=" + id,
+        url: "/LBStore/lingLiaoDetail/getKuCunById.do?id=" + id,
         contentType: "application/json",
         type: "post",
         cache: false,
@@ -765,8 +772,8 @@ function cxKuCunById(id, index) {
         },
         success: function (json) {
             if (json.result === 0) {
-                var kc = json.kuCun;
-                setKcCunData(kc, index);
+                var lld = json.lingLiaoDetail;
+                setLldCunData(lld, index);
             } else {
                 alert("查询库存失败:" + json.msg ? json.msg : "");
             }

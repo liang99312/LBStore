@@ -7,6 +7,7 @@ package com.lb.lbstore.service.impl;
 
 import com.lb.lbstore.dao.LingLiaoDao;
 import com.lb.lbstore.domain.LingLiao;
+import com.lb.lbstore.domain.LingLiaoDetail;
 import com.lb.lbstore.service.LingLiaoService;
 import java.util.HashMap;
 import java.util.List;
@@ -74,6 +75,23 @@ public class LingLiaoServiceImpl implements LingLiaoService {
     @Override
     public boolean dealLingLiao(LingLiao lingLiao,Integer a01_id) {
         return lingLiaoDao.dealLingLiao(lingLiao, a01_id);
+    }
+    
+    @Override
+    public int queryDetailRows(HashMap map) {
+        String sql = "select (1) from LingLiao where qy_id="+map.get("qy_id");
+        if (map.containsKey("mc")) {
+            sql += " and mc like '%" + map.get("mc") + "%'";
+        }
+        if (map.containsKey("state")) {
+            sql += " and state = " + map.get("state");
+        }
+        return lingLiaoDao.getCount(sql, null);
+    }
+
+    @Override
+    public List<LingLiaoDetail> queryLingLiaoDetailsByPage(HashMap map) {
+        return lingLiaoDao.queryLingLiaoDetailsByPage(map);
     }
 
 }

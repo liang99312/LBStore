@@ -30,6 +30,7 @@ public class HuanKuDetail {
     private Integer hk_id;
     private Integer kh_id;
     private Integer kc_id;
+    private Integer lld_id;
     private Integer wzzd_id;
     private String wzmc;
     private Integer wzlb_id;
@@ -269,6 +270,14 @@ public class HuanKuDetail {
 
     public void setKc_id(Integer kc_id) {
         this.kc_id = kc_id;
+    }
+
+    public Integer getLld_id() {
+        return lld_id;
+    }
+
+    public void setLld_id(Integer lld_id) {
+        this.lld_id = lld_id;
     }
 
     public String getDh() {
