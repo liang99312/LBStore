@@ -50,8 +50,8 @@ public class HuanKuDetail {
     private String zldw;   
     private String jlfs = "pt"; //普通记录(pt)；总量记录(zl)；单元明细(mx)
     private Double bzgg = 1.0D; //包装规格
-    private Double sll = 1.0D;
-    private Double slzl = 1.0D;
+    private Double hkl = 1.0D;
+    private Double hkzl = 1.0D;
     private String tysx;
     private String dymx;
     private String kw;
@@ -176,20 +176,20 @@ public class HuanKuDetail {
         this.bzgg = bzgg;
     }
 
-    public Double getSll() {
-        return sll;
+    public Double getHkl() {
+        return hkl;
     }
 
-    public void setSll(Double sll) {
-        this.sll = sll;
+    public void setHkl(Double hkl) {
+        this.hkl = hkl;
     }
 
-    public Double getSlzl() {
-        return slzl;
+    public Double getHkzl() {
+        return hkzl;
     }
 
-    public void setSlzl(Double slzl) {
-        this.slzl = slzl;
+    public void setHkzl(Double hkzl) {
+        this.hkzl = hkzl;
     }
 
     public String getTysx() {

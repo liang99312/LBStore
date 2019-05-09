@@ -11,15 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.lb.lbstore.domain.A01;
-import com.lb.lbstore.domain.LoginUser;
-import com.lb.lbstore.domain.QiYe;
 import com.lb.lbstore.service.A01Service;
 import com.lb.lbstore.userlisten.ApplicationConstants;
-import com.lb.lbstore.util.DataUtil;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -70,6 +66,7 @@ public class LoginController extends BaseController {
                 ApplicationConstants.addLoginUser(a01, this.request.getSession().getId());
                 map.put("result", 0);
                 map.put("a01",a01);
+                map.put("url","/goHome.do");
             }
         }
         return map;
@@ -98,8 +95,10 @@ public class LoginController extends BaseController {
         PrintWriter out = null;
         try {
             A01 a01 = (A01) request.getSession().getAttribute("a01");
-            ApplicationConstants.removeLoginUser(a01.getId(), request.getSession().getId());
-            request.getSession().removeAttribute("a01");
+            if(a01 != null){
+                ApplicationConstants.removeLoginUser(a01.getId(), request.getSession().getId());
+                request.getSession().removeAttribute("a01");
+            }
             out = response.getWriter();
             String loginPage = request.getContextPath() + "/index.html";
             StringBuilder builder = new StringBuilder();
@@ -112,7 +111,8 @@ public class LoginController extends BaseController {
         } catch (IOException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            out.close();
+            if(out != null)
+                out.close();
         }
     }
     

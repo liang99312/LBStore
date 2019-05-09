@@ -164,7 +164,7 @@ public class HuanKuDao extends BaseDao {
                 detail.setHk_id(id);
                 detail.setDh(huanKu.getDh());
                 if ("pt".equals(detail.getJlfs())) {
-                    detail.setSlzl(detail.getSll());
+                    detail.setHkzl(detail.getHkl());
                 }
                 session.save(detail);
             }
@@ -298,13 +298,13 @@ public class HuanKuDao extends BaseDao {
             for (KuCun kc : kcList) {
                 HuanKuDetail detail = detailTable.get(kc.getId());
                 if (detail != null) {
-                    if (kc.getSyzl() < detail.getSlzl()) {
+                    if (kc.getSyzl() < detail.getHkzl()) {
                         tx.rollback();
                         result = false;
                         return result;
                     }
-                    kc.setSyzl(kc.getSyzl() - detail.getSlzl());
-                    kc.setSyl(kc.getSyl() - detail.getSll());
+                    kc.setSyzl(kc.getSyzl() + detail.getHkzl());
+                    kc.setSyl(kc.getSyl() + detail.getHkl());
                     if (detail.getDymx() != null && !"".equals(detail.getDymx())) {
                         JSONArray detailDymx = JSONArray.parseArray(detail.getDymx());
                         JSONArray kcDymx = JSONArray.parseArray(kc.getDymx());
@@ -318,7 +318,7 @@ public class HuanKuDao extends BaseDao {
                             int id = k.getIntValue("id");
                             if (dxIds.contains(id)) {
                                 k.remove("state");
-                                k.put("state", 1);
+                                k.put("state", 0);
                             }
                         }
                         System.out.println(kcDymx.toJSONString());

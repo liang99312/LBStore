@@ -82,7 +82,7 @@ function selectCangKu(json) {
     if (json.id !== editCangKu.id) {
         if (hkmx.length > 0) {
             $("#inpCk").val(editCangKu.mc);
-            return alert("已选择其他仓库的库存");
+            return alert("已选择其他仓库的领料");
         }
         editCangKu = json;
         $("#inpCk").val(editCangKu.mc);
@@ -667,20 +667,20 @@ function cxLingLiaoDetail() {
         lingLiaoDetail.txm = $("#inpLldSelTxm").val();
     }
     $.ajax({
-        url: "/LBStore/lingLiaoDetail/getYlLingLiaoDetailTop100.do?",
+        url: "/LBStore/lingLiao/getLingLiaoDetailTop100.do?",
         data: JSON.stringify(lingLiaoDetail),
         contentType: "application/json",
         type: "post",
         cache: false,
         error: function (msg, textStatus) {
-            alert("查询库存失败");
+            alert("查询领料失败");
         },
         success: function (json) {
             if (json.result === 0) {
                 var sz = json.sz;
                 jxLingLiaoDetail(sz);
             } else {
-                alert("查询库存失败:" + json.msg ? json.msg : "");
+                alert("查询领料失败:" + json.msg ? json.msg : "");
             }
         }
     });
@@ -691,7 +691,7 @@ function jxLingLiaoDetail(sz) {
     lingLiaoDetails = [];
     lingLiaoDetails = sz;
     $.each(sz, function (index, item) { //遍历返回的json
-        var trStr = '<tr><td>' + item.wzmc + '</td><td>' + item.pp + '</td><td>' + item.xhgg + '</td><td>' + item.zl + '</td><td>' + item.syzl + '</td><td>' + item.kw + '</td><td>' + item.rksj + '</td><td>'
+        var trStr = '<tr><td>' + item.lsh + '</td><td>' + item.wzmc + '</td><td>' + item.pp + '</td><td>' + item.xhgg + '</td><td>' + item.slzl + '</td><td>' + item.sj + '</td><td>'
                 + '<button class="btn btn-info btn-xs icon-plus" onclick="selLingLiaoDetail(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button></td></tr>';
         $("#tblLingLiaoDetail_body").append(trStr);
     });
@@ -706,7 +706,7 @@ function selLingLiaoDetail(index) {
     for (var i = 0; i < hkmx.length; i++) {
         var e = hkmx[i];
         if (e.kc_id === kc.id) {
-            return alert("该库存物资已选择");
+            return alert("该领料物资已选择");
         }
     }
     setLldCunData(kc);
@@ -763,19 +763,19 @@ function setLldCunData(kc, index) {
 
 function cxLingLiaoDetailById(id, index) {
     $.ajax({
-        url: "/LBStore/lingLiaoDetail/getKuCunById.do?id=" + id,
+        url: "/LBStore/lingLiao/getLingLiaoDetailById.do?id=" + id,
         contentType: "application/json",
         type: "post",
         cache: false,
         error: function (msg, textStatus) {
-            alert("查询库存失败");
+            alert("查询领料失败");
         },
         success: function (json) {
             if (json.result === 0) {
                 var lld = json.lingLiaoDetail;
                 setLldCunData(lld, index);
             } else {
-                alert("查询库存失败:" + json.msg ? json.msg : "");
+                alert("查询领料失败:" + json.msg ? json.msg : "");
             }
         }
     });

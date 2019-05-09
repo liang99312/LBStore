@@ -94,4 +94,9 @@ public class LingLiaoServiceImpl implements LingLiaoService {
         return lingLiaoDao.queryLingLiaoDetailsByPage(map);
     }
 
+    @Override
+    public List<LingLiaoDetail> getLingLiaoDetailTop100(LingLiaoDetail detail) {
+        return lingLiaoDao.queryLingLiaoDetailsTop100(detail);
+    }
+
 }

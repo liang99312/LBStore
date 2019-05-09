@@ -37,5 +37,7 @@ public interface LingLiaoService {
     public int queryDetailRows(HashMap map);
     
     public List<LingLiaoDetail> queryLingLiaoDetailsByPage(HashMap map);
+    
+    public List<LingLiaoDetail> getLingLiaoDetailTop100(LingLiaoDetail detail);
 
 }

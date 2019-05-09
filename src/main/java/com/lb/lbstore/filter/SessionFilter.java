@@ -31,7 +31,7 @@ public class SessionFilter extends OncePerRequestFilter {
         // 请求的url  
         String url = request.getRequestURI();  
         System.out.println("url=" + url);
-        if(url.contains("LbmHotel")){  
+        if(url.contains("LBStore")){  
             boolean doFilter = chek(notFilter,url);  
             if(doFilter){  
                 Object obj = request.getSession().getAttribute("a01");  

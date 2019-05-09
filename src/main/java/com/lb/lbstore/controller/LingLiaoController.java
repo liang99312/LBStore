@@ -5,6 +5,7 @@
  */
 package com.lb.lbstore.controller;
 
+import com.lb.lbstore.domain.A01;
 import com.lb.lbstore.domain.Page;
 import javax.annotation.Resource;
 
@@ -12,10 +13,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.lb.lbstore.domain.LingLiao;
+import com.lb.lbstore.domain.LingLiaoDetail;
 import com.lb.lbstore.service.LingLiaoService;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -218,6 +221,26 @@ public class LingLiaoController extends BaseController {
         map.put("pageSize", model.getPageSize());
         model.setList(this.lingLiaoServiceImpl.queryLingLiaoDetailsByPage(map));
         return model;
+    }
+    
+    @RequestMapping(value = "getLingLiaoDetailTop100.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> getKuCunTop100(@RequestBody LingLiaoDetail model) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            A01 loginA01 = getDlA01();
+            model.setQy_id(loginA01.getQy_id());
+            List<LingLiaoDetail> list = lingLiaoServiceImpl.getLingLiaoDetailTop100(model);
+            map.put("result", 0);
+            map.put("sz", list);
+        } catch (Exception e) {
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
     }
 
 }

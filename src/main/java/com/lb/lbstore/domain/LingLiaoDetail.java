@@ -59,6 +59,10 @@ public class LingLiaoDetail {
     private transient String khmc;
     private transient String llrmc;
     private transient String sprmc;
+    private transient String lsh;
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm",timezone = "GMT+8")
+    private transient Date sj;
 
     public Integer getId() {
         return id;
@@ -282,6 +286,22 @@ public class LingLiaoDetail {
 
     public void setDh(String dh) {
         this.dh = dh;
+    }
+
+    public String getLsh() {
+        return lsh;
+    }
+
+    public void setLsh(String lsh) {
+        this.lsh = lsh;
+    }
+
+    public Date getSj() {
+        return sj;
+    }
+
+    public void setSj(Date sj) {
+        this.sj = sj;
     }
 
     @Override
