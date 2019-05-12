@@ -20,10 +20,11 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Jane
  */
 @Entity
-@JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler", "fieldHandler"})
 public class HuanKuDetail {
-    
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private Integer qy_id;
     private Integer ck_id;
@@ -41,13 +42,14 @@ public class HuanKuDetail {
     private String pp;
     private String scc;
     private String txm;
-    @DateTimeFormat(pattern="yyyy-MM-dd")
-    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
+    private String pc;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date scrq;
     private Integer bzq;
     private Double dj;
-    private String dw;    
-    private String zldw;   
+    private String dw;
+    private String zldw;
     private String jlfs = "pt"; //普通记录(pt)；总量记录(zl)；单元明细(mx)
     private Double bzgg = 1.0D; //包装规格
     private Double hkl = 1.0D;
@@ -55,7 +57,7 @@ public class HuanKuDetail {
     private String tysx;
     private String dymx;
     private String kw;
-    
+
     public Integer getId() {
         return id;
     }
@@ -135,7 +137,7 @@ public class HuanKuDetail {
     public void setXhgg(String xhgg) {
         this.xhgg = xhgg;
     }
-    
+
     public String getPp() {
         return pp;
     }
@@ -288,6 +290,14 @@ public class HuanKuDetail {
         this.dh = dh;
     }
 
+    public String getPc() {
+        return pc;
+    }
+
+    public void setPc(String pc) {
+        this.pc = pc;
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;
@@ -309,9 +319,9 @@ public class HuanKuDetail {
         }
         return true;
     }
-    
+
     @Override
-    public String toString(){
+    public String toString() {
         return wzmc;
     }
 }

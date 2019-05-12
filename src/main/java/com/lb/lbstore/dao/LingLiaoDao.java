@@ -181,14 +181,24 @@ public class LingLiaoDao extends BaseDao {
         Session session = null;
         try {
             session = getSessionFactory().openSession();
-            String sql = "select {lld.*},kh.mc as khmc,ck.mc as ckmc,ll.spsj as sj,ll.lsh as lsh from LingLiaoDetail lld left join LingLiao ll on lld.ll_id=ll.id "
-                    + "left join CangKu ck on ll.ck_id=ck.id left join KeHu kh on ll.kh_id=kh.id "
+            String sql = "select {lld.*},kh.mc as khmc,ck.mc as ckmc,ll.spsj as sj,ll.lsh as lsh,a01.mc as llrmc,l.mc as wzlb from LingLiaoDetail lld "
+                    + "left join LingLiao ll on lld.ll_id=ll.id "
+                    + "left join CangKu ck on lld.ck_id=ck.id "
+                    + "left join KeHu kh on ll.kh_id=kh.id "
+                    + "left join A01 a01 on ll.llr_id=a01.id "
+                    + "left join WuZiLeiBie l on lld.wzlb_id=l.id "
                     + "where ll.qy_id=" + detail.getQy_id();
             if (detail.getLsh() != null && !"".equals(detail.getLsh())) {
                 sql += " and ll.lsh = '" + detail.getLsh() + "'";
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
-            navtiveSQL.addEntity("lld", LingLiaoDetail.class).addScalar("khmc", StandardBasicTypes.STRING).addScalar("ckmc", StandardBasicTypes.STRING).addScalar("sj", StandardBasicTypes.DATE).addScalar("lsh", StandardBasicTypes.STRING);
+            navtiveSQL.addEntity("lld", LingLiaoDetail.class)
+                    .addScalar("khmc", StandardBasicTypes.STRING)
+                    .addScalar("ckmc", StandardBasicTypes.STRING)
+                    .addScalar("sj", StandardBasicTypes.DATE)
+                    .addScalar("lsh", StandardBasicTypes.STRING)
+                    .addScalar("llrmc", StandardBasicTypes.STRING)
+                    .addScalar("wzlb", StandardBasicTypes.STRING);
             List list = navtiveSQL.list();
             for (Object obj : list) {
                 Object[] objs = (Object[]) obj;
@@ -197,10 +207,14 @@ public class LingLiaoDao extends BaseDao {
                 String ckmc = (String) objs[2];
                 Date sj = (Date) objs[3];
                 String lsh = (String) objs[4];
+                String llrmc = (String) objs[5];
+                String wzlb = (String) objs[6];
                 lld.setKhmc(khmc);
                 lld.setCkmc(ckmc);
                 lld.setSj(sj);
                 lld.setLsh(lsh);
+                lld.setLlrmc(llrmc);
+                lld.setWzlb(wzlb);
                 result.add(lld);
             }
         } catch (Exception e) {

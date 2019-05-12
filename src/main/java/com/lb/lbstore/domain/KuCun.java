@@ -43,6 +43,7 @@ public class KuCun {
     private String pp;
     private String scc;
     private String txm;
+    private String pc;
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm",timezone = "GMT+8")
     private Date rksj;
@@ -436,6 +437,14 @@ public class KuCun {
         this.bz = bz;
     }
 
+    public String getPc() {
+        return pc;
+    }
+
+    public void setPc(String pc) {
+        this.pc = pc;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 3;

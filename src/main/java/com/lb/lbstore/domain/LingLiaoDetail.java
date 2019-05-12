@@ -41,6 +41,7 @@ public class LingLiaoDetail {
     private String pp;
     private String scc;
     private String txm;
+    private String pc;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date scrq;
@@ -304,6 +305,14 @@ public class LingLiaoDetail {
         this.sj = sj;
     }
 
+    public String getPc() {
+        return pc;
+    }
+
+    public void setPc(String pc) {
+        this.pc = pc;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 3;

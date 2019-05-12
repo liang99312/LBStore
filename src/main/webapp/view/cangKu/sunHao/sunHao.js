@@ -596,6 +596,7 @@ function saveSunHaoMingXi() {
     mx.xhgg = $("#inpMxXhgg").val();
     mx.scc = $("#inpMxScc").val();
     mx.txm = $("#inpMxTxm").val();
+    mx.pc = $("#inpMxPc").val();
     mx.scrq = $("#inpMxScrq").val();
     mx.bzq = $("#inpMxBzq").val();
     mx.dj = parseFloat($("#inpMxDj").val());
@@ -729,6 +730,7 @@ function setKcCunData(kc, index) {
     $("#inpMxXhgg").val(kc.xhgg);
     $("#inpMxScc").val(kc.scc);
     $("#inpMxTxm").val(kc.txm);
+    $("#inpMxPc").val(kc.pc);
     $("#inpMxScrq").val(kc.scrq);
     $("#inpMxBzq").val(kc.bzq);
     $("#inpMxDj").val(kc.dj);

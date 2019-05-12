@@ -180,6 +180,7 @@ function setDetails(m) {
     $("#inpMxXhgg").val(m.xhgg);
     $("#inpMxScc").val(m.scc);
     $("#inpMxTxm").val(m.txm);
+    $("#inpMxPc").val(m.pc);
     $("#inpMxScrq").val(m.scrq);
     $("#inpMxBzq").val(m.bzq);
     $("#inpMxDj").val(m.dj);
@@ -651,6 +652,7 @@ function addRuKuMingXi() {
     $("#inpMxXhgg").val("");
     $("#inpMxScc").val("");
     $("#inpMxTxm").val("");
+    $("#inpMxPc").val("");
     $("#inpMxScrq").val("");
     $("#inpMxBzq").val("0");
     $("#inpMxDj").val("1");
@@ -703,6 +705,7 @@ function setRuKuMingXiData(index) {
     $("#inpMxXhgg").val(m.xhgg);
     $("#inpMxScc").val(m.scc);
     $("#inpMxTxm").val(m.txm);
+    $("#inpMxPc").val(m.pc);
     $("#inpMxScrq").val(m.scrq);
     $("#inpMxBzq").val(m.bzq);
     $("#inpMxDj").val(m.dj);
@@ -791,6 +794,7 @@ function saveRuKuMingXi() {
     mx.xhgg = $("#inpMxXhgg").val();
     mx.scc = $("#inpMxScc").val();
     mx.txm = $("#inpMxTxm").val();
+    mx.pc = $("#inpMxPc").val();
     mx.scrq = $("#inpMxScrq").val();
     mx.dj = parseFloat($("#inpMxDj").val());
     mx.dw = $("#inpMxDw").val();

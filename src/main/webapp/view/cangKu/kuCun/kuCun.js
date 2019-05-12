@@ -203,6 +203,8 @@ function setKuCunData(m){
     $("#inpMxDj").val(m.dj);
     $("#inpMxDw").val(m.dw);
     $("#inpMxSl").val(m.sl);
+    $("#inpMxPc").val(m.pc);
+    $("#inpMxJlfs").val(m.jlfs);
     $("#inpMxBzgg").val(m.bzgg);
     $("#inpMxZldw").val(m.zldw);
     $("#inpMxZl").val(m.zl);

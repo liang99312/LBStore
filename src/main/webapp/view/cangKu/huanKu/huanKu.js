@@ -34,18 +34,18 @@ $(document).ready(function () {
     getGongYingShangs(setTrager_gongYingShang);
     $("#inpMxScrq").datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, minView: 2, startView: 2, forceParse: 0, showMeridian: 1});
 
-    $("#inpMxSll").keyup(function () {
+    $("#inpMxHkl").keyup(function () {
         if (curLingLiaoDetail && curLingLiaoDetail.jlfs === "zl") {
-            var temp_sll = parseFloat($("#inpMxSll").val());
+            var temp_sll = parseFloat($("#inpMxHkl").val());
             var temp_slzl = temp_sll * curLingLiaoDetail.bzgg;
-            $("#inpMxSlzl").val(temp_slzl.toFixed(3));
+            $("#inpMxHkzl").val(temp_slzl.toFixed(3));
         }
     });
-    $("#inpMxSlzl").keyup(function () {
+    $("#inpMxHkzl").keyup(function () {
         if (curLingLiaoDetail && curLingLiaoDetail.jlfs === "zl") {
-            var temp_slzl = parseFloat($("#inpMxSlzl").val());
+            var temp_slzl = parseFloat($("#inpMxHkzl").val());
             var temp_sll = temp_slzl / curLingLiaoDetail.bzgg;
-            $("#inpMxSll").val(temp_sll.toFixed(3));
+            $("#inpMxHkl").val(temp_sll.toFixed(3));
         }
     });
 });
@@ -491,8 +491,8 @@ function calcDymx() {
         for (var i = 0; i < dymx_opt.yxData.length; i++) {
             zl += parseFloat(dymx_opt.yxData[i].val);
         }
-        $("#inpMxSll").val(dymx_opt.yxData.length);
-        $("#inpMxSlzl").val(zl.toFixed(3));
+        $("#inpMxHkl").val(dymx_opt.yxData.length);
+        $("#inpMxHkzl").val(zl.toFixed(3));
     }
 }
 
@@ -567,7 +567,7 @@ function saveHuanKuMingXi() {
     if (!editLeiBie || editLeiBie === null) {
         return alert("物资类别不能为空");
     }
-    if ($("#inpMxSll").val() === "") {
+    if ($("#inpMxHkl").val() === "") {
         return alert("请输入还库数量");
     }
     var mx = {};
@@ -596,6 +596,7 @@ function saveHuanKuMingXi() {
     mx.xhgg = $("#inpMxXhgg").val();
     mx.scc = $("#inpMxScc").val();
     mx.txm = $("#inpMxTxm").val();
+    mx.pc = $("#inpMxPc").val();
     mx.scrq = $("#inpMxScrq").val();
     mx.bzq = $("#inpMxBzq").val();
     mx.dj = parseFloat($("#inpMxDj").val());
@@ -606,8 +607,8 @@ function saveHuanKuMingXi() {
     mx.kw = $("#inpMxKwh").val();
     mx.dymx = JSON.stringify(dymx_opt.yxData);
     mx.tysx = JSON.stringify(tysx_opt.data);
-    mx.sll = parseFloat($("#inpMxSll").val());
-    mx.slzl = parseFloat($("#inpMxSlzl").val());
+    mx.sll = parseFloat($("#inpMxHkl").val());
+    mx.slzl = parseFloat($("#inpMxHkzl").val());
     if (mx.slzl === undefined || mx.slzl === "" || mx.slzl < 0.001) {
         mx.slzl = mx.sll;
     }
@@ -702,18 +703,18 @@ function selLingLiaoDetail(index) {
     if (lingLiaoDetails.length <= index) {
         return;
     }
-    var kc = lingLiaoDetails[index];
+    var detail = lingLiaoDetails[index];
     for (var i = 0; i < hkmx.length; i++) {
         var e = hkmx[i];
-        if (e.kc_id === kc.id) {
+        if (e.kc_id === detail.id) {
             return alert("该领料物资已选择");
         }
     }
-    setLldCunData(kc);
+    setLldData(detail);
 }
 
-function setLldCunData(kc, index) {
-    curLingLiaoDetail = kc;
+function setLldData(detail, index) {
+    curLingLiaoDetail = detail;
     var m = hkmx[index];
     m = m ? m : {};
     if (m.dymx && typeof m.dymx === "string") {
@@ -723,35 +724,38 @@ function setLldCunData(kc, index) {
     }
     m.sll = m.sll ? m.sll : 0;
     m.slzl = m.slzl ? m.slzl : 0;
-    if (kc.dymx && typeof kc.dymx === "string") {
-        kc.dymx = JSON.parse(kc.dymx);
+    if (detail.dymx && typeof detail.dymx === "string") {
+        detail.dymx = JSON.parse(detail.dymx);
     }
-    dymx_opt = {data: kc.dymx, yxData: m.dymx, func: calcDymx, type:2};
-    editWzzd = {"id": kc.wzzd_id, "mc": kc.wzmc};
-    $("#inpMxWz").val(kc.wzmc);
-    editLeiBie = {"id": kc.wzlb_id, "mc": kc.wzlb};
-    $("#inpMxLb").val(kc.wzlb);
-    $("#inpMxPp").val(kc.pp);
-    editXhgg = {"id": kc.xhgg_id, "mc": kc.xhgg};
-    $("#inpMxXhgg").val(kc.xhgg);
-    $("#inpMxScc").val(kc.scc);
-    $("#inpMxTxm").val(kc.txm);
-    $("#inpMxScrq").val(kc.scrq);
-    $("#inpMxBzq").val(kc.bzq);
-    $("#inpMxDj").val(kc.dj);
-    $("#inpMxDw").val(kc.dw);
-    $("#inpMxSl").val(kc.sl);
-    $("#inpMxJlfs").val(kc.jlfs);
-    $("#inpMxBzgg").val(kc.bzgg);
-    $("#inpMxZldw").val(kc.zldw);
-    $("#inpMxZl").val(kc.zl);
-    $("#inpMxKwh").val(kc.kw);
-    buildTysx(kc.tysx);
-    $("#inpMxSyl").val(kc.syl);
-    $("#inpMxSll").val(m.sll);
-    $("#inpMxSlzl").val(m.slzl);
+    dymx_opt = {data: detail.dymx, yxData: m.dymx, func: calcDymx, type:2};
+    editWzzd = {"id": detail.wzzd_id, "mc": detail.wzmc};
+    $("#inpMxWz").val(detail.wzmc);
+    editLeiBie = {"id": detail.wzlb_id, "mc": detail.wzlb};
+    $("#inpMxLb").val(detail.wzlb);
+    $("#inpMxPp").val(detail.pp);
+    editXhgg = {"id": detail.xhgg_id, "mc": detail.xhgg};
+    $("#inpMxXhgg").val(detail.xhgg);
+    $("#inpMxScc").val(detail.scc);
+    $("#inpMxTxm").val(detail.txm);
+    $("#inpMxPc").val(detail.pc);
+    $("#inpMxScrq").val(detail.scrq);
+    $("#inpMxBzq").val(detail.bzq);
+    $("#inpMxDj").val(detail.dj);
+    $("#inpMxDw").val(detail.dw);
+    $("#inpMxSl").val(detail.sl);
+    $("#inpMxJlfs").val(detail.jlfs);
+    $("#inpMxBzgg").val(detail.bzgg);
+    $("#inpMxZldw").val(detail.zldw);
+    $("#inpMxZl").val(detail.zl);
+    $("#inpMxKwh").val(detail.kw);
+    $("#inpMxLlr").val(detail.llrmc);
+    buildTysx(detail.tysx);
+    $("#inpMxSll").val(detail.sll);
+    $("#inpMxSlzl").val(detail.slzl);
+    $("#inpMxHkl").val(0);
+    $("#inpMxHkzl").val(0);
     buildDymx();
-    if (kc.jlfs === "mx") {
+    if (detail.jlfs === "mx") {
         $("#divMxDymx").show();
     } else {
         $("#divMxDymx").hide();
@@ -773,7 +777,7 @@ function cxLingLiaoDetailById(id, index) {
         success: function (json) {
             if (json.result === 0) {
                 var lld = json.lingLiaoDetail;
-                setLldCunData(lld, index);
+                setLldData(lld, index);
             } else {
                 alert("查询领料失败:" + json.msg ? json.msg : "");
             }

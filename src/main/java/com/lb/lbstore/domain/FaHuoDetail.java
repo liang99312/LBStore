@@ -40,6 +40,7 @@ public class FaHuoDetail {
     private String pp;
     private String scc;
     private String txm;
+    private String pc;
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
     private Date scrq;
@@ -277,6 +278,14 @@ public class FaHuoDetail {
 
     public void setDh(String dh) {
         this.dh = dh;
+    }
+
+    public String getPc() {
+        return pc;
+    }
+
+    public void setPc(String pc) {
+        this.pc = pc;
     }
 
     @Override
