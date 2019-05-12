@@ -437,6 +437,7 @@ CREATE TABLE `store`.`huankudetail` (
   `ck_id` INT NOT NULL,
   `hk_id` INT NOT NULL,
   `kh_id` INT NULL,
+  `lld_id` INT NULL,
   `wzzd_id` INT NOT NULL,
   `wzmc` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
   `wzlb_id` INT NOT NULL,

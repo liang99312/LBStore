@@ -333,7 +333,7 @@ public class SunHaoDao extends BaseDao {
             sunHao.setState(1);
             sunHao.setSpr_id(a01_id);
             sunHao.setSpsj(new Date());
-            sunHao.setLsh(LshUtil.getLldLsh());
+            sunHao.setLsh(LshUtil.getShdLsh());
             session.update(sunHao);
             session.flush();
             tx.commit();

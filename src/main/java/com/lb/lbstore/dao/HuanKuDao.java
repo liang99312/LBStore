@@ -36,41 +36,41 @@ public class HuanKuDao extends BaseDao {
                     + "left join CangKu ck on hk.ck_id=ck.id "
                     + "left join A01 a01 on hk.hkr_id=a01.id "
                     + "left join A01 a02 on hk.spr_id=a02.id "
-                    + "where sh.id=" + id;
+                    + "where hk.id=" + id;
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
             navtiveSQL.addEntity("hk", HuanKu.class)
                     .addScalar("ckmc", StandardBasicTypes.STRING)
                     .addScalar("hkrmc", StandardBasicTypes.STRING)
                     .addScalar("sprmc", StandardBasicTypes.STRING);
             List list = navtiveSQL.list();
-            List<HuanKu> list_sh = new ArrayList();
+            List<HuanKu> list_hk = new ArrayList();
             for (Object obj : list) {
                 Object[] objs = (Object[]) obj;
-                HuanKu sh = (HuanKu) objs[0];
+                HuanKu hk = (HuanKu) objs[0];
                 String ckmc = (String) objs[1];
                 String hkrmc = (String) objs[2];
                 String sprmc = (String) objs[3];
-                sh.setCkmc(ckmc);
-                sh.setHkrmc(hkrmc);
-                sh.setSprmc(sprmc);
-                list_sh.add(sh);
+                hk.setCkmc(ckmc);
+                hk.setHkrmc(hkrmc);
+                hk.setSprmc(sprmc);
+                list_hk.add(hk);
             }
-            if (list_sh.isEmpty()) {
+            if (list_hk.isEmpty()) {
                 return null;
             }
-            huanKu = list_sh.get(0);
+            huanKu = list_hk.get(0);
 
-            String sql_d = "select {d.*},l.mc as wzlb from HuanKuDetail d left join WuZiLeiBie l on d.wzlb_id=l.id where d.sh_id=" + id;
+            String sql_d = "select {d.*},l.mc as wzlb from HuanKuDetail d left join WuZiLeiBie l on d.wzlb_id=l.id where d.hk_id=" + id;
             SQLQuery navtiveSQL_d = session.createSQLQuery(sql_d);
             navtiveSQL_d.addEntity("d", HuanKuDetail.class).addScalar("wzlb", StandardBasicTypes.STRING);
             List<HuanKuDetail> details = new ArrayList();
             List list_d = navtiveSQL_d.list();
             for (Object obj : list_d) {
                 Object[] objs = (Object[]) obj;
-                HuanKuDetail shd = (HuanKuDetail) objs[0];
+                HuanKuDetail hkd = (HuanKuDetail) objs[0];
                 String wzlb = (String) objs[1];
-                shd.setWzlb(wzlb);
-                details.add(shd);
+                hkd.setWzlb(wzlb);
+                details.add(hkd);
             }
             huanKu.setDetails(details);
         } catch (Exception e) {
@@ -94,7 +94,7 @@ public class HuanKuDao extends BaseDao {
             session = getSessionFactory().openSession();
             String sql = "select {hk.*},ck.mc as ckmc from HuanKu hk "
                     + "left join CangKu ck on hk.ck_id=ck.id "
-                    + "where sh.qy_id=" + map.get("qy_id");
+                    + "where hk.qy_id=" + map.get("qy_id");
             if (map.containsKey("mc")) {
                 sql += " and hk.wz like '%" + map.get("mc") + "%'";
             }
@@ -106,10 +106,10 @@ public class HuanKuDao extends BaseDao {
             List list = navtiveSQL.list();
             for (Object obj : list) {
                 Object[] objs = (Object[]) obj;
-                HuanKu sh = (HuanKu) objs[0];
+                HuanKu hk = (HuanKu) objs[0];
                 String ckmc = (String) objs[1];
-                sh.setCkmc(ckmc);
-                result.add(sh);
+                hk.setCkmc(ckmc);
+                result.add(hk);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -195,7 +195,7 @@ public class HuanKuDao extends BaseDao {
             tx = session.beginTransaction();
             session.update(huanKu);
             session.flush();
-            String deleteDetail = "delete from HuanKuDetail where sh_id=" + huanKu.getId();
+            String deleteDetail = "delete from HuanKuDetail where hk_id=" + huanKu.getId();
             session.createSQLQuery(deleteDetail).executeUpdate();
             session.flush();
             for (HuanKuDetail detail : huanKu.getDetails()) {
@@ -253,7 +253,7 @@ public class HuanKuDao extends BaseDao {
         try {
             session = getSessionFactory().openSession();
             tx = session.beginTransaction();
-            String deleteDetail = "delete from HuanKuDetail where sh_id=" + id;
+            String deleteDetail = "delete from HuanKuDetail where hk_id=" + id;
             session.createSQLQuery(deleteDetail).executeUpdate();
             String deleteLl = "delete from HuanKu where id=" + id;
             session.createSQLQuery(deleteLl).executeUpdate();
@@ -282,7 +282,7 @@ public class HuanKuDao extends BaseDao {
         try {
             session = getSessionFactory().openSession();
             tx = session.beginTransaction();
-            String sql = "from HuanKuDetail where sh_id=" + huanKu.getId();
+            String sql = "from HuanKuDetail where hk_id=" + huanKu.getId();
             List<HuanKuDetail> list = session.createQuery(sql).list();
             Hashtable<Integer, HuanKuDetail> detailTable = new Hashtable();
             StringBuilder sb = new StringBuilder();
@@ -333,7 +333,7 @@ public class HuanKuDao extends BaseDao {
             huanKu.setState(1);
             huanKu.setSpr_id(a01_id);
             huanKu.setSpsj(new Date());
-            huanKu.setLsh(LshUtil.getLldLsh());
+            huanKu.setLsh(LshUtil.getHkdLsh());
             session.update(huanKu);
             session.flush();
             tx.commit();

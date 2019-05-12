@@ -36,22 +36,22 @@ $(document).ready(function () {
 
     $("#inpMxHkl").keyup(function () {
         if (curLingLiaoDetail && curLingLiaoDetail.jlfs === "zl") {
-            var temp_sll = parseFloat($("#inpMxHkl").val());
-            var temp_slzl = temp_sll * curLingLiaoDetail.bzgg;
-            $("#inpMxHkzl").val(temp_slzl.toFixed(3));
+            var temp_hkl = parseFloat($("#inpMxHkl").val());
+            var temp_hkzl = temp_hkl * curLingLiaoDetail.bzgg;
+            $("#inpMxHkzl").val(temp_hkzl.toFixed(3));
         }
     });
     $("#inpMxHkzl").keyup(function () {
         if (curLingLiaoDetail && curLingLiaoDetail.jlfs === "zl") {
-            var temp_slzl = parseFloat($("#inpMxHkzl").val());
-            var temp_sll = temp_slzl / curLingLiaoDetail.bzgg;
-            $("#inpMxHkl").val(temp_sll.toFixed(3));
+            var temp_hkzl = parseFloat($("#inpMxHkzl").val());
+            var temp_hkl = temp_hkzl / curLingLiaoDetail.bzgg;
+            $("#inpMxHkl").val(temp_hkl.toFixed(3));
         }
     });
 });
 
 function setTrager_a01() {
-    $('#inpShr').AutoComplete({'data': lb_allA01s, 'paramName': 'editA01'});
+    $('#inpHkr').AutoComplete({'data': lb_allA01s, 'paramName': 'editA01'});
     $('#inpLldSelRkr').AutoComplete({'data': lb_allA01s, 'paramName': 'selA01'});
 }
 
@@ -300,8 +300,8 @@ function selectHuanKuDetail(id) {
                 hkmx = huanKu.details;
                 $("#inpCk").val(huanKu.ckmc);
                 editCangKu = {"id": huanKu.ck_id, "mc": huanKu.ckmc};
-                $("#inpShr").val(huanKu.shrmc);
-                editA01 = {"id": huanKu.shr_id, "mc": huanKu.shrmc};
+                $("#inpHkr").val(huanKu.hkrmc);
+                editA01 = {"id": huanKu.hkr_id, "mc": huanKu.hkrmc};
                 selectCangKu(editCangKu);
                 $("#inpDh").val(huanKu.dh);
                 $("#inpBz").val(huanKu.bz);
@@ -370,13 +370,13 @@ function saveHuanKu() {
             huanKu.ck_id = editCangKu.id;
         }
     }
-    if ($("#inpShr").val() === "") {
+    if ($("#inpHkr").val() === "") {
         return alert("请输入还库人信息");
     } else {
-        if ($("#inpShr").val() !== editA01.mc) {
+        if ($("#inpHkr").val() !== editA01.mc) {
             return alert("请输入还库人信息");
         } else {
-            huanKu.shr_id = editA01.id;
+            huanKu.hkr_id = editA01.id;
         }
     }
     var wz = "";
@@ -506,10 +506,10 @@ function jxHuanKuMingXi() {
         } else {
             item.tysx = [];
         }
-        var je = parseFloat(item.sll) * parseFloat(item.dj);
+        var je = parseFloat(item.hkl) * parseFloat(item.dj);
         var bj = optFlag === 3 || optFlag === 4 ? '' : '<button class="btn btn-info btn-xs icon-edit" onclick="editHuanKuMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var cz = optFlag === 3 || optFlag === 4 ? '' : '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteHuanKuMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>';
-        var trStr = '<tr><td>' + item.wzmc + '</td><td>' + item.pp + '</td><td>' + item.xhgg + '</td><td>' + item.sll + '</td><td>' + je + '</td><td>'
+        var trStr = '<tr><td>' + item.wzmc + '</td><td>' + item.pp + '</td><td>' + item.xhgg + '</td><td>' + item.hkl + '</td><td>' + je + '</td><td>'
                 + '<button class="btn btn-info btn-xs icon-file-alt" onclick="readHuanKuMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;'
                 + bj
                 + cz + '</td></tr>';
@@ -607,10 +607,10 @@ function saveHuanKuMingXi() {
     mx.kw = $("#inpMxKwh").val();
     mx.dymx = JSON.stringify(dymx_opt.yxData);
     mx.tysx = JSON.stringify(tysx_opt.data);
-    mx.sll = parseFloat($("#inpMxHkl").val());
-    mx.slzl = parseFloat($("#inpMxHkzl").val());
-    if (mx.slzl === undefined || mx.slzl === "" || mx.slzl < 0.001) {
-        mx.slzl = mx.sll;
+    mx.hkl = parseFloat($("#inpMxHkl").val());
+    mx.hkzl = parseFloat($("#inpMxHkzl").val());
+    if (mx.hkzl === undefined || mx.hkzl === "" || mx.hkzl < 0.001) {
+        mx.hkzl = mx.hkl;
     }
     mx.lld_id = curLingLiaoDetail.id;
     mx.kc_id = curLingLiaoDetail.kc_id;
@@ -625,8 +625,8 @@ function saveHuanKuMingXi() {
     var zje = 0;
     for (var i = 0; i < hkmx.length; i++) {
         var e = hkmx[i];
-        zsl = e.sll + zsl;
-        zje = e.sll * e.dj + zje;
+        zsl = e.hkl + zsl;
+        zje = e.hkl * e.dj + zje;
     }
     $("#inpSl").val(zsl);
     $("#inpJe").val(zje.toFixed(3));
@@ -745,13 +745,12 @@ function setLldData(detail, index) {
     $("#inpMxSl").val(detail.sl);
     $("#inpMxJlfs").val(detail.jlfs);
     $("#inpMxBzgg").val(detail.bzgg);
-    $("#inpMxZldw").val(detail.zldw);
-    $("#inpMxZl").val(detail.zl);
+    $("#inpMxSll").val(detail.sll);
+    $("#inpMxSlzlDw").val(detail.zldw);
+    $("#inpMxSlzl").val(detail.slzl);
     $("#inpMxKwh").val(detail.kw);
     $("#inpMxLlr").val(detail.llrmc);
     buildTysx(detail.tysx);
-    $("#inpMxSll").val(detail.sll);
-    $("#inpMxSlzl").val(detail.slzl);
     $("#inpMxHkl").val(0);
     $("#inpMxHkzl").val(0);
     buildDymx();
