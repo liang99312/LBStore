@@ -287,12 +287,39 @@ public class HuanKuDao extends BaseDao {
             Hashtable<Integer, HuanKuDetail> detailTable = new Hashtable();
             StringBuilder sb = new StringBuilder();
             sb.append("(-1");
+            Hashtable<Integer, HuanKuDetail> LlDetailTable = new Hashtable();
+            StringBuilder llSb = new StringBuilder();
+            llSb.append("(-1");
             for (HuanKuDetail e : huanKu.getDetails()) {
                 detailTable.put(e.getKc_id(), e);
                 sb.append(",");
                 sb.append(e.getKc_id());
+                
+                LlDetailTable.put(e.getLld_id(), e);
+                llSb.append(",");
+                llSb.append(e.getLld_id());
             }
             sb.append(")");
+            llSb.append(")");
+            
+            
+            
+            String lldString = "select lld.id as id, lld.slzl-h.zl as sl from lingliaodetail lld, (select sum(hkd.hkzl) as zl,hkd.lld_id as lld_id from huankudetail hkd where hkd.lld_id in "+llSb+" group by hkd.lld_id) as h where lld.id=h.lld_id;";
+            List lldList = session.createSQLQuery(lldString).list();
+            for(Object obj:lldList){
+                Object[] objs = (Object[]) obj;
+                Integer lld_id = (Integer) objs[0];
+                Float sl = (Float) objs[1];
+                HuanKuDetail detail = LlDetailTable.get(lld_id);
+                if(detail != null){
+                    if(sl < detail.getHkzl()){
+                        result = false;
+                        tx.rollback();
+                        return result;
+                    }
+                }
+            }
+            
             String kcSql = "from KuCun where id in " + sb.toString();
             List<KuCun> kcList = session.createQuery(kcSql).list();
             for (KuCun kc : kcList) {
@@ -321,11 +348,10 @@ public class HuanKuDao extends BaseDao {
                                 k.put("state", 0);
                             }
                         }
-                        System.out.println(kcDymx.toJSONString());
                         kc.setDymx(kcDymx.toJSONString());
                     }
                     //处理库存
-                    //session.save(kc);
+                    session.save(kc);
                 }
             }
             session.flush();
