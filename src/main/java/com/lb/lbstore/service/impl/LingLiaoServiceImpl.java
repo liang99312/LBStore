@@ -30,6 +30,11 @@ public class LingLiaoServiceImpl implements LingLiaoService {
     }
     
     @Override
+    public LingLiao getLingLiaoWithDetailById(Integer id) {
+        return  lingLiaoDao.getLingLiaoWithDetailById(id);
+    }
+    
+    @Override
     public LingLiaoDetail getLingLiaoDetailById(Integer id) {
         return  lingLiaoDao.getLingLiaoDetailById(id);
     }

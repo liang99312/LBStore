@@ -28,6 +28,70 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class LingLiaoDao extends BaseDao {
+    
+    public LingLiao getLingLiaoWithDetailById(Integer id) {
+        LingLiao lingLiao = null;
+        Session session = null;
+        try {
+            session = getSessionFactory().openSession();
+            String sql = "select {ll.*},kh.mc as khmc,ck.mc as ckmc,a01.mc as llrmc,a02.mc as sprmc from LingLiao ll "
+                    + "left join CangKu ck on ll.ck_id=ck.id "
+                    + "left join KeHu kh on ll.kh_id=kh.id "
+                    + "left join A01 a01 on ll.llr_id=a01.id "
+                    + "left join A01 a02 on ll.spr_id=a02.id "
+                    + "where ll.id=" + id;
+            SQLQuery navtiveSQL = session.createSQLQuery(sql);
+            navtiveSQL.addEntity("ll", LingLiao.class)
+                    .addScalar("khmc", StandardBasicTypes.STRING)
+                    .addScalar("ckmc", StandardBasicTypes.STRING)
+                    .addScalar("llrmc", StandardBasicTypes.STRING)
+                    .addScalar("sprmc", StandardBasicTypes.STRING);
+            List list = navtiveSQL.list();
+            List<LingLiao> list_ll = new ArrayList();
+            for (Object obj : list) {
+                Object[] objs = (Object[]) obj;
+                LingLiao ll = (LingLiao) objs[0];
+                String khmc = (String) objs[1];
+                String ckmc = (String) objs[2];
+                String llrmc = (String) objs[3];
+                String sprmc = (String) objs[4];
+                ll.setKhmc(khmc);
+                ll.setCkmc(ckmc);
+                ll.setLlrmc(llrmc);
+                ll.setSprmc(sprmc);
+                list_ll.add(ll);
+            }
+            if (list_ll.isEmpty()) {
+                return null;
+            }
+            lingLiao = list_ll.get(0);
+
+            String sql_d = "select {d.*},l.mc as wzlb from LingLiaoDetail d left join WuZiLeiBie l on d.wzlb_id=l.id where d.ll_id=" + id;
+            SQLQuery navtiveSQL_d = session.createSQLQuery(sql_d);
+            navtiveSQL_d.addEntity("d", LingLiaoDetail.class).addScalar("wzlb", StandardBasicTypes.STRING);
+            List<LingLiaoDetail> details = new ArrayList();
+            List list_d = navtiveSQL_d.list();
+            for (Object obj : list_d) {
+                Object[] objs = (Object[]) obj;
+                LingLiaoDetail lld = (LingLiaoDetail) objs[0];
+                String wzlb = (String) objs[1];
+                lld.setWzlb(wzlb);
+                details.add(lld);
+            }
+            lingLiao.setDetails(details);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (session != null) {
+                    session.close();
+                }
+            } catch (Exception he) {
+                he.printStackTrace();
+            }
+        }
+        return lingLiao;
+    }
 
     public LingLiaoDetail getLingLiaoDetailById(Integer id) {
         LingLiaoDetail lingLiaoDetail = null;
@@ -177,6 +241,36 @@ public class LingLiaoDao extends BaseDao {
                     + "where ll.qy_id=" + detail.getQy_id();
             if (detail.getLsh() != null && !"".equals(detail.getLsh())) {
                 sql += " and ll.lsh = '" + detail.getLsh() + "'";
+            }
+            if (detail.getCk_id() != null) {
+                sql += " and lld.ck_id = " + detail.getCk_id();
+            }
+            if (detail.getWzlb_id() != null) {
+                sql += " and lld.wzlb_id = " + detail.getWzlb_id();
+            }
+            if (detail.getWzmc() != null && !"".equals(detail.getWzmc())) {
+                sql += " and lld.wzmc = '" + detail.getWzmc() + "'";
+            }
+            if (detail.getXhgg() != null && !"".equals(detail.getXhgg())) {
+                sql += " and lld.xhgg = '" + detail.getXhgg() + "'";
+            }
+            if (detail.getKh_id() != null) {
+                sql += " and lld.kh_id = " + detail.getKh_id();
+            }
+            if (detail.getGys_id() != null) {
+                sql += " and lld.ck_id = " + detail.getGys_id();
+            }
+            if (detail.getLlr_id() != null) {
+                sql += " and ll.llr_id = " + detail.getLlr_id();
+            }
+            if (detail.getTxm() != null && !"".equals(detail.getTxm())) {
+                sql += " and lld.txm = '" + detail.getTxm() + "'";
+            }
+            if (detail.getQrq() != null && !"".equals(detail.getQrq())) {
+                sql += " and ll.spsj >= '" + detail.getQrq() + "'";
+            }
+            if (detail.getZrq() != null && !"".equals(detail.getZrq())) {
+                sql += " and ll.spsj <= '" + detail.getZrq() + "'";
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
             navtiveSQL.addEntity("lld", LingLiaoDetail.class)

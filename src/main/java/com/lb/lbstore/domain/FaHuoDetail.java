@@ -30,6 +30,7 @@ public class FaHuoDetail {
     private Integer fh_id;
     private Integer kh_id;
     private Integer kc_id;
+    private Integer gys_id;
     private Integer wzzd_id;
     private String wzmc;
     private Integer wzlb_id;
@@ -86,6 +87,14 @@ public class FaHuoDetail {
 
     public void setKh_id(Integer kh_id) {
         this.kh_id = kh_id;
+    }
+
+    public Integer getGys_id() {
+        return gys_id;
+    }
+
+    public void setGys_id(Integer gys_id) {
+        this.gys_id = gys_id;
     }
 
     public Integer getWzlb_id() {

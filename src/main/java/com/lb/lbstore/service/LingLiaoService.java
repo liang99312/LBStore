@@ -18,6 +18,8 @@ public interface LingLiaoService {
 
     public LingLiao getLingLiaoById(Integer id);
     
+    public LingLiao getLingLiaoWithDetailById(Integer id);
+    
     public LingLiaoDetail getLingLiaoDetailById(Integer id);
     
     public List<LingLiao> getAllLingLiaos(Integer qy_id);

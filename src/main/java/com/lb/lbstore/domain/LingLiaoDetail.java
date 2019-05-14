@@ -31,6 +31,7 @@ public class LingLiaoDetail {
     private Integer ll_id;
     private Integer kh_id;
     private Integer kc_id;
+    private Integer gys_id;
     private Integer wzzd_id;
     private String wzmc;
     private Integer wzlb_id;
@@ -64,6 +65,8 @@ public class LingLiaoDetail {
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm",timezone = "GMT+8")
     private transient Date sj;
+    private transient Integer llr_id;
+    private transient String qrq,zrq;
 
     public Integer getId() {
         return id;
@@ -96,6 +99,15 @@ public class LingLiaoDetail {
     public void setKh_id(Integer kh_id) {
         this.kh_id = kh_id;
     }
+
+    public Integer getGys_id() {
+        return gys_id;
+    }
+
+    public void setGys_id(Integer gys_id) {
+        this.gys_id = gys_id;
+    }
+
 
     public Integer getWzlb_id() {
         return wzlb_id;
@@ -371,4 +383,29 @@ public class LingLiaoDetail {
     public String toString() {
         return wzmc;
     }
+
+    public Integer getLlr_id() {
+        return llr_id;
+    }
+
+    public void setLlr_id(Integer llr_id) {
+        this.llr_id = llr_id;
+    }
+
+    public String getQrq() {
+        return qrq;
+    }
+
+    public void setQrq(String qrq) {
+        this.qrq = qrq;
+    }
+
+    public String getZrq() {
+        return zrq;
+    }
+
+    public void setZrq(String zrq) {
+        this.zrq = zrq;
+    }
+        
 }

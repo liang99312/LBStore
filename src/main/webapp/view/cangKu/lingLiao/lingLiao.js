@@ -291,7 +291,7 @@ function readLingLiao(index) {
 
 function selectLingLiaoDetail(id) {
     $.ajax({
-        url: "/LBStore/lingLiao/getLingLiaoDetailById.do?id=" + id,
+        url: "/LBStore/lingLiao/getLingLiaoWithDetailById.do?id=" + id,
         contentType: "application/json",
         type: "get",
         cache: false,
@@ -628,6 +628,7 @@ function saveLingLiaoMingXi() {
         mx.slzl = mx.sll;
     }
     mx.kc_id = curKuCun.id;
+    mx.gys_id = curKuCun.gys_id;
     mx.ck_id = curKuCun.ck_id;
     if (optMxFlag === 1) {
         llmx.push(mx);
@@ -725,8 +726,10 @@ function setKcCunData(kc, index) {
     curKuCun = kc;
     var m = llmx[index];
     m = m ? m : {};
-    if (m.dymx && typeof m.dymx === "string") {
-        m.dymx = JSON.parse(m.dymx);
+    if (m.dymx) {
+        if(typeof m.dymx === "string"){
+            m.dymx = JSON.parse(m.dymx);
+        }
     } else {
         m.dymx = [];
     }

@@ -19,7 +19,7 @@ var editCangKu;
 var editA01;
 var selA01;
 var curLingLiaoDetail;
-var dymx_opt = {data: [], yxData: [], func: calcDymx, type: 2};
+var dymx_opt = {data: [], yxData: [], func: calcDymx};
 var tysx_opt = {data: [], ls: 3, lw: 70, upeditable: 1};
 
 $(document).ready(function () {
@@ -52,7 +52,7 @@ $(document).ready(function () {
 
 function setTrager_a01() {
     $('#inpHkr').AutoComplete({'data': lb_allA01s, 'paramName': 'editA01'});
-    $('#inpLldSelRkr').AutoComplete({'data': lb_allA01s, 'paramName': 'selA01'});
+    $('#inpLldSelLlr').AutoComplete({'data': lb_allA01s, 'paramName': 'selA01'});
 }
 
 function setTrager_cangKu() {
@@ -522,7 +522,7 @@ function addHuanKuMingXi() {
         return alert("请选择还库仓库");
     }
     optMxFlag = 1;
-    dymx_opt = {data: [], yxData: [], func: calcDymx, type: 2};
+    dymx_opt = {data: [], yxData: [], func: calcDymx};
     editLeiBie = null;
     $("#huanKuMingXiModal_title").html("增加明细");
     $("#selLingLiaoDetailModal").modal("show");
@@ -618,6 +618,7 @@ function saveHuanKuMingXi() {
     }
     mx.lld_id = curLingLiaoDetail.id;
     mx.kc_id = curLingLiaoDetail.kc_id;
+    mx.gys_id = curLingLiaoDetail.gys_id;
     mx.ck_id = curLingLiaoDetail.ck_id;
     if (optMxFlag === 1) {
         hkmx.push(mx);
@@ -656,8 +657,8 @@ function cxLingLiaoDetail() {
     if ($("#inpLldSelGys").val() !== "" && $("#inpLldSelGys").val() === selGongYingShang.mc) {
         lingLiaoDetail.gys_id = selGongYingShang.id;
     }
-    if ($("#inpLldSelRkr").val() !== "" && $("#inpLldSelRkr").val() === selA01.mc) {
-        lingLiaoDetail.rkr_id = selA01.id;
+    if ($("#inpLldSelLlr").val() !== "" && $("#inpLldSelLlr").val() === selA01.mc) {
+        lingLiaoDetail.llr_id = selA01.id;
     }
     if ($("#inpLldSelQrq").val() !== "") {
         lingLiaoDetail.qrq = $("#inpLldSelQrq").val();
@@ -721,19 +722,21 @@ function setLldData(detail, index) {
     curLingLiaoDetail = detail;
     var m = hkmx[index];
     m = m ? m : {};
-    if (m.dymx && typeof m.dymx === "string") {
-        m.dymx = JSON.parse(m.dymx);
+    if (m.dymx) {
+        if(typeof m.dymx === "string"){
+            m.dymx = JSON.parse(m.dymx);
+        }
     } else {
         m.dymx = [];
     }
     m.hkl = m.hkl ? m.hkl : 0;
     m.hkzl = m.hkzl ? m.hkzl : 0;
-    if (detail.dymx && typeof detail.dymx === "string") {
+    if (detail.dymx && typeof detail.dymx === "string") {        
         detail.dymx = JSON.parse(detail.dymx);
     } else {
         detail.dymx = [];
     }
-    dymx_opt = {data: detail.dymx, yxData: m.dymx, func: calcDymx, type: 2};
+    dymx_opt = {data: detail.dymx, yxData: m.dymx, func: calcDymx};
     editWzzd = {"id": detail.wzzd_id, "mc": detail.wzmc};
     $("#inpMxWz").val(detail.wzmc);
     editLeiBie = {"id": detail.wzlb_id, "mc": detail.wzlb};

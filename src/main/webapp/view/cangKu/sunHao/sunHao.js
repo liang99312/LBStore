@@ -613,6 +613,7 @@ function saveSunHaoMingXi() {
         mx.slzl = mx.sll;
     }
     mx.kc_id = curKuCun.id;
+    mx.gys_id = curKuCun.gys_id;
     mx.ck_id = curKuCun.ck_id;
     if (optMxFlag === 1) {
         shmx.push(mx);
@@ -710,8 +711,10 @@ function setKcCunData(kc, index) {
     curKuCun = kc;
     var m = shmx[index];
     m = m ? m : {};
-    if (m.dymx && typeof m.dymx === "string") {
-        m.dymx = JSON.parse(m.dymx);
+    if (m.dymx) {
+        if(typeof m.dymx === "string"){
+            m.dymx = JSON.parse(m.dymx);
+        }
     } else {
         m.dymx = [];
     }

@@ -61,6 +61,24 @@ public class LingLiaoController extends BaseController {
         return map;
     }
     
+    @RequestMapping(value = "getLingLiaoWithDetailById.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> getLingLiaoWithDetailById(@RequestParam Integer id) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            LingLiao lingLiao = lingLiaoServiceImpl.getLingLiaoWithDetailById(id);
+            map.put("result", 0);
+            map.put("lingLiao", lingLiao);
+        } catch (Exception e) {
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
+    }
+    
     @RequestMapping(value = "getLingLiaoDetailById.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String, Object> getLingLiaoDetailById(@RequestParam Integer id) {
