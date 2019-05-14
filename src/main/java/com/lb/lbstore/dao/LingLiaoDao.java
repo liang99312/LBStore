@@ -29,56 +29,43 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class LingLiaoDao extends BaseDao {
 
-    public LingLiao getLingLiaoDetailById(Integer id) {
-        LingLiao lingLiao = null;
+    public LingLiaoDetail getLingLiaoDetailById(Integer id) {
+        LingLiaoDetail lingLiaoDetail = null;
         Session session = null;
         try {
             session = getSessionFactory().openSession();
-            String sql = "select {ll.*},kh.mc as khmc,ck.mc as ckmc,a01.mc as llrmc,a02.mc as sprmc from LingLiao ll "
-                    + "left join CangKu ck on ll.ck_id=ck.id "
+            String sql = "select {lld.*},kh.mc as khmc,ck.mc as ckmc,ll.spsj as sj,ll.lsh as lsh,a01.mc as llrmc,l.mc as wzlb from LingLiaoDetail lld "
+                    + "left join LingLiao ll on lld.ll_id=ll.id "
+                    + "left join CangKu ck on lld.ck_id=ck.id "
                     + "left join KeHu kh on ll.kh_id=kh.id "
                     + "left join A01 a01 on ll.llr_id=a01.id "
-                    + "left join A01 a02 on ll.spr_id=a02.id "
-                    + "where ll.id=" + id;
+                    + "left join WuZiLeiBie l on lld.wzlb_id=l.id "
+                    + "where lld.id=" + id;
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
-            navtiveSQL.addEntity("ll", LingLiao.class)
+            navtiveSQL.addEntity("lld", LingLiaoDetail.class)
                     .addScalar("khmc", StandardBasicTypes.STRING)
                     .addScalar("ckmc", StandardBasicTypes.STRING)
+                    .addScalar("sj", StandardBasicTypes.DATE)
+                    .addScalar("lsh", StandardBasicTypes.STRING)
                     .addScalar("llrmc", StandardBasicTypes.STRING)
-                    .addScalar("sprmc", StandardBasicTypes.STRING);
+                    .addScalar("wzlb", StandardBasicTypes.STRING);
             List list = navtiveSQL.list();
-            List<LingLiao> list_ll = new ArrayList();
             for (Object obj : list) {
                 Object[] objs = (Object[]) obj;
-                LingLiao ll = (LingLiao) objs[0];
+                lingLiaoDetail = (LingLiaoDetail) objs[0];
                 String khmc = (String) objs[1];
                 String ckmc = (String) objs[2];
-                String llrmc = (String) objs[3];
-                String sprmc = (String) objs[4];
-                ll.setKhmc(khmc);
-                ll.setCkmc(ckmc);
-                ll.setLlrmc(llrmc);
-                ll.setSprmc(sprmc);
-                list_ll.add(ll);
+                Date sj = (Date) objs[3];
+                String lsh = (String) objs[4];
+                String llrmc = (String) objs[5];
+                String wzlb = (String) objs[6];
+                lingLiaoDetail.setKhmc(khmc);
+                lingLiaoDetail.setCkmc(ckmc);
+                lingLiaoDetail.setSj(sj);
+                lingLiaoDetail.setLsh(lsh);
+                lingLiaoDetail.setLlrmc(llrmc);
+                lingLiaoDetail.setWzlb(wzlb);
             }
-            if (list_ll.isEmpty()) {
-                return null;
-            }
-            lingLiao = list_ll.get(0);
-
-            String sql_d = "select {d.*},l.mc as wzlb from LingLiaoDetail d left join WuZiLeiBie l on d.wzlb_id=l.id where d.ll_id=" + id;
-            SQLQuery navtiveSQL_d = session.createSQLQuery(sql_d);
-            navtiveSQL_d.addEntity("d", LingLiaoDetail.class).addScalar("wzlb", StandardBasicTypes.STRING);
-            List<LingLiaoDetail> details = new ArrayList();
-            List list_d = navtiveSQL_d.list();
-            for (Object obj : list_d) {
-                Object[] objs = (Object[]) obj;
-                LingLiaoDetail lld = (LingLiaoDetail) objs[0];
-                String wzlb = (String) objs[1];
-                lld.setWzlb(wzlb);
-                details.add(lld);
-            }
-            lingLiao.setDetails(details);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -90,7 +77,7 @@ public class LingLiaoDao extends BaseDao {
                 he.printStackTrace();
             }
         }
-        return lingLiao;
+        return lingLiaoDetail;
     }
 
     public List<LingLiao> queryLingLiaosByPage(HashMap map) {

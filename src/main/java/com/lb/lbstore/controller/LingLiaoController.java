@@ -69,9 +69,9 @@ public class LingLiaoController extends BaseController {
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            LingLiao lingLiao = lingLiaoServiceImpl.getLingLiaoDetailById(id);
+            LingLiaoDetail lingLiaoDetail = lingLiaoServiceImpl.getLingLiaoDetailById(id);
             map.put("result", 0);
-            map.put("lingLiao", lingLiao);
+            map.put("lingLiaoDetail", lingLiaoDetail);
         } catch (Exception e) {
             map.put("result", -1);
             map.put("msg", e.getMessage());

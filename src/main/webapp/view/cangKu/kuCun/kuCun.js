@@ -203,18 +203,23 @@ function setKuCunData(m){
     $("#inpMxDj").val(m.dj);
     $("#inpMxDw").val(m.dw);
     $("#inpMxSl").val(m.sl);
+    $("#inpMxSyl").val(m.syl);
     $("#inpMxPc").val(m.pc);
     $("#inpMxJlfs").val(m.jlfs);
     $("#inpMxBzgg").val(m.bzgg);
     $("#inpMxZldw").val(m.zldw);
     $("#inpMxZl").val(m.zl);
+    $("#inpMxSyzl").val(m.syzl);
     $("#divMxDymx").hide();
     $("#dvMxBzgg").hide();
+    $("#dvMxZl").hide();
     if (m.jlfs === "mx") {
         $("#divMxDymx").show();
         $("#dvMxBzgg").show();
+        $("#dvMxZl").show();
     } else if (m.jlfs === "zl"){
         $("#dvMxBzgg").show();
+        $("#dvMxZl").show();
     }
     
     $("#inpMxCkdj").val(m.ckdj);

@@ -19,7 +19,7 @@ var editCangKu;
 var editA01;
 var selA01;
 var curLingLiaoDetail;
-var dymx_opt = {data: [], yxData: [], func: calcDymx, type:2};
+var dymx_opt = {data: [], yxData: [], func: calcDymx, type: 2};
 var tysx_opt = {data: [], ls: 3, lw: 70, upeditable: 1};
 
 $(document).ready(function () {
@@ -522,7 +522,7 @@ function addHuanKuMingXi() {
         return alert("请选择还库仓库");
     }
     optMxFlag = 1;
-    dymx_opt = {data: [], yxData: [], func: calcDymx, type:2};
+    dymx_opt = {data: [], yxData: [], func: calcDymx, type: 2};
     editLeiBie = null;
     $("#huanKuMingXiModal_title").html("增加明细");
     $("#selLingLiaoDetailModal").modal("show");
@@ -609,8 +609,12 @@ function saveHuanKuMingXi() {
     mx.tysx = JSON.stringify(tysx_opt.data);
     mx.hkl = parseFloat($("#inpMxHkl").val());
     mx.hkzl = parseFloat($("#inpMxHkzl").val());
-    if (mx.hkzl === undefined || mx.hkzl === "" || mx.hkzl < 0.001) {
+    if(mx.jlfs === "pt"){
         mx.hkzl = mx.hkl;
+    }else{
+        if (mx.hkzl === undefined || mx.hkzl === "" || mx.hkzl < 0.001) {
+            mx.hkzl = mx.hkl;
+        }
     }
     mx.lld_id = curLingLiaoDetail.id;
     mx.kc_id = curLingLiaoDetail.kc_id;
@@ -722,12 +726,14 @@ function setLldData(detail, index) {
     } else {
         m.dymx = [];
     }
-    m.sll = m.sll ? m.sll : 0;
-    m.slzl = m.slzl ? m.slzl : 0;
+    m.hkl = m.hkl ? m.hkl : 0;
+    m.hkzl = m.hkzl ? m.hkzl : 0;
     if (detail.dymx && typeof detail.dymx === "string") {
         detail.dymx = JSON.parse(detail.dymx);
+    } else {
+        detail.dymx = [];
     }
-    dymx_opt = {data: detail.dymx, yxData: m.dymx, func: calcDymx, type:2};
+    dymx_opt = {data: detail.dymx, yxData: m.dymx, func: calcDymx, type: 2};
     editWzzd = {"id": detail.wzzd_id, "mc": detail.wzmc};
     $("#inpMxWz").val(detail.wzmc);
     editLeiBie = {"id": detail.wzlb_id, "mc": detail.wzlb};
@@ -751,8 +757,8 @@ function setLldData(detail, index) {
     $("#inpMxKwh").val(detail.kw);
     $("#inpMxLlr").val(detail.llrmc);
     buildTysx(detail.tysx);
-    $("#inpMxHkl").val(0);
-    $("#inpMxHkzl").val(0);
+    $("#inpMxHkl").val(m.hkl);
+    $("#inpMxHkzl").val(m.hkzl);
     buildDymx();
     if (detail.jlfs === "mx") {
         $("#divMxDymx").show();
@@ -768,7 +774,7 @@ function cxLingLiaoDetailById(id, index) {
     $.ajax({
         url: "/LBStore/lingLiao/getLingLiaoDetailById.do?id=" + id,
         contentType: "application/json",
-        type: "post",
+        type: "get",
         cache: false,
         error: function (msg, textStatus) {
             alert("查询领料失败");

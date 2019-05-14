@@ -21,7 +21,7 @@ public interface HuanKuService {
        
     public boolean updateHuanKu(HuanKu huanKu);
     
-    public boolean dealHuanKu(HuanKu huanKu,Integer a01_id);
+    public String dealHuanKu(HuanKu huanKu,Integer a01_id);
     
     public HuanKu saveHuanKu(HuanKu huanKu);
     

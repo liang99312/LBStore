@@ -112,8 +112,15 @@ public class HuanKuController extends BaseController {
                 map.put("msg", "领料单已办理！");
                 return map;
             }
-            boolean result = huanKuServiceImpl.dealHuanKu(model,getDlA01().getId());
-            map.put("result", result? 0:-1);
+            String result = huanKuServiceImpl.dealHuanKu(model,getDlA01().getId());
+            if("1".equals(result)){
+                map.put("result", 0);
+            }else if("0".equals(result)){
+                map.put("result", -1);
+            }else{
+                map.put("result", -1);
+                map.put("msg", result);
+            }
         } catch (Exception e) {
             map.put("result", -1);
             map.put("msg", e.getMessage());

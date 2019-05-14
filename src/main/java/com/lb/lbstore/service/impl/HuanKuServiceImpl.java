@@ -67,7 +67,7 @@ public class HuanKuServiceImpl implements HuanKuService {
     }
 
     @Override
-    public boolean dealHuanKu(HuanKu huanKu,Integer a01_id) {
+    public String dealHuanKu(HuanKu huanKu,Integer a01_id) {
         return huanKuDao.dealHuanKu(huanKu, a01_id);
     }
 

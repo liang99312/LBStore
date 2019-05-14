@@ -275,8 +275,8 @@ public class HuanKuDao extends BaseDao {
         return result;
     }
 
-    public boolean dealHuanKu(HuanKu huanKu, Integer a01_id) {
-        boolean result = false;
+    public String dealHuanKu(HuanKu huanKu, Integer a01_id) {
+        String result = "1";
         Session session = null;
         Transaction tx = null;
         try {
@@ -294,32 +294,32 @@ public class HuanKuDao extends BaseDao {
                 detailTable.put(e.getKc_id(), e);
                 sb.append(",");
                 sb.append(e.getKc_id());
-                
+
                 LlDetailTable.put(e.getLld_id(), e);
                 llSb.append(",");
                 llSb.append(e.getLld_id());
             }
             sb.append(")");
             llSb.append(")");
-            
-            
-            
-            String lldString = "select lld.id as id, lld.slzl-h.zl as sl from lingliaodetail lld, (select sum(hkd.hkzl) as zl,hkd.lld_id as lld_id from huankudetail hkd where hkd.lld_id in "+llSb+" group by hkd.lld_id) as h where lld.id=h.lld_id;";
+
+            String lldString = "select lld.id as id, lld.slzl-h.zl as sl from lingliaodetail lld, "
+                    + "(select sum(hkd.hkzl) as zl,hkd.lld_id as lld_id from huankudetail hkd,huanku hk where hkd.hk_id=hk.id and hk.state=1 and hkd.lld_id in " + llSb + " group by hkd.lld_id) as h "
+                    + "where lld.id=h.lld_id;";
             List lldList = session.createSQLQuery(lldString).list();
-            for(Object obj:lldList){
+            for (Object obj : lldList) {
                 Object[] objs = (Object[]) obj;
                 Integer lld_id = (Integer) objs[0];
-                Float sl = (Float) objs[1];
+                Double sl = (Double) objs[1];
                 HuanKuDetail detail = LlDetailTable.get(lld_id);
-                if(detail != null){
-                    if(sl < detail.getHkzl()){
-                        result = false;
+                if (detail != null) {
+                    if (sl < detail.getHkzl()) {
+                        result = "还库数量不能大于领料数量！";
                         tx.rollback();
                         return result;
                     }
                 }
             }
-            
+
             String kcSql = "from KuCun where id in " + sb.toString();
             List<KuCun> kcList = session.createQuery(kcSql).list();
             for (KuCun kc : kcList) {
@@ -327,7 +327,7 @@ public class HuanKuDao extends BaseDao {
                 if (detail != null) {
                     if (kc.getSyzl() < detail.getHkzl()) {
                         tx.rollback();
-                        result = false;
+                        result = "0";
                         return result;
                     }
                     kc.setSyzl(kc.getSyzl() + detail.getHkzl());
@@ -363,7 +363,7 @@ public class HuanKuDao extends BaseDao {
             session.update(huanKu);
             session.flush();
             tx.commit();
-            result = true;
+            result = "1";
         } catch (Exception e) {
             tx.rollback();
             e.printStackTrace();
