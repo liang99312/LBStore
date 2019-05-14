@@ -25,6 +25,7 @@ var editFeiA01;
 var selA01;
 var curKuCun;
 var curFaHuo;
+var selBaoBiao;
 var dymx_opt = {data: [], yxData: [], func: calcDymx};
 var tysx_opt = {data: [], ls: 3, lw: 70, upeditable: 1};
 
@@ -38,6 +39,7 @@ $(document).ready(function () {
     getWuZiZiDians(setTrager_ziDian);
     getWuZiLeiBies(setTrager_leiBie);
     getGongYingShangs(setTrager_gongYingShang);
+    getBaoBiaosByMk("505",setTrager_baoBiao);
     $("#inpMxScrq").datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, minView: 2, startView: 2, forceParse: 0, showMeridian: 1});
 
     $("#inpMxFhl").keyup(function () {
@@ -84,6 +86,10 @@ function setTrager_leiBie() {
 
 function setTrager_gongYingShang() {
     $('#inpKcSelGys').AutoComplete({'data': lb_gongYingShangs, 'paramName': 'selGongYingShang'});
+}
+
+function setTrager_baoBiao() {
+    $('#inpSelBb').AutoComplete({'data': lb_baoBiaos, 'paramName': 'selBaoBiao'});
 }
 
 function selectCangKu(json) {
@@ -255,6 +261,7 @@ function addFaHuo() {
     editCangKu = {};
     editKeHu = {};
     $("#faHuoModel_title").html("新增发货单");
+    $(".bb-element").hide();
     $("#btnOk").html("保存");
     $("#divXzmx").show();
     $("#divSpr").hide();
@@ -275,6 +282,7 @@ function editFaHuo(index) {
         return alert("请选择发货单");
     }
     $("#faHuoModel_title").html("修改发货单");
+    $(".bb-element").hide();
     $("#btnOk").html("保存");
     $("#divXzmx").show();
     $("#divSpr").hide();
@@ -290,6 +298,7 @@ function readFaHuo(index) {
         return alert("请选择发货单");
     }
     $("#faHuoModel_title").html("查看发货单");
+    $(".bb-element").show();
     $("#btnOk").html("关闭");
     $("#divXzmx").hide();
     $("#divSpr").show();
@@ -345,6 +354,7 @@ function dealFaHuo(index) {
         return alert("请选择发货单");
     }
     $("#faHuoModel_title").html("办理发货单");
+    $(".bb-element").hide();
     $("#btnOk").html("办理");
     $("#divXzmx").hide();
     $("#divSpr").hide();
@@ -982,4 +992,24 @@ function delFaHuoFei(index) {
             }
         });
     }
+}
+
+function execBaoBiao(){
+    if (selBaoBiao === undefined) {
+        return alert("请选择报表");
+    }
+    $.ajax({
+        url: "/LBStore/baoBiao/getBaoBiaoNrById.do?id=" + selBaoBiao.id,
+        contentType: "application/json",
+        type: "get",
+        dataType: "html",
+        cache: false,
+        error: function (msg, textStatus) {
+            alert("读取报表失败");
+        },
+        success: function (text) {
+            $("#dvBbnr").html(text);
+            $("#baoBiaoModal").modal("show");
+        }
+    });
 }

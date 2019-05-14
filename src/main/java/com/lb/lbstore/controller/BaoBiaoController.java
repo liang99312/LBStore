@@ -46,6 +46,25 @@ public class BaoBiaoController extends BaseController {
         return "baoBiao/baoBiao";
     }
 
+    @RequestMapping(value = "getBaoBiaosByMk.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> getBaoBiaosByMk(@RequestBody BaoBiao model) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            List<BaoBiao> baoBiaoList = new ArrayList<BaoBiao>();
+            baoBiaoList = baoBiaoServiceImpl.getBaoBiaosByMk(getDlA01().getQy_id(),model.getMkdm());
+            map.put("result", 0);
+            map.put("sz", baoBiaoList);
+        } catch (Exception e) {
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
+    }
+    
     @RequestMapping(value = "getAllBaoBiaos.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String, Object> getAllBaoBiaos() {

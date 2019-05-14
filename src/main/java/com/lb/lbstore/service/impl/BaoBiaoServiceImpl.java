@@ -32,6 +32,11 @@ public class BaoBiaoServiceImpl implements BaoBiaoService {
     public List<BaoBiao> getAllBaoBiaos(Integer qy_id) {
         return baoBiaoDao.getResult("from BaoBiao baoBiao where qy_id="+qy_id, null);
     }
+    
+    @Override
+    public List<BaoBiao> getBaoBiaosByMk(Integer qy_id,String mkdm) {
+        return baoBiaoDao.getResult("from BaoBiao baoBiao where qy_id="+qy_id + " and mkdm='" + mkdm + "'", null);
+    }
 
     @Override
     public boolean updateBaoBiao(BaoBiao baoBiao) {

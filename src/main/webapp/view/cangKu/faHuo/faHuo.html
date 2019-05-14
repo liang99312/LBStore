@@ -172,6 +172,9 @@ and open the template in the editor.
                         </div>
                     </div>
                     <div class="modal-footer" style="text-align: center;padding: 8px;">
+                        <label class="bb-element"  for="inpSelBb">报表：</label>
+                        <input class="bb-element" type="text" id="inpSelBb" />
+                        <button id="btnBb" type="submit" class="bb-element btn btn-primary" onclick="execBaoBiao()">执行</button>
                         <button id="btnOk" type="submit" class="btn btn-primary" onclick="saveFaHuo()">保存</button>
                     </div>
                 </div>
@@ -258,7 +261,7 @@ and open the template in the editor.
                 </div>
             </div>
         </div>
-        
+
         <div class="modal fade" id="selKuCunModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog" style="width: 800px;">
                 <div class="modal-content">
@@ -317,7 +320,7 @@ and open the template in the editor.
                 </div>
             </div>
         </div>
-        
+
         <div class="modal fade" id="faHuoFeiModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div  id="faHuoFeiModalDlg" class="modal-dialog" style="width: 800px;">
                 <div class="modal-content">
@@ -387,5 +390,19 @@ and open the template in the editor.
             </div>
         </div>
         
+        <div class="modal fade" id="baoBiaoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style="width: 100%">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #ace1ff;height: 40px;border-top-left-radius: 6px;border-top-right-radius: 6px;padding:10px">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="baoBiaoModel_title">执行报表</h4>
+                    </div>
+                    <div id="dvBbnr" class="modal-body" style="height:700px;padding: 0;">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </body>
 </html>

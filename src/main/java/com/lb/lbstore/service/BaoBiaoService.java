@@ -19,6 +19,8 @@ public interface BaoBiaoService {
     
     public List<BaoBiao> getAllBaoBiaos(Integer qy_id);
     
+    public List<BaoBiao> getBaoBiaosByMk(Integer qy_id,String mkdm);
+    
     public boolean updateBaoBiao(BaoBiao baoBiao);
     
     public BaoBiao saveBaoBiao(BaoBiao baoBiao);
