@@ -206,7 +206,7 @@ public class FaHuoDao extends BaseDao {
                 detail.setFh_id(id);
                 detail.setDh(faHuo.getDh());
                 if ("pt".equals(detail.getJlfs())) {
-                    detail.setSlzl(detail.getSll());
+                    detail.setFhzl(detail.getFhl());
                 }
                 session.save(detail);
             }
@@ -343,13 +343,13 @@ public class FaHuoDao extends BaseDao {
             for (KuCun kc : kcList) {
                 FaHuoDetail detail = detailTable.get(kc.getId());
                 if (detail != null) {
-                    if (kc.getSyzl() < detail.getSlzl()) {
+                    if (kc.getSyzl() < detail.getFhzl()) {
                         tx.rollback();
                         result = false;
                         return result;
                     }
-                    kc.setSyzl(kc.getSyzl() - detail.getSlzl());
-                    kc.setSyl(kc.getSyl() - detail.getSll());
+                    kc.setSyzl(kc.getSyzl() - detail.getFhzl());
+                    kc.setSyl(kc.getSyl() - detail.getFhl());
                     if (detail.getDymx() != null && !"".equals(detail.getDymx())) {
                         JSONArray detailDymx = JSONArray.parseArray(detail.getDymx());
                         JSONArray kcDymx = JSONArray.parseArray(kc.getDymx());

@@ -51,8 +51,8 @@ public class SunHaoDetail {
     private String zldw;   
     private String jlfs = "pt"; //普通记录(pt)；总量记录(zl)；单元明细(mx)
     private Double bzgg = 1.0D; //包装规格
-    private Double sll = 1.0D;
-    private Double slzl = 1.0D;
+    private Double shl = 1.0D;
+    private Double shzl = 1.0D;
     private String tysx;
     private String dymx;
     private String kw;
@@ -186,20 +186,20 @@ public class SunHaoDetail {
         this.bzgg = bzgg;
     }
 
-    public Double getSll() {
-        return sll;
+    public Double getShl() {
+        return shl;
     }
 
-    public void setSll(Double sll) {
-        this.sll = sll;
+    public void setShl(Double shl) {
+        this.shl = shl;
     }
 
-    public Double getSlzl() {
-        return slzl;
+    public Double getShzl() {
+        return shzl;
     }
 
-    public void setSlzl(Double slzl) {
-        this.slzl = slzl;
+    public void setShzl(Double shzl) {
+        this.shzl = shzl;
     }
 
     public String getTysx() {

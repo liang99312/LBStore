@@ -40,18 +40,18 @@ $(document).ready(function () {
     getGongYingShangs(setTrager_gongYingShang);
     $("#inpMxScrq").datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, minView: 2, startView: 2, forceParse: 0, showMeridian: 1});
 
-    $("#inpMxSll").keyup(function () {
+    $("#inpMxFhl").keyup(function () {
         if (curKuCun && curKuCun.jlfs === "zl") {
-            var temp_sll = parseFloat($("#inpMxSll").val());
-            var temp_slzl = temp_sll * curKuCun.bzgg;
-            $("#inpMxSlzl").val(temp_slzl.toFixed(3));
+            var temp_fhl = parseFloat($("#inpMxFhl").val());
+            var temp_fhzl = temp_fhl * curKuCun.bzgg;
+            $("#inpMxFhzl").val(temp_fhzl.toFixed(3));
         }
     });
-    $("#inpMxSlzl").keyup(function () {
+    $("#inpMxFhzl").keyup(function () {
         if (curKuCun && curKuCun.jlfs === "zl") {
-            var temp_slzl = parseFloat($("#inpMxSlzl").val());
-            var temp_sll = temp_slzl / curKuCun.bzgg;
-            $("#inpMxSll").val(temp_sll.toFixed(3));
+            var temp_fhzl = parseFloat($("#inpMxFhzl").val());
+            var temp_fhl = temp_fhzl / curKuCun.bzgg;
+            $("#inpMxFhl").val(temp_fhl.toFixed(3));
         }
     });
 });
@@ -520,8 +520,8 @@ function calcDymx() {
         for (var i = 0; i < dymx_opt.yxData.length; i++) {
             zl += parseFloat(dymx_opt.yxData[i].val);
         }
-        $("#inpMxSll").val(dymx_opt.yxData.length);
-        $("#inpMxSlzl").val(zl.toFixed(3));
+        $("#inpMxFhl").val(dymx_opt.yxData.length);
+        $("#inpMxFhzl").val(zl.toFixed(3));
     }
 }
 
@@ -535,10 +535,10 @@ function jxFaHuoMingXi() {
         } else {
             item.tysx = [];
         }
-        var je = parseFloat(item.sll) * parseFloat(item.dj);
+        var je = parseFloat(item.fhl) * parseFloat(item.dj);
         var bj = optFlag === 3 || optFlag === 4 ? '' : '<button class="btn btn-info btn-xs icon-edit" onclick="editFaHuoMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var cz = optFlag === 3 || optFlag === 4 ? '' : '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteFaHuoMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>';
-        var trStr = '<tr><td>' + item.wzmc + '</td><td>' + item.pp + '</td><td>' + item.xhgg + '</td><td>' + item.sll + '</td><td>' + je + '</td><td>'
+        var trStr = '<tr><td>' + item.wzmc + '</td><td>' + item.pp + '</td><td>' + item.xhgg + '</td><td>' + item.fhl + '</td><td>' + je + '</td><td>'
                 + '<button class="btn btn-info btn-xs icon-file-alt" onclick="readFaHuoMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;'
                 + bj
                 + cz + '</td></tr>';
@@ -596,7 +596,7 @@ function saveFaHuoMingXi() {
     if (!editLeiBie || editLeiBie === null) {
         return alert("物资类别不能为空");
     }
-    if ($("#inpMxSll").val() === "") {
+    if ($("#inpMxFhl").val() === "") {
         return alert("请输入发货数量");
     }
     var mx = {};
@@ -636,10 +636,10 @@ function saveFaHuoMingXi() {
     mx.kw = $("#inpMxKwh").val();
     mx.dymx = JSON.stringify(dymx_opt.yxData);
     mx.tysx = JSON.stringify(tysx_opt.data);
-    mx.sll = parseFloat($("#inpMxSll").val());
-    mx.slzl = parseFloat($("#inpMxSlzl").val());
-    if (mx.slzl === undefined || mx.slzl === "" || mx.slzl < 0.001) {
-        mx.slzl = mx.sll;
+    mx.fhl = parseFloat($("#inpMxFhl").val());
+    mx.fhzl = parseFloat($("#inpMxFhzl").val());
+    if (mx.fhzl === undefined || mx.fhzl === "" || mx.fhzl < 0.001) {
+        mx.fhzl = mx.fhl;
     }
     mx.kc_id = curKuCun.id;
     mx.gys_id = curKuCun.gys_id;
@@ -654,8 +654,8 @@ function saveFaHuoMingXi() {
     var zje = 0;
     for (var i = 0; i < fhmx.length; i++) {
         var e = fhmx[i];
-        zsl = e.sll + zsl;
-        zje = e.sll * e.dj + zje;
+        zsl = e.fhl + zsl;
+        zje = e.fhl * e.dj + zje;
     }
     $("#inpSl").val(zsl);
     $("#inpJe").val(zje.toFixed(3));
@@ -747,8 +747,8 @@ function setKcCunData(kc, index) {
     } else {
         m.dymx = [];
     }
-    m.sll = m.sll ? m.sll : 0;
-    m.slzl = m.slzl ? m.slzl : 0;
+    m.fhl = m.fhl ? m.fhl : 0;
+    m.fhzl = m.fhzl ? m.fhzl : 0;
     if (kc.dymx && typeof kc.dymx === "string") {
         kc.dymx = JSON.parse(kc.dymx);
     }
@@ -775,8 +775,8 @@ function setKcCunData(kc, index) {
     $("#inpMxKwh").val(kc.kw);
     buildTysx(kc.tysx);
     $("#inpMxSyl").val(kc.syl);
-    $("#inpMxSll").val(m.sll);
-    $("#inpMxSlzl").val(m.slzl);
+    $("#inpMxFhl").val(m.fhl);
+    $("#inpMxFhzl").val(m.fhzl);
     buildDymx();
     if (kc.jlfs === "mx") {
         $("#divMxDymx").show();

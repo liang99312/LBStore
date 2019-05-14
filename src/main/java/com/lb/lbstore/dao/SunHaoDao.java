@@ -164,7 +164,7 @@ public class SunHaoDao extends BaseDao {
                 detail.setSh_id(id);
                 detail.setDh(sunHao.getDh());
                 if ("pt".equals(detail.getJlfs())) {
-                    detail.setSlzl(detail.getSll());
+                    detail.setShzl(detail.getShl());
                 }
                 session.save(detail);
             }
@@ -298,13 +298,13 @@ public class SunHaoDao extends BaseDao {
             for (KuCun kc : kcList) {
                 SunHaoDetail detail = detailTable.get(kc.getId());
                 if (detail != null) {
-                    if (kc.getSyzl() < detail.getSlzl()) {
+                    if (kc.getSyzl() < detail.getShzl()) {
                         tx.rollback();
                         result = false;
                         return result;
                     }
-                    kc.setSyzl(kc.getSyzl() - detail.getSlzl());
-                    kc.setSyl(kc.getSyl() - detail.getSll());
+                    kc.setSyzl(kc.getSyzl() - detail.getShzl());
+                    kc.setSyl(kc.getSyl() - detail.getShl());
                     if (detail.getDymx() != null && !"".equals(detail.getDymx())) {
                         JSONArray detailDymx = JSONArray.parseArray(detail.getDymx());
                         JSONArray kcDymx = JSONArray.parseArray(kc.getDymx());
