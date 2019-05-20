@@ -50,7 +50,7 @@ function addQiYe() {
     $("#inpLxdh").val("");
     $("#inpGly").val("").removeAttr("disabled");
     $("#inpBz").val("");
-    $("#qiYeModal").modal("show");
+    $("#qiYeModal").modal({backdrop:'static'});
 }
 
 function editQiYe(index) {
@@ -69,7 +69,7 @@ function editQiYe(index) {
     $("#inpLxdh").val(qiYe.lxdh);
     $("#inpGly").val(qiYe.gly).attr("disabled","disabled");
     $("#inpBz").val(qiYe.bz);
-    $("#qiYeModal").modal("show");
+    $("#qiYeModal").modal({backdrop:'static'});
 }
 
 function saveQiYe() {

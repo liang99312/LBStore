@@ -45,7 +45,7 @@ function addBuMen() {
     $("#inpMc").val("");
     $("#inpDm").val("");
     $("#inpBz").val("");
-    $("#buMenModal").modal("show");
+    $("#buMenModal").modal({backdrop:'static'});
 }
 
 function editBuMen(index) {
@@ -60,7 +60,7 @@ function editBuMen(index) {
     $("#inpMc").val(buMen.mc);
     $("#inpDm").val(buMen.dm);
     $("#inpBz").val(buMen.bz);
-    $("#buMenModal").modal("show");
+    $("#buMenModal").modal({backdrop:'static'});
 }
 
 function saveBuMen() {

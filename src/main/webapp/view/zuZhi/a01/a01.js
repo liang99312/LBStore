@@ -50,7 +50,7 @@ function addA01() {
     $("#inpA0111").val("男");
     $("#inpA0105").val("");
     $("#inpPassword").val("");
-    $("#a01Modal").modal("show");
+    $("#a01Modal").modal({backdrop:'static'});
 }
 
 function editA01(index) {
@@ -68,7 +68,7 @@ function editA01(index) {
     $("#inpA0111").val(a01.a0111);
     $("#inpA0105").val(a01.a0105);
     $("#inpPassword").val(a01.password);
-    $("#a01Modal").modal("show");
+    $("#a01Modal").modal({backdrop:'static'});
 }
 
 function setA01(index) {
@@ -90,7 +90,7 @@ function setA01(index) {
         }
     }
     $("#tblQx").selectTable(opt);
-    $("#a01QxModal").modal("show");
+    $("#a01QxModal").modal({backdrop:'static'});
 }
 
 function saveA01() {

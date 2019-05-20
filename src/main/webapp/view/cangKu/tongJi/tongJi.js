@@ -51,7 +51,7 @@ function execBaoBiao(index) {
         },
         success: function (text) {
             $("#dvBbnr").html(text);
-            $("#baoBiaoModal").modal("show");
+            $("#baoBiaoModal").modal({backdrop:'static'});
         }
     });
 }

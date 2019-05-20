@@ -48,7 +48,7 @@ function addGongYingShang() {
     $("#inpLxr").val("");
     $("#inpLxdh").val("");
     $("#inpBz").val("");
-    $("#gongYingShangModal").modal("show");
+    $("#gongYingShangModal").modal({backdrop:'static'});
 }
 
 function editGongYingShang(index) {
@@ -66,7 +66,7 @@ function editGongYingShang(index) {
     $("#inpLxr").val(gongYingShang.lxr);
     $("#inpLxdh").val(gongYingShang.lxdh);
     $("#inpBz").val(gongYingShang.bz);
-    $("#gongYingShangModal").modal("show");
+    $("#gongYingShangModal").modal({backdrop:'static'});
 }
 
 function saveGongYingShang() {

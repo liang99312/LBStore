@@ -127,7 +127,7 @@ function selectWuZiLeiBie(json) {
 }
 
 function selectFaHuo_m() {
-    $("#faHuoSelectModal").modal("show");
+    $("#faHuoSelectModal").modal({backdrop:'static'});
 }
 
 function selectWuZiZiDian(json) {
@@ -200,7 +200,7 @@ function jxFaHuo(json) {
 }
 
 function showSelectFaHuo() {
-    $("#faHuoSelectModal").modal("show");
+    $("#faHuoSelectModal").modal({backdrop:'static'});
 }
 
 function selectFaHuo() {
@@ -272,7 +272,7 @@ function addFaHuo() {
     $("#inpSl").val(0);
     $("#inpJe").val(0);
     jxFaHuoMingXi();
-    $("#faHuoModal").modal("show");
+    $("#faHuoModal").modal({backdrop:'static'});
 }
 
 function editFaHuo(index) {
@@ -324,12 +324,12 @@ function jxReadFaHuo(faHuo) {
     $("#inpSpr").val(faHuo.sprmc);
     $("#inpSpsj").val(faHuo.spsj);
     jxFaHuoMingXi();
-    $("#faHuoModal").modal("show");
+    $("#faHuoModal").modal({backdrop:'static'});
 }
 
 function editFeiIndex(id, func) {
     $.ajax({
-        url: "/LBStore/faHuo/getFaHuoDetailById.do?id=" + id,
+        url: "/LBStore/faHuo/getFaHuoWithDetailById.do?id=" + id,
         contentType: "application/json",
         type: "get",
         cache: false,
@@ -564,7 +564,7 @@ function addFaHuoMingXi() {
     dymx_opt = {data: [], yxData: [], func: calcDymx};
     editLeiBie = null;
     $("#faHuoMingXiModal_title").html("增加明细");
-    $("#selKuCunModal").modal("show");
+    $("#selKuCunModal").modal({backdrop:'static'});
 }
 
 function editFaHuoMingXi(index) {
@@ -795,7 +795,7 @@ function setKcCunData(kc, index) {
     }
     selectMxJlfs();
     $("#selKuCunModal").modal("hide");
-    $("#faHuoMingXiModal").modal("show");
+    $("#faHuoMingXiModal").modal({backdrop:'static'});
 }
 
 function cxKuCunById(id, index) {
@@ -854,7 +854,7 @@ function selectFaHuoFei(json) {
     options.func = jxFaHuoFei;
     options.ul = "#example2";
     queryPaginator(options);
-    $("#faHuoFeiModal").modal("show");
+    $("#faHuoFeiModal").modal({backdrop:'static'});
 }
 
 function addFaHuoFei(type) {
@@ -875,7 +875,7 @@ function addFaHuoFei(type) {
         $("#inpFeiSkr").val("");
         $("#inpFeiBz").val("");
     }
-    $("#faHuoFeiEditModal").modal("show");
+    $("#faHuoFeiEditModal").modal({backdrop:'static'});
 }
 
 function editFaHuoFei(index) {
@@ -895,7 +895,7 @@ function editFaHuoFei(index) {
     $("#inpFeiJe").val(faHuoFei.je);
     $("#inpFeiSkr").val(faHuoFei.skrmc);
     $("#inpFeiBz").val(faHuoFei.bz);
-    $("#faHuoFeiEditModal").modal("show");
+    $("#faHuoFeiEditModal").modal({backdrop:'static'});
 }
 
 function checkFei(type, index, je) {
@@ -1009,7 +1009,7 @@ function execBaoBiao(){
         },
         success: function (text) {
             $("#dvBbnr").html(text);
-            $("#baoBiaoModal").modal("show");
+            $("#baoBiaoModal").modal({backdrop:'static'});
         }
     });
 }

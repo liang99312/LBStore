@@ -56,7 +56,7 @@ function jxKuCun(json) {
 }
 
 function showSelectKuCun() {
-    $("#kuCunSelectModal").modal("show");
+    $("#kuCunSelectModal").modal({backdrop:'static'});
 }
 
 function selectKuCun() {
@@ -229,7 +229,7 @@ function setKuCunData(m){
     
     buildTysx(m.tysx);
     buildDymx();
-    $("#kuCunModal").modal("show");
+    $("#kuCunModal").modal({backdrop:'static'});
 }
 
 function buildTysx(data) {

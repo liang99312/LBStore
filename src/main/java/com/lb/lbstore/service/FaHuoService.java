@@ -6,6 +6,7 @@
 package com.lb.lbstore.service;
 
 import com.lb.lbstore.domain.FaHuo;
+import com.lb.lbstore.domain.FaHuoDetail;
 import com.lb.lbstore.domain.FaHuoFei;
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +19,7 @@ public interface FaHuoService {
 
     public FaHuo getFaHuoById(Integer id);
     
-    public FaHuo getFaHuoDetailById(Integer id);
+    public FaHuo getFaHuoWithDetailById(Integer id);
        
     public boolean updateFaHuo(FaHuo faHuo);
     
@@ -43,4 +44,8 @@ public interface FaHuoService {
     public FaHuoFei saveFaHuoFei(FaHuoFei faHuoFei);
     
     public boolean deleteFaHuoFei(Integer id,Integer fh_id);
+    
+    public FaHuoDetail getFaHuoDetailById(Integer id);
+    
+    public List<FaHuoDetail> getFaHuoDetailTop100(FaHuoDetail detail);
 }

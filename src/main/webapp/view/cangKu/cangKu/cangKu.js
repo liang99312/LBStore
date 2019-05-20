@@ -56,7 +56,7 @@ function addCangKu() {
     $("#inpDm").val("");
     $("#inpLx").val("");
     $("#inpBz").val("");
-    $("#cangKuModal").modal("show");
+    $("#cangKuModal").modal({backdrop:'static'});
 }
 
 function editCangKu(index) {
@@ -72,7 +72,7 @@ function editCangKu(index) {
     $("#inpDm").val(cangKu.dm);
     $("#inpLx").val(cangKu.lx);
     $("#inpBz").val(cangKu.bz);
-    $("#cangKuModal").modal("show");
+    $("#cangKuModal").modal({backdrop:'static'});
 }
 
 function setCangKu(index) {
@@ -99,7 +99,7 @@ function selectCangKuById(id) {
                 opt.yxData = curCangKu.a01s;
                 $("#tblYg").inputTable(opt);
                 setCangKuSetting();
-                $("#cangKuSetModal").modal("show");
+                $("#cangKuSetModal").modal({backdrop:'static'});
             } else
                 alert("获取仓库信息失败:" + json.msg !== undefined ? json.msg : "");
         }
@@ -193,7 +193,7 @@ function addKw() {
     $("#inpKwMc").val("");
     $("#inpKwQi").val("");
     $("#inpKwZhi").val("");
-    $("#kuWeiSetModal").modal("show");
+    $("#kuWeiSetModal").modal({backdrop:'static'});
 }
 
 function editKw() {
@@ -205,7 +205,7 @@ function editKw() {
     $("#inpKwMc").val(selKuWei.mc);
     $("#inpKwQi").val(selKuWei.qsh);
     $("#inpKwZhi").val(selKuWei.jsh);
-    $("#kuWeiSetModal").modal("show");
+    $("#kuWeiSetModal").modal({backdrop:'static'});
 }
 
 function delKw() {

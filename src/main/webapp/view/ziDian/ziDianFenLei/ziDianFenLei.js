@@ -38,7 +38,7 @@ function addZiDianFenLei() {
     $("#inpMc").val("");
     $("#inpDm").val("");
     $("#inpBz").val("");
-    $("#ziDianFenLeiModal").modal("show");
+    $("#ziDianFenLeiModal").modal({backdrop:'static'});
 }
 
 function editZiDianFenLei(index) {
@@ -53,7 +53,7 @@ function editZiDianFenLei(index) {
     $("#inpMc").val(ziDianFenLei.mc);
     $("#inpDm").val(ziDianFenLei.dm);
     $("#inpBz").val(ziDianFenLei.bz);
-    $("#ziDianFenLeiModal").modal("show");
+    $("#ziDianFenLeiModal").modal({backdrop:'static'});
 }
 
 function saveZiDianFenLei() {

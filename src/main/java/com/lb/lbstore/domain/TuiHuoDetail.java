@@ -20,17 +20,19 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Jane
  */
 @Entity
-@JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
-public class FaHuoDetail {
-    
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler", "fieldHandler"})
+public class TuiHuoDetail {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private Integer qy_id;
     private Integer ck_id;
-    private Integer fh_id;
+    private Integer th_id;
     private Integer kh_id;
     private Integer kc_id;
     private Integer gys_id;
+    private Integer fhd_id;
     private Integer wzzd_id;
     private String wzmc;
     private Integer wzlb_id;
@@ -42,31 +44,21 @@ public class FaHuoDetail {
     private String scc;
     private String txm;
     private String pc;
-    @DateTimeFormat(pattern="yyyy-MM-dd")
-    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date scrq;
     private Integer bzq;
     private Double dj;
-    private String dw;    
-    private String zldw;   
+    private String dw;
+    private String zldw;
     private String jlfs = "pt"; //普通记录(pt)；总量记录(zl)；单元明细(mx)
     private Double bzgg = 1.0D; //包装规格
-    private Double fhl = 1.0D;
-    private Double fhzl = 1.0D;
+    private Double thl = 1.0D;
+    private Double thzl = 1.0D;
     private String tysx;
     private String dymx;
     private String kw;
-    private transient String ckmc;
-    private transient String khmc;
-    private transient String fhrmc;
-    private transient String sprmc;
-    private transient String lsh;
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm",timezone = "GMT+8")
-    private transient Date sj;
-    private transient Integer fhr_id;
-    private transient String qrq,zrq;
-    
+
     public Integer getId() {
         return id;
     }
@@ -106,6 +98,7 @@ public class FaHuoDetail {
     public void setGys_id(Integer gys_id) {
         this.gys_id = gys_id;
     }
+
 
     public Integer getWzlb_id() {
         return wzlb_id;
@@ -154,7 +147,7 @@ public class FaHuoDetail {
     public void setXhgg(String xhgg) {
         this.xhgg = xhgg;
     }
-    
+
     public String getPp() {
         return pp;
     }
@@ -195,20 +188,20 @@ public class FaHuoDetail {
         this.bzgg = bzgg;
     }
 
-    public Double getFhl() {
-        return fhl;
+    public Double getThl() {
+        return thl;
     }
 
-    public void setFhl(Double fhl) {
-        this.fhl = fhl;
+    public void setThl(Double thl) {
+        this.thl = thl;
     }
 
-    public Double getFhzl() {
-        return fhzl;
+    public Double getThzl() {
+        return thzl;
     }
 
-    public void setFhzl(Double fhzl) {
-        this.fhzl = fhzl;
+    public void setThzl(Double thzl) {
+        this.thzl = thzl;
     }
 
     public String getTysx() {
@@ -275,12 +268,12 @@ public class FaHuoDetail {
         this.kw = kw;
     }
 
-    public Integer getFh_id() {
-        return fh_id;
+    public Integer getTh_id() {
+        return th_id;
     }
 
-    public void setFh_id(Integer fh_id) {
-        this.fh_id = fh_id;
+    public void setTh_id(Integer th_id) {
+        this.th_id = th_id;
     }
 
     public Integer getKc_id() {
@@ -289,6 +282,14 @@ public class FaHuoDetail {
 
     public void setKc_id(Integer kc_id) {
         this.kc_id = kc_id;
+    }
+
+    public Integer getFhd_id() {
+        return fhd_id;
+    }
+
+    public void setFhd_id(Integer fhd_id) {
+        this.fhd_id = fhd_id;
     }
 
     public String getDh() {
@@ -307,78 +308,6 @@ public class FaHuoDetail {
         this.pc = pc;
     }
 
-    public String getCkmc() {
-        return ckmc;
-    }
-
-    public void setCkmc(String ckmc) {
-        this.ckmc = ckmc;
-    }
-
-    public String getKhmc() {
-        return khmc;
-    }
-
-    public void setKhmc(String khmc) {
-        this.khmc = khmc;
-    }
-
-    public String getFhrmc() {
-        return fhrmc;
-    }
-
-    public void setFhrmc(String fhrmc) {
-        this.fhrmc = fhrmc;
-    }
-
-    public String getSprmc() {
-        return sprmc;
-    }
-
-    public void setSprmc(String sprmc) {
-        this.sprmc = sprmc;
-    }
-
-    public String getLsh() {
-        return lsh;
-    }
-
-    public void setLsh(String lsh) {
-        this.lsh = lsh;
-    }
-
-    public Date getSj() {
-        return sj;
-    }
-
-    public void setSj(Date sj) {
-        this.sj = sj;
-    }
-
-    public Integer getFhr_id() {
-        return fhr_id;
-    }
-
-    public void setFhr_id(Integer fhr_id) {
-        this.fhr_id = fhr_id;
-    }
-
-    public String getQrq() {
-        return qrq;
-    }
-
-    public void setQrq(String qrq) {
-        this.qrq = qrq;
-    }
-
-    public String getZrq() {
-        return zrq;
-    }
-
-    public void setZrq(String zrq) {
-        this.zrq = zrq;
-    }
-
     @Override
     public int hashCode() {
         int hash = 3;
@@ -394,15 +323,15 @@ public class FaHuoDetail {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final FaHuoDetail other = (FaHuoDetail) obj;
+        final TuiHuoDetail other = (TuiHuoDetail) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
     }
-    
+
     @Override
-    public String toString(){
+    public String toString() {
         return wzmc;
     }
 }

@@ -97,7 +97,7 @@ function selectWuZiLeiBie(json) {
 }
 
 function selectRuKu_m() {
-    $("#ruKuSelectModal").modal("show");
+    $("#ruKuSelectModal").modal({backdrop:'static'});
 }
 
 function selectWuZiZiDian(json) {
@@ -262,7 +262,7 @@ function jxRuKu(json) {
 }
 
 function showSelectRuKu() {
-    $("#ruKuSelectModal").modal("show");
+    $("#ruKuSelectModal").modal({backdrop:'static'});
 }
 
 function selectRuKu() {
@@ -338,7 +338,7 @@ function addRuKu() {
     $("#inpSl").val(0);
     $("#inpJe").val(0);
     jxRuKuMingXi();
-    $("#ruKuModal").modal("show");
+    $("#ruKuModal").modal({backdrop:'static'});
 }
 
 function editRuKu(index) {
@@ -398,7 +398,7 @@ function jxReadRuKu(ruKu) {
     $("#inpSpr").val(ruKu.sprmc);
     $("#inpSpsj").val(ruKu.spsj);
     jxRuKuMingXi();
-    $("#ruKuModal").modal("show");
+    $("#ruKuModal").modal({backdrop:'static'});
 }
 
 function selectRuKuDetail(id, func) {
@@ -667,7 +667,7 @@ function addRuKuMingXi() {
     $("#divMxDymx").hide();
     $("#dvMxBzgg").hide();
     $("#dvMxZl").hide();
-    $("#ruKuMingXiModal").modal("show");
+    $("#ruKuMingXiModal").modal({backdrop:'static'});
 }
 
 function editRuKuMingXi(index) {
@@ -730,7 +730,7 @@ function setRuKuMingXiData(index) {
         $("#dvMxBzgg").hide();
         $("#dvMxZl").hide();
     }
-    $("#ruKuMingXiModal").modal("show");
+    $("#ruKuMingXiModal").modal({backdrop:'static'});
 }
 
 function deleteRuKuMingXi(index) {
@@ -860,7 +860,7 @@ function selectRuKuFei(json) {
     options.func = jxRuKuFei;
     options.ul = "#example2";
     queryPaginator(options);
-    $("#ruKuFeiModal").modal("show");
+    $("#ruKuFeiModal").modal({backdrop:'static'});
 }
 
 function addRuKuFei(type) {
@@ -881,7 +881,7 @@ function addRuKuFei(type) {
         $("#inpFeiSkr").val("");
         $("#inpFeiBz").val("");
     }
-    $("#ruKuFeiEditModal").modal("show");
+    $("#ruKuFeiEditModal").modal({backdrop:'static'});
 }
 
 function editRuKuFei(index) {
@@ -901,7 +901,7 @@ function editRuKuFei(index) {
     $("#inpFeiJe").val(ruKuFei.je);
     $("#inpFeiSkr").val(ruKuFei.skrmc);
     $("#inpFeiBz").val(ruKuFei.bz);
-    $("#ruKuFeiEditModal").modal("show");
+    $("#ruKuFeiEditModal").modal({backdrop:'static'});
 }
 
 function checkFei(type, index, je) {

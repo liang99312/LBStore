@@ -87,6 +87,39 @@ public class LshUtil {
         return result;
     }
     
+    public static String getFhdLsh(){
+        String dateStr = DateUtil.DateToStr(new Date());
+        String result = DateUtil.DateToStr(new Date(), "yyyyMMdd");
+        String key = "fhd" + DateUtil.DateToStr(new Date());
+        Integer i = 0;
+        if(lshMap.get(key) == null){
+            Set<String> keySet = lshMap.keySet();
+            for(String k : keySet){
+                if(k.startsWith("fhd")){
+                    lshMap.remove(k);
+                }
+            }
+            String sql = "select max(lsh) from fahuo where lsh like '"+dateStr+"%'";
+            CommonDao commonDao = (CommonDao) ApplicationUtil.getBean("commonDao");
+            List list = commonDao.getSqlResult(sql);
+            if(list.isEmpty()){
+                i = 1;
+            }else{
+                Object obj = list.get(0);
+                if(obj == null){
+                    i=1;
+                }else{
+                    i = Integer.valueOf(obj.toString().substring(10)) + 1;
+                }
+            }
+        }else{
+            i = lshMap.get(key) + 1;
+        }
+        result += getNewNumber(i,4);
+        lshMap.put(key, i);
+        return result;
+    }
+    
     public static String getHkdLsh(){
         String dateStr = DateUtil.DateToStr(new Date());
         String result = DateUtil.DateToStr(new Date(), "yyyyMMdd");
@@ -100,6 +133,39 @@ public class LshUtil {
                 }
             }
             String sql = "select max(lsh) from huanku where lsh like '"+dateStr+"%'";
+            CommonDao commonDao = (CommonDao) ApplicationUtil.getBean("commonDao");
+            List list = commonDao.getSqlResult(sql);
+            if(list.isEmpty()){
+                i = 1;
+            }else{
+                Object obj = list.get(0);
+                if(obj == null){
+                    i=1;
+                }else{
+                    i = Integer.valueOf(obj.toString().substring(10)) + 1;
+                }
+            }
+        }else{
+            i = lshMap.get(key) + 1;
+        }
+        result += getNewNumber(i,4);
+        lshMap.put(key, i);
+        return result;
+    }
+    
+    public static String getThdLsh(){
+        String dateStr = DateUtil.DateToStr(new Date());
+        String result = DateUtil.DateToStr(new Date(), "yyyyMMdd");
+        String key = "thd" + DateUtil.DateToStr(new Date());
+        Integer i = 0;
+        if(lshMap.get(key) == null){
+            Set<String> keySet = lshMap.keySet();
+            for(String k : keySet){
+                if(k.startsWith("thd")){
+                    lshMap.remove(k);
+                }
+            }
+            String sql = "select max(lsh) from tuihuo where lsh like '"+dateStr+"%'";
             CommonDao commonDao = (CommonDao) ApplicationUtil.getBean("commonDao");
             List list = commonDao.getSqlResult(sql);
             if(list.isEmpty()){

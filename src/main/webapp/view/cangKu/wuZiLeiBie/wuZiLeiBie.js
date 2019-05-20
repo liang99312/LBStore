@@ -65,7 +65,7 @@ function addWuZiLeiBie() {
     $("#inpDm").val("");
     $("#inpBz").val("");
     buildTysx(tysx);
-    $("#wuZiLeiBieModal").modal("show");
+    $("#wuZiLeiBieModal").modal({backdrop:'static'});
 }
 
 function editWuZiLeiBie(index) {
@@ -81,7 +81,7 @@ function editWuZiLeiBie(index) {
     $("#inpDm").val(wuZiLeiBie.dm);
     $("#inpBz").val(wuZiLeiBie.bz);
     setTysx(wuZiLeiBie);
-    $("#wuZiLeiBieModal").modal("show");
+    $("#wuZiLeiBieModal").modal({backdrop:'static'});
 }
 
 function setTysx(json) {
@@ -198,7 +198,7 @@ function addTeYouShuXing() {
     optTsFlag = 1;
     $("#wuZiLeiBieModel_title").html("增加特有属性");
     $("#inpTsMc").val("");
-    $("#teYouShuXingModal").modal("show");
+    $("#teYouShuXingModal").modal({backdrop:'static'});
 }
 
 function editTeYouShuXing(index) {
@@ -213,7 +213,7 @@ function editTeYouShuXing(index) {
             editFenLei = {id: t.zdfl, mc: t.zdfl_mc};
             $("#inpTsZiDian").val(editFenLei.mc);
         }
-        $("#teYouShuXingModal").modal("show");
+        $("#teYouShuXingModal").modal({backdrop:'static'});
     }
 }
 

@@ -49,7 +49,7 @@ function addZiDian() {
     $("#inpMc").val("");
     $("#inpDm").val("");
     $("#inpBz").val("");
-    $("#ziDianModal").modal("show");
+    $("#ziDianModal").modal({backdrop:'static'});
 }
 
 function editZiDian(index) {
@@ -75,7 +75,7 @@ function editZiDian(index) {
     if(editFenLei && editFenLei !== null){
         $("#inpFenLei").val(editFenLei.mc);
     }
-    $("#ziDianModal").modal("show");
+    $("#ziDianModal").modal({backdrop:'static'});
 }
 
 function saveZiDian() {

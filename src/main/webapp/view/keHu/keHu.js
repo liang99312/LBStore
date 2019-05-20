@@ -48,7 +48,7 @@ function addKeHu() {
     $("#inpLxr").val("");
     $("#inpLxdh").val("");
     $("#inpBz").val("");
-    $("#keHuModal").modal("show");
+    $("#keHuModal").modal({backdrop:'static'});
 }
 
 function editKeHu(index) {
@@ -66,7 +66,7 @@ function editKeHu(index) {
     $("#inpLxr").val(keHu.lxr);
     $("#inpLxdh").val(keHu.lxdh);
     $("#inpBz").val(keHu.bz);
-    $("#keHuModal").modal("show");
+    $("#keHuModal").modal({backdrop:'static'});
 }
 
 function saveKeHu() {

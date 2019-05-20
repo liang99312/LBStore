@@ -58,7 +58,7 @@ function addBaoBiao() {
     $("#baoBiaoModel_title").html("新增报表");
     $("#inpMc").val("");
     $("#inpMk").val("");
-    $("#baoBiaoModal").modal("show");
+    $("#baoBiaoModal").modal({backdrop:'static'});
 }
 
 function editBaoBiao(index) {
@@ -79,7 +79,7 @@ function editBaoBiao(index) {
             break;
         }
     }
-    $("#baoBiaoModal").modal("show");
+    $("#baoBiaoModal").modal({backdrop:'static'});
 }
 
 function saveBaoBiao() {

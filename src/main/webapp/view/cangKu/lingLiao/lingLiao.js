@@ -115,7 +115,7 @@ function selectWuZiLeiBie(json) {
 }
 
 function selectLingLiao_m() {
-    $("#lingLiaoSelectModal").modal("show");
+    $("#lingLiaoSelectModal").modal({backdrop:'static'});
 }
 
 function selectWuZiZiDian(json) {
@@ -185,7 +185,7 @@ function jxLingLiao(json) {
 }
 
 function showSelectLingLiao() {
-    $("#lingLiaoSelectModal").modal("show");
+    $("#lingLiaoSelectModal").modal({backdrop:'static'});
 }
 
 function selectLingLiao() {
@@ -256,7 +256,7 @@ function addLingLiao() {
     $("#inpSl").val(0);
     $("#inpJe").val(0);
     jxLingLiaoMingXi();
-    $("#lingLiaoModal").modal("show");
+    $("#lingLiaoModal").modal({backdrop:'static'});
 }
 
 function editLingLiao(index) {
@@ -317,7 +317,7 @@ function selectLingLiaoDetail(id) {
                 $("#inpSpr").val(lingLiao.sprmc);
                 $("#inpSpsj").val(lingLiao.spsj);
                 jxLingLiaoMingXi();
-                $("#lingLiaoModal").modal("show");
+                $("#lingLiaoModal").modal({backdrop:'static'});
             } else
                 alert("获取领料单信息失败:" + json.msg !== undefined ? json.msg : "");
         }
@@ -540,7 +540,7 @@ function addLingLiaoMingXi() {
     dymx_opt = {data: [], yxData: [], func: calcDymx};
     editLeiBie = null;
     $("#lingLiaoMingXiModal_title").html("增加明细");
-    $("#selKuCunModal").modal("show");
+    $("#selKuCunModal").modal({backdrop:'static'});
 }
 
 function editLingLiaoMingXi(index) {
@@ -771,7 +771,7 @@ function setKcCunData(kc, index) {
     }
     selectMxJlfs();
     $("#selKuCunModal").modal("hide");
-    $("#lingLiaoMingXiModal").modal("show");
+    $("#lingLiaoMingXiModal").modal({backdrop:'static'});
 }
 
 function cxKuCunById(id, index) {

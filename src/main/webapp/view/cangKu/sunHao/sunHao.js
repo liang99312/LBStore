@@ -113,7 +113,7 @@ function selectWuZiLeiBie(json) {
 }
 
 function selectSunHao_m() {
-    $("#sunHaoSelectModal").modal("show");
+    $("#sunHaoSelectModal").modal({backdrop:'static'});
 }
 
 function selectWuZiZiDian(json) {
@@ -183,7 +183,7 @@ function jxSunHao(json) {
 }
 
 function showSelectSunHao() {
-    $("#sunHaoSelectModal").modal("show");
+    $("#sunHaoSelectModal").modal({backdrop:'static'});
 }
 
 function selectSunHao() {
@@ -252,7 +252,7 @@ function addSunHao() {
     $("#inpSl").val(0);
     $("#inpJe").val(0);
     jxSunHaoMingXi();
-    $("#sunHaoModal").modal("show");
+    $("#sunHaoModal").modal({backdrop:'static'});
 }
 
 function editSunHao(index) {
@@ -311,7 +311,7 @@ function selectSunHaoDetail(id) {
                 $("#inpSpr").val(sunHao.sprmc);
                 $("#inpSpsj").val(sunHao.spsj);
                 jxSunHaoMingXi();
-                $("#sunHaoModal").modal("show");
+                $("#sunHaoModal").modal({backdrop:'static'});
             } else
                 alert("获取损耗单信息失败:" + json.msg !== undefined ? json.msg : "");
         }
@@ -525,7 +525,7 @@ function addSunHaoMingXi() {
     dymx_opt = {data: [], yxData: [], func: calcDymx};
     editLeiBie = null;
     $("#sunHaoMingXiModal_title").html("增加明细");
-    $("#selKuCunModal").modal("show");
+    $("#selKuCunModal").modal({backdrop:'static'});
 }
 
 function editSunHaoMingXi(index) {
@@ -756,7 +756,7 @@ function setKcCunData(kc, index) {
     }
     selectMxJlfs();
     $("#selKuCunModal").modal("hide");
-    $("#sunHaoMingXiModal").modal("show");
+    $("#sunHaoMingXiModal").modal({backdrop:'static'});
 }
 
 function cxKuCunById(id, index) {

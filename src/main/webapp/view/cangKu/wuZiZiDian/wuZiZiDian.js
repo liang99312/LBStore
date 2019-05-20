@@ -59,7 +59,7 @@ function addWuZiZiDian() {
     $("#inpBm").val("");
     $("#inpDw").val("");
     $("#inpBz").val("");
-    $("#wuZiZiDianModal").modal("show");
+    $("#wuZiZiDianModal").modal({backdrop:'static'});
 }
 
 function editWuZiZiDian(index) {
@@ -86,7 +86,7 @@ function editWuZiZiDian(index) {
     if (editLeiBie && editLeiBie !== null) {
         $("#inpLeiBie").val(editLeiBie.mc);
     }
-    $("#wuZiZiDianModal").modal("show");
+    $("#wuZiZiDianModal").modal({backdrop:'static'});
 }
 
 function saveWuZiZiDian() {
@@ -196,7 +196,7 @@ function selectWuZiXhgg(json) {
     options.func = jxWuZiXhgg;
     options.ul = "#example2";
     queryPaginator(options);
-    $("#wuZiXhggModal").modal("show");
+    $("#wuZiXhggModal").modal({backdrop:'static'});
 }
 
 function addWuZiXhgg() {
@@ -211,7 +211,7 @@ function addWuZiXhgg() {
     $("#inpGgdm").val("");
     $("#inpGgjb").val("0");
     $("#inpGgbzq").val("0");
-    $("#wuZiXhggEditModal").modal("show");
+    $("#wuZiXhggEditModal").modal({backdrop:'static'});
 }
 
 function editWuZiXhgg(index) {
@@ -232,7 +232,7 @@ function editWuZiXhgg(index) {
     $("#inpGgdm").val(wuZiXhgg.dm);
     $("#inpGgjb").val(wuZiXhgg.jb);
     $("#inpGgbzq").val(wuZiXhgg.bzq);
-    $("#wuZiXhggEditModal").modal("show");
+    $("#wuZiXhggEditModal").modal({backdrop:'static'});
 }
 
 function saveWuZiXhgg() {

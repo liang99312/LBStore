@@ -30,7 +30,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class FaHuoDao extends BaseDao {
 
-    public FaHuo getFaHuoDetailById(Integer id) {
+    public FaHuo getFaHuoWithDetailById(Integer id) {
         FaHuo faHuo = null;
         Session session = null;
         try {
@@ -300,8 +300,8 @@ public class FaHuoDao extends BaseDao {
             session.createSQLQuery(deleteDetail).executeUpdate();
             String deleteFei = "delete from FaHuoFei where fh_id=" + id;
             session.createSQLQuery(deleteFei).executeUpdate();
-            String deleteLl = "delete from FaHuo where id=" + id;
-            session.createSQLQuery(deleteLl).executeUpdate();
+            String deleteFh = "delete from FaHuo where id=" + id;
+            session.createSQLQuery(deleteFh).executeUpdate();
             session.flush();
             tx.commit();
             result = true;
@@ -378,7 +378,7 @@ public class FaHuoDao extends BaseDao {
             faHuo.setState(1);
             faHuo.setSpr_id(a01_id);
             faHuo.setSpsj(new Date());
-            faHuo.setLsh(LshUtil.getLldLsh());
+            faHuo.setLsh(LshUtil.getFhdLsh());
             faHuo.setDfje(faHuo.getJe() - faHuo.getYfje());
             session.update(faHuo);
             session.flush();
@@ -485,6 +485,142 @@ public class FaHuoDao extends BaseDao {
             result = true;
         } catch (Exception e) {
             tx.rollback();
+            e.printStackTrace();
+        } finally {
+            try {
+                if (session != null) {
+                    session.close();
+                }
+            } catch (Exception he) {
+                he.printStackTrace();
+            }
+        }
+        return result;
+    }
+    
+    public FaHuoDetail getFaHuoDetailById(Integer id) {
+        FaHuoDetail faHuoDetail = null;
+        Session session = null;
+        try {
+            session = getSessionFactory().openSession();
+            String sql = "select {fhd.*},kh.mc as khmc,ck.mc as ckmc,fh.spsj as sj,fh.lsh as lsh,a01.mc as fhrmc,l.mc as wzlb from FaHuoDetail fhd "
+                    + "left join FaHuo fh on fhd.fh_id=fh.id "
+                    + "left join CangKu ck on fhd.ck_id=ck.id "
+                    + "left join KeHu kh on fh.kh_id=kh.id "
+                    + "left join A01 a01 on fh.fhr_id=a01.id "
+                    + "left join WuZiLeiBie l on fhd.wzlb_id=l.id "
+                    + "where fhd.id=" + id;
+            SQLQuery navtiveSQL = session.createSQLQuery(sql);
+            navtiveSQL.addEntity("fhd", FaHuoDetail.class)
+                    .addScalar("khmc", StandardBasicTypes.STRING)
+                    .addScalar("ckmc", StandardBasicTypes.STRING)
+                    .addScalar("sj", StandardBasicTypes.DATE)
+                    .addScalar("lsh", StandardBasicTypes.STRING)
+                    .addScalar("fhrmc", StandardBasicTypes.STRING)
+                    .addScalar("wzlb", StandardBasicTypes.STRING);
+            List list = navtiveSQL.list();
+            for (Object obj : list) {
+                Object[] objs = (Object[]) obj;
+                faHuoDetail = (FaHuoDetail) objs[0];
+                String khmc = (String) objs[1];
+                String ckmc = (String) objs[2];
+                Date sj = (Date) objs[3];
+                String lsh = (String) objs[4];
+                String fhrmc = (String) objs[5];
+                String wzlb = (String) objs[6];
+                faHuoDetail.setKhmc(khmc);
+                faHuoDetail.setCkmc(ckmc);
+                faHuoDetail.setSj(sj);
+                faHuoDetail.setLsh(lsh);
+                faHuoDetail.setFhrmc(fhrmc);
+                faHuoDetail.setWzlb(wzlb);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (session != null) {
+                    session.close();
+                }
+            } catch (Exception he) {
+                he.printStackTrace();
+            }
+        }
+        return faHuoDetail;
+    }
+    
+    public List<FaHuoDetail> queryFaHuoDetailsTop100(FaHuoDetail detail) {
+        List<FaHuoDetail> result = new ArrayList();
+        Session session = null;
+        try {
+            session = getSessionFactory().openSession();
+            String sql = "select {fhd.*},kh.mc as khmc,ck.mc as ckmc,fh.spsj as sj,fh.lsh as lsh,a01.mc as fhrmc,l.mc as wzlb from FaHuoDetail fhd "
+                    + "left join FaHuo fh on fhd.fh_id=fh.id "
+                    + "left join CangKu ck on fhd.ck_id=ck.id "
+                    + "left join KeHu kh on fh.kh_id=kh.id "
+                    + "left join A01 a01 on fh.fhr_id=a01.id "
+                    + "left join WuZiLeiBie l on fhd.wzlb_id=l.id "
+                    + "where fh.qy_id=" + detail.getQy_id();
+            if (detail.getLsh() != null && !"".equals(detail.getLsh())) {
+                sql += " and fh.lsh = '" + detail.getLsh() + "'";
+            }
+            if (detail.getCk_id() != null) {
+                sql += " and fhd.ck_id = " + detail.getCk_id();
+            }
+            if (detail.getWzlb_id() != null) {
+                sql += " and fhd.wzlb_id = " + detail.getWzlb_id();
+            }
+            if (detail.getWzmc() != null && !"".equals(detail.getWzmc())) {
+                sql += " and fhd.wzmc = '" + detail.getWzmc() + "'";
+            }
+            if (detail.getXhgg() != null && !"".equals(detail.getXhgg())) {
+                sql += " and fhd.xhgg = '" + detail.getXhgg() + "'";
+            }
+            if (detail.getKh_id() != null) {
+                sql += " and fhd.kh_id = " + detail.getKh_id();
+            }
+            if (detail.getGys_id() != null) {
+                sql += " and fhd.ck_id = " + detail.getGys_id();
+            }
+            if (detail.getFhr_id() != null) {
+                sql += " and fh.fhr_id = " + detail.getFhr_id();
+            }
+            if (detail.getTxm() != null && !"".equals(detail.getTxm())) {
+                sql += " and fhd.txm = '" + detail.getTxm() + "'";
+            }
+            if (detail.getQrq() != null && !"".equals(detail.getQrq())) {
+                sql += " and fh.spsj >= '" + detail.getQrq() + "'";
+            }
+            if (detail.getZrq() != null && !"".equals(detail.getZrq())) {
+                sql += " and fh.spsj <= '" + detail.getZrq() + "'";
+            }
+            SQLQuery navtiveSQL = session.createSQLQuery(sql);
+            navtiveSQL.addEntity("fhd", FaHuoDetail.class)
+                    .addScalar("khmc", StandardBasicTypes.STRING)
+                    .addScalar("ckmc", StandardBasicTypes.STRING)
+                    .addScalar("sj", StandardBasicTypes.DATE)
+                    .addScalar("lsh", StandardBasicTypes.STRING)
+                    .addScalar("fhrmc", StandardBasicTypes.STRING)
+                    .addScalar("wzlb", StandardBasicTypes.STRING);
+            List list = navtiveSQL.list();
+            for (Object obj : list) {
+                Object[] objs = (Object[]) obj;
+                FaHuoDetail fhd = (FaHuoDetail) objs[0];
+                String khmc = (String) objs[1];
+                String ckmc = (String) objs[2];
+                Date sj = (Date) objs[3];
+                String lsh = (String) objs[4];
+                String fhrmc = (String) objs[5];
+                String wzlb = (String) objs[6];
+                fhd.setKhmc(khmc);
+                fhd.setCkmc(ckmc);
+                fhd.setSj(sj);
+                fhd.setLsh(lsh);
+                fhd.setFhrmc(fhrmc);
+                fhd.setWzlb(wzlb);
+                result.add(fhd);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
