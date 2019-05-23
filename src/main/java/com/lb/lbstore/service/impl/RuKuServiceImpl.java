@@ -35,6 +35,11 @@ public class RuKuServiceImpl implements RuKuService {
     public RuKu getRuKuWithDetailById(Integer id) {
         return  ruKuDao.getRuKuWithDetailById(id);
     }
+    
+    @Override
+    public RuKuDetail getRuKuDetailById(Integer id) {
+        return  ruKuDao.getRuKuDetailById(id);
+    }
 
     @Override
     public List<RuKu> getAllRuKus(Integer qy_id) {
@@ -114,6 +119,11 @@ public class RuKuServiceImpl implements RuKuService {
     @Override
     public boolean deleteRuKuFei(Integer id,Integer rk_id) {
         return ruKuDao.deleteRuKuFei(id, rk_id);
+    }
+    
+    @Override
+    public List<RuKuDetail> getRuKuDetailTop100(RuKuDetail detail) {
+        return ruKuDao.queryRuKuDetailsTop100(detail);
     }
 
 }

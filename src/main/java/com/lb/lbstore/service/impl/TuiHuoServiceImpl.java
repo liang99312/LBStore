@@ -30,7 +30,7 @@ public class TuiHuoServiceImpl implements TuiHuoService {
     
     @Override
     public TuiHuo getTuiHuoDetailById(Integer id) {
-        return  tuiHuoDao.getTuiHuoDetailById(id);
+        return tuiHuoDao.getTuiHuoDetailById(id);
     }
 
     @Override

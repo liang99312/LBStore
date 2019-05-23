@@ -21,25 +21,25 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 @Entity
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler", "fieldHandler"})
-public class RuKuDetail {
+public class TuiGongDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private Integer qy_id;
     private Integer ck_id;
-    private Integer rk_id;
-    private Integer kc_id;
+    private Integer tg_id;
     private Integer kh_id;
+    private Integer kc_id;
     private Integer gys_id;
+    private Integer rkd_id;
     private Integer wzzd_id;
     private String wzmc;
     private Integer wzlb_id;
     private transient String wzlb;
     private Integer xhgg_id;
     private String xhgg;
-    private String ly; //供应商；客户；生产
-    private String dh; //单号
+    private String dh;
     private String pp;
     private String scc;
     private String txm;
@@ -53,22 +53,11 @@ public class RuKuDetail {
     private String zldw;
     private String jlfs = "pt"; //普通记录(pt)；总量记录(zl)；单元明细(mx)
     private Double bzgg = 1.0D; //包装规格
-    private Double sl = 1.0D;
-    private Double zl = 1.0D;
+    private Double tgl = 1.0D;
+    private Double tgzl = 1.0D;
     private String tysx;
     private String dymx;
     private String kw;
-    
-    private transient String ckmc;
-    private transient String khmc;
-    private transient String rkrmc;
-    private transient String sprmc;
-    private transient String lsh;
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm",timezone = "GMT+8")
-    private transient Date sj;
-    private transient Integer rkr_id;
-    private transient String qrq,zrq;
 
     public Integer getId() {
         return id;
@@ -94,22 +83,6 @@ public class RuKuDetail {
         this.ck_id = ck_id;
     }
 
-    public Integer getRk_id() {
-        return rk_id;
-    }
-
-    public void setRk_id(Integer rk_id) {
-        this.rk_id = rk_id;
-    }
-
-    public Integer getKc_id() {
-        return kc_id;
-    }
-
-    public void setKc_id(Integer kc_id) {
-        this.kc_id = kc_id;
-    }
-
     public Integer getKh_id() {
         return kh_id;
     }
@@ -125,6 +98,7 @@ public class RuKuDetail {
     public void setGys_id(Integer gys_id) {
         this.gys_id = gys_id;
     }
+
 
     public Integer getWzlb_id() {
         return wzlb_id;
@@ -174,22 +148,6 @@ public class RuKuDetail {
         this.xhgg = xhgg;
     }
 
-    public String getLy() {
-        return ly;
-    }
-
-    public void setLy(String ly) {
-        this.ly = ly;
-    }
-
-    public String getDh() {
-        return dh;
-    }
-
-    public void setDh(String dh) {
-        this.dh = dh;
-    }
-
     public String getPp() {
         return pp;
     }
@@ -230,20 +188,20 @@ public class RuKuDetail {
         this.bzgg = bzgg;
     }
 
-    public Double getSl() {
-        return sl;
+    public Double getTgl() {
+        return tgl;
     }
 
-    public void setSl(Double sl) {
-        this.sl = sl;
+    public void setTgl(Double tgl) {
+        this.tgl = tgl;
     }
 
-    public Double getZl() {
-        return zl;
+    public Double getTgzl() {
+        return tgzl;
     }
 
-    public void setZl(Double zl) {
-        this.zl = zl;
+    public void setTgzl(Double tgzl) {
+        this.tgzl = tgzl;
     }
 
     public String getTysx() {
@@ -310,6 +268,38 @@ public class RuKuDetail {
         this.kw = kw;
     }
 
+    public Integer getTg_id() {
+        return tg_id;
+    }
+
+    public void setTg_id(Integer tg_id) {
+        this.tg_id = tg_id;
+    }
+
+    public Integer getKc_id() {
+        return kc_id;
+    }
+
+    public void setKc_id(Integer kc_id) {
+        this.kc_id = kc_id;
+    }
+
+    public Integer getRkd_id() {
+        return rkd_id;
+    }
+
+    public void setRkd_id(Integer rkd_id) {
+        this.rkd_id = rkd_id;
+    }
+
+    public String getDh() {
+        return dh;
+    }
+
+    public void setDh(String dh) {
+        this.dh = dh;
+    }
+
     public String getPc() {
         return pc;
     }
@@ -317,78 +307,8 @@ public class RuKuDetail {
     public void setPc(String pc) {
         this.pc = pc;
     }
-    
-    public String getCkmc() {
-        return ckmc;
-    }
 
-    public void setCkmc(String ckmc) {
-        this.ckmc = ckmc;
-    }
 
-    public String getKhmc() {
-        return khmc;
-    }
-
-    public void setKhmc(String khmc) {
-        this.khmc = khmc;
-    }
-
-    public String getRkrmc() {
-        return rkrmc;
-    }
-
-    public void setRkrmc(String rkrmc) {
-        this.rkrmc = rkrmc;
-    }
-
-    public String getSprmc() {
-        return sprmc;
-    }
-
-    public void setSprmc(String sprmc) {
-        this.sprmc = sprmc;
-    }
-
-    public String getLsh() {
-        return lsh;
-    }
-
-    public void setLsh(String lsh) {
-        this.lsh = lsh;
-    }
-
-    public Date getSj() {
-        return sj;
-    }
-
-    public void setSj(Date sj) {
-        this.sj = sj;
-    }
-
-    public Integer getRkr_id() {
-        return rkr_id;
-    }
-
-    public void setRkr_id(Integer rkr_id) {
-        this.rkr_id = rkr_id;
-    }
-
-    public String getQrq() {
-        return qrq;
-    }
-
-    public void setQrq(String qrq) {
-        this.qrq = qrq;
-    }
-
-    public String getZrq() {
-        return zrq;
-    }
-
-    public void setZrq(String zrq) {
-        this.zrq = zrq;
-    }
     @Override
     public int hashCode() {
         int hash = 3;
@@ -404,7 +324,7 @@ public class RuKuDetail {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final RuKuDetail other = (RuKuDetail) obj;
+        final TuiGongDetail other = (TuiGongDetail) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }

@@ -48,5 +48,9 @@ public interface RuKuService {
     public RuKuFei saveRuKuFei(RuKuFei ruKuFei);
     
     public boolean deleteRuKuFei(Integer id,Integer rk_id);
+    
+    public RuKuDetail getRuKuDetailById(Integer id);
+    
+    public List<RuKuDetail> getRuKuDetailTop100(RuKuDetail detail);
 
 }

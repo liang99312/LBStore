@@ -5,6 +5,7 @@
  */
 package com.lb.lbstore.controller;
 
+import com.lb.lbstore.domain.A01;
 import com.lb.lbstore.domain.Page;
 import javax.annotation.Resource;
 
@@ -72,6 +73,24 @@ public class RuKuController extends BaseController {
             RuKu ruKu = ruKuServiceImpl.getRuKuWithDetailById(id);
             map.put("result", 0);
             map.put("ruKu", ruKu);
+        } catch (Exception e) {
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
+    }
+    
+    @RequestMapping(value = "getRuKuDetailById.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> getRuKuDetailById(@RequestParam Integer id) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            RuKuDetail ruKuDetail = ruKuServiceImpl.getRuKuDetailById(id);
+            map.put("result", 0);
+            map.put("ruKuDetail", ruKuDetail);
         } catch (Exception e) {
             map.put("result", -1);
             map.put("msg", e.getMessage());
@@ -311,6 +330,26 @@ public class RuKuController extends BaseController {
         map.put("pageSize", model.getPageSize());
         model.setList(this.ruKuServiceImpl.queryRuKuFeisByPage(map));
         return model;
+    }
+    
+    @RequestMapping(value = "getRuKuDetailTop100.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> getKuCunTop100(@RequestBody RuKuDetail model) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            A01 loginA01 = getDlA01();
+            model.setQy_id(loginA01.getQy_id());
+            List<RuKuDetail> list = ruKuServiceImpl.getRuKuDetailTop100(model);
+            map.put("result", 0);
+            map.put("sz", list);
+        } catch (Exception e) {
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
     }
 
 }

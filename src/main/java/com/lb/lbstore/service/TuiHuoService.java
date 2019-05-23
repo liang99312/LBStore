@@ -5,6 +5,7 @@
  */
 package com.lb.lbstore.service;
 
+import com.lb.lbstore.domain.RuKuDetail;
 import com.lb.lbstore.domain.TuiHuo;
 import java.util.HashMap;
 import java.util.List;

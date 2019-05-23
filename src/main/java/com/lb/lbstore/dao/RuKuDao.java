@@ -95,6 +95,142 @@ public class RuKuDao extends BaseDao {
         return ruKu;
     }
     
+    public RuKuDetail getRuKuDetailById(Integer id) {
+        RuKuDetail ruKuDetail = null;
+        Session session = null;
+        try {
+            session = getSessionFactory().openSession();
+            String sql = "select {rkd.*},kh.mc as khmc,ck.mc as ckmc,rk.spsj as sj,rk.lsh as lsh,a01.mc as rkrmc,l.mc as wzlb from RuKuDetail rkd "
+                    + "left join RuKu rk on rkd.rk_id=rk.id "
+                    + "left join CangKu ck on rkd.ck_id=ck.id "
+                    + "left join KeHu kh on rk.kh_id=kh.id "
+                    + "left join A01 a01 on rk.rkr_id=a01.id "
+                    + "left join WuZiLeiBie l on rkd.wzlb_id=l.id "
+                    + "where rkd.id=" + id;
+            SQLQuery navtiveSQL = session.createSQLQuery(sql);
+            navtiveSQL.addEntity("rkd", RuKuDetail.class)
+                    .addScalar("khmc", StandardBasicTypes.STRING)
+                    .addScalar("ckmc", StandardBasicTypes.STRING)
+                    .addScalar("sj", StandardBasicTypes.DATE)
+                    .addScalar("lsh", StandardBasicTypes.STRING)
+                    .addScalar("rkrmc", StandardBasicTypes.STRING)
+                    .addScalar("wzlb", StandardBasicTypes.STRING);
+            List list = navtiveSQL.list();
+            for (Object obj : list) {
+                Object[] objs = (Object[]) obj;
+                ruKuDetail = (RuKuDetail) objs[0];
+                String khmc = (String) objs[1];
+                String ckmc = (String) objs[2];
+                Date sj = (Date) objs[3];
+                String lsh = (String) objs[4];
+                String rkrmc = (String) objs[5];
+                String wzlb = (String) objs[6];
+                ruKuDetail.setKhmc(khmc);
+                ruKuDetail.setCkmc(ckmc);
+                ruKuDetail.setSj(sj);
+                ruKuDetail.setLsh(lsh);
+                ruKuDetail.setRkrmc(rkrmc);
+                ruKuDetail.setWzlb(wzlb);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (session != null) {
+                    session.close();
+                }
+            } catch (Exception he) {
+                he.printStackTrace();
+            }
+        }
+        return ruKuDetail;
+    }
+    
+    public List<RuKuDetail> queryRuKuDetailsTop100(RuKuDetail detail) {
+        List<RuKuDetail> result = new ArrayList();
+        Session session = null;
+        try {
+            session = getSessionFactory().openSession();
+            String sql = "select {rkd.*},kh.mc as khmc,ck.mc as ckmc,rk.spsj as sj,rk.lsh as lsh,a01.mc as rkrmc,l.mc as wzlb from RuKuDetail rkd "
+                    + "left join RuKu rk on rkd.rk_id=rk.id "
+                    + "left join CangKu ck on rkd.ck_id=ck.id "
+                    + "left join KeHu kh on rk.kh_id=kh.id "
+                    + "left join A01 a01 on rk.rkr_id=a01.id "
+                    + "left join WuZiLeiBie l on rkd.wzlb_id=l.id "
+                    + "where rk.qy_id=" + detail.getQy_id();
+            if (detail.getLsh() != null && !"".equals(detail.getLsh())) {
+                sql += " and rk.lsh = '" + detail.getLsh() + "'";
+            }
+            if (detail.getCk_id() != null) {
+                sql += " and rkd.ck_id = " + detail.getCk_id();
+            }
+            if (detail.getWzlb_id() != null) {
+                sql += " and rkd.wzlb_id = " + detail.getWzlb_id();
+            }
+            if (detail.getWzmc() != null && !"".equals(detail.getWzmc())) {
+                sql += " and rkd.wzmc = '" + detail.getWzmc() + "'";
+            }
+            if (detail.getXhgg() != null && !"".equals(detail.getXhgg())) {
+                sql += " and rkd.xhgg = '" + detail.getXhgg() + "'";
+            }
+            if (detail.getKh_id() != null) {
+                sql += " and rkd.kh_id = " + detail.getKh_id();
+            }
+            if (detail.getGys_id() != null) {
+                sql += " and rkd.ck_id = " + detail.getGys_id();
+            }
+            if (detail.getRkr_id() != null) {
+                sql += " and rk.rkr_id = " + detail.getRkr_id();
+            }
+            if (detail.getTxm() != null && !"".equals(detail.getTxm())) {
+                sql += " and rkd.txm = '" + detail.getTxm() + "'";
+            }
+            if (detail.getQrq() != null && !"".equals(detail.getQrq())) {
+                sql += " and rk.spsj >= '" + detail.getQrq() + "'";
+            }
+            if (detail.getZrq() != null && !"".equals(detail.getZrq())) {
+                sql += " and rk.spsj <= '" + detail.getZrq() + "'";
+            }
+            SQLQuery navtiveSQL = session.createSQLQuery(sql);
+            navtiveSQL.addEntity("rkd", RuKuDetail.class)
+                    .addScalar("khmc", StandardBasicTypes.STRING)
+                    .addScalar("ckmc", StandardBasicTypes.STRING)
+                    .addScalar("sj", StandardBasicTypes.DATE)
+                    .addScalar("lsh", StandardBasicTypes.STRING)
+                    .addScalar("rkrmc", StandardBasicTypes.STRING)
+                    .addScalar("wzlb", StandardBasicTypes.STRING);
+            List list = navtiveSQL.list();
+            for (Object obj : list) {
+                Object[] objs = (Object[]) obj;
+                RuKuDetail rkd = (RuKuDetail) objs[0];
+                String khmc = (String) objs[1];
+                String ckmc = (String) objs[2];
+                Date sj = (Date) objs[3];
+                String lsh = (String) objs[4];
+                String rkrmc = (String) objs[5];
+                String wzlb = (String) objs[6];
+                rkd.setKhmc(khmc);
+                rkd.setCkmc(ckmc);
+                rkd.setSj(sj);
+                rkd.setLsh(lsh);
+                rkd.setRkrmc(rkrmc);
+                rkd.setWzlb(wzlb);
+                result.add(rkd);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (session != null) {
+                    session.close();
+                }
+            } catch (Exception he) {
+                he.printStackTrace();
+            }
+        }
+        return result;
+    }
+    
     public List<RuKuDetail> queryRuKuDetailTop100(Integer wzzd_id){
         List<RuKuDetail> details = new ArrayList<>();
         Session session = null;
@@ -396,7 +532,10 @@ public class RuKuDao extends BaseDao {
                 kc.setKw(d.getKw());
                 kc.setRksj(new Date());
                 
-                session.save(kc);
+                Integer kc_id = (Integer) session.save(kc);
+                session.flush();
+                d.setKc_id(kc_id);
+                session.update(d);
             }
             session.flush();
             ruKu = (RuKu) session.load(RuKu.class, ruKu.getId());
