@@ -302,23 +302,23 @@ public class TuiGongDao extends BaseDao {
             sb.append(")");
             llSb.append(")");
 
-            String lldString = "select lld.id as id, lld.slzl-h.zl as sl from lingliaodetail lld, "
-                    + "(select sum(tgd.tgzl) as zl,tgd.lld_id as lld_id from tuigongdetail tgd,tuigong tg where tgd.tg_id=tg.id and tg.state=1 and tgd.lld_id in " + llSb + " group by tgd.lld_id) as h "
-                    + "where lld.id=h.lld_id;";
-            List lldList = session.createSQLQuery(lldString).list();
-            for (Object obj : lldList) {
-                Object[] objs = (Object[]) obj;
-                Integer lld_id = (Integer) objs[0];
-                Double sl = (Double) objs[1];
-                TuiGongDetail detail = LlDetailTable.get(lld_id);
-                if (detail != null) {
-                    if (sl < detail.getTgzl()) {
-                        result = "还库数量不能大于领料数量！";
-                        tx.rollback();
-                        return result;
-                    }
-                }
-            }
+//            String lldString = "select lld.id as id, lld.slzl-h.zl as sl from lingliaodetail lld, "
+//                    + "(select sum(tgd.tgzl) as zl,tgd.lld_id as lld_id from tuigongdetail tgd,tuigong tg where tgd.tg_id=tg.id and tg.state=1 and tgd.lld_id in " + llSb + " group by tgd.lld_id) as h "
+//                    + "where lld.id=h.lld_id;";
+//            List lldList = session.createSQLQuery(lldString).list();
+//            for (Object obj : lldList) {
+//                Object[] objs = (Object[]) obj;
+//                Integer lld_id = (Integer) objs[0];
+//                Double sl = (Double) objs[1];
+//                TuiGongDetail detail = LlDetailTable.get(lld_id);
+//                if (detail != null) {
+//                    if (sl < detail.getTgzl()) {
+//                        result = "退供数量不能大于领料数量！";
+//                        tx.rollback();
+//                        return result;
+//                    }
+//                }
+//            }
 
             String kcSql = "from KuCun where id in " + sb.toString();
             List<KuCun> kcList = session.createQuery(kcSql).list();

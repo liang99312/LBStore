@@ -227,14 +227,14 @@ and open the template in the editor.
                             <div class="form-group">
                                 <label for="inpMxRkr">入&ensp;库&ensp;人：</label>
                                 <input type="text" id="inpMxRkr" disabled="disabled"/>
-                                <label for="inpMxSl">入&ensp;取&ensp;量：</label>
-                                <input type="text" id="inpMxSll" disabled="disabled"/>
-                                <label for="inpMxTgl">返&ensp;货&ensp;量：</label>
+                                <label for="inpMxSyl">剩&ensp;余&ensp;量：</label>
+                                <input type="text" id="inpMxSyl" disabled="disabled"/>
+                                <label for="inpMxTgl">退&ensp;供&ensp;量：</label>
                                 <input type="text" id="inpMxTgl" />
                             </div>
                             <div id="dvMxZl" class="form-group" style="display: none;">
-                                <label for="inpMxZl">入取总量：</label>
-                                <input type="text" id="inpMxZl" disabled="disabled"/>
+                                <label for="inpMxSyzl">剩余总量：</label>
+                                <input type="text" id="inpMxSyzl" disabled="disabled"/>
                                 <label for="inpMxTgzl">退供总量：</label>
                                 <input type="text" id="inpMxTgzl" />
                             </div>
@@ -251,7 +251,7 @@ and open the template in the editor.
             </div>
         </div>
         
-        <div class="modal fade" id="selRuKuDetailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade" id="selKuCunDetailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog" style="width: 800px;">
                 <div class="modal-content">
                     <div class="modal-header" style="background: #ace1ff;height: 40px;border-top-left-radius: 6px;border-top-right-radius: 6px;padding:10px">
@@ -261,50 +261,50 @@ and open the template in the editor.
                     <div class="modal-body">
                         <div class="content">
                             <div class="form-group">
-                                <label for="inpRkdSelWzlb">类&ensp;&ensp;别：</label>
-                                <input type="text" id="inpRkdSelWzlb" />
-                                <label for="inpRkdSelWz">物&ensp;&ensp;资：</label>
-                                <input type="text" id="inpRkdSelWz" />
+                                <label for="inpKcdSelWzlb">类&ensp;&ensp;别：</label>
+                                <input type="text" id="inpKcdSelWzlb" />
+                                <label for="inpKcdSelWz">物&ensp;&ensp;资：</label>
+                                <input type="text" id="inpKcdSelWz" />
                             </div>
                             <div class="form-group">
                                 <label for="inpdSelXhgg">规&ensp;&ensp;格：</label>
-                                <input type="text" id="inpRkdSelXhgg" />
-                                <label for="inpRkdSelKh">客&ensp;&ensp;户：</label>
-                                <input type="text" id="inpRkdSelKh" />
+                                <input type="text" id="inpKcdSelXhgg" />
+                                <label for="inpKcdSelKh">客&ensp;&ensp;户：</label>
+                                <input type="text" id="inpKcdSelKh" />
                             </div>
                             <div class="form-group">
-                                <label for="inpRkdSelGys">供应商：</label>
-                                <input type="text" id="inpRkdSelGys" />
-                                <label for="inpRkdSelRkr">入库人：</label>
-                                <input type="text" id="inpRkdSelRkr" />
+                                <label for="inpKcdSelGys">供应商：</label>
+                                <input type="text" id="inpKcdSelGys" />
+                                <label for="inpKcdSelRkr">入库人：</label>
+                                <input type="text" id="inpKcdSelRkr" />
                             </div>
                             <div class="form-group">
-                                <label for="inpRkdSelLsh">入库单：</label>
-                                <input type="text" id="inpRkdSelLsh" />
-                                <label for="inpRkdSelTxm">条形码：</label>
-                                <input type="text" id="inpRkdSelTxm" />
+                                <label for="inpKcdSelLsh">入库单：</label>
+                                <input type="text" id="inpKcdSelLsh" />
+                                <label for="inpKcdSelTxm">条形码：</label>
+                                <input type="text" id="inpKcdSelTxm" />
                             </div>
                             <div class="form-group">
-                                <label for="inpRkdSelRq">日&ensp;&ensp;期：</label>
-                                <input type="text" id="inpRkdSelQrq" />-<input type="text" id="inpRkdSelZrq" />
+                                <label for="inpKcdSelRq">日&ensp;&ensp;期：</label>
+                                <input type="text" id="inpKcdSelQrq" />-<input type="text" id="inpKcdSelZrq" />
                             </div>
                             <div id="divXzmx" class="form-group">
-                                <button type="button" class="btn btn-primary btn-sm" onclick="cxRuKuDetail();">查询入库</button>
+                                <button type="button" class="btn btn-primary btn-sm" onclick="cxKuCunDetail();">查询库存</button>
                             </div>
                             <div style="min-height: 100px;max-height: 300px;overflow-y: auto;">
-                                <table id="tblRuKuDetail" class="table table-hover">
+                                <table id="tblKuCunDetail" class="table table-hover">
                                     <thead>
                                         <tr style="background: #e9f7ff;">
                                             <th style="width:20%">入库单号</th>
                                             <th style="width:20%">名称</th>
                                             <th style="width:10%">品牌</th>
                                             <th style="width:10%">型号规格</th>
-                                            <th style="width:10%">入库数量</th>
+                                            <th style="width:10%">库存数量</th>
                                             <th style="width:20%">入库时间</th>
                                             <th>操作</th>
                                         </tr>
                                     </thead>
-                                    <tbody id='tblRuKuDetail_body'>
+                                    <tbody id='tblKuCunDetail_body'>
                                         <tr><td>无明细记录</td></tr>
                                     </tbody>
                                 </table>
