@@ -403,7 +403,7 @@ function jxReadRuKu(ruKu) {
 
 function selectRuKuDetail(id, func) {
     $.ajax({
-        url: "/LBStore/ruKu/getRuKuDetailById.do?id=" + id,
+        url: "/LBStore/ruKu/getRuKuWithDetailById.do?id=" + id,
         contentType: "application/json",
         type: "get",
         cache: false,

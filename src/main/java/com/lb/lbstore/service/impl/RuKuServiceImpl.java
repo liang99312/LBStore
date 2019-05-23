@@ -32,8 +32,8 @@ public class RuKuServiceImpl implements RuKuService {
     }
     
     @Override
-    public RuKu getRuKuDetailById(Integer id) {
-        return  ruKuDao.getRuKuDetailById(id);
+    public RuKu getRuKuWithDetailById(Integer id) {
+        return  ruKuDao.getRuKuWithDetailById(id);
     }
 
     @Override

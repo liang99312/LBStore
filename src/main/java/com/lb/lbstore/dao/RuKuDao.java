@@ -27,7 +27,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class RuKuDao extends BaseDao {
     
-    public RuKu getRuKuDetailById(Integer id){
+    public RuKu getRuKuWithDetailById(Integer id){
         RuKu ruKu = null;
         Session session = null;
         try {
