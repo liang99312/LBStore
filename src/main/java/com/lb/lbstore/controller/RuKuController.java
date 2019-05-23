@@ -61,15 +61,15 @@ public class RuKuController extends BaseController {
         return map;
     }
     
-    @RequestMapping(value = "getRuKuDetailById.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "getRuKuWithDetailById.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Map<String, Object> getRuKuDetailById(@RequestParam Integer id) {
+    public Map<String, Object> getRuKuWithDetailById(@RequestParam Integer id) {
         if (!existsUser()) {
             return notLoginResult();
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            RuKu ruKu = ruKuServiceImpl.getRuKuDetailById(id);
+            RuKu ruKu = ruKuServiceImpl.getRuKuWithDetailById(id);
             map.put("result", 0);
             map.put("ruKu", ruKu);
         } catch (Exception e) {

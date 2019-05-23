@@ -19,7 +19,7 @@ public interface RuKuService {
 
     public RuKu getRuKuById(Integer id);
     
-    public RuKu getRuKuDetailById(Integer id);
+    public RuKu getRuKuWithDetailById(Integer id);
     
     public List<RuKu> getAllRuKus(Integer qy_id);
     
