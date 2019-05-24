@@ -248,6 +248,7 @@ function addHuanKu() {
     $("#divSpr").hide();
     $("#inpGys").val("");
     $("#inpDh").val("");
+    $("#inpYy").val("");
     $("#inpBz").val("");
     $("#inpSl").val(0);
     $("#inpJe").val(0);
@@ -304,6 +305,7 @@ function selectHuanKuDetail(id) {
                 editA01 = {"id": huanKu.hkr_id, "mc": huanKu.hkrmc};
                 selectCangKu(editCangKu);
                 $("#inpDh").val(huanKu.dh);
+                $("#inpYy").val(huanKu.yy);
                 $("#inpBz").val(huanKu.bz);
                 $("#inpSl").val(huanKu.sl);
                 $("#inpJe").val(huanKu.je);
@@ -413,6 +415,7 @@ function saveHuanKu() {
     huanKu.details = hkmx;
     huanKu.wz = wz;
     huanKu.dh = $("#inpDh").val();
+    huanKu.yy = $("#inpYy").val();
     huanKu.bz = $("#inpBz").val();
     huanKu.sl = $("#inpSl").val();
     huanKu.je = $("#inpJe").val();

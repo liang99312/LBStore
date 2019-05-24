@@ -248,6 +248,7 @@ function addTuiHuo() {
     $("#divSpr").hide();
     $("#inpGys").val("");
     $("#inpDh").val("");
+    $("#inpYy").val("");
     $("#inpBz").val("");
     $("#inpSl").val(0);
     $("#inpJe").val(0);
@@ -304,6 +305,7 @@ function selectTuiHuoDetail(id) {
                 editA01 = {"id": tuiHuo.thr_id, "mc": tuiHuo.thrmc};
                 selectCangKu(editCangKu);
                 $("#inpDh").val(tuiHuo.dh);
+                $("#inpYy").val(tuiHuo.yy);
                 $("#inpBz").val(tuiHuo.bz);
                 $("#inpSl").val(tuiHuo.sl);
                 $("#inpJe").val(tuiHuo.je);
@@ -413,6 +415,7 @@ function saveTuiHuo() {
     tuiHuo.details = thmx;
     tuiHuo.wz = wz;
     tuiHuo.dh = $("#inpDh").val();
+    tuiHuo.yy = $("#inpYy").val();
     tuiHuo.bz = $("#inpBz").val();
     tuiHuo.sl = $("#inpSl").val();
     tuiHuo.je = $("#inpJe").val();

@@ -248,6 +248,7 @@ function addTuiGong() {
     $("#divSpr").hide();
     $("#inpGys").val("");
     $("#inpDh").val("");
+    $("#inpYy").val("");
     $("#inpBz").val("");
     $("#inpSl").val(0);
     $("#inpJe").val(0);
@@ -304,6 +305,7 @@ function selectTuiGongDetail(id) {
                 editA01 = {"id": tuiGong.tgr_id, "mc": tuiGong.tgrmc};
                 selectCangKu(editCangKu);
                 $("#inpDh").val(tuiGong.dh);
+                $("#inpYy").val(tuiGong.yy);
                 $("#inpBz").val(tuiGong.bz);
                 $("#inpSl").val(tuiGong.sl);
                 $("#inpJe").val(tuiGong.je);
@@ -413,6 +415,7 @@ function saveTuiGong() {
     tuiGong.details = tgmx;
     tuiGong.wz = wz;
     tuiGong.dh = $("#inpDh").val();
+    tuiGong.yy = $("#inpYy").val();
     tuiGong.bz = $("#inpBz").val();
     tuiGong.sl = $("#inpSl").val();
     tuiGong.je = $("#inpJe").val();

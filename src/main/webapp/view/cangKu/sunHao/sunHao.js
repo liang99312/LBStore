@@ -248,6 +248,7 @@ function addSunHao() {
     $("#divSpr").hide();
     $("#inpGys").val("");
     $("#inpDh").val("");
+    $("#inpYy").val("");
     $("#inpBz").val("");
     $("#inpSl").val(0);
     $("#inpJe").val(0);
@@ -304,6 +305,7 @@ function selectSunHaoDetail(id) {
                 editA01 = {"id": sunHao.shr_id, "mc": sunHao.shrmc};
                 selectCangKu(editCangKu);
                 $("#inpDh").val(sunHao.dh);
+                $("#inpYy").val(sunHao.yy);
                 $("#inpBz").val(sunHao.bz);
                 $("#inpSl").val(sunHao.sl);
                 $("#inpJe").val(sunHao.je);
@@ -413,6 +415,7 @@ function saveSunHao() {
     sunHao.details = shmx;
     sunHao.wz = wz;
     sunHao.dh = $("#inpDh").val();
+    sunHao.yy = $("#inpYy").val();
     sunHao.bz = $("#inpBz").val();
     sunHao.sl = $("#inpSl").val();
     sunHao.je = $("#inpJe").val();
