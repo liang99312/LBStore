@@ -56,6 +56,7 @@ public class SunHaoDetail {
     private String tysx;
     private String dymx;
     private String kw;
+    private String bz;
     
     public Integer getId() {
         return id;
@@ -297,6 +298,15 @@ public class SunHaoDetail {
     public void setPc(String pc) {
         this.pc = pc;
     }
+
+    public String getBz() {
+        return bz;
+    }
+
+    public void setBz(String bz) {
+        this.bz = bz;
+    }
+       
 
     @Override
     public int hashCode() {

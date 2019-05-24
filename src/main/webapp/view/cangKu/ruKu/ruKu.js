@@ -179,6 +179,7 @@ function setDetails(m) {
     editXhgg = {"id": m.xhgg_id, "mc": m.xhgg};
     $("#inpMxXhgg").val(m.xhgg);
     $("#inpMxScc").val(m.scc);
+    $("#inpMxBz").val(m.bz);
     $("#inpMxTxm").val(m.txm);
     $("#inpMxPc").val(m.pc);
     $("#inpMxScrq").val(m.scrq);
@@ -651,6 +652,7 @@ function addRuKuMingXi() {
     $("#inpMxPp").val("");
     $("#inpMxXhgg").val("");
     $("#inpMxScc").val("");
+    $("#inpMxBz").val("");
     $("#inpMxTxm").val("");
     $("#inpMxPc").val("");
     $("#inpMxScrq").val("");
@@ -704,6 +706,7 @@ function setRuKuMingXiData(index) {
     editXhgg = {"id": m.xhgg_id, "mc": m.xhgg};
     $("#inpMxXhgg").val(m.xhgg);
     $("#inpMxScc").val(m.scc);
+    $("#inpMxBz").val(m.bz);
     $("#inpMxTxm").val(m.txm);
     $("#inpMxPc").val(m.pc);
     $("#inpMxScrq").val(m.scrq);
@@ -793,6 +796,7 @@ function saveRuKuMingXi() {
     }
     mx.xhgg = $("#inpMxXhgg").val();
     mx.scc = $("#inpMxScc").val();
+    mx.bz = $("#inpMxBz").val();
     mx.txm = $("#inpMxTxm").val();
     mx.pc = $("#inpMxPc").val();
     mx.scrq = $("#inpMxScrq").val();

@@ -57,6 +57,7 @@ public class LingLiaoDetail {
     private String tysx;
     private String dymx;
     private String kw;
+    private String bz;
     private transient String ckmc;
     private transient String khmc;
     private transient String llrmc;
@@ -406,6 +407,14 @@ public class LingLiaoDetail {
 
     public void setZrq(String zrq) {
         this.zrq = zrq;
+    }
+
+    public String getBz() {
+        return bz;
+    }
+
+    public void setBz(String bz) {
+        this.bz = bz;
     }
         
 }

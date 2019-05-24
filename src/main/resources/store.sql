@@ -201,6 +201,7 @@ CREATE TABLE `store`.`rukudetail` (
   `tysx` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `dymx` varchar(4000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `kw` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `bz` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`))ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `store`.`rukufei` (
@@ -303,6 +304,7 @@ CREATE TABLE `store`.`lingliaodetail` (
   `tysx` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `dymx` varchar(4000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `kw` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `bz` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `kc_id` INT NOT NULL,
   PRIMARY KEY (`id`))ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -355,6 +357,7 @@ CREATE TABLE `store`.`fahuodetail` (
   `tysx` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `dymx` varchar(4000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `kw` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `bz` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `kc_id` INT NOT NULL,
   PRIMARY KEY (`id`))ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -378,6 +381,7 @@ CREATE TABLE `store`.`sunhao` (
   `lsh` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `wz` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `dh` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `yy` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `bz` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `sl` FLOAT(19,2) COLLATE utf8_unicode_ci DEFAULT NULL,
   `je` FLOAT(19,2) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -415,6 +419,7 @@ CREATE TABLE `store`.`sunhaodetail` (
   `tysx` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `dymx` varchar(4000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `kw` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `bz` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `kc_id` INT NOT NULL,
   PRIMARY KEY (`id`))ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -427,6 +432,7 @@ CREATE TABLE `store`.`huanku` (
   `lsh` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `wz` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `dh` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `yy` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `bz` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `sl` FLOAT(19,2) COLLATE utf8_unicode_ci DEFAULT NULL,
   `je` FLOAT(19,2) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -464,6 +470,7 @@ CREATE TABLE `store`.`huankudetail` (
   `tysx` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `dymx` varchar(4000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `kw` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `bz` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `kc_id` INT NOT NULL,
   `lld_id` INT NOT NULL,
   PRIMARY KEY (`id`))ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
@@ -477,6 +484,7 @@ CREATE TABLE `store`.`tuihuo` (
   `lsh` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `wz` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `dh` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `yy` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `bz` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `sl` FLOAT(19,2) COLLATE utf8_unicode_ci DEFAULT NULL,
   `je` FLOAT(19,2) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -514,6 +522,7 @@ CREATE TABLE `store`.`tuihuodetail` (
   `tysx` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `dymx` varchar(4000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `kw` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `bz` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `kc_id` INT NOT NULL,
   `fhd_id` INT NOT NULL,
   PRIMARY KEY (`id`))ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
@@ -527,6 +536,7 @@ CREATE TABLE `store`.`tuigong` (
   `lsh` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `wz` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `dh` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `yy` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `bz` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `sl` FLOAT(19,2) COLLATE utf8_unicode_ci DEFAULT NULL,
   `je` FLOAT(19,2) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -564,6 +574,7 @@ CREATE TABLE `store`.`tuigongdetail` (
   `tysx` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `dymx` varchar(4000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `kw` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `bz` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `kc_id` INT NOT NULL,
   `rkd_id` INT NOT NULL,
   PRIMARY KEY (`id`))ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

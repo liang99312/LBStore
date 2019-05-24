@@ -610,6 +610,7 @@ function saveLingLiaoMingXi() {
     }
     mx.xhgg = $("#inpMxXhgg").val();
     mx.scc = $("#inpMxScc").val();
+    mx.bz = $("#inpMxBz").val();
     mx.txm = $("#inpMxTxm").val();
     mx.pc = $("#inpMxPc").val();
     mx.scrq = $("#inpMxScrq").val();
@@ -747,6 +748,7 @@ function setKcCunData(kc, index) {
     editXhgg = {"id": kc.xhgg_id, "mc": kc.xhgg};
     $("#inpMxXhgg").val(kc.xhgg);
     $("#inpMxScc").val(kc.scc);
+    $("#inpMxBz").val(kc.bz);
     $("#inpMxTxm").val(kc.txm);
     $("#inpMxPc").val(kc.pc);
     $("#inpMxScrq").val(kc.scrq);

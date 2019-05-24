@@ -598,6 +598,7 @@ function saveTuiHuoMingXi() {
     }
     mx.xhgg = $("#inpMxXhgg").val();
     mx.scc = $("#inpMxScc").val();
+    mx.bz = $("#inpMxBz").val();
     mx.txm = $("#inpMxTxm").val();
     mx.pc = $("#inpMxPc").val();
     mx.scrq = $("#inpMxScrq").val();
@@ -748,6 +749,7 @@ function setFhdData(detail, index) {
     editXhgg = {"id": detail.xhgg_id, "mc": detail.xhgg};
     $("#inpMxXhgg").val(detail.xhgg);
     $("#inpMxScc").val(detail.scc);
+    $("#inpMxBz").val(detail.bz);
     $("#inpMxTxm").val(detail.txm);
     $("#inpMxPc").val(detail.pc);
     $("#inpMxScrq").val(detail.scrq);

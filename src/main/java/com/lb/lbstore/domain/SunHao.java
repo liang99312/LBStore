@@ -42,6 +42,7 @@ public class SunHao {
     private Date spsj;
     private Double sl = 0D;
     private Double je = 0D;
+    private String yy;
     private String bz;
     private Integer state;//0:未办理；1：已办理；
     private transient List<SunHaoDetail> details = new ArrayList();
@@ -210,7 +211,15 @@ public class SunHao {
     public void setShrmc(String shrmc) {
         this.shrmc = shrmc;
     }
+    
+    public String getYy() {
+        return yy;
+    }
 
+    public void setYy(String yy) {
+        this.yy = yy;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 3;

@@ -598,6 +598,7 @@ function saveTuiGongMingXi() {
     }
     mx.xhgg = $("#inpMxXhgg").val();
     mx.scc = $("#inpMxScc").val();
+    mx.bz = $("#inpMxBz").val();
     mx.txm = $("#inpMxTxm").val();
     mx.pc = $("#inpMxPc").val();
     mx.scrq = $("#inpMxScrq").val();

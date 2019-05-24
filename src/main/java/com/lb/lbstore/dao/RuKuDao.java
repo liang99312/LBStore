@@ -509,6 +509,7 @@ public class RuKuDao extends BaseDao {
                 kc.setRk_id(d.getRk_id());
                 kc.setRkd_id(d.getId());
                 kc.setScc(d.getScc());
+                kc.setBz(d.getBz());
                 kc.setScrq(d.getScrq());
                 kc.setSl(d.getSl());
                 kc.setSpr_id(a01_id);

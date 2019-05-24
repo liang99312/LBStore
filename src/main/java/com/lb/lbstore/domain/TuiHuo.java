@@ -42,6 +42,7 @@ public class TuiHuo {
     private Date spsj;
     private Double sl = 0D;
     private Double je = 0D;
+    private String yy;
     private String bz;
     private Integer state;//0:未办理；1：已办理；
     private transient List<TuiHuoDetail> details = new ArrayList();
@@ -209,6 +210,14 @@ public class TuiHuo {
 
     public void setSprmc(String sprmc) {
         this.sprmc = sprmc;
+    }
+    
+    public String getYy() {
+        return yy;
+    }
+
+    public void setYy(String yy) {
+        this.yy = yy;
     }
 
     @Override

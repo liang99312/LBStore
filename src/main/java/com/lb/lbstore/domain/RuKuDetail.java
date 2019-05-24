@@ -58,6 +58,7 @@ public class RuKuDetail {
     private String tysx;
     private String dymx;
     private String kw;
+    private String bz;
     
     private transient String ckmc;
     private transient String khmc;
@@ -389,6 +390,15 @@ public class RuKuDetail {
     public void setZrq(String zrq) {
         this.zrq = zrq;
     }
+
+    public String getBz() {
+        return bz;
+    }
+
+    public void setBz(String bz) {
+        this.bz = bz;
+    }
+       
     @Override
     public int hashCode() {
         int hash = 3;
