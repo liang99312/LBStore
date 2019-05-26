@@ -51,6 +51,7 @@ public class FaHuoDetail {
     private String zldw;   
     private String jlfs = "pt"; //普通记录(pt)；总量记录(zl)；单元明细(mx)
     private Double bzgg = 1.0D; //包装规格
+    private Double fhdj = 1.0D;
     private Double fhl = 1.0D;
     private Double fhzl = 1.0D;
     private String tysx;
@@ -194,6 +195,14 @@ public class FaHuoDetail {
 
     public void setBzgg(Double bzgg) {
         this.bzgg = bzgg;
+    }
+
+    public Double getFhdj() {
+        return fhdj;
+    }
+
+    public void setFhdj(Double fhdj) {
+        this.fhdj = fhdj;
     }
 
     public Double getFhl() {

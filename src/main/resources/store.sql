@@ -353,6 +353,7 @@ CREATE TABLE `store`.`fahuodetail` (
   `jlfs` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `bzgg` FLOAT(19,2) COLLATE utf8_unicode_ci DEFAULT NULL,
   `fhl` FLOAT(19,2) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `fhdj` FLOAT(19,2) COLLATE utf8_unicode_ci DEFAULT NULL,
   `fhzl` FLOAT(19,2) COLLATE utf8_unicode_ci DEFAULT NULL,
   `tysx` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `dymx` varchar(4000) COLLATE utf8_unicode_ci DEFAULT NULL,

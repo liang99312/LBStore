@@ -160,14 +160,14 @@ function selectWuZiZiDian(json) {
 function selectMxJlfs() {
     var val = $("#inpMxJlfs").val();
     $(".form-MxBzgg").hide();
-    $("#dvMxZl").hide();
+    $(".mxZlGroup").hide();
     $("#divMxDymx").hide();
     if (val === "zl") {
         $(".form-MxBzgg").show();
-        $("#dvMxZl").show();
+        $(".mxZlGroup").show();
     } else if (val === "mx") {
         $(".form-MxBzgg").show();
-        $("#dvMxZl").show();
+        $(".mxZlGroup").show();
         $("#divMxDymx").show();
         buildDymx();
     }
@@ -545,7 +545,7 @@ function jxFaHuoMingXi() {
         } else {
             item.tysx = [];
         }
-        var je = parseFloat(item.fhl) * parseFloat(item.dj);
+        var je = parseFloat(item.fhl) * parseFloat(item.fhdj);
         var bj = optFlag === 3 || optFlag === 4 ? '' : '<button class="btn btn-info btn-xs icon-edit" onclick="editFaHuoMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var cz = optFlag === 3 || optFlag === 4 ? '' : '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteFaHuoMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>';
         var trStr = '<tr><td>' + item.wzmc + '</td><td>' + item.pp + '</td><td>' + item.xhgg + '</td><td>' + item.fhl + '</td><td>' + je + '</td><td>'
@@ -649,6 +649,7 @@ function saveFaHuoMingXi() {
     mx.tysx = JSON.stringify(tysx_opt.data);
     mx.fhl = parseFloat($("#inpMxFhl").val());
     mx.fhzl = parseFloat($("#inpMxFhzl").val());
+    mx.fhdj = parseFloat($("#inpMxFhdj").val());
     if (mx.fhzl === undefined || mx.fhzl === "" || mx.fhzl < 0.001) {
         mx.fhzl = mx.fhl;
     }
@@ -666,7 +667,7 @@ function saveFaHuoMingXi() {
     for (var i = 0; i < fhmx.length; i++) {
         var e = fhmx[i];
         zsl = e.fhl + zsl;
-        zje = e.fhl * e.dj + zje;
+        zje = e.fhl * e.fhdj + zje;
     }
     $("#inpSl").val(zsl);
     $("#inpJe").val(zje.toFixed(3));
@@ -789,6 +790,7 @@ function setKcCunData(kc, index) {
     $("#inpMxSyl").val(kc.syl);
     $("#inpMxFhl").val(m.fhl);
     $("#inpMxFhzl").val(m.fhzl);
+    $("#inpMxFhdj").val(m.fhdj? m.fhdj:kc.ckdj);
     buildDymx();
     if (kc.jlfs === "mx") {
         $("#divMxDymx").show();
