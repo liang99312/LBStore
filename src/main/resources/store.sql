@@ -489,6 +489,8 @@ CREATE TABLE `store`.`tuihuo` (
   `bz` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `sl` FLOAT(19,2) COLLATE utf8_unicode_ci DEFAULT 0,
   `je` FLOAT(19,2) COLLATE utf8_unicode_ci DEFAULT 0,
+  `yfje` FLOAT(19,2) COLLATE utf8_unicode_ci DEFAULT 0,
+  `dfje` FLOAT(19,2) COLLATE utf8_unicode_ci DEFAULT 0,
   `sj` datetime DEFAULT NULL,
   `spsj` datetime DEFAULT NULL,
   `state` int(11) DEFAULT 0,
