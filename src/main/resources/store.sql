@@ -494,6 +494,18 @@ CREATE TABLE `store`.`tuihuo` (
   `state` int(11) DEFAULT 0,
   PRIMARY KEY (`id`))ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+CREATE TABLE `store`.`tuihuofei` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `qy_id` INT NOT NULL,
+  `th_id` INT NOT NULL,
+  `kh_id` INT NULL,
+  `gys_id` INT NULL,
+  `skr_id` INT NOT NULL,
+  `je` FLOAT(19,2) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `rq` datetime DEFAULT NULL,
+  `bz` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`))ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
 CREATE TABLE `store`.`tuihuodetail` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `qy_id` INT NOT NULL,
@@ -514,6 +526,7 @@ CREATE TABLE `store`.`tuihuodetail` (
   `scrq` datetime DEFAULT NULL,
   `bzq` INT DEFAULT 0,
   `dj` FLOAT(19,2) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `fhdj` FLOAT(19,2) COLLATE utf8_unicode_ci DEFAULT NULL,
   `dw` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `zldw` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `jlfs` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,

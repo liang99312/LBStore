@@ -146,14 +146,14 @@ function selectWuZiZiDian(json) {
 function selectMxJlfs() {
     var val = $("#inpMxJlfs").val();
     $(".form-MxBzgg").hide();
-    $("#dvMxZl").hide();
+    $(".mxZlGroup").hide();
     $("#divMxDymx").hide();
     if (val === "zl") {
         $(".form-MxBzgg").show();
-        $("#dvMxZl").show();
+        $(".mxZlGroup").show();
     } else if (val === "mx") {
         $(".form-MxBzgg").show();
-        $("#dvMxZl").show();
+        $(".mxZlGroup").show();
         $("#divMxDymx").show();
         buildDymx();
     }
@@ -509,7 +509,7 @@ function jxTuiHuoMingXi() {
         } else {
             item.tysx = [];
         }
-        var je = parseFloat(item.thl) * parseFloat(item.dj);
+        var je = parseFloat(item.thl) * parseFloat(item.fhdj);
         var bj = optFlag === 3 || optFlag === 4 ? '' : '<button class="btn btn-info btn-xs icon-edit" onclick="editTuiHuoMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var cz = optFlag === 3 || optFlag === 4 ? '' : '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteTuiHuoMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>';
         var trStr = '<tr><td>' + item.wzmc + '</td><td>' + item.pp + '</td><td>' + item.xhgg + '</td><td>' + item.thl + '</td><td>' + je + '</td><td>'
@@ -604,6 +604,7 @@ function saveTuiHuoMingXi() {
     mx.scrq = $("#inpMxScrq").val();
     mx.bzq = $("#inpMxBzq").val();
     mx.dj = parseFloat($("#inpMxDj").val());
+    mx.fhdj = parseFloat($("#inpMxFhdj").val());
     mx.dw = $("#inpMxDw").val();
     mx.jlfs = $("#inpMxJlfs").val();
     mx.bzgg = $("#inpMxBzgg").val();
@@ -635,7 +636,7 @@ function saveTuiHuoMingXi() {
     for (var i = 0; i < thmx.length; i++) {
         var e = thmx[i];
         zsl = e.thl + zsl;
-        zje = e.thl * e.dj + zje;
+        zje = e.thl * e.fhdj + zje;
     }
     $("#inpSl").val(zsl);
     $("#inpJe").val(zje.toFixed(3));
@@ -755,6 +756,7 @@ function setFhdData(detail, index) {
     $("#inpMxScrq").val(detail.scrq);
     $("#inpMxBzq").val(detail.bzq);
     $("#inpMxDj").val(detail.dj);
+    $("#inpMxFhdj").val(detail.fhdj);
     $("#inpMxDw").val(detail.dw);
     $("#inpMxSl").val(detail.sl);
     $("#inpMxJlfs").val(detail.jlfs);
@@ -763,7 +765,7 @@ function setFhdData(detail, index) {
     $("#inpMxFhzlDw").val(detail.zldw);
     $("#inpMxFhzl").val(detail.fhzl);
     $("#inpMxKwh").val(detail.kw);
-    $("#inpMxLlr").val(detail.llrmc);
+    $("#inpMxFhr").val(detail.fhrmc);
     buildTysx(detail.tysx);
     $("#inpMxThl").val(m.thl);
     $("#inpMxThzl").val(m.thzl);

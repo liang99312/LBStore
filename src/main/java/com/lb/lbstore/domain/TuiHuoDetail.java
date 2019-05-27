@@ -49,6 +49,7 @@ public class TuiHuoDetail {
     private Date scrq;
     private Integer bzq;
     private Double dj;
+    private Double fhdj;
     private String dw;
     private String zldw;
     private String jlfs = "pt"; //普通记录(pt)；总量记录(zl)；单元明细(mx)
@@ -171,6 +172,14 @@ public class TuiHuoDetail {
 
     public void setDj(Double dj) {
         this.dj = dj;
+    }
+
+    public Double getFhdj() {
+        return fhdj;
+    }
+
+    public void setFhdj(Double fhdj) {
+        this.fhdj = fhdj;
     }
 
     public String getDw() {
