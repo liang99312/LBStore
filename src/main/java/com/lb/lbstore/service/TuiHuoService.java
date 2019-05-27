@@ -7,6 +7,7 @@ package com.lb.lbstore.service;
 
 import com.lb.lbstore.domain.RuKuDetail;
 import com.lb.lbstore.domain.TuiHuo;
+import com.lb.lbstore.domain.TuiHuoFei;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,5 +32,17 @@ public interface TuiHuoService {
     public int queryRows(HashMap map);
     
     public List<TuiHuo> queryTuiHuosByPage(HashMap map);
+    
+    public int queryFeiRows(HashMap map);
+    
+    public List<TuiHuoFei> queryTuiHuoFeisByPage(HashMap map);
+    
+    public TuiHuoFei getTuiHuoFeiById(Integer id);
 
+     public boolean updateTuiHuoFei(TuiHuoFei tuiHuoFei);
+       
+    public TuiHuoFei saveTuiHuoFei(TuiHuoFei tuiHuoFei);
+    
+    public boolean deleteTuiHuoFei(Integer id,Integer fh_id);
+    
 }

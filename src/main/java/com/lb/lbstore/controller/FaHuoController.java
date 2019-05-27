@@ -194,8 +194,7 @@ public class FaHuoController extends BaseController {
         model.setList(this.faHuoServiceImpl.queryFaHuosByPage(map));
         return model;
     }
-    
-    
+        
     @RequestMapping(value = "saveFaHuoFei.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String, Object> saveFaHuoFei(@RequestBody FaHuoFei model) {

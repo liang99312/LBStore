@@ -7,6 +7,7 @@ package com.lb.lbstore.service.impl;
 
 import com.lb.lbstore.dao.TuiHuoDao;
 import com.lb.lbstore.domain.TuiHuo;
+import com.lb.lbstore.domain.TuiHuoFei;
 import com.lb.lbstore.service.TuiHuoService;
 import java.util.HashMap;
 import java.util.List;
@@ -70,5 +71,38 @@ public class TuiHuoServiceImpl implements TuiHuoService {
     public String dealTuiHuo(TuiHuo tuiHuo,Integer a01_id) {
         return tuiHuoDao.dealTuiHuo(tuiHuo, a01_id);
     }
+    
+    @Override
+    public int queryFeiRows(HashMap map) {
+        String sql = "select (1) from TuiHuoFei where fh_id="+map.get("fh_id");
+        return tuiHuoDao.getCount(sql, null);
+    }
+
+    @Override
+    public List<TuiHuoFei> queryTuiHuoFeisByPage(HashMap map) {
+        return tuiHuoDao.queryTuiHuoFeisByPage(map);
+    }
+
+    @Override
+    public TuiHuoFei getTuiHuoFeiById(Integer id) {
+        return (TuiHuoFei) tuiHuoDao.findObjectById(TuiHuoFei.class, id);
+    }
+
+    @Override
+    public boolean updateTuiHuoFei(TuiHuoFei tuiHuoFei) {
+        return tuiHuoDao.updateTuiHuoFei(tuiHuoFei);
+    }
+
+    @Override
+    public TuiHuoFei saveTuiHuoFei(TuiHuoFei tuiHuoFei) {
+        int id = tuiHuoDao.saveTuiHuoFei(tuiHuoFei);
+        return (TuiHuoFei) tuiHuoDao.findObjectById(TuiHuoFei.class, id);
+    }
+
+    @Override
+    public boolean deleteTuiHuoFei(Integer id,Integer fh_id) {
+        return tuiHuoDao.deleteTuiHuoFei(id, fh_id);
+    }
+
 
 }

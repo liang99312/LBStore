@@ -7,6 +7,7 @@ package com.lb.lbstore.dao;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.lb.lbstore.domain.TuiHuoFei;
 import com.lb.lbstore.domain.KuCun;
 import com.lb.lbstore.domain.TuiHuo;
 import com.lb.lbstore.domain.TuiHuoDetail;
@@ -255,6 +256,8 @@ public class TuiHuoDao extends BaseDao {
             tx = session.beginTransaction();
             String deleteDetail = "delete from TuiHuoDetail where th_id=" + id;
             session.createSQLQuery(deleteDetail).executeUpdate();
+            String deleteFei = "delete from TuiHuoFei where th_id=" + id;
+            session.createSQLQuery(deleteFei).executeUpdate();
             String deleteLl = "delete from TuiHuo where id=" + id;
             session.createSQLQuery(deleteLl).executeUpdate();
             session.flush();
@@ -368,6 +371,137 @@ public class TuiHuoDao extends BaseDao {
             tx.rollback();
             e.printStackTrace();
             result = "处理错误：" + e.getMessage();
+        } finally {
+            try {
+                if (session != null) {
+                    session.close();
+                }
+            } catch (Exception he) {
+                he.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    public List<TuiHuoFei> queryTuiHuoFeisByPage(HashMap map) {
+        List<TuiHuoFei> result = new ArrayList();
+        Session session = null;
+        try {
+            session = getSessionFactory().openSession();
+            String sql = "select {thf.*},a01.mc as skrmc from TuiHuoFei thf "
+                    + "left join A01 a01 on thf.skr_id=a01.id "
+                    + "where thf.th_id=" + map.get("th_id");
+            SQLQuery navtiveSQL = session.createSQLQuery(sql);
+            navtiveSQL.addEntity("thf", TuiHuoFei.class).addScalar("skrmc", StandardBasicTypes.STRING);
+            List list = navtiveSQL.list();
+            for (Object obj : list) {
+                Object[] objs = (Object[]) obj;
+                TuiHuoFei thf = (TuiHuoFei) objs[0];
+                String skrmc = (String) objs[1];
+                thf.setSkrmc(skrmc);
+                result.add(thf);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (session != null) {
+                    session.close();
+                }
+            } catch (Exception he) {
+                he.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    public boolean deleteTuiHuoFei(Integer id, Integer th_id) {
+        boolean result = false;
+        Session session = null;
+        Transaction tx = null;
+        try {
+            session = getSessionFactory().openSession();
+            tx = session.beginTransaction();
+            String deleteFei = "delete from TuiHuoFei where id=" + id;
+            session.createSQLQuery(deleteFei).executeUpdate();
+            session.flush();
+            String updateTuiHuo = "update tuihuo set yfje = (select sum(f.je) from tuihuofei f where f.th_id = " + th_id + ") where tuihuo.id=" + th_id;
+            session.createSQLQuery(updateTuiHuo).executeUpdate();
+            session.flush();
+            updateTuiHuo = "update tuihuo set dfje = je - yfje where id=" + th_id;
+            session.createSQLQuery(updateTuiHuo).executeUpdate();
+            session.flush();
+            tx.commit();
+            result = true;
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            try {
+                if (session != null) {
+                    session.close();
+                }
+            } catch (Exception he) {
+                he.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    public Integer saveTuiHuoFei(TuiHuoFei tuiHuoFei) {
+        Integer result = -1;
+        Session session = null;
+        Transaction tx = null;
+        try {
+            session = getSessionFactory().openSession();
+            tx = session.beginTransaction();
+            Integer id = (Integer) session.save(tuiHuoFei);
+            session.flush();
+            int th_id = tuiHuoFei.getTh_id();
+            String updateTuiHuo = "update tuihuo set yfje = (select sum(f.je) from tuihuofei f where f.th_id = " + th_id + ") where tuihuo.id=" + th_id;
+            session.createSQLQuery(updateTuiHuo).executeUpdate();
+            session.flush();
+            updateTuiHuo = "update tuihuo set dfje = je - yfje where id=" + th_id;
+            session.createSQLQuery(updateTuiHuo).executeUpdate();
+            session.flush();
+            tx.commit();
+            result = id;
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            try {
+                if (session != null) {
+                    session.close();
+                }
+            } catch (Exception he) {
+                he.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    public boolean updateTuiHuoFei(TuiHuoFei tuiHuoFei) {
+        boolean result = false;
+        Session session = null;
+        Transaction tx = null;
+        try {
+            session = getSessionFactory().openSession();
+            tx = session.beginTransaction();
+            session.update(tuiHuoFei);
+            session.flush();
+            int th_id = tuiHuoFei.getTh_id();
+            String updateTuiHuo = "update tuihuo set yfje = (select sum(f.je) from tuihuofei f where f.th_id = " + th_id + ") where tuihuo.id=" + th_id;
+            session.createSQLQuery(updateTuiHuo).executeUpdate();
+            session.flush();
+            updateTuiHuo = "update tuihuo set dfje = je - yfje where id=" + th_id;
+            session.createSQLQuery(updateTuiHuo).executeUpdate();
+            session.flush();
+            tx.commit();
+            result = true;
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
         } finally {
             try {
                 if (session != null) {

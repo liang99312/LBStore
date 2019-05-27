@@ -42,6 +42,8 @@ public class TuiHuo {
     private Date spsj;
     private Double sl = 0D;
     private Double je = 0D;
+    private Double yfje = 0D;
+    private Double dfje = 0D;
     private String yy;
     private String bz;
     private Integer state;//0:未办理；1：已办理；
@@ -146,6 +148,22 @@ public class TuiHuo {
 
     public void setJe(Double je) {
         this.je = je;
+    }
+
+    public Double getYfje() {
+        return yfje;
+    }
+
+    public void setYfje(Double yfje) {
+        this.yfje = yfje;
+    }
+
+    public Double getDfje() {
+        return dfje;
+    }
+
+    public void setDfje(Double dfje) {
+        this.dfje = dfje;
     }
 
     public String getBz() {

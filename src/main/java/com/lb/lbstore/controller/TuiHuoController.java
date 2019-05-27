@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.lb.lbstore.domain.TuiHuo;
+import com.lb.lbstore.domain.TuiHuoFei;
 import com.lb.lbstore.service.TuiHuoService;
 import java.util.ArrayList;
 import java.util.Date;
@@ -195,6 +196,107 @@ public class TuiHuoController extends BaseController {
         map.put("beginRow", model.getBegin());
         map.put("pageSize", model.getPageSize());
         model.setList(this.tuiHuoServiceImpl.queryTuiHuosByPage(map));
+        return model;
+    }
+    
+    @RequestMapping(value = "saveTuiHuoFei.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> saveTuiHuoFei(@RequestBody TuiHuoFei model) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            model.setQy_id(getDlA01().getQy_id());
+            model.setRq(new Date());
+            TuiHuoFei tuiHuoFei = tuiHuoServiceImpl.saveTuiHuoFei(model);
+            map.put("result", 0);
+            map.put("tuiHuoFei", tuiHuoFei);
+        } catch (Exception e) {
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
+    }
+    
+    @RequestMapping(value = "getTuiHuoFeiById.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> getTuiHuoFeiById(@RequestParam Integer id) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            TuiHuoFei tuiHuoFei = tuiHuoServiceImpl.getTuiHuoFeiById(id);
+            map.put("result", 0);
+            map.put("tuiHuoFei", tuiHuoFei);
+        } catch (Exception e) {
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
+    }
+
+    @RequestMapping(value = "updateTuiHuoFei.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> updateTuiHuoFei(@RequestBody TuiHuoFei model) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            boolean result = tuiHuoServiceImpl.updateTuiHuoFei(model);
+            map.put("result", result? 0:-1);
+        } catch (Exception e) {
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
+    }
+    
+    @RequestMapping(value = "deleteTuiHuoFei.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> deleteTuiHuoFei(@RequestParam Integer id,@RequestParam Integer fh_id) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            boolean result = tuiHuoServiceImpl.deleteTuiHuoFei(id,fh_id);
+            map.put("result", result? 0:-1);
+        } catch (Exception e) {
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
+    }
+
+    //分页查询
+    @RequestMapping(value = "listTuiHuoFeisByPage.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Page listTuiHuoFeisByPage(@RequestBody Page model) {
+        HashMap map = model.getParamters();
+        if (map == null) {
+            map = new HashMap();
+        }
+        map.put("qy_id", getDlA01().getQy_id());
+        if (model.getRows() == 0) {
+            model.setRows(this.tuiHuoServiceImpl.queryRows(map));//查询记录数
+        }
+        if (model.getRows() == 0) {
+            model.setCurrentPage(1);
+            model.setList(new ArrayList());
+            model.setParamters(new HashMap());
+            model.setRows(0);
+            model.setTotalPage(0);
+            return model;
+        }
+        if (model.getTotalPage() == 0) {
+            model.setTotalPage(model.calcTotalPage());
+        }
+        map.put("beginRow", model.getBegin());
+        map.put("pageSize", model.getPageSize());
+        model.setList(this.tuiHuoServiceImpl.queryTuiHuoFeisByPage(map));
         return model;
     }
 
