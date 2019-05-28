@@ -556,6 +556,8 @@ CREATE TABLE `store`.`tuigong` (
   `bz` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `sl` FLOAT(19,2) COLLATE utf8_unicode_ci DEFAULT 0,
   `je` FLOAT(19,2) COLLATE utf8_unicode_ci DEFAULT 0,
+  `yfje` FLOAT(19,2) COLLATE utf8_unicode_ci DEFAULT 0,
+  `dfje` FLOAT(19,2) COLLATE utf8_unicode_ci DEFAULT 0,
   `sj` datetime DEFAULT NULL,
   `spsj` datetime DEFAULT NULL,
   `state` int(11) DEFAULT 0,
@@ -593,4 +595,16 @@ CREATE TABLE `store`.`tuigongdetail` (
   `bz` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `kc_id` INT NOT NULL,
   `rkd_id` INT NOT NULL,
+  PRIMARY KEY (`id`))ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `store`.`tuigongfei` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `qy_id` INT NOT NULL,
+  `tg_id` INT NOT NULL,
+  `kh_id` INT NULL,
+  `gys_id` INT NULL,
+  `skr_id` INT NOT NULL,
+  `je` FLOAT(19,2) COLLATE utf8_unicode_ci DEFAULT 0,
+  `rq` datetime DEFAULT NULL,
+  `bz` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`))ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

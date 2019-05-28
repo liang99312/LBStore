@@ -7,6 +7,7 @@ package com.lb.lbstore.service.impl;
 
 import com.lb.lbstore.dao.TuiGongDao;
 import com.lb.lbstore.domain.TuiGong;
+import com.lb.lbstore.domain.TuiGongFei;
 import com.lb.lbstore.service.TuiGongService;
 import java.util.HashMap;
 import java.util.List;
@@ -69,6 +70,38 @@ public class TuiGongServiceImpl implements TuiGongService {
     @Override
     public String dealTuiGong(TuiGong tuiGong,Integer a01_id) {
         return tuiGongDao.dealTuiGong(tuiGong, a01_id);
+    }
+    
+    @Override
+    public int queryFeiRows(HashMap map) {
+        String sql = "select (1) from TuiGongFei where tg_id="+map.get("tg_id");
+        return tuiGongDao.getCount(sql, null);
+    }
+
+    @Override
+    public List<TuiGongFei> queryTuiGongFeisByPage(HashMap map) {
+        return tuiGongDao.queryTuiGongFeisByPage(map);
+    }
+
+    @Override
+    public TuiGongFei getTuiGongFeiById(Integer id) {
+        return (TuiGongFei) tuiGongDao.findObjectById(TuiGongFei.class, id);
+    }
+
+    @Override
+    public boolean updateTuiGongFei(TuiGongFei tuiGongFei) {
+        return tuiGongDao.updateTuiGongFei(tuiGongFei);
+    }
+
+    @Override
+    public TuiGongFei saveTuiGongFei(TuiGongFei tuiGongFei) {
+        int id = tuiGongDao.saveTuiGongFei(tuiGongFei);
+        return (TuiGongFei) tuiGongDao.findObjectById(TuiGongFei.class, id);
+    }
+
+    @Override
+    public boolean deleteTuiGongFei(Integer id,Integer tg_id) {
+        return tuiGongDao.deleteTuiGongFei(id, tg_id);
     }
 
 }

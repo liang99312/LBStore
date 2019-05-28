@@ -10,6 +10,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.lb.lbstore.domain.KuCun;
 import com.lb.lbstore.domain.TuiGong;
 import com.lb.lbstore.domain.TuiGongDetail;
+import com.lb.lbstore.domain.TuiGongFei;
 import com.lb.lbstore.domain.WuZiXhgg;
 import com.lb.lbstore.domain.WuZiZiDian;
 import com.lb.lbstore.util.LshUtil;
@@ -255,6 +256,8 @@ public class TuiGongDao extends BaseDao {
             tx = session.beginTransaction();
             String deleteDetail = "delete from TuiGongDetail where tg_id=" + id;
             session.createSQLQuery(deleteDetail).executeUpdate();
+            String deleteFei = "delete from TuiGongFei where tg_id=" + id;
+            session.createSQLQuery(deleteFei).executeUpdate();
             String deleteLl = "delete from TuiGong where id=" + id;
             session.createSQLQuery(deleteLl).executeUpdate();
             session.flush();
@@ -364,6 +367,137 @@ public class TuiGongDao extends BaseDao {
             session.flush();
             tx.commit();
             result = "1";
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            try {
+                if (session != null) {
+                    session.close();
+                }
+            } catch (Exception he) {
+                he.printStackTrace();
+            }
+        }
+        return result;
+    }
+    
+    public List<TuiGongFei> queryTuiGongFeisByPage(HashMap map) {
+        List<TuiGongFei> result = new ArrayList();
+        Session session = null;
+        try {
+            session = getSessionFactory().openSession();
+            String sql = "select {thf.*},a01.mc as skrmc from TuiGongFei thf "
+                    + "left join A01 a01 on thf.skr_id=a01.id "
+                    + "where thf.tg_id=" + map.get("tg_id");
+            SQLQuery navtiveSQL = session.createSQLQuery(sql);
+            navtiveSQL.addEntity("thf", TuiGongFei.class).addScalar("skrmc", StandardBasicTypes.STRING);
+            List list = navtiveSQL.list();
+            for (Object obj : list) {
+                Object[] objs = (Object[]) obj;
+                TuiGongFei thf = (TuiGongFei) objs[0];
+                String skrmc = (String) objs[1];
+                thf.setSkrmc(skrmc);
+                result.add(thf);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (session != null) {
+                    session.close();
+                }
+            } catch (Exception he) {
+                he.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    public boolean deleteTuiGongFei(Integer id, Integer tg_id) {
+        boolean result = false;
+        Session session = null;
+        Transaction tx = null;
+        try {
+            session = getSessionFactory().openSession();
+            tx = session.beginTransaction();
+            String deleteFei = "delete from TuiGongFei where id=" + id;
+            session.createSQLQuery(deleteFei).executeUpdate();
+            session.flush();
+            String updateTuiGong = "update tuigong set yfje = (select sum(f.je) from tuigongfei f where f.tg_id = " + tg_id + ") where tuigong.id=" + tg_id;
+            session.createSQLQuery(updateTuiGong).executeUpdate();
+            session.flush();
+            updateTuiGong = "update tuigong set dfje = je - yfje where id=" + tg_id;
+            session.createSQLQuery(updateTuiGong).executeUpdate();
+            session.flush();
+            tx.commit();
+            result = true;
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            try {
+                if (session != null) {
+                    session.close();
+                }
+            } catch (Exception he) {
+                he.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    public Integer saveTuiGongFei(TuiGongFei tuiGongFei) {
+        Integer result = -1;
+        Session session = null;
+        Transaction tx = null;
+        try {
+            session = getSessionFactory().openSession();
+            tx = session.beginTransaction();
+            Integer id = (Integer) session.save(tuiGongFei);
+            session.flush();
+            int tg_id = tuiGongFei.getTg_id();
+            String updateTuiGong = "update tuigong set yfje = (select sum(f.je) from tuigongfei f where f.tg_id = " + tg_id + ") where tuigong.id=" + tg_id;
+            session.createSQLQuery(updateTuiGong).executeUpdate();
+            session.flush();
+            updateTuiGong = "update tuigong set dfje = je - yfje where id=" + tg_id;
+            session.createSQLQuery(updateTuiGong).executeUpdate();
+            session.flush();
+            tx.commit();
+            result = id;
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            try {
+                if (session != null) {
+                    session.close();
+                }
+            } catch (Exception he) {
+                he.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    public boolean updateTuiGongFei(TuiGongFei tuiGongFei) {
+        boolean result = false;
+        Session session = null;
+        Transaction tx = null;
+        try {
+            session = getSessionFactory().openSession();
+            tx = session.beginTransaction();
+            session.update(tuiGongFei);
+            session.flush();
+            int tg_id = tuiGongFei.getTg_id();
+            String updateTuiGong = "update tuigong set yfje = (select sum(f.je) from tuigongfei f where f.tg_id = " + tg_id + ") where tuigong.id=" + tg_id;
+            session.createSQLQuery(updateTuiGong).executeUpdate();
+            session.flush();
+            updateTuiGong = "update tuigong set dfje = je - yfje where id=" + tg_id;
+            session.createSQLQuery(updateTuiGong).executeUpdate();
+            session.flush();
+            tx.commit();
+            result = true;
         } catch (Exception e) {
             tx.rollback();
             e.printStackTrace();

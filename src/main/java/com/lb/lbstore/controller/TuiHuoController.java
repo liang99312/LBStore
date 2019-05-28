@@ -256,13 +256,13 @@ public class TuiHuoController extends BaseController {
     
     @RequestMapping(value = "deleteTuiHuoFei.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Map<String, Object> deleteTuiHuoFei(@RequestParam Integer id,@RequestParam Integer fh_id) {
+    public Map<String, Object> deleteTuiHuoFei(@RequestParam Integer id,@RequestParam Integer th_id) {
         if (!existsUser()) {
             return notLoginResult();
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            boolean result = tuiHuoServiceImpl.deleteTuiHuoFei(id,fh_id);
+            boolean result = tuiHuoServiceImpl.deleteTuiHuoFei(id,th_id);
             map.put("result", result? 0:-1);
         } catch (Exception e) {
             map.put("result", -1);

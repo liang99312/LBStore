@@ -43,6 +43,6 @@ public interface TuiHuoService {
        
     public TuiHuoFei saveTuiHuoFei(TuiHuoFei tuiHuoFei);
     
-    public boolean deleteTuiHuoFei(Integer id,Integer fh_id);
+    public boolean deleteTuiHuoFei(Integer id,Integer th_id);
     
 }

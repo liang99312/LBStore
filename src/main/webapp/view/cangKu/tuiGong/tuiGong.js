@@ -1,10 +1,13 @@
 var tuiGongs;
+var tuiGongFeis;
+var feiOptFlag = -1;
 var optFlag = 1;
 var editIndex = -1;
 var editType;
 var tgmx = [];
 var optMxFlag = 1;
 var editMxIndex = -1;
+var xhggEditIndex = -1;
 var tgIndex = 0;
 var selWzzd;
 var editWzzd;
@@ -17,6 +20,7 @@ var selGongYingShang;
 var selKuWei;
 var editCangKu;
 var editA01;
+var editFeiA01;
 var selA01;
 var curKuCunDetail;
 var dymx_opt = {data: [], yxData: [], func: calcDymx};
@@ -24,7 +28,7 @@ var tysx_opt = {data: [], ls: 3, lw: 70, upeditable: 1};
 
 $(document).ready(function () {
     $('#inpSj').val(dateFormat(new Date()));
-    $('#inpSj').datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd hh:ii', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, startView: 2, forceParse: 0, showMeridian: 1});
+    $('#inpSj,#inpFeiRq').datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd hh:ii', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, startView: 2, forceParse: 0, showMeridian: 1});
     $('#inpSelQrq,#inpSelZrq,#inpMxScrq,#inpKcdSelQrq,#inpKcdSelZrq').datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, minView: 2, startView: 2, forceParse: 0, showMeridian: 1});
     getAllA01s(setTrager_a01);
     getCangKus(setTrager_cangKu);
@@ -52,6 +56,7 @@ $(document).ready(function () {
 
 function setTrager_a01() {
     $('#inpTgr').AutoComplete({'data': lb_allA01s, 'paramName': 'editA01'});
+    $('#inpFeiSkr').AutoComplete({'data': lb_allA01s, 'paramName': 'editFeiA01'});
     $('#inpKcdSelRkr').AutoComplete({'data': lb_allA01s, 'paramName': 'selA01'});
 }
 
@@ -113,7 +118,7 @@ function selectWuZiLeiBie(json) {
 }
 
 function selectTuiGong_m() {
-    $("#tuiGongSelectModal").modal({backdrop:'static'});
+    $("#tuiGongSelectModal").modal({backdrop: 'static'});
 }
 
 function selectWuZiZiDian(json) {
@@ -173,17 +178,20 @@ function jxTuiGong(json) {
         var editStr = '<button class="btn btn-info btn-xs icon-edit" onclick="editTuiGong(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var dealStr = '<button class="btn btn-info btn-xs icon-legal" onclick="dealTuiGong(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var delStr = '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteTuiGong(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>';
+        var feiStr = '<button class="btn btn-info btn-xs icon-money" onclick="feiTuiGong(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>';
         var trStr = '<tr' + classStr + '><td>' + item.ckmc + '</td><td>' + item.lsh + '</td><td>' + item.dh + '</td><td>' + item.wz + '</td><td>' + item.sj + '</td><td>' + item.sl + '</td><td>'
                 + readStr
                 + (item.state === 0 ? editStr : "")
                 + (item.state === 0 ? dealStr : "")
-                + (item.state === 0 || item.state === -1 ? delStr : "") + '</td></tr>';
+                + (item.state === 0 || item.state === -1 ? delStr : "")
+                + (item.state > 0 ? feiStr : "")
+                + '</td></tr>';
         $("#data_table_body").append(trStr);
     });
 }
 
 function showSelectTuiGong() {
-    $("#tuiGongSelectModal").modal({backdrop:'static'});
+    $("#tuiGongSelectModal").modal({backdrop: 'static'});
 }
 
 function selectTuiGong() {
@@ -253,7 +261,7 @@ function addTuiGong() {
     $("#inpSl").val(0);
     $("#inpJe").val(0);
     jxTuiGongMingXi();
-    $("#tuiGongModal").modal({backdrop:'static'});
+    $("#tuiGongModal").modal({backdrop: 'static'});
 }
 
 function editTuiGong(index) {
@@ -268,7 +276,7 @@ function editTuiGong(index) {
     $("#divSpr").hide();
     var tuiGong = tuiGongs[index];
     editIndex = index;
-    selectTuiGongDetail(tuiGong.id);
+    editFeiIndex(tuiGong.id, jxReadTuiGong);
 }
 
 function readTuiGong(index) {
@@ -283,39 +291,44 @@ function readTuiGong(index) {
     $("#divSpr").show();
     var tuiGong = tuiGongs[index];
     editIndex = index;
-    selectTuiGongDetail(tuiGong.id);
+    editFeiIndex(tuiGong.id, jxReadTuiGong);
 }
 
-function selectTuiGongDetail(id) {
+function jxReadTuiGong(tuiGong) {
+    tgmx = tuiGong.details;
+    $("#inpCk").val(tuiGong.ckmc);
+    editCangKu = {"id": tuiGong.ck_id, "mc": tuiGong.ckmc};
+    $("#inpTgr").val(tuiGong.tgrmc);
+    editA01 = {"id": tuiGong.tgr_id, "mc": tuiGong.tgrmc};
+    selectCangKu(editCangKu);
+    $("#inpDh").val(tuiGong.dh);
+    $("#inpYy").val(tuiGong.yy);
+    $("#inpBz").val(tuiGong.bz);
+    $("#inpSl").val(tuiGong.sl);
+    $("#inpJe").val(tuiGong.je);
+    $("#inpSj").val(tuiGong.sj);
+    $("#inpSpr").val(tuiGong.sprmc);
+    $("#inpSpsj").val(tuiGong.spsj);
+    jxTuiGongMingXi();
+    $("#tuiGongModal").modal({backdrop: 'static'});
+}
+
+function editFeiIndex(id, func) {
     $.ajax({
         url: "/LBStore/tuiGong/getTuiGongDetailById.do?id=" + id,
         contentType: "application/json",
         type: "get",
         cache: false,
         error: function (msg, textStatus) {
-            alert("获取退供单信息失败");
+            alert("获取发货单信息失败");
         },
         success: function (json) {
             if (json.result === 0) {
-                var tuiGong = json.tuiGong;
-                tgmx = tuiGong.details;
-                $("#inpCk").val(tuiGong.ckmc);
-                editCangKu = {"id": tuiGong.ck_id, "mc": tuiGong.ckmc};
-                $("#inpTgr").val(tuiGong.tgrmc);
-                editA01 = {"id": tuiGong.tgr_id, "mc": tuiGong.tgrmc};
-                selectCangKu(editCangKu);
-                $("#inpDh").val(tuiGong.dh);
-                $("#inpYy").val(tuiGong.yy);
-                $("#inpBz").val(tuiGong.bz);
-                $("#inpSl").val(tuiGong.sl);
-                $("#inpJe").val(tuiGong.je);
-                $("#inpSj").val(tuiGong.sj);
-                $("#inpSpr").val(tuiGong.sprmc);
-                $("#inpSpsj").val(tuiGong.spsj);
-                jxTuiGongMingXi();
-                $("#tuiGongModal").modal({backdrop:'static'});
+                if (func) {
+                    func(json.tuiGong);
+                }
             } else
-                alert("获取退供单信息失败:" + json.msg !== undefined ? json.msg : "");
+                alert("获取发货单信息失败:" + json.msg !== undefined ? json.msg : "");
         }
     });
 }
@@ -332,7 +345,7 @@ function dealTuiGong(index) {
     $("#divSpr").hide();
     var tuiGong = tuiGongs[index];
     editIndex = index;
-    selectTuiGongDetail(tuiGong.id);
+    editFeiIndex(tuiGong.id, jxReadTuiGong);
 }
 
 function saveTuiGong() {
@@ -528,7 +541,7 @@ function addTuiGongMingXi() {
     dymx_opt = {data: [], yxData: [], func: calcDymx};
     editLeiBie = null;
     $("#tuiGongMingXiModal_title").html("增加明细");
-    $("#selKuCunDetailModal").modal({backdrop:'static'});
+    $("#selKuCunDetailModal").modal({backdrop: 'static'});
 }
 
 function editTuiGongMingXi(index) {
@@ -613,9 +626,9 @@ function saveTuiGongMingXi() {
     mx.tysx = JSON.stringify(tysx_opt.data);
     mx.tgl = parseFloat($("#inpMxTgl").val());
     mx.tgzl = parseFloat($("#inpMxTgzl").val());
-    if(mx.jlfs === "pt"){
+    if (mx.jlfs === "pt") {
         mx.tgzl = mx.tgl;
-    }else{
+    } else {
         if (mx.tgzl === undefined || mx.tgzl === "" || mx.tgzl < 0.001) {
             mx.tgzl = mx.tgl;
         }
@@ -727,7 +740,7 @@ function setKcdData(detail, index) {
     var m = tgmx[index];
     m = m ? m : {};
     if (m.dymx) {
-        if(typeof m.dymx === "string"){
+        if (typeof m.dymx === "string") {
             m.dymx = JSON.parse(m.dymx);
         }
     } else {
@@ -735,7 +748,7 @@ function setKcdData(detail, index) {
     }
     m.tgl = m.tgl ? m.tgl : 0;
     m.tgzl = m.tgzl ? m.tgzl : 0;
-    if (detail.dymx && typeof detail.dymx === "string") {        
+    if (detail.dymx && typeof detail.dymx === "string") {
         detail.dymx = JSON.parse(detail.dymx);
     } else {
         detail.dymx = [];
@@ -773,7 +786,7 @@ function setKcdData(detail, index) {
     }
     selectMxJlfs();
     $("#selKuCunDetailModal").modal("hide");
-    $("#tuiGongMingXiModal").modal({backdrop:'static'});
+    $("#tuiGongMingXiModal").modal({backdrop: 'static'});
 }
 
 function cxKuCunDetailById(id, index) {
@@ -794,4 +807,201 @@ function cxKuCunDetailById(id, index) {
             }
         }
     });
+}
+
+
+function cxFaHuoDetailById(id, index) {
+    $.ajax({
+        url: "/LBStore/faHuo/getFaHuoDetailById.do?id=" + id,
+        contentType: "application/json",
+        type: "get",
+        cache: false,
+        error: function (msg, textStatus) {
+            alert("查询发货失败");
+        },
+        success: function (json) {
+            if (json.result === 0) {
+                var fhd = json.faHuoDetail;
+                setFhdData(fhd, index);
+            } else {
+                alert("查询发货失败:" + json.msg ? json.msg : "");
+            }
+        }
+    });
+}
+
+function feiTuiGong(index) {
+    $("#tblTuiGongFei_body tr").remove();
+    if (tuiGongs[index] === undefined) {
+        return alert("请选择发货单");
+    }
+    editIndex = index;
+    var tuiGong = tuiGongs[index];
+    editFeiIndex(tuiGong.id, selectTuiGongFei);
+}
+
+function jxTuiGongFei(json) {
+    $("#tblTuiGongFei_body tr").remove();
+    tuiGongFeis = [];
+    tuiGongFeis = json.list;
+    $.each(json.list, function (index, item) { //遍历返回的json
+        var trStr = '<tr><td>' + item.rq + '</td><td>' + item.je + '</td><td>' + item.skrmc + '</td><td>' + item.bz + '</td><td>'
+                + '<button class="btn btn-info btn-xs icon-edit" onclick="editTuiGongFei(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;'
+                + '<button class="btn btn-danger btn-xs icon-remove" onclick="delTuiGongFei(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button></td></tr>';
+        $("#tblTuiGongFei_body").append(trStr);
+    });
+}
+
+function selectTuiGongFei(json) {
+    curTuiGong = json;
+    var jexx = "总金额：￥" + curTuiGong.je + "&ensp;&ensp;&ensp;&ensp;已付：￥" + curTuiGong.yfje + "&ensp;&ensp;&ensp;&ensp;待付：<span style='color:red'>￥" + curTuiGong.dfje + "</span>";
+    $("#tuiGongJexx").html(jexx);
+    var tuiGongFei = {};
+    var tj = {"pageSize": 10, "currentPage": 1};
+    tuiGongFei.tg_id = json.id;
+    tj.paramters = tuiGongFei;
+    var options = {};
+    options.url = "/LBStore/tuiGong/listTuiGongFeisByPage.do";
+    options.tj = tj;
+    options.func = jxTuiGongFei;
+    options.ul = "#example2";
+    queryPaginator(options);
+    $("#tuiGongFeiModal").modal({backdrop: 'static'});
+}
+
+function addTuiGongFei(type) {
+    feiOptFlag = 1;
+    if (!curTuiGong) {
+        return;
+    }
+    editFeiA01 = undefined;
+    $("#tuiGongFeiEditModel_title").html("新增记录");
+    if (type === 1) {
+        $("#inpFeiRq").val(dateFormat_f(new Date()));
+        $("#inpFeiJe").val(curTuiGong.dfje);
+        $("#inpFeiSkr").val("");
+        $("#inpFeiBz").val("");
+    } else {
+        $("#inpFeiRq").val(dateFormat_f(new Date()));
+        $("#inpFeiJe").val(0);
+        $("#inpFeiSkr").val("");
+        $("#inpFeiBz").val("");
+    }
+    $("#tuiGongFeiEditModal").modal({backdrop: 'static'});
+}
+
+function editTuiGongFei(index) {
+    if (!curTuiGong) {
+        return;
+    }
+    feiOptFlag = 2;
+    if (tuiGongFeis[index] === undefined) {
+        feiOptFlag = 1;
+        return alert("请选择记录");
+    }
+    var tuiGongFei = tuiGongFeis[index];
+    xhggEditIndex = index;
+    editFeiA01 = {id: tuiGongFei.skr_id, mc: tuiGongFei.skrmc};
+    $("#tuiGongFeiEditModel_title").html("修改记录");
+    $("#inpFeiRq").val(tuiGongFei.rq);
+    $("#inpFeiJe").val(tuiGongFei.je);
+    $("#inpFeiSkr").val(tuiGongFei.skrmc);
+    $("#inpFeiBz").val(tuiGongFei.bz);
+    $("#tuiGongFeiEditModal").modal({backdrop: 'static'});
+}
+
+function checkFei(type, index, je) {
+    var zje = 0;
+    if (type === 1) {
+        for (var i = 0; i < tuiGongFeis.length; i++) {
+            zje = zje + tuiGongFeis[i].je;
+        }
+    } else if (type === 2) {
+        for (var i = 0; i < tuiGongFeis.length; i++) {
+            if (i !== index) {
+                zje = zje + tuiGongFeis[i].je;
+            }
+        }
+    }
+    zje = zje + je;
+    if (zje > curTuiGong.je) {
+        alert("付款金额超过了订单金额");
+        return false;
+    }
+    return true;
+}
+
+function saveTuiGongFei() {
+    if (!curTuiGong) {
+        return;
+    }
+    var tuiGongFei = {};
+    var url = "";
+    var je = parseFloat($("#inpFeiJe").val());
+    if (feiOptFlag === 2) {
+        if (tuiGongFeis[xhggEditIndex] === undefined) {
+            return;
+        }
+        tuiGongFei = tuiGongFeis[xhggEditIndex];
+        url = "/LBStore/tuiGong/updateTuiGongFei.do";
+    } else if (feiOptFlag === 1) {
+        url = "/LBStore/tuiGong/saveTuiGongFei.do";
+        tuiGongFei.tg_id = curTuiGong.id;
+
+    }
+    if (!checkFei(feiOptFlag, xhggEditIndex, je)) {
+        return;
+    }
+    if (!editFeiA01 || editFeiA01.mc === '' || editFeiA01.mc !== $("#inpFeiSkr").val()) {
+        return alert("请选择收款人");
+    }
+    tuiGongFei.rq = $("#inpFeiRq").val();
+    tuiGongFei.je = je;
+    tuiGongFei.skr_id = editFeiA01.id;
+    tuiGongFei.kh_id = curTuiGong.kh_id;
+    tuiGongFei.bz = $("#inpFeiBz").val();
+    $.ajax({
+        url: url,
+        data: JSON.stringify(tuiGongFei),
+        contentType: "application/json",
+        type: "post",
+        cache: false,
+        error: function (msg, textStatus) {
+            alert("保存失败");
+        },
+        success: function (json) {
+            if (json.result === 0) {
+                $("#tuiGongFeiEditModal").modal("hide");
+                editFeiIndex(curTuiGong.id, selectTuiGongFei);
+            } else {
+                alert("保存失败：" + json.msg ? json.msg : "");
+            }
+        }
+    });
+}
+
+function delTuiGongFei(index) {
+    if (tuiGongFeis[index] === undefined) {
+        return alert("请选择记录");
+    }
+    var tuiGongFei = tuiGongFeis[index];
+    if (confirm("确定删除记录?")) {
+        $.ajax({
+            url: "/LBStore/tuiGong/deleteTuiGongFei.do?id=" + tuiGongFei.id + "&tg_id=" + curTuiGong.id,
+            contentType: "application/json",
+            type: "get",
+            dataType: "json",
+            cache: false,
+            error: function (msg, textStatus) {
+                alert("删除失败");
+            },
+            success: function (json) {
+                if (json.result === 0) {
+                    editFeiIndex(curTuiGong.id, selectTuiGongFei);
+                } else {
+                    alert("删除失败：" + json.msg ? json.msg : "");
+                }
+            }
+        });
+    }
 }

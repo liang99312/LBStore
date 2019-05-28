@@ -6,6 +6,7 @@
 package com.lb.lbstore.service;
 
 import com.lb.lbstore.domain.TuiGong;
+import com.lb.lbstore.domain.TuiGongFei;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,4 +32,15 @@ public interface TuiGongService {
     
     public List<TuiGong> queryTuiGongsByPage(HashMap map);
 
+    public int queryFeiRows(HashMap map);
+    
+    public List<TuiGongFei> queryTuiGongFeisByPage(HashMap map);
+    
+    public TuiGongFei getTuiGongFeiById(Integer id);
+
+     public boolean updateTuiGongFei(TuiGongFei tuiGongFei);
+       
+    public TuiGongFei saveTuiGongFei(TuiGongFei tuiGongFei);
+    
+    public boolean deleteTuiGongFei(Integer id,Integer tg_id);
 }

@@ -74,7 +74,7 @@ public class TuiHuoServiceImpl implements TuiHuoService {
     
     @Override
     public int queryFeiRows(HashMap map) {
-        String sql = "select (1) from TuiHuoFei where fh_id="+map.get("fh_id");
+        String sql = "select (1) from TuiHuoFei where th_id="+map.get("th_id");
         return tuiHuoDao.getCount(sql, null);
     }
 
@@ -100,8 +100,8 @@ public class TuiHuoServiceImpl implements TuiHuoService {
     }
 
     @Override
-    public boolean deleteTuiHuoFei(Integer id,Integer fh_id) {
-        return tuiHuoDao.deleteTuiHuoFei(id, fh_id);
+    public boolean deleteTuiHuoFei(Integer id,Integer th_id) {
+        return tuiHuoDao.deleteTuiHuoFei(id, th_id);
     }
 
 
