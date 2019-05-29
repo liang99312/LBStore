@@ -291,7 +291,7 @@ function selectRuKu_m() {
     var ruKu = {};
     var tj = {"pageSize": 20, "currentPage": 1};
     if ($("#inpSelWz").val() !== "") {
-        ruKu.wzmc = $("#inpSelWz").val();
+        ruKu.wz = $("#inpSelWz").val();
     }
     if ($("#selState").val() !== '' && $("#selState").val() !== "-9") {
         ruKu.state = $("#selState").val();
@@ -568,7 +568,7 @@ function deleteRuKu(index) {
         return alert("请选择入库单");
     }
     var ruKu = ruKus[index];
-    if (confirm("确定删除入库单：" + ruKu.mc + "?")) {
+    if (confirm("确定删除入库单：" + ruKu.wz + "?")) {
         $.ajax({
             url: "/LBStore/ruKu/deleteRuKu.do?id=" + ruKu.id,
             contentType: "application/json",

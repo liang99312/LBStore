@@ -53,7 +53,10 @@ public class FaHuoServiceImpl implements FaHuoService {
 
     @Override
     public int queryRows(HashMap map) {
-        String sql = "select (1) from FaHuo where qy_id="+map.get("qy_id");
+        String sql = "select count(1) from FaHuo where qy_id="+map.get("qy_id");
+        if (map.containsKey("ck_id")) {
+            sql += " and ck_id = " + map.get("ck_id");
+        }
         if (map.containsKey("mc")) {
             sql += " and mc like '%" + map.get("mc") + "%'";
         }
@@ -70,7 +73,7 @@ public class FaHuoServiceImpl implements FaHuoService {
     
     @Override
     public int queryFeiRows(HashMap map) {
-        String sql = "select (1) from FaHuoFei where fh_id="+map.get("fh_id");
+        String sql = "select count(1) from FaHuoFei where fh_id="+map.get("fh_id");
         return faHuoDao.getCount(sql, null);
     }
 

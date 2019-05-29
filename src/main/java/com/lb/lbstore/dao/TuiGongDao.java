@@ -96,6 +96,9 @@ public class TuiGongDao extends BaseDao {
             String sql = "select {tg.*},ck.mc as ckmc from TuiGong tg "
                     + "left join CangKu ck on tg.ck_id=ck.id "
                     + "where tg.qy_id=" + map.get("qy_id");
+            if (map.containsKey("ck_id")) {
+                sql += " and tg.ck_id = " + map.get("ck_id");
+            }
             if (map.containsKey("mc")) {
                 sql += " and tg.wz like '%" + map.get("mc") + "%'";
             }

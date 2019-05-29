@@ -102,6 +102,9 @@ public class FaHuoDao extends BaseDao {
             String sql = "select {fh.*},kh.mc as khmc,ck.mc as ckmc from FaHuo fh "
                     + "left join CangKu ck on fh.ck_id=ck.id left join KeHu kh on fh.kh_id=kh.id "
                     + "where fh.qy_id=" + map.get("qy_id");
+            if (map.containsKey("ck_id")) {
+                sql += " and fh.ck_id = " + map.get("ck_id");
+            }
             if (map.containsKey("mc")) {
                 sql += " and fh.wz like '%" + map.get("mc") + "%'";
             }

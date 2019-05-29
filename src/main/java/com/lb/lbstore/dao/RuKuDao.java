@@ -269,11 +269,26 @@ public class RuKuDao extends BaseDao {
             String sql = "select {rk.*},kh.mc as khmc,gys.mc as gysmc,ck.mc as ckmc from RuKu rk "
                     + "left join CangKu ck on rk.ck_id=ck.id left join KeHu kh on rk.kh_id=kh.id left join GongYingShang gys on rk.gys_id=gys.id "
                     + "where rk.qy_id="+map.get("qy_id");
-            if (map.containsKey("mc")) {
-                sql += " and rk.wz like '%" + map.get("mc") + "%'";
+            if (map.containsKey("ck_id")) {
+                sql += " and rk.ck_id = " + map.get("ck_id");
+            }
+            if (map.containsKey("wz")) {
+                sql += " and rk.wz like '%" + map.get("wz") + "%'";
             }
             if (map.containsKey("state")) {
                 sql += " and rk.state = " + map.get("state");
+            }
+            if (map.containsKey("kh_id")) {
+                sql += " and rk.kh_id = " + map.get("kh_id");
+            }
+            if (map.containsKey("gys_id")) {
+                sql += " and rk.gys_id = " + map.get("gys_id");
+            }
+            if (map.containsKey("qrq")) {
+                sql += " and rk.sj >= '" + map.get("qrq") + "'";
+            }
+            if (map.containsKey("zrq")) {
+                sql += " and rk.sj <= '" + map.get("zrq") + " 23:59:59'";
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);  
             navtiveSQL.addEntity("rk", RuKu.class).addScalar("khmc", StandardBasicTypes.STRING).addScalar("gysmc", StandardBasicTypes.STRING).addScalar("ckmc", StandardBasicTypes.STRING);  

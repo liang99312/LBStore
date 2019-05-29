@@ -126,6 +126,9 @@ public class KuCunDao extends BaseDao {
             if (map.containsKey("wzmc")) {
                 sql += " and kc.wzmc like '%" + map.get("wzmc") + "%'";
             }
+            if (map.containsKey("txm")) {
+                sql += " and kc.txm like '%" + map.get("txm") + "%'";
+            }
             if (map.containsKey("xhgg")) {
                 sql += " and kc.xhgg like '%" + map.get("xhgg") + "%'";
             }

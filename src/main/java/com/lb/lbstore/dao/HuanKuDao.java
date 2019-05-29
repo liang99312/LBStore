@@ -95,6 +95,9 @@ public class HuanKuDao extends BaseDao {
             String sql = "select {hk.*},ck.mc as ckmc from HuanKu hk "
                     + "left join CangKu ck on hk.ck_id=ck.id "
                     + "where hk.qy_id=" + map.get("qy_id");
+            if (map.containsKey("ck_id")) {
+                sql += " and hk.ck_id = " + map.get("ck_id");
+            }
             if (map.containsKey("mc")) {
                 sql += " and hk.wz like '%" + map.get("mc") + "%'";
             }

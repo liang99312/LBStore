@@ -95,6 +95,9 @@ public class SunHaoDao extends BaseDao {
             String sql = "select {sh.*},ck.mc as ckmc from SunHao sh "
                     + "left join CangKu ck on sh.ck_id=ck.id "
                     + "where sh.qy_id=" + map.get("qy_id");
+            if (map.containsKey("ck_id")) {
+                sql += " and sh.ck_id = " + map.get("ck_id");
+            }
             if (map.containsKey("mc")) {
                 sql += " and sh.wz like '%" + map.get("mc") + "%'";
             }

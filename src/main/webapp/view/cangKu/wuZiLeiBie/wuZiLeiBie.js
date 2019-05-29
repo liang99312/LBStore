@@ -198,6 +198,8 @@ function addTeYouShuXing() {
     optTsFlag = 1;
     $("#wuZiLeiBieModel_title").html("增加特有属性");
     $("#inpTsMc").val("");
+    editFenLei = null;
+    $("#inpTsType").val("");
     $("#teYouShuXingModal").modal({backdrop:'static'});
 }
 

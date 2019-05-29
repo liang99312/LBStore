@@ -52,7 +52,10 @@ public class TuiGongServiceImpl implements TuiGongService {
 
     @Override
     public int queryRows(HashMap map) {
-        String sql = "select (1) from TuiGong where qy_id="+map.get("qy_id");
+        String sql = "select count(1) from TuiGong where qy_id="+map.get("qy_id");
+        if (map.containsKey("ck_id")) {
+            sql += " and ck_id = " + map.get("ck_id");
+        }
         if (map.containsKey("mc")) {
             sql += " and mc like '%" + map.get("mc") + "%'";
         }
@@ -74,7 +77,7 @@ public class TuiGongServiceImpl implements TuiGongService {
     
     @Override
     public int queryFeiRows(HashMap map) {
-        String sql = "select (1) from TuiGongFei where tg_id="+map.get("tg_id");
+        String sql = "select count(1) from TuiGongFei where tg_id="+map.get("tg_id");
         return tuiGongDao.getCount(sql, null);
     }
 

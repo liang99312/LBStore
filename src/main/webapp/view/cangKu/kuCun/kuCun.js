@@ -63,7 +63,7 @@ function selectKuCun() {
     var kuCun = {};
     var tj = {"pageSize": 20, "currentPage": 1};
     if ($("#selName").val() !== "") {
-        kuCun.mc = $("#selName").val();
+        kuCun.wzmc = $("#selName").val();
     }
     if ($("#selTxm").val() !== '') {
         kuCun.txm = $("#selTxm").val();
