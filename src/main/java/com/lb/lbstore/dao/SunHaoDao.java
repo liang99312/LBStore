@@ -98,11 +98,26 @@ public class SunHaoDao extends BaseDao {
             if (map.containsKey("ck_id")) {
                 sql += " and sh.ck_id = " + map.get("ck_id");
             }
-            if (map.containsKey("mc")) {
-                sql += " and sh.wz like '%" + map.get("mc") + "%'";
+            if (map.containsKey("lsh")) {
+                sql += " and sh.lsh like '%" + map.get("lsh") + "%'";
+            }
+            if (map.containsKey("wz")) {
+                sql += " and sh.wz like '%" + map.get("wz") + "%'";
             }
             if (map.containsKey("state")) {
                 sql += " and sh.state = " + map.get("state");
+            }
+            if (map.containsKey("kh_id")) {
+                sql += " and sh.kh_id = " + map.get("kh_id");
+            }
+            if (map.containsKey("gys_id")) {
+                sql += " and sh.gys_id = " + map.get("gys_id");
+            }
+            if (map.containsKey("qrq")) {
+                sql += " and sh.sj >= '" + map.get("qrq") + "'";
+            }
+            if (map.containsKey("zrq")) {
+                sql += " and sh.sj <= '" + map.get("zrq") + " 23:59:59'";
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
             navtiveSQL.addEntity("sh", SunHao.class).addScalar("ckmc", StandardBasicTypes.STRING);

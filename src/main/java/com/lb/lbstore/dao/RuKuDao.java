@@ -272,6 +272,9 @@ public class RuKuDao extends BaseDao {
             if (map.containsKey("ck_id")) {
                 sql += " and rk.ck_id = " + map.get("ck_id");
             }
+            if (map.containsKey("lsh")) {
+                sql += " and rk.lsh like '%" + map.get("lsh") + "%'";
+            }
             if (map.containsKey("wz")) {
                 sql += " and rk.wz like '%" + map.get("wz") + "%'";
             }

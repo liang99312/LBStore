@@ -68,6 +68,9 @@ public class RuKuServiceImpl implements RuKuService {
         if (map.containsKey("ck_id")) {
             sql += " and ck_id = " + map.get("ck_id");
         }
+        if (map.containsKey("lsh")) {
+            sql += " and lsh like '%" + map.get("lsh") + "%'";
+        }
         if (map.containsKey("wz")) {
             sql += " and wz like '%" + map.get("wz") + "%'";
         }

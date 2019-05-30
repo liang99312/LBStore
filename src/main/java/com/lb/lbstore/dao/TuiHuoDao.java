@@ -99,11 +99,26 @@ public class TuiHuoDao extends BaseDao {
             if (map.containsKey("ck_id")) {
                 sql += " and th.ck_id = " + map.get("ck_id");
             }
-            if (map.containsKey("mc")) {
-                sql += " and th.wz like '%" + map.get("mc") + "%'";
+            if (map.containsKey("lsh")) {
+                sql += " and th.lsh like '%" + map.get("lsh") + "%'";
+            }
+            if (map.containsKey("wz")) {
+                sql += " and th.wz like '%" + map.get("wz") + "%'";
             }
             if (map.containsKey("state")) {
                 sql += " and th.state = " + map.get("state");
+            }
+            if (map.containsKey("kh_id")) {
+                sql += " and th.kh_id = " + map.get("kh_id");
+            }
+            if (map.containsKey("gys_id")) {
+                sql += " and th.gys_id = " + map.get("gys_id");
+            }
+            if (map.containsKey("qrq")) {
+                sql += " and th.sj >= '" + map.get("qrq") + "'";
+            }
+            if (map.containsKey("zrq")) {
+                sql += " and th.sj <= '" + map.get("zrq") + " 23:59:59'";
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
             navtiveSQL.addEntity("th", TuiHuo.class).addScalar("ckmc", StandardBasicTypes.STRING);

@@ -99,11 +99,26 @@ public class TuiGongDao extends BaseDao {
             if (map.containsKey("ck_id")) {
                 sql += " and tg.ck_id = " + map.get("ck_id");
             }
-            if (map.containsKey("mc")) {
-                sql += " and tg.wz like '%" + map.get("mc") + "%'";
+            if (map.containsKey("lsh")) {
+                sql += " and tg.lsh like '%" + map.get("lsh") + "%'";
+            }
+            if (map.containsKey("wz")) {
+                sql += " and tg.wz like '%" + map.get("wz") + "%'";
             }
             if (map.containsKey("state")) {
                 sql += " and tg.state = " + map.get("state");
+            }
+            if (map.containsKey("kh_id")) {
+                sql += " and tg.kh_id = " + map.get("kh_id");
+            }
+            if (map.containsKey("gys_id")) {
+                sql += " and tg.gys_id = " + map.get("gys_id");
+            }
+            if (map.containsKey("qrq")) {
+                sql += " and tg.sj >= '" + map.get("qrq") + "'";
+            }
+            if (map.containsKey("zrq")) {
+                sql += " and tg.sj <= '" + map.get("zrq") + " 23:59:59'";
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
             navtiveSQL.addEntity("tg", TuiGong.class).addScalar("ckmc", StandardBasicTypes.STRING);

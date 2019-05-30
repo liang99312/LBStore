@@ -15,12 +15,10 @@ import com.lb.lbstore.domain.WuZiXhgg;
 import com.lb.lbstore.domain.WuZiZiDian;
 import com.lb.lbstore.util.LshUtil;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.Objects;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -105,11 +103,26 @@ public class FaHuoDao extends BaseDao {
             if (map.containsKey("ck_id")) {
                 sql += " and fh.ck_id = " + map.get("ck_id");
             }
-            if (map.containsKey("mc")) {
-                sql += " and fh.wz like '%" + map.get("mc") + "%'";
+            if (map.containsKey("lsh")) {
+                sql += " and fh.lsh like '%" + map.get("lsh") + "%'";
+            }
+            if (map.containsKey("wz")) {
+                sql += " and fh.wz like '%" + map.get("wz") + "%'";
             }
             if (map.containsKey("state")) {
                 sql += " and fh.state = " + map.get("state");
+            }
+            if (map.containsKey("kh_id")) {
+                sql += " and fh.kh_id = " + map.get("kh_id");
+            }
+            if (map.containsKey("gys_id")) {
+                sql += " and fh.gys_id = " + map.get("gys_id");
+            }
+            if (map.containsKey("qrq")) {
+                sql += " and fh.sj >= '" + map.get("qrq") + "'";
+            }
+            if (map.containsKey("zrq")) {
+                sql += " and fh.sj <= '" + map.get("zrq") + " 23:59:59'";
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
             navtiveSQL.addEntity("fh", FaHuo.class).addScalar("khmc", StandardBasicTypes.STRING).addScalar("ckmc", StandardBasicTypes.STRING);
