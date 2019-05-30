@@ -425,7 +425,7 @@ public class FaHuoDao extends BaseDao {
             String deleteFei = "delete from FaHuoFei where id=" + id;
             session.createSQLQuery(deleteFei).executeUpdate();
             session.flush();
-            String updateFaHuo = "update fahuo set yfje = (select sum(f.je) from fahuofei f where f.fh_id = " + fh_id + ") where fahuo.id=" + fh_id;
+            String updateFaHuo = "update fahuo set yfje = ifnull((select sum(ifnull(f.je,0)) from fahuofei f where f.fh_id = " + fh_id + "),0) where fahuo.id=" + fh_id;
             session.createSQLQuery(updateFaHuo).executeUpdate();
             session.flush();
             updateFaHuo = "update fahuo set dfje = je - yfje where id=" + fh_id;
@@ -458,7 +458,7 @@ public class FaHuoDao extends BaseDao {
             Integer id = (Integer) session.save(faHuoFei);
             session.flush();
             int fh_id = faHuoFei.getFh_id();
-            String updateFaHuo = "update fahuo set yfje = (select sum(f.je) from fahuofei f where f.fh_id = " + fh_id + ") where fahuo.id=" + fh_id;
+            String updateFaHuo = "update fahuo set yfje = ifnull((select sum(ifnull(f.je,0)) from fahuofei f where f.fh_id = " + fh_id + "),0) where fahuo.id=" + fh_id;
             session.createSQLQuery(updateFaHuo).executeUpdate();
             session.flush();
             updateFaHuo = "update fahuo set dfje = je - yfje where id=" + fh_id;
@@ -491,7 +491,7 @@ public class FaHuoDao extends BaseDao {
             session.update(faHuoFei);
             session.flush();
             int fh_id = faHuoFei.getFh_id();
-            String updateFaHuo = "update fahuo set yfje = (select sum(f.je) from fahuofei f where f.fh_id = " + fh_id + ") where fahuo.id=" + fh_id;
+            String updateFaHuo = "update fahuo set yfje = ifnull((select sum(ifnull(f.je,0)) from fahuofei f where f.fh_id = " + fh_id + "),0) where fahuo.id=" + fh_id;
             session.createSQLQuery(updateFaHuo).executeUpdate();
             session.flush();
             updateFaHuo = "update fahuo set dfje = je - yfje where id=" + fh_id;

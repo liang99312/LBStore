@@ -442,7 +442,7 @@ public class TuiGongDao extends BaseDao {
             String deleteFei = "delete from TuiGongFei where id=" + id;
             session.createSQLQuery(deleteFei).executeUpdate();
             session.flush();
-            String updateTuiGong = "update tuigong set yfje = (select sum(f.je) from tuigongfei f where f.tg_id = " + tg_id + ") where tuigong.id=" + tg_id;
+            String updateTuiGong = "update tuigong set yfje = ifnull((select sum(ifnull(f.je,0)) from tuigongfei f where f.tg_id = " + tg_id + "),0) where tuigong.id=" + tg_id;
             session.createSQLQuery(updateTuiGong).executeUpdate();
             session.flush();
             updateTuiGong = "update tuigong set dfje = je - yfje where id=" + tg_id;
@@ -475,7 +475,7 @@ public class TuiGongDao extends BaseDao {
             Integer id = (Integer) session.save(tuiGongFei);
             session.flush();
             int tg_id = tuiGongFei.getTg_id();
-            String updateTuiGong = "update tuigong set yfje = (select sum(f.je) from tuigongfei f where f.tg_id = " + tg_id + ") where tuigong.id=" + tg_id;
+            String updateTuiGong = "update tuigong set yfje = ifnull((select sum(ifnull(f.je,0)) from tuigongfei f where f.tg_id = " + tg_id + "),0) where tuigong.id=" + tg_id;
             session.createSQLQuery(updateTuiGong).executeUpdate();
             session.flush();
             updateTuiGong = "update tuigong set dfje = je - yfje where id=" + tg_id;
@@ -508,7 +508,7 @@ public class TuiGongDao extends BaseDao {
             session.update(tuiGongFei);
             session.flush();
             int tg_id = tuiGongFei.getTg_id();
-            String updateTuiGong = "update tuigong set yfje = (select sum(f.je) from tuigongfei f where f.tg_id = " + tg_id + ") where tuigong.id=" + tg_id;
+            String updateTuiGong = "update tuigong set yfje = ifnull((select sum(ifnull(f.je,0)) from tuigongfei f where f.tg_id = " + tg_id + "),0) where tuigong.id=" + tg_id;
             session.createSQLQuery(updateTuiGong).executeUpdate();
             session.flush();
             updateTuiGong = "update tuigong set dfje = je - yfje where id=" + tg_id;

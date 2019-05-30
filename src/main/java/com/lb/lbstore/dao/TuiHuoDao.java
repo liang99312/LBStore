@@ -323,8 +323,8 @@ public class TuiHuoDao extends BaseDao {
             sb.append(")");
             llSb.append(")");
 
-            String fhdString = "select fhd.id as id, fhd.fhzl-h.zl as sl from fahuodetail fhd, "
-                    + "(select sum(thd.thzl) as zl,thd.fhd_id as fhd_id from tuihuodetail thd,tuihuo th where thd.th_id=th.id and th.state=1 and thd.fhd_id in " + llSb + " group by thd.fhd_id) as h "
+            String fhdString = "select fhd.id as id, fhd.fhzl-ifnull(h.zl,0) as sl from fahuodetail fhd, "
+                    + "(select sum(ifnull(thd.thzl,0)) as zl,thd.fhd_id as fhd_id from tuihuodetail thd,tuihuo th where thd.th_id=th.id and th.state=1 and thd.fhd_id in " + llSb + " group by thd.fhd_id) as h "
                     + "where fhd.id=h.fhd_id;";
             List fhdList = session.createSQLQuery(fhdString).list();
             for (Object obj : fhdList) {
@@ -443,7 +443,7 @@ public class TuiHuoDao extends BaseDao {
             String deleteFei = "delete from TuiHuoFei where id=" + id;
             session.createSQLQuery(deleteFei).executeUpdate();
             session.flush();
-            String updateTuiHuo = "update tuihuo set yfje = (select sum(f.je) from tuihuofei f where f.th_id = " + th_id + ") where tuihuo.id=" + th_id;
+            String updateTuiHuo = "update tuihuo set yfje = ifnull((select sum(ifnull(f.je,0)) from tuihuofei f where f.th_id = " + th_id + "),0) where tuihuo.id=" + th_id;
             session.createSQLQuery(updateTuiHuo).executeUpdate();
             session.flush();
             updateTuiHuo = "update tuihuo set dfje = je - yfje where id=" + th_id;
@@ -476,7 +476,7 @@ public class TuiHuoDao extends BaseDao {
             Integer id = (Integer) session.save(tuiHuoFei);
             session.flush();
             int th_id = tuiHuoFei.getTh_id();
-            String updateTuiHuo = "update tuihuo set yfje = (select sum(f.je) from tuihuofei f where f.th_id = " + th_id + ") where tuihuo.id=" + th_id;
+            String updateTuiHuo = "update tuihuo set yfje = ifnull((select sum(ifnull(f.je,0)) from tuihuofei f where f.th_id = " + th_id + "),0) where tuihuo.id=" + th_id;
             session.createSQLQuery(updateTuiHuo).executeUpdate();
             session.flush();
             updateTuiHuo = "update tuihuo set dfje = je - yfje where id=" + th_id;
@@ -509,7 +509,7 @@ public class TuiHuoDao extends BaseDao {
             session.update(tuiHuoFei);
             session.flush();
             int th_id = tuiHuoFei.getTh_id();
-            String updateTuiHuo = "update tuihuo set yfje = (select sum(f.je) from tuihuofei f where f.th_id = " + th_id + ") where tuihuo.id=" + th_id;
+            String updateTuiHuo = "update tuihuo set yfje = ifnull((select sum(ifnull(f.je,0)) from tuihuofei f where f.th_id = " + th_id + "),0) where tuihuo.id=" + th_id;
             session.createSQLQuery(updateTuiHuo).executeUpdate();
             session.flush();
             updateTuiHuo = "update tuihuo set dfje = je - yfje where id=" + th_id;

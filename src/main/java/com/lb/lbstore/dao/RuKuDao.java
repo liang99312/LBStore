@@ -592,7 +592,7 @@ public class RuKuDao extends BaseDao {
             String deleteFei = "delete from RuKuFei where id=" + id;
             session.createSQLQuery(deleteFei).executeUpdate();
             session.flush();
-            String updateRuKu = "update ruku set yfje = (select sum(f.je) from rukufei f where f.rk_id = " + rk_id + ") where ruku.id=" + rk_id;
+            String updateRuKu = "update ruku set yfje = ifnull((select sum(ifnull(f.je,0)) from rukufei f where f.rk_id = " + rk_id + "),0) where ruku.id=" + rk_id;
             session.createSQLQuery(updateRuKu).executeUpdate();
             session.flush();
             updateRuKu = "update ruku set dfje = je - yfje where id=" + rk_id;
@@ -625,7 +625,7 @@ public class RuKuDao extends BaseDao {
             Integer id = (Integer) session.save(ruKuFei);
             session.flush();
             int rk_id = ruKuFei.getRk_id();
-            String updateRuKu = "update ruku set yfje = (select sum(f.je) from rukufei f where f.rk_id = " + rk_id + ") where ruku.id=" + rk_id;
+            String updateRuKu = "update ruku set yfje = ifnull((select sum(ifnull(f.je,0)) from rukufei f where f.rk_id = " + rk_id + "),0) where ruku.id=" + rk_id;
             session.createSQLQuery(updateRuKu).executeUpdate();
             session.flush();
             updateRuKu = "update ruku set dfje = je - yfje where id=" + rk_id;
@@ -658,7 +658,7 @@ public class RuKuDao extends BaseDao {
             session.update(ruKuFei);
             session.flush();
             int rk_id = ruKuFei.getRk_id();
-            String updateRuKu = "update ruku set yfje = (select sum(f.je) from rukufei f where f.rk_id = " + rk_id + ") where ruku.id=" + rk_id;
+            String updateRuKu = "update ruku set yfje = ifnull((select sum(ifnull(f.je,0)) from rukufei f where f.rk_id = " + rk_id + "),0) where ruku.id=" + rk_id;
             session.createSQLQuery(updateRuKu).executeUpdate();
             session.flush();
             updateRuKu = "update ruku set dfje = je - yfje where id=" + rk_id;

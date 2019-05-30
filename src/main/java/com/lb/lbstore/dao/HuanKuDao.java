@@ -320,8 +320,8 @@ public class HuanKuDao extends BaseDao {
             sb.append(")");
             llSb.append(")");
 
-            String lldString = "select lld.id as id, lld.slzl-h.zl as sl from lingliaodetail lld, "
-                    + "(select sum(hkd.hkzl) as zl,hkd.lld_id as lld_id from huankudetail hkd,huanku hk where hkd.hk_id=hk.id and hk.state=1 and hkd.lld_id in " + llSb + " group by hkd.lld_id) as h "
+            String lldString = "select lld.id as id, lld.slzl-ifnull(h.zl,0) as sl from lingliaodetail lld, "
+                    + "(select sum(ifnull(hkd.hkzl,0)) as zl,hkd.lld_id as lld_id from huankudetail hkd,huanku hk where hkd.hk_id=hk.id and hk.state=1 and hkd.lld_id in " + llSb + " group by hkd.lld_id) as h "
                     + "where lld.id=h.lld_id;";
             List lldList = session.createSQLQuery(lldString).list();
             for (Object obj : lldList) {
