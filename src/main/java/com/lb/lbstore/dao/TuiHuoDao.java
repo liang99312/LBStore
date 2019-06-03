@@ -346,7 +346,7 @@ public class TuiHuoDao extends BaseDao {
             for (KuCun kc : kcList) {
                 TuiHuoDetail detail = detailTable.get(kc.getId());
                 if (detail != null) {
-                    if (kc.getSyzl() < detail.getThzl()) {
+                    if ((kc.getZl() - kc.getSyzl()) < detail.getThzl()) {
                         tx.rollback();
                         result = "0";
                         return result;

@@ -346,7 +346,7 @@ public class TuiGongDao extends BaseDao {
             for (KuCun kc : kcList) {
                 TuiGongDetail detail = detailTable.get(kc.getId());
                 if (detail != null) {
-                    if (kc.getSyzl() < detail.getTgzl()) {
+                    if ((kc.getZl() - kc.getSyzl()) < detail.getTgzl()) {
                         tx.rollback();
                         result = "0";
                         return result;
