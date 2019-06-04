@@ -15,6 +15,7 @@ var editXhgg;
 var editLeiBie;
 var selLeiBie;
 var selCangKu;
+var editKeHu;
 var selKeHu;
 var selGongYingShang;
 var selKuWei;
@@ -68,6 +69,7 @@ function setTrager_cangKu() {
 
 function setTrager_keHu() {
     $('#inpSelKh').AutoComplete({'data': lb_keHus, 'paramName': 'selKeHu'});
+    $('#inpKh').AutoComplete({'data': lb_keHus, 'paramName': 'editKeHu'});
     $('#inpFhdSelKh').AutoComplete({'data': lb_keHus, 'paramName': 'selKeHu'});
 }
 
@@ -302,6 +304,7 @@ function jxReadTuiHuo(tuiHuo) {
     thmx = tuiHuo.details;
     $("#inpCk").val(tuiHuo.ckmc);
     editCangKu = {"id": tuiHuo.ck_id, "mc": tuiHuo.ckmc};
+    editKeHu = {"id": tuiHuo.kh_id, "mc": tuiHuo.khmc};
     $("#inpThr").val(tuiHuo.thrmc);
     editA01 = {"id": tuiHuo.thr_id, "mc": tuiHuo.thrmc};
     selectCangKu(editCangKu);
@@ -389,6 +392,15 @@ function saveTuiHuo() {
             tuiHuo.ck_id = editCangKu.id;
         }
     }
+    if ($("#inpKh").val() === "") {
+        return alert("请输入客户信息");
+    } else {
+        if ($("#inpKh").val() !== editKeHu.mc) {
+            return alert("请输入客户信息");
+        } else {
+            tuiHuo.kh_id = editKeHu.id;
+        }
+    }
     if ($("#inpThr").val() === "") {
         return alert("请输入退货人信息");
     } else {
@@ -404,6 +416,9 @@ function saveTuiHuo() {
         var e = thmx[i];
         if (e.ck_id !== tuiHuo.ck_id) {
             return alert("退货明细仓库和退货单仓库不匹配！");
+        }
+        if (e.kh_id !== tuiHuo.kh_id) {
+            return alert("退货明细客户和退货单客户不匹配！");
         }
         if (optFlag === 3) {
             if (e.kw === undefined || e.kw === null || e.kw === "") {
@@ -541,6 +556,9 @@ function addTuiHuoMingXi() {
     if ($("#inpCk").val() === "" || $("#inpCk").val() !== editCangKu.mc) {
         return alert("请选择退货仓库");
     }
+    if ($("#inpKh").val() === "" || $("#inpKh").val() !== editKeHu.mc) {
+        return alert("请选择退货客户");
+    }
     optMxFlag = 1;
     dymx_opt = {data: [], yxData: [], func: calcDymx};
     editLeiBie = null;
@@ -589,6 +607,9 @@ function saveTuiHuoMingXi() {
     }
     if ($("#inpMxThl").val() === "") {
         return alert("请输入退货数量");
+    }
+    if(curFaHuoDetail.kh_id !== editKeHu.id){
+        return alert("明细客户和当前客户不一致");
     }
     var mx = {};
     if ($("#inpMxWz").val() === "") {
@@ -642,6 +663,7 @@ function saveTuiHuoMingXi() {
     mx.kc_id = curFaHuoDetail.kc_id;
     mx.gys_id = curFaHuoDetail.gys_id;
     mx.ck_id = curFaHuoDetail.ck_id;
+    mx.kh_id = curFaHuoDetail.kh_id;
     if (optMxFlag === 1) {
         thmx.push(mx);
     } else if (optMxFlag === 2) {
@@ -664,6 +686,7 @@ function saveTuiHuoMingXi() {
 function cxFaHuoDetail() {
     var faHuoDetail = {};
     faHuoDetail.ck_id = editCangKu.id;
+    faHuoDetail.kh_id = editKeHu.id;
     if ($("#inpFhdSelWzlb").val() !== "" && $("#inpFhdSelWzlb").val() === selLeiBie.mc) {
         faHuoDetail.wzlb_id = selLeiBie.id;
     }

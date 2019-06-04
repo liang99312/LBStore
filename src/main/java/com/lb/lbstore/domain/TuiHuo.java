@@ -30,6 +30,7 @@ public class TuiHuo {
     private String lsh;
     private Integer qy_id;
     private Integer ck_id;
+    private Integer kh_id;
     private Integer thr_id;
     private Integer spr_id;
     private String wz;
@@ -51,6 +52,7 @@ public class TuiHuo {
     private transient Date qrq;
     private transient Date zrq;
     private transient String ckmc;
+    private transient String khmc;
     private transient String thrmc;
     private transient String sprmc;
 
@@ -84,6 +86,14 @@ public class TuiHuo {
 
     public void setCk_id(Integer ck_id) {
         this.ck_id = ck_id;
+    }
+
+    public Integer getKh_id() {
+        return kh_id;
+    }
+
+    public void setKh_id(Integer kh_id) {
+        this.kh_id = kh_id;
     }
 
     public Integer getThr_id() {
@@ -236,6 +246,14 @@ public class TuiHuo {
 
     public void setYy(String yy) {
         this.yy = yy;
+    }
+
+    public String getKhmc() {
+        return khmc;
+    }
+
+    public void setKhmc(String khmc) {
+        this.khmc = khmc;
     }
 
     @Override

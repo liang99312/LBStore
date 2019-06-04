@@ -30,6 +30,8 @@ public class TuiGong {
     private String lsh;
     private Integer qy_id;
     private Integer ck_id;
+    private Integer gys_id;
+    private Integer kh_id;
     private Integer tgr_id;
     private Integer spr_id;
     private String wz;
@@ -84,6 +86,22 @@ public class TuiGong {
 
     public void setCk_id(Integer ck_id) {
         this.ck_id = ck_id;
+    }
+
+    public Integer getGys_id() {
+        return gys_id;
+    }
+
+    public void setGys_id(Integer gys_id) {
+        this.gys_id = gys_id;
+    }
+
+    public Integer getKh_id() {
+        return kh_id;
+    }
+
+    public void setKh_id(Integer kh_id) {
+        this.kh_id = kh_id;
     }
 
     public Integer getTgr_id() {

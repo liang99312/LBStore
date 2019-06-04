@@ -33,16 +33,18 @@ public class TuiHuoDao extends BaseDao {
         Session session = null;
         try {
             session = getSessionFactory().openSession();
-            String sql = "select {th.*},ck.mc as ckmc,a01.mc as thrmc,a02.mc as sprmc from TuiHuo th "
+            String sql = "select {th.*},ck.mc as ckmc,a01.mc as thrmc,a02.mc as sprmc,kh.mc as khmc from TuiHuo th "
                     + "left join CangKu ck on th.ck_id=ck.id "
                     + "left join A01 a01 on th.thr_id=a01.id "
                     + "left join A01 a02 on th.spr_id=a02.id "
+                    + "left join KeHu kh on th.kh_id=kh.id "
                     + "where th.id=" + id;
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
             navtiveSQL.addEntity("th", TuiHuo.class)
                     .addScalar("ckmc", StandardBasicTypes.STRING)
                     .addScalar("thrmc", StandardBasicTypes.STRING)
-                    .addScalar("sprmc", StandardBasicTypes.STRING);
+                    .addScalar("sprmc", StandardBasicTypes.STRING)
+                    .addScalar("khmc", StandardBasicTypes.STRING);
             List list = navtiveSQL.list();
             List<TuiHuo> list_th = new ArrayList();
             for (Object obj : list) {
@@ -51,9 +53,11 @@ public class TuiHuoDao extends BaseDao {
                 String ckmc = (String) objs[1];
                 String thrmc = (String) objs[2];
                 String sprmc = (String) objs[3];
+                String khmc = (String) objs[4];
                 th.setCkmc(ckmc);
                 th.setThrmc(thrmc);
                 th.setSprmc(sprmc);
+                th.setKhmc(khmc);
                 list_th.add(th);
             }
             if (list_th.isEmpty()) {
@@ -93,8 +97,9 @@ public class TuiHuoDao extends BaseDao {
         Session session = null;
         try {
             session = getSessionFactory().openSession();
-            String sql = "select {th.*},ck.mc as ckmc from TuiHuo th "
+            String sql = "select {th.*},ck.mc as ckmc,kh.mc as khmc from TuiHuo th "
                     + "left join CangKu ck on th.ck_id=ck.id "
+                    + "left join KeHu kh on th.kh_id=kh.id "
                     + "where th.qy_id=" + map.get("qy_id");
             if (map.containsKey("ck_id")) {
                 sql += " and th.ck_id = " + map.get("ck_id");
@@ -121,13 +126,15 @@ public class TuiHuoDao extends BaseDao {
                 sql += " and th.sj <= '" + map.get("zrq") + " 23:59:59'";
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
-            navtiveSQL.addEntity("th", TuiHuo.class).addScalar("ckmc", StandardBasicTypes.STRING);
+            navtiveSQL.addEntity("th", TuiHuo.class).addScalar("ckmc", StandardBasicTypes.STRING).addScalar("khmc", StandardBasicTypes.STRING);
             List list = navtiveSQL.list();
             for (Object obj : list) {
                 Object[] objs = (Object[]) obj;
                 TuiHuo th = (TuiHuo) objs[0];
                 String ckmc = (String) objs[1];
+                String khmc = (String) objs[2];
                 th.setCkmc(ckmc);
+                th.setKhmc(khmc);
                 result.add(th);
             }
         } catch (Exception e) {
