@@ -328,6 +328,7 @@ public class RuKuDao extends BaseDao {
         try {
             session = getSessionFactory().openSession();
             tx = session.beginTransaction();
+            ruKu.setDfje(ruKu.getJe() - ruKu.getYfje());
             Integer id = (Integer) session.save(ruKu);
             session.flush();
             for(RuKuDetail detail:ruKu.getDetails()){
@@ -389,6 +390,7 @@ public class RuKuDao extends BaseDao {
         try {
             session = getSessionFactory().openSession();
             tx = session.beginTransaction();
+            ruKu.setDfje(ruKu.getJe() - ruKu.getYfje());
             session.update(ruKu);
             session.flush();
             String deleteDetail = "delete from RuKuDetail where rk_id="+ruKu.getId();

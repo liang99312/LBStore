@@ -155,6 +155,7 @@ public class TuiHuoDao extends BaseDao {
         try {
             session = getSessionFactory().openSession();
             tx = session.beginTransaction();
+            tuiHuo.setDfje(tuiHuo.getJe() - tuiHuo.getYfje());
             Integer id = (Integer) session.save(tuiHuo);
             session.flush();
             for (TuiHuoDetail detail : tuiHuo.getDetails()) {
@@ -215,7 +216,8 @@ public class TuiHuoDao extends BaseDao {
         Transaction tx = null;
         try {
             session = getSessionFactory().openSession();
-            tx = session.beginTransaction();
+            tx = session.beginTransaction();            
+            tuiHuo.setDfje(tuiHuo.getJe() - tuiHuo.getYfje());
             session.update(tuiHuo);
             session.flush();
             String deleteDetail = "delete from TuiHuoDetail where th_id=" + tuiHuo.getId();

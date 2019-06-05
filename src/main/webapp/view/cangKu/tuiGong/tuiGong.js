@@ -648,11 +648,11 @@ function saveTuiGongMingXi() {
         return alert("请输入退供数量");
     }
     if ("供应商" === $("#inpLy").val()) {
-        if (curFaHuoDetail.gys_id !== editGongYingShang.id) {
+        if (curKuCunDetail.gys_id !== editGongYingShang.id) {
             return alert("明细供应商和当前供应商不一致");
         }
     } else if ("客户" === $("#inpLy").val()) {
-        if (curFaHuoDetail.kh_id !== editKeHu.id) {
+        if (curKuCunDetail.kh_id !== editKeHu.id) {
             return alert("明细客户和当前客户不一致");
         }
     }
@@ -707,7 +707,7 @@ function saveTuiGongMingXi() {
     mx.kc_id = curKuCunDetail.id;
     mx.gys_id = curKuCunDetail.gys_id;
     mx.ck_id = curKuCunDetail.ck_id;
-    mx.kh_id = curKuCunDetial.kh_id;
+    mx.kh_id = curKuCunDetail.kh_id;
     if (optMxFlag === 1) {
         tgmx.push(mx);
     } else if (optMxFlag === 2) {

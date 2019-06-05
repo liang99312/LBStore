@@ -189,6 +189,7 @@ public class FaHuoDao extends BaseDao {
         try {
             session = getSessionFactory().openSession();
             tx = session.beginTransaction();
+            faHuo.setDfje(faHuo.getJe() - faHuo.getYfje());
             Integer id = (Integer) session.save(faHuo);
             session.flush();
             for (FaHuoDetail detail : faHuo.getDetails()) {
@@ -251,6 +252,7 @@ public class FaHuoDao extends BaseDao {
         try {
             session = getSessionFactory().openSession();
             tx = session.beginTransaction();
+            faHuo.setDfje(faHuo.getJe() - faHuo.getYfje());
             session.update(faHuo);
             session.flush();
             String deleteDetail = "delete from FaHuoDetail where fh_id=" + faHuo.getId();
