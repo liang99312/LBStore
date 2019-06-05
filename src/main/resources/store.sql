@@ -552,6 +552,7 @@ CREATE TABLE `store`.`tuigong` (
   `kh_id` INT NULL,
   `tgr_id` INT NOT NULL,
   `spr_id` INT NULL,
+  `ly` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `lsh` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `wz` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `dh` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,

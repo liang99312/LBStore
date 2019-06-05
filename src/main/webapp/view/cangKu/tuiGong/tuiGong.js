@@ -16,7 +16,9 @@ var editLeiBie;
 var selLeiBie;
 var selCangKu;
 var selKeHu;
+var editKeHu;
 var selGongYingShang;
+var editGongYingShang;
 var selKuWei;
 var editCangKu;
 var editA01;
@@ -52,6 +54,16 @@ $(document).ready(function () {
             $("#inpMxTgl").val(temp_tgl.toFixed(3));
         }
     });
+    $(".rk_kh").hide();
+    $("#inpLy").change(function () {
+        if ($("#inpLy").val() === "供应商") {
+            $(".rk_gys").removeAttr("disabled").show();
+            $(".rk_kh").hide();
+        } else if ($("#inpLy").val() === "客户") {
+            $(".rk_gys").hide();
+            $(".rk_kh").show();
+        }
+    });
 });
 
 function setTrager_a01() {
@@ -68,7 +80,7 @@ function setTrager_cangKu() {
 
 function setTrager_keHu() {
     $('#inpSelKh').AutoComplete({'data': lb_keHus, 'paramName': 'selKeHu'});
-    $('#inpKcdSelKh').AutoComplete({'data': lb_keHus, 'paramName': 'selKeHu'});
+    $('#inpKh').AutoComplete({'data': lb_keHus, 'paramName': 'editKeHu'});
 }
 
 function setTrager_ziDian() {
@@ -81,7 +93,8 @@ function setTrager_leiBie() {
 }
 
 function setTrager_gongYingShang() {
-    $('#inpKcdSelGys').AutoComplete({'data': lb_gongYingShangs, 'paramName': 'selGongYingShang'});
+    $('#inpSelGys').AutoComplete({'data': lb_gongYingShangs, 'paramName': 'selGongYingShang'});
+    $('#inpGys').AutoComplete({'data': lb_gongYingShangs, 'paramName': 'editGongYingShang'});
 }
 
 function selectCangKu(json) {
@@ -234,6 +247,9 @@ function selectTuiGong_m() {
     if ($("#inpSelKh").val() !== "" && $("#inpSelKh").val() === selKeHu.mc) {
         tuiGong.kh_id = selKeHu.id;
     }
+    if ($("#inpSelGys").val() !== "" && $("#inpSelGys").val() === selGongYingShang.mc) {
+        tuiGong.gys_id = selGongYingShang.id;
+    }
     if ($("#inpSelQrq").val() !== "") {
         tuiGong.qrq = $("#inpSelQrq").val();
     }
@@ -254,6 +270,8 @@ function addTuiGong() {
     optFlag = 1;
     tgmx = [];
     editCangKu = {};
+    editGongYingShang = {};
+    editKeHu = {};
     $("#tuiGongModel_title").html("新增退供单");
     $("#btnOk").html("保存");
     $("#divXzmx").show();
@@ -305,12 +323,20 @@ function jxReadTuiGong(tuiGong) {
     $("#inpTgr").val(tuiGong.tgrmc);
     editA01 = {"id": tuiGong.tgr_id, "mc": tuiGong.tgrmc};
     selectCangKu(editCangKu);
+    if ("供应商" === tuiGong.ly) {
+        editGongYingShang = {"id": tuiGong.gys_id, "mc": tuiGong.gysmc};
+    } else if ("客户" === tuiGong.ly) {
+        editKeHu = {"id": tuiGong.kh_id, "mc": tuiGong.khmc};
+    }
     $("#inpDh").val(tuiGong.dh);
     $("#inpYy").val(tuiGong.yy);
     $("#inpBz").val(tuiGong.bz);
     $("#inpSl").val(tuiGong.sl);
     $("#inpJe").val(tuiGong.je);
     $("#inpSj").val(tuiGong.sj);
+    $("#inpLy").val(tuiGong.ly);
+    $("#inpGys").val(tuiGong.gysmc);
+    $("#inpKh").val(tuiGong.khmc);
     $("#inpSpr").val(tuiGong.sprmc);
     $("#inpSpsj").val(tuiGong.spsj);
     jxTuiGongMingXi();
@@ -396,6 +422,28 @@ function saveTuiGong() {
             return alert("请输入退供人信息");
         } else {
             tuiGong.tgr_id = editA01.id;
+        }
+    }
+    tuiGong.ly = $("#inpLy").val();
+    if ("供应商" === $("#inpLy").val()) {
+        if ($("#inpGys").val() === "") {
+            return alert("请输入供应商信息");
+        } else {
+            if ($("#inpGys").val() !== editGongYingShang.mc) {
+                return alert("请输入供应商信息");
+            } else {
+                tuiGong.gys_id = editGongYingShang.id;
+            }
+        }
+    } else if ("客户" === $("#inpLy").val()) {
+        if ($("#inpKh").val() === "") {
+            return alert("请输入客户信息");
+        } else {
+            if ($("#inpKh").val() !== editKeHu.mc) {
+                return alert("请输入客户信息");
+            } else {
+                tuiGong.kh_id = editKeHu.id;
+            }
         }
     }
     var wz = "";
@@ -541,6 +589,15 @@ function addTuiGongMingXi() {
     if ($("#inpCk").val() === "" || $("#inpCk").val() !== editCangKu.mc) {
         return alert("请选择退供仓库");
     }
+    if ("供应商" === $("#inpLy").val()) {
+        if ($("#inpGys").val() === "" || $("#inpGys").val() !== editGongYingShang.mc) {
+            return alert("请选择退供供应商");
+        }
+    } else if ("客户" === $("#inpLy").val()) {
+        if ($("#inpKh").val() === "" || $("#inpKh").val() !== editKeHu.mc) {
+            return alert("请选择退供客户");
+        }
+    }
     optMxFlag = 1;
     dymx_opt = {data: [], yxData: [], func: calcDymx};
     editLeiBie = null;
@@ -589,6 +646,15 @@ function saveTuiGongMingXi() {
     }
     if ($("#inpMxTgl").val() === "") {
         return alert("请输入退供数量");
+    }
+    if ("供应商" === $("#inpLy").val()) {
+        if (curFaHuoDetail.gys_id !== editGongYingShang.id) {
+            return alert("明细供应商和当前供应商不一致");
+        }
+    } else if ("客户" === $("#inpLy").val()) {
+        if (curFaHuoDetail.kh_id !== editKeHu.id) {
+            return alert("明细客户和当前客户不一致");
+        }
     }
     var mx = {};
     if ($("#inpMxWz").val() === "") {
@@ -641,6 +707,7 @@ function saveTuiGongMingXi() {
     mx.kc_id = curKuCunDetail.id;
     mx.gys_id = curKuCunDetail.gys_id;
     mx.ck_id = curKuCunDetail.ck_id;
+    mx.kh_id = curKuCunDetial.kh_id;
     if (optMxFlag === 1) {
         tgmx.push(mx);
     } else if (optMxFlag === 2) {
@@ -663,6 +730,11 @@ function saveTuiGongMingXi() {
 function cxKuCunDetail() {
     var ruKuDetail = {};
     ruKuDetail.ck_id = editCangKu.id;
+    if ("供应商" === $("#inpLy").val()) {
+        ruKuDetail.gys_id = editGongYingShang.id;
+    } else if ("客户" === $("#inpLy").val()) {
+        ruKuDetail.kh_id = editKeHu.id;
+    }
     if ($("#inpKcdSelWzlb").val() !== "" && $("#inpKcdSelWzlb").val() === selLeiBie.mc) {
         ruKuDetail.wzlb_id = selLeiBie.id;
     }
@@ -671,12 +743,6 @@ function cxKuCunDetail() {
     }
     if ($("#inpKcdSelXhgg").val() !== "") {
         ruKuDetail.xhgg = $("#inpKcdSelXhgg").val();
-    }
-    if ($("#inpKcdSelKh").val() !== "" && $("#inpKcdSelKh").val() === selKeHu.mc) {
-        ruKuDetail.kh_id = selKeHu.id;
-    }
-    if ($("#inpKcdSelGys").val() !== "" && $("#inpKcdSelGys").val() === selGongYingShang.mc) {
-        ruKuDetail.gys_id = selGongYingShang.id;
     }
     if ($("#inpKcdSelRkr").val() !== "" && $("#inpKcdSelRkr").val() === selA01.mc) {
         ruKuDetail.rkr_id = selA01.id;

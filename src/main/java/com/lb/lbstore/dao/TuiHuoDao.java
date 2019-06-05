@@ -116,9 +116,6 @@ public class TuiHuoDao extends BaseDao {
             if (map.containsKey("kh_id")) {
                 sql += " and th.kh_id = " + map.get("kh_id");
             }
-            if (map.containsKey("gys_id")) {
-                sql += " and th.gys_id = " + map.get("gys_id");
-            }
             if (map.containsKey("qrq")) {
                 sql += " and th.sj >= '" + map.get("qrq") + "'";
             }

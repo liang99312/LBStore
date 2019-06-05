@@ -33,16 +33,20 @@ public class TuiGongDao extends BaseDao {
         Session session = null;
         try {
             session = getSessionFactory().openSession();
-            String sql = "select {tg.*},ck.mc as ckmc,a01.mc as tgrmc,a02.mc as sprmc from TuiGong tg "
+            String sql = "select {tg.*},ck.mc as ckmc,a01.mc as tgrmc,a02.mc as sprmc,gys.mc as gysmc,kh.mc as khmc from TuiGong tg "
                     + "left join CangKu ck on tg.ck_id=ck.id "
                     + "left join A01 a01 on tg.tgr_id=a01.id "
                     + "left join A01 a02 on tg.spr_id=a02.id "
+                    + "left join GongYingShang gys on tg.gys_id=gys.id "
+                    + "left join KeHu kh on tg.kh_id=kh.id "
                     + "where tg.id=" + id;
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
             navtiveSQL.addEntity("tg", TuiGong.class)
                     .addScalar("ckmc", StandardBasicTypes.STRING)
                     .addScalar("tgrmc", StandardBasicTypes.STRING)
-                    .addScalar("sprmc", StandardBasicTypes.STRING);
+                    .addScalar("sprmc", StandardBasicTypes.STRING)
+                    .addScalar("gysmc", StandardBasicTypes.STRING)
+                    .addScalar("khmc", StandardBasicTypes.STRING);
             List list = navtiveSQL.list();
             List<TuiGong> list_tg = new ArrayList();
             for (Object obj : list) {
@@ -51,9 +55,13 @@ public class TuiGongDao extends BaseDao {
                 String ckmc = (String) objs[1];
                 String tgrmc = (String) objs[2];
                 String sprmc = (String) objs[3];
+                String gysmc = (String) objs[4];
+                String khmc = (String) objs[5];
                 tg.setCkmc(ckmc);
                 tg.setTgrmc(tgrmc);
                 tg.setSprmc(sprmc);
+                tg.setGysmc(gysmc);
+                tg.setKhmc(khmc);
                 list_tg.add(tg);
             }
             if (list_tg.isEmpty()) {
@@ -93,8 +101,10 @@ public class TuiGongDao extends BaseDao {
         Session session = null;
         try {
             session = getSessionFactory().openSession();
-            String sql = "select {tg.*},ck.mc as ckmc from TuiGong tg "
+            String sql = "select {tg.*},ck.mc as ckmc,gys.mc as gysmc,kh.mc as khmc from TuiGong tg "
                     + "left join CangKu ck on tg.ck_id=ck.id "
+                    + "left join GongYingShang gys on tg.gys_id=gys.id "
+                    + "left join KeHu kh on tg.kh_id=kh.id "
                     + "where tg.qy_id=" + map.get("qy_id");
             if (map.containsKey("ck_id")) {
                 sql += " and tg.ck_id = " + map.get("ck_id");
@@ -121,13 +131,17 @@ public class TuiGongDao extends BaseDao {
                 sql += " and tg.sj <= '" + map.get("zrq") + " 23:59:59'";
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
-            navtiveSQL.addEntity("tg", TuiGong.class).addScalar("ckmc", StandardBasicTypes.STRING);
+            navtiveSQL.addEntity("tg", TuiGong.class).addScalar("ckmc", StandardBasicTypes.STRING).addScalar("gysmc", StandardBasicTypes.STRING).addScalar("khmc", StandardBasicTypes.STRING);
             List list = navtiveSQL.list();
             for (Object obj : list) {
                 Object[] objs = (Object[]) obj;
                 TuiGong tg = (TuiGong) objs[0];
                 String ckmc = (String) objs[1];
+                String gysmc = (String) objs[2];
+                String khmc = (String) objs[3];
                 tg.setCkmc(ckmc);
+                tg.setGysmc(gysmc);
+                tg.setKhmc(khmc);
                 result.add(tg);
             }
         } catch (Exception e) {

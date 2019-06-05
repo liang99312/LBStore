@@ -34,6 +34,7 @@ public class TuiGong {
     private Integer kh_id;
     private Integer tgr_id;
     private Integer spr_id;
+    private String ly;
     private String wz;
     private String dh;
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
@@ -55,6 +56,8 @@ public class TuiGong {
     private transient String ckmc;
     private transient String tgrmc;
     private transient String sprmc;
+    private transient String gysmc;
+    private transient String khmc;
 
     public Integer getId() {
         return id;
@@ -119,7 +122,15 @@ public class TuiGong {
     public void setSpr_id(Integer spr_id) {
         this.spr_id = spr_id;
     }
+    
+    public String getLy() {
+        return ly;
+    }
 
+    public void setLy(String ly) {
+        this.ly = ly;
+    }
+    
     public String getWz() {
         return wz;
     }
@@ -246,6 +257,22 @@ public class TuiGong {
 
     public void setSprmc(String sprmc) {
         this.sprmc = sprmc;
+    }
+
+    public String getGysmc() {
+        return gysmc;
+    }
+
+    public void setGysmc(String gysmc) {
+        this.gysmc = gysmc;
+    }
+
+    public String getKhmc() {
+        return khmc;
+    }
+
+    public void setKhmc(String khmc) {
+        this.khmc = khmc;
     }
     
     public String getYy() {
