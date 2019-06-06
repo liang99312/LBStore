@@ -62,7 +62,6 @@ function setTrager_cangKu() {
 }
 
 function setTrager_keHu() {
-    $('#inpSelKh').AutoComplete({'data': lb_keHus, 'paramName': 'selKeHu'});
     $('#inpLldSelKh').AutoComplete({'data': lb_keHus, 'paramName': 'selKeHu'});
 }
 
@@ -223,9 +222,6 @@ function selectHuanKu_m() {
     }
     if ($("#inpSelCk").val() !== "" && $("#inpSelCk").val() === selCangKu.mc) {
         huanKu.ck_id = selCangKu.id;
-    }
-    if ($("#inpSelKh").val() !== "" && $("#inpSelKh").val() === selKeHu.mc) {
-        huanKu.kh_id = selKeHu.id;
     }
     if ($("#inpSelQrq").val() !== "") {
         huanKu.qrq = $("#inpSelQrq").val();
