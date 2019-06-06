@@ -227,8 +227,8 @@ function selectTuiHuo_m() {
     if ($("#inpSelWz").val() !== "") {
         tuiHuo.wzmc = $("#inpSelWz").val();
     }
-    if ($("#selState").val() !== '' && $("#selState").val() !== "-9") {
-        tuiHuo.state = $("#selState").val();
+    if ($("#inpSelState").val() !== '' && $("#inpSelState").val() !== "-9") {
+        tuiHuo.state = $("#inpSelState").val();
     }
     if ($("#inpSelCk").val() !== "" && $("#inpSelCk").val() === selCangKu.mc) {
         tuiHuo.ck_id = selCangKu.id;

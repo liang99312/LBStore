@@ -219,8 +219,8 @@ function selectLingLiao_m() {
     if ($("#inpSelWz").val() !== "") {
         lingLiao.wzmc = $("#inpSelWz").val();
     }
-    if ($("#selState").val() !== '' && $("#selState").val() !== "-9") {
-        lingLiao.state = $("#selState").val();
+    if ($("#inpSelState").val() !== '' && $("#inpSelState").val() !== "-9") {
+        lingLiao.state = $("#inpSelState").val();
     }
     if ($("#inpSelCk").val() !== "" && $("#inpSelCk").val() === selCangKu.mc) {
         lingLiao.ck_id = selCangKu.id;

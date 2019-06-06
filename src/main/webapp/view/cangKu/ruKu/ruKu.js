@@ -297,8 +297,8 @@ function selectRuKu_m() {
     if ($("#inpSelWz").val() !== "") {
         ruKu.wz = $("#inpSelWz").val();
     }
-    if ($("#selState").val() !== '' && $("#selState").val() !== "-9") {
-        ruKu.state = $("#selState").val();
+    if ($("#inpSelState").val() !== '' && $("#inpSelState").val() !== "-9") {
+        ruKu.state = $("#inpSelState").val();
     }
     if ($("#inpSelCk").val() !== "" && $("#inpSelCk").val() === selCangKu.mc) {
         ruKu.ck_id = selCangKu.id;

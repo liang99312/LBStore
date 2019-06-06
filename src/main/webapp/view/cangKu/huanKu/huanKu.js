@@ -217,8 +217,8 @@ function selectHuanKu_m() {
     if ($("#inpSelWz").val() !== "") {
         huanKu.wzmc = $("#inpSelWz").val();
     }
-    if ($("#selState").val() !== '' && $("#selState").val() !== "-9") {
-        huanKu.state = $("#selState").val();
+    if ($("#inpSelState").val() !== '' && $("#inpSelState").val() !== "-9") {
+        huanKu.state = $("#inpSelState").val();
     }
     if ($("#inpSelCk").val() !== "" && $("#inpSelCk").val() === selCangKu.mc) {
         huanKu.ck_id = selCangKu.id;

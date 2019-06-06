@@ -217,8 +217,8 @@ function selectSunHao_m() {
     if ($("#inpSelWz").val() !== "") {
         sunHao.wzmc = $("#inpSelWz").val();
     }
-    if ($("#selState").val() !== '' && $("#selState").val() !== "-9") {
-        sunHao.state = $("#selState").val();
+    if ($("#inpSelState").val() !== '' && $("#inpSelState").val() !== "-9") {
+        sunHao.state = $("#inpSelState").val();
     }
     if ($("#inpSelCk").val() !== "" && $("#inpSelCk").val() === selCangKu.mc) {
         sunHao.ck_id = selCangKu.id;
