@@ -85,6 +85,7 @@ function setTrager_keHu() {
 
 function setTrager_ziDian() {
     $('#inpKcdSelWz').AutoComplete({'data': lb_wuZiZiDians, 'afterSelectedHandler': selectWuZiZiDian});
+    $('#inpSelWz').AutoComplete({'data': lb_wuZiZiDians});
     $('#selWzmc').AutoComplete({'data': lb_wuZiZiDians});
 }
 

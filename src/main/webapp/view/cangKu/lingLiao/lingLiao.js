@@ -70,6 +70,7 @@ function setTrager_keHu() {
 
 function setTrager_ziDian() {
     $('#inpKcSelWz').AutoComplete({'data': lb_wuZiZiDians, 'afterSelectedHandler': selectWuZiZiDian});
+    $('#inpSelWz').AutoComplete({'data': lb_wuZiZiDians});
     $('#selWzmc').AutoComplete({'data': lb_wuZiZiDians});
 }
 
@@ -217,7 +218,7 @@ function selectLingLiao_m() {
     var lingLiao = {};
     var tj = {"pageSize": 20, "currentPage": 1};
     if ($("#inpSelWz").val() !== "") {
-        lingLiao.wzmc = $("#inpSelWz").val();
+        lingLiao.wz = $("#inpSelWz").val();
     }
     if ($("#inpSelState").val() !== '' && $("#inpSelState").val() !== "-9") {
         lingLiao.state = $("#inpSelState").val();
