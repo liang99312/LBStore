@@ -226,7 +226,7 @@ function selectTuiHuo_m() {
     var tuiHuo = {};
     var tj = {"pageSize": 20, "currentPage": 1};
     if ($("#inpSelWz").val() !== "") {
-        tuiHuo.wzmc = $("#inpSelWz").val();
+        tuiHuo.wz = $("#inpSelWz").val();
     }
     if ($("#inpSelState").val() !== '' && $("#inpSelState").val() !== "-9") {
         tuiHuo.state = $("#inpSelState").val();

@@ -216,7 +216,7 @@ function selectSunHao_m() {
     var sunHao = {};
     var tj = {"pageSize": 20, "currentPage": 1};
     if ($("#inpSelWz").val() !== "") {
-        sunHao.wzmc = $("#inpSelWz").val();
+        sunHao.wz = $("#inpSelWz").val();
     }
     if ($("#inpSelState").val() !== '' && $("#inpSelState").val() !== "-9") {
         sunHao.state = $("#inpSelState").val();

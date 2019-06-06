@@ -233,7 +233,7 @@ function selectFaHuo_m() {
     var faHuo = {};
     var tj = {"pageSize": 20, "currentPage": 1};
     if ($("#inpSelWz").val() !== "") {
-        faHuo.wzmc = $("#inpSelWz").val();
+        faHuo.wz = $("#inpSelWz").val();
     }
     if ($("#inpSelState").val() !== '' && $("#inpSelState").val() !== "-9") {
         faHuo.state = $("#inpSelState").val();

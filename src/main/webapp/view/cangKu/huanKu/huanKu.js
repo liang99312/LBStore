@@ -216,7 +216,7 @@ function selectHuanKu_m() {
     var huanKu = {};
     var tj = {"pageSize": 20, "currentPage": 1};
     if ($("#inpSelWz").val() !== "") {
-        huanKu.wzmc = $("#inpSelWz").val();
+        huanKu.wz = $("#inpSelWz").val();
     }
     if ($("#inpSelState").val() !== '' && $("#inpSelState").val() !== "-9") {
         huanKu.state = $("#inpSelState").val();

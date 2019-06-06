@@ -237,7 +237,7 @@ function selectTuiGong_m() {
     var tuiGong = {};
     var tj = {"pageSize": 20, "currentPage": 1};
     if ($("#inpSelWz").val() !== "") {
-        tuiGong.wzmc = $("#inpSelWz").val();
+        tuiGong.wz = $("#inpSelWz").val();
     }
     if ($("#inpSelState").val() !== '' && $("#inpSelState").val() !== "-9") {
         tuiGong.state = $("#inpSelState").val();
