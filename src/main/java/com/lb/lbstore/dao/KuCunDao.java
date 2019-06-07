@@ -154,10 +154,10 @@ public class KuCunDao extends BaseDao {
                 sql += " and kc.rksj <= '" + map.get("zrq") + " 23:59:59'";
             }
             if (map.containsKey("qsl")) {
-                sql += " and kc.syzl >= " + map.get("qsl");
+                sql += " and kc.syl >= " + map.get("qsl");
             }
             if (map.containsKey("zsl")) {
-                sql += " and kc.syzl <= " + map.get("zsl");
+                sql += " and kc.syl <= " + map.get("zsl");
             }
             if (map.containsKey("lqq")) {
                 sql += " and datediff(kc.bzrq,now()) <= " + map.get("lqq");

@@ -69,10 +69,10 @@ public class KuCunServiceImpl implements KuCunService {
             sql += " and rksj <= '" + map.get("zrq") + " 23:59:59'";
         }
         if (map.containsKey("qsl")) {
-            sql += " and syzl >= " + map.get("qsl");
+            sql += " and syl >= " + map.get("qsl");
         }
         if (map.containsKey("zsl")) {
-            sql += " and syzl <= " + map.get("zsl");
+            sql += " and syl <= " + map.get("zsl");
         }
         if (map.containsKey("lqq")) {
             sql += " and datediff(bzrq,now()) <= " + map.get("lqq");
