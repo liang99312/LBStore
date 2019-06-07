@@ -58,7 +58,7 @@ public class KeHuServiceImpl implements KeHuService {
 
     @Override
     public int queryRows(HashMap map) {
-        String sql = "select (1) from KeHu where qy_id="+map.get("qy_id");
+        String sql = "select count(1) from KeHu where qy_id="+map.get("qy_id");
         if (map.containsKey("mc")) {
             sql += " and mc like '%" + map.get("mc") + "%'";
         }

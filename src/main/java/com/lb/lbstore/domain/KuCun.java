@@ -76,6 +76,9 @@ public class KuCun {
     private transient String rkrmc;
     private transient String sprmc;
     private transient String wzlb;
+    private transient Integer lqq;
+    private transient Integer qsl;
+    private transient Integer zsl;
     
     public Integer getId() {
         return id;
@@ -443,6 +446,30 @@ public class KuCun {
 
     public void setPc(String pc) {
         this.pc = pc;
+    }
+
+    public Integer getLqq() {
+        return lqq;
+    }
+
+    public void setLqq(Integer lqq) {
+        this.lqq = lqq;
+    }
+
+    public Integer getQsl() {
+        return qsl;
+    }
+
+    public void setQsl(Integer qsl) {
+        this.qsl = qsl;
+    }
+
+    public Integer getZsl() {
+        return zsl;
+    }
+
+    public void setZsl(Integer zsl) {
+        this.zsl = zsl;
     }
     
     @Override

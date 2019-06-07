@@ -40,7 +40,7 @@ public class KuCunServiceImpl implements KuCunService {
 
     @Override
     public int queryRows(HashMap map) {
-        String sql = "select (1) from KuCun where qy_id="+map.get("qy_id");
+        String sql = "select count(1) from KuCun where qy_id="+map.get("qy_id");
         if (map.containsKey("wzmc")) {
             sql += " and wzmc like '%" + map.get("wzmc") + "%'";
         }
@@ -67,6 +67,15 @@ public class KuCunServiceImpl implements KuCunService {
         }
         if (map.containsKey("zrq")) {
             sql += " and rksj <= '" + map.get("zrq") + " 23:59:59'";
+        }
+        if (map.containsKey("qsl")) {
+            sql += " and syzl >= " + map.get("qsl");
+        }
+        if (map.containsKey("zsl")) {
+            sql += " and syzl <= " + map.get("zsl");
+        }
+        if (map.containsKey("lqq")) {
+            sql += " and datediff(bzrq,now()) <= " + map.get("lqq");
         }
         return kuCunDao.getCount(sql, null);
     }

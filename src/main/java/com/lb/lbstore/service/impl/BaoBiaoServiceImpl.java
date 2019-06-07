@@ -56,7 +56,7 @@ public class BaoBiaoServiceImpl implements BaoBiaoService {
 
     @Override
     public int queryRows(HashMap map) {
-        String sql = "select (1) from BaoBiao where qy_id="+map.get("qy_id");
+        String sql = "select count(1) from BaoBiao where qy_id="+map.get("qy_id");
         if (map.containsKey("mc")) {
             sql += " and mc like '%" + map.get("mc") + "%'";
         }
@@ -80,7 +80,7 @@ public class BaoBiaoServiceImpl implements BaoBiaoService {
 
     @Override
     public int queryMkRows(HashMap map) {
-        String sql = "select (1) from BaoBiao where qy_id="+map.get("qy_id") + " and mkdm='" + map.get("mkdm") + "'";
+        String sql = "select count(1) from BaoBiao where qy_id="+map.get("qy_id") + " and mkdm='" + map.get("mkdm") + "'";
         if (map.containsKey("mc")) {
             sql += " and mc like '%" + map.get("mc") + "%'";
         }

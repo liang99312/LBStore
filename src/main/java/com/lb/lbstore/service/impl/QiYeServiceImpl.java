@@ -58,7 +58,7 @@ public class QiYeServiceImpl implements QiYeService {
 
     @Override
     public int queryRows(HashMap map) {
-        String sql = "select (1) from QiYe where 1=1";
+        String sql = "select count(1) from QiYe where 1=1";
         if (map.containsKey("mc")) {
             sql += " and mc like '%" + map.get("mc") + "%'";
         }

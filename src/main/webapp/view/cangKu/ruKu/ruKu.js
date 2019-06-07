@@ -510,6 +510,9 @@ function saveRuKu() {
             ruKu.rkr_id = editA01.id;
         }
     }
+    if ($("#inpDh").val() === "") {
+        return alert("请输入入库单号，可用于下次录入相同物资入库，可节省部分信息录入");
+    }
     var wz = "";
     var wzs = [];
     for (var i = 0; i < rkmx.length; i++) {

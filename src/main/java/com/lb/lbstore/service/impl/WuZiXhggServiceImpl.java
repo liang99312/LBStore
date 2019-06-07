@@ -51,7 +51,7 @@ public class WuZiXhggServiceImpl implements WuZiXhggService {
 
     @Override
     public int queryRows(HashMap map) {
-        String sql = "select (1) from WuZiXhgg where qy_id="+map.get("qy_id") + " and wzzd_id=" + map.get("wzzd_id");
+        String sql = "select count(1) from WuZiXhgg where qy_id="+map.get("qy_id") + " and wzzd_id=" + map.get("wzzd_id");
         if (map.containsKey("mc")) {
             sql += " and mc like '%" + map.get("mc") + "%'";
         }

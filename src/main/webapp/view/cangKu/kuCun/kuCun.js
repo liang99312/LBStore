@@ -107,6 +107,15 @@ function selectKuCun_m() {
     if ($("#inpSelZrq").val() !== "") {
         kuCun.zrq = $("#inpSelZrq").val();
     }
+    if ($("#inpSelLqq").val() !== "") {
+        kuCun.lqq = $("#inpSelLqq").val();
+    }
+    if ($("#inpSelQsl").val() !== "") {
+        kuCun.qsl = $("#inpSelQsl").val();
+    }
+    if ($("#inpSelZsl").val() !== "") {
+        kuCun.zsl = $("#inpSelZsl").val();
+    }
     tj.paramters = kuCun;
     var options = {};
     options.url = "/LBStore/kuCun/listKuCunsByPage.do";

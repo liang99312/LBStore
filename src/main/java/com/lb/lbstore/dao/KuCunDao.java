@@ -153,6 +153,15 @@ public class KuCunDao extends BaseDao {
             if (map.containsKey("zrq")) {
                 sql += " and kc.rksj <= '" + map.get("zrq") + " 23:59:59'";
             }
+            if (map.containsKey("qsl")) {
+                sql += " and kc.syzl >= " + map.get("qsl");
+            }
+            if (map.containsKey("zsl")) {
+                sql += " and kc.syzl <= " + map.get("zsl");
+            }
+            if (map.containsKey("lqq")) {
+                sql += " and datediff(kc.bzrq,now()) <= " + map.get("lqq");
+            }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
             navtiveSQL.addEntity("kc", KuCun.class)
                     .addScalar("khmc", StandardBasicTypes.STRING)

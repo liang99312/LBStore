@@ -82,7 +82,7 @@ public class A01ServiceImpl implements A01Service {
 
     @Override
     public int queryRows(HashMap map) {
-        String sql = "select (1) from A01 where qy_id="+map.get("qy_id")+" and state < 8";
+        String sql = "select count(1) from A01 where qy_id="+map.get("qy_id")+" and state < 8";
         if (map.containsKey("mc")) {
             sql += " and mc like '%" + map.get("mc") + "%'";
         }
