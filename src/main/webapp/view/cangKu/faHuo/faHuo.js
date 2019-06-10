@@ -25,6 +25,7 @@ var editFeiA01;
 var selA01;
 var curKuCun;
 var curFaHuo;
+var bbFaHuo;
 var selBaoBiao;
 var dymx_opt = {data: [], yxData: [], func: calcDymx};
 var tysx_opt = {data: [], ls: 3, lw: 70, upeditable: 1};
@@ -313,6 +314,7 @@ function readFaHuo(index) {
 }
 
 function jxReadFaHuo(faHuo) {
+    bbFaHuo = faHuo;
     fhmx = faHuo.details;
     $("#inpKh").val(faHuo.khmc);
     $("#inpCk").val(faHuo.ckmc);

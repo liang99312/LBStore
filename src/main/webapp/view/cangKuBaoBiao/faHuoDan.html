@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script type="text/javascript" src="/LBStore/js/jquery-barcode.js"></script>
+        <script type="text/javascript">
+            var fhJson = {};
+            $(document).ready(function () {
+                fhJson = bbFaHuo;
+                jxFaHuoDan4Dy(fhJson);
+                $("#dvFmFaHuoDan").show();
+                $("#ckBaoBiao").css("width", "250mm");
+            });
+
+            function jxFaHuoDan4Dy(json) {
+                if(json.lsh && json.lsh !== null){
+                    $("#tblZiHao").barcode(json.lsh, "code128", {barWidth: 2, barHeight: 40, fontSize: 17, marginHRI: 0});
+                }
+                $("#tblShdw").html(json.khmc);
+                $("#tblRiQi").html(json.sj.substring(0,10));
+                $("#tblFhd_cp tr:not(:first)").remove();
+                paiXu(json.details);
+                var zongJE = 0;
+                for (var i = 0; i < json.details.length; i++) {
+                    var e = json.details[i];
+                    zongJE += e.dj * e.fhl;
+                    $("#tblFhd_cp").append("<tr><td>" + e.wzmc + "</td>\n\
+                                <td>" + e.xhgg + "</td>\n\
+                                <td style='text-align: center'>" + e.dw + "</td>\n\
+                                <td style='text-align: right'>" + e.fhl + "</td>\n\
+                                <td style='text-align: right'>" + e.dj.toFixed(3) + "</td>\n\
+                                <td style='text-align: right'>" + (e.dj * e.fhl).toFixed(3) + "</td>\n\
+                                <td><input type='text' value='" + (e.bz===null? "":e.bz) + "' style='width:100%;height:9mm;border:none;' /></td></tr>");
+                }
+                $("#tblFhd_cp").append("<tr><td colspan='2' style='border-right:none;'>合计：<a id='heJi'>" + fhJson.je.toFixed(3) + "</a></td>\n\
+                                <td colspan='3' style='border-right:none;border-left:none;'>已付：" + fhJson.yfje.toFixed(3) + "</td>\n\
+                                <td colspan='2' style='border-left:none;'>尚欠：" + (fhJson.je - fhJson.yfje).toFixed(3) + "</td></tr>");
+            }
+
+            function dyFaHuoDan4Dy() {
+                var s = $("#dvFmFaHuoDan").html();
+                try {
+                    parent.parent.webObject.printTick(s);
+                } catch (e) {
+                    window.PrintText(s);
+                }
+            }
+
+            function paiXu(details) {
+                var i = details.length, j;
+                var fhddetail;
+                while (i > 0) {
+                    for (j = 0; j < i - 1; j++) {
+                        if (parseInt(details[j].txm) > parseInt(details[j + 1].txm)) {
+                            fhddetail = details[j];
+                            details[j] = details[j + 1];
+                            details[j + 1] = fhddetail;
+                        }
+                    }
+                    i--;
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <div id="dvFmFaHuoDan" style="width: 250mm;">
+            <div style="width: 250mm;">
+                <style type="text/css">
+                    table#tblFmFaHuoDan,#tblFhd_cp{
+                        font-family:"宋体";
+                        position: relative;
+                        float: left;
+                        width: 100%;
+                        text-align: left;
+                        border-spacing: 0px;
+                        border-collapse: collapse;
+                        empty-cells: show;
+                        cursor: pointer;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    table#tblFhd_cp input{
+                        font-family:"宋体";
+                        font-size: 5.4mm;
+                    }
+                    table#tblFmFaHuoDan td{
+                        font-family:"宋体";
+                        font-size: 5.4mm;
+                        height: 10mm;
+                        border: 1px #000 solid;
+                        padding-left: 3px;
+                    }
+                    table#tblFmFaHuoDan tr.noBorder td{
+                        border: none;
+                    }
+                    tr.tou td{
+                        text-align: center;
+                    }
+                </style>
+                <table id="tblFmFaHuoDanTools" style="width:98%;margin-top: 5px;">
+                    <tr class="noBorder">
+                        <td>
+                            <input type="button" value="打印" onclick="dyFaHuoDan4Dy();">
+                        </td>
+                    </tr>
+                </table>
+                <table id="tblFmFaHuoDan" style="width:98%;margin-top: 5px;">
+                    <tr class="noBorder">
+                        <td colspan="3" style="padding: 0;">
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="width: 20%;"></td>
+                                    <td id="biaoTi" style="text-align: left; width: 54%; font-weight:900; font-size: 9mm; text-decoration: underline;">车库里销售公司</td>
+                                    <td rowspan="2"><div id="tblZiHao"></div></td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 20%;"></td>
+                                    <td id="biaoTi" style="vertical-align: top;height: 8mm;text-align: left; width: 54%; font-size: 4.5mm;">地址：柳州市河东私营经济区C-6区4-1号&nbsp;电话：2529283</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr class="noBorder" style="height: 4mm;">
+                        <td colspan="3" style="height: 4mm;">
+                            <table style="width: 100%;">
+                                <tr style="height: 4mm;">
+                                    <td style="width: 12%; vertical-align: bottom; height: 4mm;">顾客：</td>
+                                    <td id="tblShdw" style="width:50%; vertical-align: bottom; height: 4mm;"></td>
+                                    <td style="width: 10%; vertical-align: bottom; height: 4mm;text-align: right;">日期：</td>
+                                    <td style="vertical-align: bottom; height: 4mm;text-align: left;"><a id="tblRiQi"></a></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="border: none">
+                            <table id="tblFhd_cp" style="width: 100%;table-layout: fixed;">
+                                <tr class="tou">
+                                    <td style="width: 24%">名&nbsp;&nbsp;&nbsp;称</td>
+                                    <td style="width: 10%">规&nbsp;格</td>
+                                    <td style="width: 8%">单&nbsp;位</td>
+                                    <td style="width: 8%">数&nbsp;量</td>
+                                    <td style="width: 8%">单&nbsp;价</td>
+                                    <td style="width: 12%">金&nbsp;额</td>
+                                    <td>备&nbsp;&nbsp;注</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <!--<tr class="noBorder">
+                            <td colspan="3" style="text-align:left;">
+                                收货单位应遵守事项：<br/>
+                                1、收货单位把货款在&nbsp;&nbsp;&nbsp;&nbsp;年&nbsp;&nbsp;月&nbsp;&nbsp;日前付清。逾期付款，按欠款总额日罚万分之五违约金。<br/>
+                                2、收货后如发现质量问题（在不损坏情况下）应在三天内书面通知核实，否则责任自负。<br/>
+                                3、收货清单一式三份，购、销双方各执一份，存根一份。收货方验收货物签字后产生合同作用。</td>
+                    </tr>-->
+                    <tr class="noBorder">
+                        <td style="text-align: left;width: 12%;">收货单位：</td>
+                        <td style="text-align:left;width: 50%"></td>
+                        <td style="text-align: left;">送货人：</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
