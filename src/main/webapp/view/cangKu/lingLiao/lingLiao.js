@@ -1,4 +1,5 @@
 var lingLiaos;
+var bbLingLiao;
 var optFlag = 1;
 var editIndex = -1;
 var editType;
@@ -306,6 +307,7 @@ function selectLingLiaoDetail(id) {
         success: function (json) {
             if (json.result === 0) {
                 var lingLiao = json.lingLiao;
+                bbLingLiao = lingLiao;
                 llmx = lingLiao.details;
                 $("#inpKh").val(lingLiao.khmc);
                 $("#inpCk").val(lingLiao.ckmc);

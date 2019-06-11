@@ -1,4 +1,5 @@
 var huanKus;
+var bbHuanKu;
 var optFlag = 1;
 var editIndex = -1;
 var editType;
@@ -299,6 +300,7 @@ function selectHuanKuDetail(id) {
         success: function (json) {
             if (json.result === 0) {
                 var huanKu = json.huanKu;
+                bbHuanKu = huanKu;
                 hkmx = huanKu.details;
                 $("#inpCk").val(huanKu.ckmc);
                 editCangKu = {"id": huanKu.ck_id, "mc": huanKu.ckmc};

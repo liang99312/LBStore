@@ -1,4 +1,5 @@
 var ruKus;
+var bbRuKu;
 var ruKuFeis;
 var feiOptFlag = -1;
 var optFlag = 1;
@@ -379,6 +380,7 @@ function readRuKu(index) {
 }
 
 function jxReadRuKu(ruKu) {
+    bbRuKu = ruKu;
     rkmx = ruKu.details;
     if ("供应商" === ruKu.ly) {
         $("#inpGys").val(ruKu.gysmc);

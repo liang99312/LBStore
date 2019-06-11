@@ -1,4 +1,5 @@
 var tuiGongs;
+var bbTuiGong;
 var tuiGongFeis;
 var feiOptFlag = -1;
 var optFlag = 1;
@@ -318,6 +319,7 @@ function readTuiGong(index) {
 }
 
 function jxReadTuiGong(tuiGong) {
+    bbTuiGong = tuiGong;
     tgmx = tuiGong.details;
     $("#inpCk").val(tuiGong.ckmc);
     editCangKu = {"id": tuiGong.ck_id, "mc": tuiGong.ckmc};

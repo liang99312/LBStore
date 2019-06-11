@@ -1,4 +1,5 @@
 var tuiHuos;
+var bbTuiHuo;
 var tuiHuoFeis;
 var feiOptFlag = -1;
 var optFlag = 1;
@@ -302,6 +303,7 @@ function readTuiHuo(index) {
 }
 
 function jxReadTuiHuo(tuiHuo) {
+    bbTuiHuo = tuiHuo;
     thmx = tuiHuo.details;
     $("#inpCk").val(tuiHuo.ckmc);
     editCangKu = {"id": tuiHuo.ck_id, "mc": tuiHuo.ckmc};

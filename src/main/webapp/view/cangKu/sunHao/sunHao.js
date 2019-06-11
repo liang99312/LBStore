@@ -1,4 +1,5 @@
 var sunHaos;
+var bbSunHao;
 var optFlag = 1;
 var editIndex = -1;
 var editType;
@@ -299,6 +300,7 @@ function selectSunHaoDetail(id) {
         success: function (json) {
             if (json.result === 0) {
                 var sunHao = json.sunHao;
+                bbSunHao = sunHao;
                 shmx = sunHao.details;
                 $("#inpCk").val(sunHao.ckmc);
                 editCangKu = {"id": sunHao.ck_id, "mc": sunHao.ckmc};
