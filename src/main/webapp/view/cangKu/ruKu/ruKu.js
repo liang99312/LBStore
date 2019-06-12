@@ -81,6 +81,8 @@ function setTrager_ziDian() {
     $('#inpSelWz').AutoComplete({'data': lb_wuZiZiDians, 'paramName': 'selWzzd'});
     $('#selWzmc').AutoComplete({'data': lb_wuZiZiDians});
     $('#inpMxWz').AutoComplete({'data': lb_wuZiZiDians, 'afterSelectedHandler': selectWuZiZiDian});
+    var temp_wuZiZiDians = $.extend(true, [], lb_wuZiZiDians);
+    $('#inpMxWzbm').AutoComplete({'data': temp_wuZiZiDians, 'fieldName':'bm', 'afterSelectedHandler': selectWuZiZiDian});
 }
 
 function setTrager_leiBie() {
@@ -104,6 +106,8 @@ function selectRuKu_m() {
 
 function selectWuZiZiDian(json) {
     editWzzd = json;
+    $("#inpMxWzbm").val(editWzzd.bm);
+    $("#inpMxWz").val(editWzzd.mc);
     if (json.id > -1) {
         $.ajax({
             url: "/LBStore/wuZiZiDian/getWuZiZiDianById.do?id=" + json.id,
@@ -657,6 +661,7 @@ function addRuKuMingXi() {
     $("#ruKuMingXiModal_title").html("增加明细");
     $("#btnMxOk").html("保存");
     $("#inpMxWz").val("");
+    $("#inpMxWzbm").val("");
     $("#inpMxLb").val("");
     $("#inpMxPp").val("");
     $("#inpMxXhgg").val("");
@@ -707,8 +712,9 @@ function setRuKuMingXiData(index) {
         m.dymx = JSON.parse(m.dymx);
     }
     dymx_opt = {data: [], yxData: m.dymx, func: calcDymx};
-    editWzzd = {"id": m.wzzd_id, "mc": m.wzmc};
+    editWzzd = {"id": m.wzzd_id, "mc": m.wzmc, "bm":m.wzbm};
     $("#inpMxWz").val(m.wzmc);
+    $("#inpMxWzbm").val(m.wzbm);
     editLeiBie = {"id": m.wzlb_id, "mc": m.wzlb};
     $("#inpMxLb").val(m.wzlb);
     $("#inpMxPp").val(m.pp);
@@ -775,8 +781,10 @@ function saveRuKuMingXi() {
     }
     if ($("#inpMxWz").val() === "") {
         return alert("请输入物资名称");
+    } else if ($("#inpMxWzbm").val() === "") {
+        return alert("请输入物资编码");
     } else {
-        if (!editWzzd || $("#inpMxWz").val() !== editWzzd.mc) {
+        if (!editWzzd || $("#inpMxWz").val() !== editWzzd.mc || $("#inpMxWzbm").val() !== editWzzd.bm) {
             mx.wzzd_id = -1;
         } else {
             mx.wzzd_id = editWzzd.id;
@@ -784,6 +792,7 @@ function saveRuKuMingXi() {
     }
     mx.wzlb_id = editLeiBie.id;
     mx.wzmc = $("#inpMxWz").val();
+    mx.wzbm = $("#inpMxWzbm").val();
     mx.wzlb = $("#inpMxLb").val();
     mx.pp = $("#inpMxPp").val();
     if ($("#inpMxXhgg").val() === "") {

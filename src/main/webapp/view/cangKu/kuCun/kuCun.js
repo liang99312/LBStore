@@ -194,8 +194,9 @@ function readKuCun(index){
 
 function setKuCunData(m){
     dymx_opt = {data: [], yxData: JSON.parse(m.dymx), func: calcDymx};
-    selWzzd = {"id": m.wzzd_id, "mc": m.wzmc};
+    selWzzd = {"id": m.wzzd_id, "mc": m.wzmc, "bm": m.wzbm};
     $("#inpMxWz").val(m.wzmc);
+    $("#inpMxWzbm").val(m.wzbm);
     selLeiBie = {"id": m.wzlb_id, "mc": m.wzlb};
     $("#inpMxLb").val(m.wzlb);
     $("#inpMxRksj").val(m.rksj);
@@ -209,6 +210,7 @@ function setKuCunData(m){
     $("#inpMxKh").val(m.khmc);
     $("#inpMxScrq").val(m.scrq);
     $("#inpMxBzq").val(m.bzq);
+    $("#inpMxBzrq").val(m.bzrq);
     $("#inpMxDj").val(m.dj);
     $("#inpMxDw").val(m.dw);
     $("#inpMxSl").val(m.sl);

@@ -87,8 +87,8 @@ public class WuZiZiDianServiceImpl implements WuZiZiDianService {
     }
 
     @Override
-    public boolean existWuZiZiDian(Integer qy_id, Integer id, String mc) {
-        return wuZiZiDianDao.existWuZiZiDian(qy_id, id, mc);
+    public boolean existWuZiZiDian(Integer qy_id, Integer id, String mc, String bm) {
+        return wuZiZiDianDao.existWuZiZiDian(qy_id, id, mc, bm);
     }
 
 }

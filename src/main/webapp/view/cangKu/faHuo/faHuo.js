@@ -618,9 +618,11 @@ function saveFaHuoMingXi() {
     }
     var mx = {};
     if ($("#inpMxWz").val() === "") {
-        return alert("请输入物资名称");
+        return alert("请选择库存");
+    } else if ($("#inpMxWzbm").val() === "") {
+        return alert("请选择库存");
     } else {
-        if (!editWzzd || $("#inpMxWz").val() !== editWzzd.mc) {
+        if (!editWzzd || $("#inpMxWz").val() !== editWzzd.mc || $("#inpMxWzbm").val() !== editWzzd.bm) {
             mx.wzzd_id = -1;
         } else {
             mx.wzzd_id = editWzzd.id;
@@ -628,6 +630,7 @@ function saveFaHuoMingXi() {
     }
     mx.wzlb_id = editLeiBie.id;
     mx.wzmc = $("#inpMxWz").val();
+    mx.wzbm = $("#inpMxWzbm").val();
     mx.wzlb = $("#inpMxLb").val();
     mx.pp = $("#inpMxPp").val();
     if ($("#inpMxXhgg").val() === "") {
@@ -772,8 +775,10 @@ function setKcCunData(kc, index) {
         kc.dymx = JSON.parse(kc.dymx);
     }
     dymx_opt = {data: kc.dymx, yxData: m.dymx, func: calcDymx};
-    editWzzd = {"id": kc.wzzd_id, "mc": kc.wzmc};
+    editWzzd = {"id": kc.wzzd_id, "mc": kc.wzmc, "bm": kc.wzbm};
     $("#inpMxWz").val(kc.wzmc);
+    $("#inpMxWzbm").val(kc.wzbm);
+    $("#inpMxBzrq").val(kc.bzrq);
     editLeiBie = {"id": kc.wzlb_id, "mc": kc.wzlb};
     $("#inpMxLb").val(kc.wzlb);
     $("#inpMxPp").val(kc.pp);

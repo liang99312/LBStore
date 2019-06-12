@@ -33,6 +33,7 @@ public class RuKuDetail {
     private Integer kh_id;
     private Integer gys_id;
     private Integer wzzd_id;
+    private String wzbm;
     private String wzmc;
     private Integer wzlb_id;
     private transient String wzlb;
@@ -149,6 +150,14 @@ public class RuKuDetail {
 
     public void setWzzd_id(Integer wzzd_id) {
         this.wzzd_id = wzzd_id;
+    }
+
+    public String getWzbm() {
+        return wzbm;
+    }
+
+    public void setWzbm(String wzbm) {
+        this.wzbm = wzbm;
     }
 
     public String getWzmc() {

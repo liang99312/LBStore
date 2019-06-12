@@ -11,8 +11,6 @@ import com.lb.lbstore.domain.KuCun;
 import com.lb.lbstore.domain.FaHuo;
 import com.lb.lbstore.domain.FaHuoDetail;
 import com.lb.lbstore.domain.FaHuoFei;
-import com.lb.lbstore.domain.WuZiXhgg;
-import com.lb.lbstore.domain.WuZiZiDian;
 import com.lb.lbstore.util.LshUtil;
 import java.util.ArrayList;
 import java.util.Date;
@@ -193,30 +191,6 @@ public class FaHuoDao extends BaseDao {
             Integer id = (Integer) session.save(faHuo);
             session.flush();
             for (FaHuoDetail detail : faHuo.getDetails()) {
-                Integer zd_id = detail.getWzzd_id();
-                if (detail.getWzzd_id() < 1) {
-                    WuZiZiDian zd = new WuZiZiDian();
-                    zd.setDw(detail.getDw());
-                    zd.setMc(detail.getWzmc());
-                    zd.setQy_id(faHuo.getQy_id());
-                    zd.setState(0);
-                    zd.setWzlb_id(detail.getWzlb_id());
-                    zd_id = (Integer) session.save(zd);
-                    session.flush();
-                    detail.setWzzd_id(zd_id);
-                }
-                Integer xhgg_id = detail.getXhgg_id();
-                if (detail.getXhgg_id() < 1) {
-                    WuZiXhgg xhgg = new WuZiXhgg();
-                    xhgg.setBzq(detail.getBzq());
-                    xhgg.setMc(detail.getXhgg());
-                    xhgg.setQy_id(faHuo.getQy_id());
-                    xhgg.setWzzd_id(zd_id);
-                    xhgg_id = (Integer) session.save(xhgg);
-                    session.flush();
-                    detail.setXhgg_id(xhgg_id);
-                }
-
                 detail.setCk_id(faHuo.getCk_id());
                 detail.setKh_id(faHuo.getKh_id());
                 detail.setQy_id(faHuo.getQy_id());
@@ -259,30 +233,6 @@ public class FaHuoDao extends BaseDao {
             session.createSQLQuery(deleteDetail).executeUpdate();
             session.flush();
             for (FaHuoDetail detail : faHuo.getDetails()) {
-                Integer zd_id = detail.getWzzd_id();
-                if (detail.getWzzd_id() < 1) {
-                    WuZiZiDian zd = new WuZiZiDian();
-                    zd.setDw(detail.getDw());
-                    zd.setMc(detail.getWzmc());
-                    zd.setQy_id(faHuo.getQy_id());
-                    zd.setState(0);
-                    zd.setWzlb_id(detail.getWzlb_id());
-                    zd_id = (Integer) session.save(zd);
-                    session.flush();
-                    detail.setWzzd_id(zd_id);
-                }
-                Integer xhgg_id = detail.getXhgg_id();
-                if (detail.getXhgg_id() < 1) {
-                    WuZiXhgg xhgg = new WuZiXhgg();
-                    xhgg.setBzq(detail.getBzq());
-                    xhgg.setMc(detail.getXhgg());
-                    xhgg.setQy_id(faHuo.getQy_id());
-                    xhgg.setWzzd_id(zd_id);
-                    xhgg_id = (Integer) session.save(xhgg);
-                    session.flush();
-                    detail.setXhgg_id(xhgg_id);
-                }
-
                 detail.setCk_id(faHuo.getCk_id());
                 detail.setKh_id(faHuo.getKh_id());
                 detail.setQy_id(faHuo.getQy_id());

@@ -337,6 +337,7 @@ public class RuKuDao extends BaseDao {
                     WuZiZiDian zd = new WuZiZiDian();
                     zd.setDw(detail.getDw());
                     zd.setMc(detail.getWzmc());
+                    zd.setBm(detail.getWzbm());
                     zd.setQy_id(ruKu.getQy_id());
                     zd.setState(0);
                     zd.setWzlb_id(detail.getWzlb_id());
@@ -402,6 +403,7 @@ public class RuKuDao extends BaseDao {
                     WuZiZiDian zd = new WuZiZiDian();
                     zd.setDw(detail.getDw());
                     zd.setMc(detail.getWzmc());
+                    zd.setBm(detail.getWzbm());
                     zd.setQy_id(ruKu.getQy_id());
                     zd.setState(0);
                     zd.setWzlb_id(detail.getWzlb_id());

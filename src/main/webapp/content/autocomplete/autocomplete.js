@@ -44,6 +44,7 @@
             'listDirection': 'down', // string 'down' or 'up'
             // data
             'data': [], // array, string, function
+            'fieldName':'mc',
             'ajaxDataType': 'json', // string 'json' or 'xml'
             'ajaxParams': {}, // function, string, object
             'ajaxTimeout': 3000, // number
@@ -391,10 +392,10 @@
 
             if ($.isPlainObject(value)) {
                 if(value.label === undefined){
-                    value.label = value.mc;
+                    value.label = value[that.option.fieldName];
                 }
                 if(value.value === undefined){
-                    value.value = value.mc;
+                    value.value = value[that.option.fieldName];
                 }
                 var item = $.extend(false, {}, value);
             } else if (typeof (value) === 'string') {

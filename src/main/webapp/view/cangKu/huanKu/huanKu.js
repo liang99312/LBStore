@@ -578,9 +578,11 @@ function saveHuanKuMingXi() {
     }
     var mx = {};
     if ($("#inpMxWz").val() === "") {
-        return alert("请输入物资名称");
+        return alert("请选择库存");
+    } else if ($("#inpMxWzbm").val() === "") {
+        return alert("请选择库存");
     } else {
-        if (!editWzzd || $("#inpMxWz").val() !== editWzzd.mc) {
+        if (!editWzzd || $("#inpMxWz").val() !== editWzzd.mc || $("#inpMxWzbm").val() !== editWzzd.bm) {
             mx.wzzd_id = -1;
         } else {
             mx.wzzd_id = editWzzd.id;
@@ -588,6 +590,7 @@ function saveHuanKuMingXi() {
     }
     mx.wzlb_id = editLeiBie.id;
     mx.wzmc = $("#inpMxWz").val();
+    mx.wzbm = $("#inpMxWzbm").val();
     mx.wzlb = $("#inpMxLb").val();
     mx.pp = $("#inpMxPp").val();
     if ($("#inpMxXhgg").val() === "") {
@@ -757,6 +760,7 @@ function setLldData(detail, index) {
     $("#inpMxPc").val(detail.pc);
     $("#inpMxScrq").val(detail.scrq);
     $("#inpMxBzq").val(detail.bzq);
+    $("#inpMxBzrq").val(getAddDate(detail.scrq,detail.bzq));
     $("#inpMxDj").val(detail.dj);
     $("#inpMxDw").val(detail.dw);
     $("#inpMxSl").val(detail.sl);

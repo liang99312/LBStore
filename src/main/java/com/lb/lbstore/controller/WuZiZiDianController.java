@@ -73,7 +73,7 @@ public class WuZiZiDianController extends BaseController {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             model.setQy_id(getDlA01().getQy_id());
-            if(wuZiZiDianServiceImpl.existWuZiZiDian(model.getQy_id(), -1, model.getMc())){
+            if(wuZiZiDianServiceImpl.existWuZiZiDian(model.getQy_id(), -1, model.getMc(), model.getBm())){
                 map.put("result", -1);
                 map.put("msg", "物资字典名称已存在");
             }else{
@@ -97,7 +97,7 @@ public class WuZiZiDianController extends BaseController {
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            if(wuZiZiDianServiceImpl.existWuZiZiDian(model.getQy_id(), model.getId(), model.getMc())){
+            if(wuZiZiDianServiceImpl.existWuZiZiDian(model.getQy_id(), model.getId(), model.getMc(), model.getBm())){
                 map.put("result", -1);
                 map.put("msg", "物资字典名称已存在");
             }else{
