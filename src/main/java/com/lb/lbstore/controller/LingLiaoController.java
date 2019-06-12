@@ -135,6 +135,7 @@ public class LingLiaoController extends BaseController {
             }
             boolean result = lingLiaoServiceImpl.dealLingLiao(model,getDlA01().getId());
             map.put("result", result? 0:-1);
+            map.put("msg", result? "":"库存不足");
         } catch (Exception e) {
             map.put("result", -1);
             map.put("msg", e.getMessage());

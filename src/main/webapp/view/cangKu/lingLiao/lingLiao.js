@@ -604,6 +604,9 @@ function saveLingLiaoMingXi() {
             mx.wzzd_id = editWzzd.id;
         }
     }
+    if(parseFloat($("#inpMxSll").val()) > parseFloat($("#inpMxSyl").val())){
+        return alert("请输入申领数量不能大于剩余量");
+    }
     mx.wzlb_id = editLeiBie.id;
     mx.wzmc = $("#inpMxWz").val();
     mx.wzbm = $("#inpMxWzbm").val();

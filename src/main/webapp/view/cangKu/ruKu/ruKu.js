@@ -56,6 +56,10 @@ $(document).ready(function () {
     });
 });
 
+function refreshWuZiZiDian(){
+    getWuZiZiDians(setTrager_ziDian);
+}
+
 function setTrager_a01() {
     $('#inpRkr').AutoComplete({'data': lb_allA01s, 'paramName': 'editA01'});
     $('#inpFeiSkr').AutoComplete({'data': lb_allA01s, 'paramName': 'editFeiA01'});
