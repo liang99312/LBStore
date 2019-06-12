@@ -75,7 +75,7 @@ public class WuZiZiDianController extends BaseController {
             model.setQy_id(getDlA01().getQy_id());
             if(wuZiZiDianServiceImpl.existWuZiZiDian(model.getQy_id(), -1, model.getMc(), model.getBm())){
                 map.put("result", -1);
-                map.put("msg", "物资字典名称已存在");
+                map.put("msg", "物资字典名称或编码已存在");
             }else{
                 model.setState(0);
                 WuZiZiDian wuZiZiDian = wuZiZiDianServiceImpl.saveWuZiZiDian(model);
