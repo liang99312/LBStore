@@ -832,6 +832,9 @@ function saveRuKuMingXi() {
     mx.kw = $("#inpMxKwh").val();
     mx.dymx = JSON.stringify(dymx_opt.yxData);
     mx.tysx = JSON.stringify(tysx_opt.data);
+    if("pt" === $("#inpMxJlfs").val()){
+        mx.zl = mx.sl;
+    }
     if (optMxFlag === 1) {
         rkmx.push(mx);
     } else if (optMxFlag === 2) {

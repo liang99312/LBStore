@@ -638,8 +638,12 @@ function saveLingLiaoMingXi() {
     mx.tysx = JSON.stringify(tysx_opt.data);
     mx.sll = parseFloat($("#inpMxSll").val());
     mx.slzl = parseFloat($("#inpMxSlzl").val());
-    if (mx.slzl === undefined || mx.slzl === "" || mx.slzl < 0.001) {
+    if("pt" === $("#inpMxJlfs").val()){
         mx.slzl = mx.sll;
+    } else {
+        if (mx.slzl === undefined || mx.slzl === "" || mx.slzl < 0.001) {
+            mx.slzl = mx.sll;
+        }
     }
     mx.kc_id = curKuCun.id;
     mx.gys_id = curKuCun.gys_id;

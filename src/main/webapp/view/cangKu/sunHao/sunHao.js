@@ -115,7 +115,7 @@ function selectWuZiLeiBie(json) {
 }
 
 function selectSunHao_m() {
-    $("#sunHaoSelectModal").modal({backdrop:'static'});
+    $("#sunHaoSelectModal").modal({backdrop: 'static'});
 }
 
 function selectWuZiZiDian(json) {
@@ -185,7 +185,7 @@ function jxSunHao(json) {
 }
 
 function showSelectSunHao() {
-    $("#sunHaoSelectModal").modal({backdrop:'static'});
+    $("#sunHaoSelectModal").modal({backdrop: 'static'});
 }
 
 function selectSunHao() {
@@ -255,7 +255,7 @@ function addSunHao() {
     $("#inpSl").val(0);
     $("#inpJe").val(0);
     jxSunHaoMingXi();
-    $("#sunHaoModal").modal({backdrop:'static'});
+    $("#sunHaoModal").modal({backdrop: 'static'});
 }
 
 function editSunHao(index) {
@@ -316,7 +316,7 @@ function selectSunHaoDetail(id) {
                 $("#inpSpr").val(sunHao.sprmc);
                 $("#inpSpsj").val(sunHao.spsj);
                 jxSunHaoMingXi();
-                $("#sunHaoModal").modal({backdrop:'static'});
+                $("#sunHaoModal").modal({backdrop: 'static'});
             } else
                 alert("获取损耗单信息失败:" + json.msg !== undefined ? json.msg : "");
         }
@@ -531,7 +531,7 @@ function addSunHaoMingXi() {
     dymx_opt = {data: [], yxData: [], func: calcDymx};
     editLeiBie = null;
     $("#sunHaoMingXiModal_title").html("增加明细");
-    $("#selKuCunModal").modal({backdrop:'static'});
+    $("#selKuCunModal").modal({backdrop: 'static'});
 }
 
 function editSunHaoMingXi(index) {
@@ -619,8 +619,12 @@ function saveSunHaoMingXi() {
     mx.tysx = JSON.stringify(tysx_opt.data);
     mx.shl = parseFloat($("#inpMxShl").val());
     mx.shzl = parseFloat($("#inpMxShzl").val());
-    if (mx.shzl === undefined || mx.shzl === "" || mx.shzl < 0.001) {
+    if ("pt" === $("#inpMxJlfs").val()) {
         mx.shzl = mx.shl;
+    } else {
+        if (mx.shzl === undefined || mx.shzl === "" || mx.shzl < 0.001) {
+            mx.shzl = mx.shl;
+        }
     }
     mx.kc_id = curKuCun.id;
     mx.gys_id = curKuCun.gys_id;
@@ -722,7 +726,7 @@ function setKcCunData(kc, index) {
     var m = shmx[index];
     m = m ? m : {};
     if (m.dymx) {
-        if(typeof m.dymx === "string"){
+        if (typeof m.dymx === "string") {
             m.dymx = JSON.parse(m.dymx);
         }
     } else {
@@ -769,7 +773,7 @@ function setKcCunData(kc, index) {
     }
     selectMxJlfs();
     $("#selKuCunModal").modal("hide");
-    $("#sunHaoMingXiModal").modal({backdrop:'static'});
+    $("#sunHaoMingXiModal").modal({backdrop: 'static'});
 }
 
 function cxKuCunById(id, index) {

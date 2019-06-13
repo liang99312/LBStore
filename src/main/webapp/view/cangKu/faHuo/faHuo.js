@@ -40,7 +40,7 @@ $(document).ready(function () {
     getWuZiZiDians(setTrager_ziDian);
     getWuZiLeiBies(setTrager_leiBie);
     getGongYingShangs(setTrager_gongYingShang);
-    getBaoBiaosByMk("505",setTrager_baoBiao);
+    getBaoBiaosByMk("505", setTrager_baoBiao);
     $("#inpMxScrq").datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, minView: 2, startView: 2, forceParse: 0, showMeridian: 1});
 
     $("#inpMxFhl").keyup(function () {
@@ -130,7 +130,7 @@ function selectWuZiLeiBie(json) {
 }
 
 function selectFaHuo_m() {
-    $("#faHuoSelectModal").modal({backdrop:'static'});
+    $("#faHuoSelectModal").modal({backdrop: 'static'});
 }
 
 function selectWuZiZiDian(json) {
@@ -203,7 +203,7 @@ function jxFaHuo(json) {
 }
 
 function showSelectFaHuo() {
-    $("#faHuoSelectModal").modal({backdrop:'static'});
+    $("#faHuoSelectModal").modal({backdrop: 'static'});
 }
 
 function selectFaHuo() {
@@ -278,7 +278,7 @@ function addFaHuo() {
     $("#inpSl").val(0);
     $("#inpJe").val(0);
     jxFaHuoMingXi();
-    $("#faHuoModal").modal({backdrop:'static'});
+    $("#faHuoModal").modal({backdrop: 'static'});
 }
 
 function editFaHuo(index) {
@@ -331,7 +331,7 @@ function jxReadFaHuo(faHuo) {
     $("#inpSpr").val(faHuo.sprmc);
     $("#inpSpsj").val(faHuo.spsj);
     jxFaHuoMingXi();
-    $("#faHuoModal").modal({backdrop:'static'});
+    $("#faHuoModal").modal({backdrop: 'static'});
 }
 
 function editFeiIndex(id, func) {
@@ -571,7 +571,7 @@ function addFaHuoMingXi() {
     dymx_opt = {data: [], yxData: [], func: calcDymx};
     editLeiBie = null;
     $("#faHuoMingXiModal_title").html("增加明细");
-    $("#selKuCunModal").modal({backdrop:'static'});
+    $("#selKuCunModal").modal({backdrop: 'static'});
 }
 
 function editFaHuoMingXi(index) {
@@ -660,8 +660,12 @@ function saveFaHuoMingXi() {
     mx.fhl = parseFloat($("#inpMxFhl").val());
     mx.fhzl = parseFloat($("#inpMxFhzl").val());
     mx.fhdj = parseFloat($("#inpMxFhdj").val());
-    if (mx.fhzl === undefined || mx.fhzl === "" || mx.fhzl < 0.001) {
-        mx.fhzl = mx.fhl;
+    if ("pt" === $("#inpMxJlfs").val()) {
+        mx.slzl = mx.sll;
+    } else {
+        if (mx.fhzl === undefined || mx.fhzl === "" || mx.fhzl < 0.001) {
+            mx.fhzl = mx.fhl;
+        }
     }
     mx.kc_id = curKuCun.id;
     mx.gys_id = curKuCun.gys_id;
@@ -763,7 +767,7 @@ function setKcCunData(kc, index) {
     var m = fhmx[index];
     m = m ? m : {};
     if (m.dymx) {
-        if(typeof m.dymx === "string"){
+        if (typeof m.dymx === "string") {
             m.dymx = JSON.parse(m.dymx);
         }
     } else {
@@ -802,7 +806,7 @@ function setKcCunData(kc, index) {
     $("#inpMxSyl").val(kc.syl);
     $("#inpMxFhl").val(m.fhl);
     $("#inpMxFhzl").val(m.fhzl);
-    $("#inpMxFhdj").val(m.fhdj? m.fhdj:kc.ckdj);
+    $("#inpMxFhdj").val(m.fhdj ? m.fhdj : kc.ckdj);
     buildDymx();
     if (kc.jlfs === "mx") {
         $("#divMxDymx").show();
@@ -811,7 +815,7 @@ function setKcCunData(kc, index) {
     }
     selectMxJlfs();
     $("#selKuCunModal").modal("hide");
-    $("#faHuoMingXiModal").modal({backdrop:'static'});
+    $("#faHuoMingXiModal").modal({backdrop: 'static'});
 }
 
 function cxKuCunById(id, index) {
@@ -870,7 +874,7 @@ function selectFaHuoFei(json) {
     options.func = jxFaHuoFei;
     options.ul = "#example2";
     queryPaginator(options);
-    $("#faHuoFeiModal").modal({backdrop:'static'});
+    $("#faHuoFeiModal").modal({backdrop: 'static'});
 }
 
 function addFaHuoFei(type) {
@@ -891,7 +895,7 @@ function addFaHuoFei(type) {
         $("#inpFeiSkr").val("");
         $("#inpFeiBz").val("");
     }
-    $("#faHuoFeiEditModal").modal({backdrop:'static'});
+    $("#faHuoFeiEditModal").modal({backdrop: 'static'});
 }
 
 function editFaHuoFei(index) {
@@ -911,7 +915,7 @@ function editFaHuoFei(index) {
     $("#inpFeiJe").val(faHuoFei.je);
     $("#inpFeiSkr").val(faHuoFei.skrmc);
     $("#inpFeiBz").val(faHuoFei.bz);
-    $("#faHuoFeiEditModal").modal({backdrop:'static'});
+    $("#faHuoFeiEditModal").modal({backdrop: 'static'});
 }
 
 function checkFei(type, index, je) {
@@ -920,7 +924,7 @@ function checkFei(type, index, je) {
         for (var i = 0; i < faHuoFeis.length; i++) {
             zje = zje + faHuoFeis[i].je;
         }
-    } else if (type === 2){
+    } else if (type === 2) {
         for (var i = 0; i < faHuoFeis.length; i++) {
             if (i !== index) {
                 zje = zje + faHuoFeis[i].je;
@@ -1010,7 +1014,7 @@ function delFaHuoFei(index) {
     }
 }
 
-function execBaoBiao(){
+function execBaoBiao() {
     if (selBaoBiao === undefined) {
         return alert("请选择报表");
     }
@@ -1025,7 +1029,7 @@ function execBaoBiao(){
         },
         success: function (text) {
             $("#dvBbnr").html(text);
-            $("#baoBiaoModal").modal({backdrop:'static'});
+            $("#baoBiaoModal").modal({backdrop: 'static'});
         }
     });
 }

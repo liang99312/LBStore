@@ -453,7 +453,7 @@ public class LingLiaoDao extends BaseDao {
             for (KuCun kc : kcList) {
                 LingLiaoDetail detail = detailTable.get(kc.getId());
                 if (detail != null) {
-                    if (kc.getSyzl() < detail.getSlzl()) {
+                    if (kc.getSyl() < detail.getSll()) {
                         tx.rollback();
                         result = false;
                         return result;
