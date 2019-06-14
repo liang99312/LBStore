@@ -234,7 +234,7 @@ function selectMxJlfs() {
         $("#dvMxBzgg").show();
         $("#dvMxZl").show();
     } else if (val === "mx") {
-        $("#dvMxBzgg").show();
+        $("#dvMxBzgg").val("1").show();
         $("#dvMxZl").show();
         $("#divMxDymx").show();
         if ($("#dvMxBzgg").val() === "") {

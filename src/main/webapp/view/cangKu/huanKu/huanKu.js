@@ -747,8 +747,9 @@ function setLldData(detail, index) {
         detail.dymx = [];
     }
     dymx_opt = {data: detail.dymx, yxData: m.dymx, func: calcDymx};
-    editWzzd = {"id": detail.wzzd_id, "mc": detail.wzmc};
+    editWzzd = {"id": detail.wzzd_id, "mc": detail.wzmc, "bm": detail.wzbm};
     $("#inpMxWz").val(detail.wzmc);
+    $("#inpMxWzbm").val(detail.wzbm);
     editLeiBie = {"id": detail.wzlb_id, "mc": detail.wzlb};
     $("#inpMxLb").val(detail.wzlb);
     $("#inpMxPp").val(detail.pp);

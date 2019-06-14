@@ -560,7 +560,7 @@ public class FaHuoDao extends BaseDao {
                 sql += " and fh.spsj >= '" + detail.getQrq() + "'";
             }
             if (detail.getZrq() != null && !"".equals(detail.getZrq())) {
-                sql += " and fh.spsj <= '" + detail.getZrq() + "'";
+                sql += " and fh.spsj <= '" + detail.getZrq() + " 23:59:59'";
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
             navtiveSQL.addEntity("fhd", FaHuoDetail.class)

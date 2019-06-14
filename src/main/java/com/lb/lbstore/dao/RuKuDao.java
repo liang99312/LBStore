@@ -189,7 +189,7 @@ public class RuKuDao extends BaseDao {
                 sql += " and rk.spsj >= '" + detail.getQrq() + "'";
             }
             if (detail.getZrq() != null && !"".equals(detail.getZrq())) {
-                sql += " and rk.spsj <= '" + detail.getZrq() + "'";
+                sql += " and rk.spsj <= '" + detail.getZrq() + " 23:59:59'";
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
             navtiveSQL.addEntity("rkd", RuKuDetail.class)
@@ -533,6 +533,7 @@ public class RuKuDao extends BaseDao {
                 kc.setScc(d.getScc());
                 kc.setBz(d.getBz());
                 kc.setScrq(d.getScrq());
+                kc.setPc(d.getPc());
                 kc.setSl(d.getSl());
                 kc.setSpr_id(a01_id);
                 kc.setTxm(d.getTxm());

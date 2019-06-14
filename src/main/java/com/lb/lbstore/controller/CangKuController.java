@@ -170,7 +170,7 @@ public class CangKuController extends BaseController {
         return model;
     }
 
-    @RequestMapping(value = "getCangKuKuWeiById.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "getCangKuKuWeiById.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String, Object> getCangKuKuWeiById(@RequestParam Integer id) {
         if (!existsUser()) {
@@ -188,7 +188,7 @@ public class CangKuController extends BaseController {
         return map;
     }
 
-    @RequestMapping(value = "getCangKuA01ById.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "getCangKuA01ById.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String, Object> getCangKuA01ById(@RequestParam Integer id) {
         if (!existsUser()) {

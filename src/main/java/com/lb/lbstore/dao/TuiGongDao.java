@@ -312,9 +312,9 @@ public class TuiGongDao extends BaseDao {
             for (KuCun kc : kcList) {
                 TuiGongDetail detail = detailTable.get(kc.getId());
                 if (detail != null) {
-                    if ((kc.getZl() - kc.getSyzl()) < detail.getTgzl()) {
+                    if (kc.getSyzl() < detail.getTgzl()) {
                         tx.rollback();
-                        result = "0";
+                        result = "库存数量对不上";
                         return result;
                     }
                     kc.setSyzl(kc.getSyzl() - detail.getTgzl());

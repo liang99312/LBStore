@@ -121,7 +121,7 @@ public class GongYingShangController extends BaseController {
         return map;
     }
     
-    @RequestMapping(value = "getGongYingShangById.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "getGongYingShangById.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String, Object> getGongYingShangById(@RequestParam Integer id) {
         if (!existsUser()) {

@@ -121,7 +121,7 @@ public class KeHuController extends BaseController {
         return map;
     }
     
-    @RequestMapping(value = "getKeHuById.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "getKeHuById.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String, Object> getKeHuById(@RequestParam Integer id) {
         if (!existsUser()) {

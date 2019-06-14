@@ -284,7 +284,7 @@ public class LingLiaoDao extends BaseDao {
                 sql += " and ll.spsj >= '" + detail.getQrq() + "'";
             }
             if (detail.getZrq() != null && !"".equals(detail.getZrq())) {
-                sql += " and ll.spsj <= '" + detail.getZrq() + "'";
+                sql += " and ll.spsj <= '" + detail.getZrq() + " 23:59:59'";
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
             navtiveSQL.addEntity("lld", LingLiaoDetail.class)

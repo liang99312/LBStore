@@ -615,7 +615,7 @@ function editTuiGongMingXi(index) {
         $("#tuiGongMingXiModal_title").html("修改明细");
         $("#btnMxOk").html("保存");
         var temp = tgmx[index];
-        cxKuCunDetailById(temp.lld_id, index);
+        cxKuCunDetailById(temp.kc_id, index);
     }
 }
 
@@ -626,7 +626,7 @@ function readTuiGongMingXi(index) {
         $("#tuiGongMingXiModal_title").html("查看明细");
         $("#btnMxOk").html("关闭");
         var temp = tgmx[index];
-        cxKuCunDetailById(temp.rkd_id, index);
+        cxKuCunDetailById(temp.kc_id, index);
     }
 }
 

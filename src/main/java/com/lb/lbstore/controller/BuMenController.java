@@ -120,7 +120,7 @@ public class BuMenController extends BaseController {
         return map;
     }
     
-    @RequestMapping(value = "getBuMenById.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "getBuMenById.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String, Object> getBuMenById(@RequestParam Integer id) {
         if (!existsUser()) {

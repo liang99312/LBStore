@@ -51,8 +51,8 @@ public class TuiGong {
     private String bz;
     private Integer state;//0:未办理；1：已办理；
     private transient List<TuiGongDetail> details = new ArrayList();
-    private transient Date qrq;
-    private transient Date zrq;
+    private transient String qrq;
+    private transient String zrq;
     private transient String ckmc;
     private transient String tgrmc;
     private transient String sprmc;
@@ -219,19 +219,19 @@ public class TuiGong {
         this.details = details;
     }
 
-    public Date getQrq() {
+    public String getQrq() {
         return qrq;
     }
 
-    public void setQrq(Date qrq) {
+    public void setQrq(String qrq) {
         this.qrq = qrq;
     }
 
-    public Date getZrq() {
+    public String getZrq() {
         return zrq;
     }
 
-    public void setZrq(Date zrq) {
+    public void setZrq(String zrq) {
         this.zrq = zrq;
     }
 

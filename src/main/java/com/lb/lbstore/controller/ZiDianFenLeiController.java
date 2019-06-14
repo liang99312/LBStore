@@ -119,7 +119,7 @@ public class ZiDianFenLeiController extends BaseController {
         return map;
     }
     
-    @RequestMapping(value = "getZiDianFenLeiById.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "getZiDianFenLeiById.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String, Object> getZiDianFenLeiById(@RequestParam Integer id) {
         if (!existsUser()) {

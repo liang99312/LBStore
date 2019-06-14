@@ -138,7 +138,7 @@ public class QiYeController extends BaseController {
         return map;
     }
     
-    @RequestMapping(value = "getQiYeById.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "getQiYeById.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String, Object> getQiYeById(@RequestParam Integer id) {
         if (!existsUser()) {

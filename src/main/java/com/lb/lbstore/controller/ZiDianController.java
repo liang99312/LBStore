@@ -119,7 +119,7 @@ public class ZiDianController extends BaseController {
         return map;
     }
     
-    @RequestMapping(value = "getZiDianById.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "getZiDianById.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String, Object> getZiDianById(@RequestParam Integer id) {
         if (!existsUser()) {

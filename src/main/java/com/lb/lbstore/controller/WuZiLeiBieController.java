@@ -120,7 +120,7 @@ public class WuZiLeiBieController extends BaseController {
         return map;
     }
     
-    @RequestMapping(value = "getWuZiLeiBieById.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "getWuZiLeiBieById.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String, Object> getWuZiLeiBieById(@RequestParam Integer id) {
         if (!existsUser()) {

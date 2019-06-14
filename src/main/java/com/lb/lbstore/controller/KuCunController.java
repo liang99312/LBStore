@@ -113,7 +113,7 @@ public class KuCunController extends BaseController {
         return map;
     }
     
-    @RequestMapping(value = "getKuCunById.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "getKuCunById.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String, Object> getKuCunById(@RequestParam Integer id) {
         if (!existsUser()) {

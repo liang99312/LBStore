@@ -165,7 +165,7 @@ public class BaoBiaoController extends BaseController {
         return map;
     }
 
-    @RequestMapping(value = "getBaoBiaoById.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "getBaoBiaoById.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String, Object> getBaoBiaoById(@RequestParam Integer id) {
         if (!existsUser()) {

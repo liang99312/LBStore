@@ -160,7 +160,7 @@ public class A01Controller extends BaseController {
         return map;
     }
 
-    @RequestMapping(value = "getA01ById.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "getA01ById.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String, Object> getA01ById(@RequestParam Integer id) {
         if (!existsUser()) {
