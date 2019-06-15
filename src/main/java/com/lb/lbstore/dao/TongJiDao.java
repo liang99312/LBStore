@@ -5,7 +5,6 @@
  */
 package com.lb.lbstore.dao;
 
-import com.lb.lbstore.domain.FaHuoFei;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -64,7 +63,7 @@ public class TongJiDao extends BaseDao {
         Session session = null;
         try {
             session = getSessionFactory().openSession();
-            String sql = "select kh.mc,fhd.wzmc,fhd.xhgg,sum(fh.sl) as sl "
+            String sql = "select kh.mc,fhd.wzbm,fhd.wzmc,fhd.xhgg,sum(fh.sl) as sl "
                     + "from fahuodetail fhd left join kehu kh on fhd.kh_id=kh.id left join fahuo fh on fhd.fh_id=fh.id "
                     + "where fh.qy_id=" + map.get("qy_id") + " and fh.state = 1 ";
             if (map.containsKey("ck_id")) {
@@ -79,7 +78,7 @@ public class TongJiDao extends BaseDao {
             if (map.containsKey("zrq")) {
                 sql += " and fh.sj <= '" + map.get("zrq") + " 23:59:59'";
             }
-            sql += " group by fh.kh_id,wzmc,fhd.xhgg order by fh.kh_id";
+            sql += " group by fh.kh_id,fhd.wzbm,fhd.wzmc,fhd.xhgg order by fh.kh_id";
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
             navtiveSQL.addScalar("khmc", StandardBasicTypes.STRING).addScalar("sl", StandardBasicTypes.DOUBLE).addScalar("je", StandardBasicTypes.DOUBLE).addScalar("yfje", StandardBasicTypes.DOUBLE).addScalar("dfje", StandardBasicTypes.DOUBLE);
             result = navtiveSQL.list();
