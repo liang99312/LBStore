@@ -41,15 +41,20 @@
                     li.append(menus);
                 }
                 else {
-                    var href = 'javascript:addTabs({id:\'' + item.id + '\',title: \'' + item.text + '\',close: true,url: \'' + item.url + '\'});';
-                    a.attr('href', href);
-                    //if (item.istab)
-                    //    a.attr('href', href);
-                    //else {
-                    //    a.attr('href', item.url);
-                    //    a.attr('title', item.text);
-                    //    a.attr('target', '_blank')
-                    //}
+                    if(item.func){
+                        var href = 'javascript:'+item.func+'();';
+                        a.attr('href', href);
+                    }else{
+                        var href = 'javascript:addTabs({id:\'' + item.id + '\',title: \'' + item.text + '\',close: true,url: \'' + item.url + '\'});';
+                        a.attr('href', href);
+                        //if (item.istab)
+                        //    a.attr('href', href);
+                        //else {
+                        //    a.attr('href', item.url);
+                        //    a.attr('title', item.text);
+                        //    a.attr('target', '_blank')
+                        //}
+                    }
                     li.append(a);
                 }
                 target.append(li);

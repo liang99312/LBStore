@@ -67,7 +67,7 @@
                                 <td colspan='2' style='border-left:none;'>尚欠：" + (fhJson.je - fhJson.yfje).toFixed(3) + "</td></tr>");
             }
 
-            function dyFaHuoDan4Dy() {
+            function dyFaHuoDan4Dy2() {
                 var height = parseInt($("#tblFhd_cp").css("height"));
                 var len = $("#tblFhd_cp tr").length;
                 var pages = Math.floor((height - 1) / 350) + 1;
@@ -120,14 +120,14 @@
                 window.PrintText(s, 1, 210, 140);
             }
 
-//            function dyFaHuoDan4Dy() {
-//                var s = $("#dvFmFaHuoDan").html();
-//                try {
-//                    parent.parent.webObject.printTick(s);
-//                } catch (e) {
-//                    window.PrintText(s);
-//                }
-//            }
+            function dyFaHuoDan4Dy() {
+                var s = $("#dvFmFaHuoDan").html();
+                try {
+                    parent.parent.webObject.printTick(s);
+                } catch (e) {
+                    window.PrintText(s, 1, 210, 140);
+                }
+            }
 
             function paiXu(details) {
                 var i = details.length, j;

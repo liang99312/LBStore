@@ -184,7 +184,7 @@ function jxTuiHuo(json) {
         var dealStr = '<button class="btn btn-info btn-xs icon-legal" onclick="dealTuiHuo(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var feiStr = '<button class="btn btn-info btn-xs icon-money" onclick="feiTuiHuo(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>';
         var delStr = '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteTuiHuo(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>';
-        var trStr = '<tr' + classStr + '><td>' + item.ckmc + '</td><td>' + item.lsh + '</td><td>' + item.dh + '</td><td>' + item.wz + '</td><td>' + item.sj + '</td><td>' + item.sl + '</td><td>'
+        var trStr = '<tr' + classStr + '><td>' + item.ckmc + '</td><td>' + item.lsh + '</td><td>' + item.dh + '</td><td class="longText">' + item.wz + '</td><td>' + item.sj + '</td><td>' + item.sl + '</td><td>'
                 + readStr
                 + (item.state === 0 ? editStr : "")
                 + (item.state === 0 ? dealStr : "")

@@ -261,7 +261,7 @@ function jxRuKu(json) {
         var dealStr = '<button class="btn btn-info btn-xs icon-legal" onclick="dealRuKu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var delStr = '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteRuKu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>';
         var feiStr = '<button class="btn btn-info btn-xs icon-money" onclick="feiRuKu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>';
-        var trStr = '<tr' + classStr + '><td>' + item.ckmc + '</td><td>' + item.lsh + '</td><td>' + item.gysmc + '</td><td>' + item.khmc + '</td><td>' + item.wz + '</td><td>' + item.sj + '</td><td>' + item.sl + '</td><td>'
+        var trStr = '<tr' + classStr + '><td>' + item.ckmc + '</td><td>' + item.lsh + '</td><td>' + item.gysmc + '</td><td>' + item.khmc + '</td><td class="longText">' + item.wz + '</td><td>' + item.sj + '</td><td>' + item.sl + '</td><td>'
                 + readStr
                 + (item.state === 0 ? editStr : "")
                 + (item.state === 0 ? dealStr : "")

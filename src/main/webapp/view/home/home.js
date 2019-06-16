@@ -20,6 +20,7 @@ var goBaoBiao = "/LBStore/baoBiao/goBaoBiao.do";
 var goZiDianLeiBie = "/LBStore/ziDianFenLei/goZiDianFenLei.do";
 var goQiYeZiDian = "/LBStore/ziDian/goZiDian.do";
 var goPassword = "/LBStore/goPassword.do";
+var goSetPrinter = "#";
 
 var allMenu = {data: [
         {id: '1', text: '组织机构', icon: 'icon-leaf', url: '', menus: [
@@ -51,7 +52,8 @@ var allMenu = {data: [
         {id: '8', text: '报表管理', icon: 'icon-leaf', url: '', menus: [
                 {id: '801', text: '报表管理', icon: 'icon-glass', url: goBaoBiao}]},
         {id: '9', text: '系统管理', icon: 'icon-cog', url: '', menus: [
-                {id: '901', text: '修改密码', icon: 'icon-glass', url: goPassword}]}]};
+                {id: '901', text: '修改密码', icon: 'icon-glass', url: goPassword},
+                {id: '902', text: '设置打印机', icon: 'icon-glass', url: goSetPrinter,func:'setPrinter'}]}]};
 var loadUser = null;
 
 $(document).ready(function () {
@@ -73,6 +75,10 @@ $(document).ready(function () {
         }
     });
 });
+
+function setPrinter(){
+    window.SetPrinter();
+}
 
 function setMenu(quanxian) {
     var qxArray = quanxian.split(";");
