@@ -242,6 +242,9 @@ public class KuCunDao extends BaseDao {
             if (kuCun.getZrq() != null) {
                 sql += " and kc.rksj <= '" + kuCun.getZrq() + " 23:59:59'";
             }
+            if (kuCun.getSyl()!= null && kuCun.getSyl() > 999999) {
+                sql += " and kc.syl > 0";
+            }
             sql += " limit 100";
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
             navtiveSQL.addEntity("kc", KuCun.class)

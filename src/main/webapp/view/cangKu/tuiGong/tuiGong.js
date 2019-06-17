@@ -765,6 +765,9 @@ function cxKuCunDetail() {
     if ($("#inpKcdSelTxm").val() !== "") {
         ruKuDetail.txm = $("#inpKcdSelTxm").val();
     }
+    if($("#inpKcSelFlag").prop("checked")){
+        kuCun.syl = 999999.9;
+    }
     $.ajax({
         url: "/LBStore/kuCun/getKuCunTop100.do?",
         data: JSON.stringify(ruKuDetail),
