@@ -20,6 +20,7 @@ var editCangKu;
 var editA01;
 var selA01;
 var curKuCun;
+var selBaoBiao;
 var dymx_opt = {data: [], yxData: [], func: calcDymx};
 var tysx_opt = {data: [], ls: 3, lw: 70, upeditable: 1};
 
@@ -33,6 +34,7 @@ $(document).ready(function () {
     getWuZiZiDians(setTrager_ziDian);
     getWuZiLeiBies(setTrager_leiBie);
     getGongYingShangs(setTrager_gongYingShang);
+    getBaoBiaosByMk("506", setTrager_baoBiao);
     $("#inpMxScrq").datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, minView: 2, startView: 2, forceParse: 0, showMeridian: 1});
 
     $("#inpMxShl").keyup(function () {
@@ -78,6 +80,10 @@ function setTrager_leiBie() {
 
 function setTrager_gongYingShang() {
     $('#inpKcSelGys').AutoComplete({'data': lb_gongYingShangs, 'paramName': 'selGongYingShang'});
+}
+
+function setTrager_baoBiao() {
+    $('#inpSelBb').AutoComplete({'data': lb_baoBiaos, 'paramName': 'selBaoBiao'});
 }
 
 function selectCangKu(json) {
@@ -795,6 +801,26 @@ function cxKuCunById(id, index) {
             } else {
                 alert("查询库存失败:" + json.msg ? json.msg : "");
             }
+        }
+    });
+}
+
+function execBaoBiao() {
+    if (selBaoBiao === undefined) {
+        return alert("请选择报表");
+    }
+    $.ajax({
+        url: "/LBStore/baoBiao/getBaoBiaoNrById.do?id=" + selBaoBiao.id,
+        contentType: "application/json",
+        type: "get",
+        dataType: "html",
+        cache: false,
+        error: function (msg, textStatus) {
+            alert("读取报表失败");
+        },
+        success: function (text) {
+            $("#dvBbnr").html(text);
+            $("#baoBiaoModal").modal({backdrop: 'static'});
         }
     });
 }

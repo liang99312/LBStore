@@ -23,6 +23,7 @@ var editGongYingShang;
 var editCangKu;
 var editA01;
 var editFeiA01;
+var selBaoBiao;
 var dymx_opt = {data: [], yxData: [], func: calcDymx};
 var tysx_opt = {data: [], ls: 2, lw: 70};
 
@@ -36,6 +37,7 @@ $(document).ready(function () {
     getGongYingShangs(setTrager_gongYingShang);
     getWuZiZiDians(setTrager_ziDian);
     getWuZiLeiBies(setTrager_leiBie);
+    getBaoBiaosByMk("503", setTrager_baoBiao);
     $("#inpMxScrq").datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, minView: 2, startView: 2, forceParse: 0, showMeridian: 1});
     $("#inpMxJlfs").change(function () {
         $("#tblMxDymx input:last").blur();
@@ -91,6 +93,10 @@ function setTrager_ziDian() {
 
 function setTrager_leiBie() {
     $('#inpMxLb').AutoComplete({'data': lb_wuZiLeiBies, 'afterSelectedHandler': selectWuZiLeiBie});
+}
+
+function setTrager_baoBiao() {
+    $('#inpSelBb').AutoComplete({'data': lb_baoBiaos, 'paramName': 'selBaoBiao'});
 }
 
 function selectWuZiLeiBie(json) {
@@ -1028,4 +1034,24 @@ function delRuKuFei(index) {
             }
         });
     }
+}
+
+function execBaoBiao() {
+    if (selBaoBiao === undefined) {
+        return alert("请选择报表");
+    }
+    $.ajax({
+        url: "/LBStore/baoBiao/getBaoBiaoNrById.do?id=" + selBaoBiao.id,
+        contentType: "application/json",
+        type: "get",
+        dataType: "html",
+        cache: false,
+        error: function (msg, textStatus) {
+            alert("读取报表失败");
+        },
+        success: function (text) {
+            $("#dvBbnr").html(text);
+            $("#baoBiaoModal").modal({backdrop: 'static'});
+        }
+    });
 }

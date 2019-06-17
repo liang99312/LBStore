@@ -4,19 +4,19 @@
         <meta charset="UTF-8">
         <script type="text/javascript" src="/LBStore/js/jquery-barcode.js"></script>
         <script type="text/javascript">
-            var fhJson = {};
+            var rkJson = {};
             var index = 0;
             $(document).ready(function () {
-                fhJson = bbFaHuo;
-                jxFaHuoDan4Dy(fhJson);
-                selKeHu(fhJson.kh_id);
-                $("#dvFmFaHuoDan").show();
+                rkJson = bbRuKu;
+                jxRuKuDan4Dy(rkJson);
+                selGongYingShang(rkJson.gys_id);
+                $("#dvFmRuKuDan").show();
                 $("#ckBaoBiao").css("width", "250mm");
             });
 
-            function selKeHu(id) {
+            function selGongYingShang(id) {
                 $.ajax({
-                    url: "/LBStore/keHu/getKeHuById.do?id=" + id,
+                    url: "/LBStore/gongYingShang/getGongYingShangById.do?id=" + id,
                     contentType: "application/json",
                     type: "get",
                     dataType: "json",
@@ -26,16 +26,16 @@
                     },
                     success: function (json) {
                         if (json.result === 0) {
-                            var kh = json.keHu;
-                            $("#khmc").html("往来单位：" + kh.mc);
-                            $("#khlxfs").html("联系地址：" + kh.dz);
-                            $("#khlxdh").html("联系电话：" + kh.lxdh);
+                            var gys = json.gongYingShang;
+                            $("#gysmc").html("往来单位：" + gys.mc);
+                            $("#gyslxfs").html("联系地址：" + gys.dz);
+                            $("#gyslxdh").html("联系电话：" + gys.lxdh);
                         }
                     }
                 });
             }
 
-            function jxFaHuoDan4Dy(json) {
+            function jxRuKuDan4Dy(json) {
                 var a01 = window.top.loadUser;
                 if (json.lsh && json.lsh !== null) {
                     $("#tblZiHao").barcode(json.lsh, "code128", {barWidth: 2, barHeight: 40, fontSize: 17, marginHRI: 0});
@@ -43,85 +43,35 @@
                 }
                 $("#djrq").html("单据日期：" + json.sj.substring(0, 10));
                 $("#zdr").html("制单人：" + a01.mc);
-                $("#tblFhd_cp tr:not(:first)").remove();
+                $("#tblRkd_cp tr:not(:first)").remove();
                 paiXu(json.details);
                 var zongJE = 0;
                 var zsl = 0;
+                rkJson.je = rkJson.je===null? 0:rkJson.je;
+                rkJson.yfje = rkJson.yfje===null? 0:rkJson.yfje;
+                rkJson.dfje = rkJson.dfje===null? 0:rkJson.dfje;
                 for (var i = 0; i < json.details.length; i++) {
                     var e = json.details[i];
-                    zongJE += e.fhdj * e.fhl;
-                    zsl += e.fhl;
-                    $("#tblFhd_cp").append("<tr><td style='text-align: center'>" + (i + 1) + "</td>\n\
+                    zongJE += e.dj * e.sl;
+                    zsl += e.sl;
+                    $("#tblRkd_cp").append("<tr><td style='text-align: center'>" + (i + 1) + "</td>\n\
                                 <td>" + e.wzbm + "</td>\n\
                                 <td>" + e.wzmc + "</td>\n\
                                 <td>" + e.xhgg + "</td>\n\
                                 <td style='text-align: center'>" + e.dw + "</td>\n\
-                                <td style='text-align: right'>" + e.fhl + "</td>\n\
-                                <td style='text-align: right'>" + e.fhdj.toFixed(3) + "</td>\n\
-                                <td style='text-align: right'>" + (e.fhdj * e.fhl).toFixed(3) + "</td>\n\
+                                <td style='text-align: right'>" + e.sl + "</td>\n\
+                                <td style='text-align: right'>" + e.dj.toFixed(3) + "</td>\n\
+                                <td style='text-align: right'>" + (e.dj * e.sl).toFixed(3) + "</td>\n\
                                 <td><input type='text' value='" + (e.bz === null ? "" : e.bz) + "' style='width:100%;height:9mm;border:none;' /></td></tr>");
                 }
-                $("#tblFhd_cp").append("<tr><td colspan='2' style='border-right:none;'>合计 数量：<a id='heJi'>" + zsl + "</a></td>\n\
-                                <td colspan='2' style='border-right:none;border-left:none;'>金额：<a id='heJi'>" + fhJson.je.toFixed(3) + "</a></td>\n\
-                                <td colspan='3' style='border-right:none;border-left:none;'>已付：" + fhJson.yfje.toFixed(3) + "</td>\n\
-                                <td colspan='2' style='border-left:none;'>尚欠：" + (fhJson.je - fhJson.yfje).toFixed(3) + "</td></tr>");
+                $("#tblRkd_cp").append("<tr><td colspan='2' style='border-right:none;'>合计 数量：<a id='heJi'>" + zsl + "</a></td>\n\
+                                <td colspan='2' style='border-right:none;border-left:none;'>金额：<a id='heJi'>" + rkJson.je.toFixed(3) + "</a></td>\n\
+                                <td colspan='3' style='border-right:none;border-left:none;'>已付：" + rkJson.yfje.toFixed(3) + "</td>\n\
+                                <td colspan='2' style='border-left:none;'>尚欠：" + (rkJson.je - rkJson.yfje).toFixed(3) + "</td></tr>");
             }
 
-            function dyFaHuoDan4Dy2() {
-                var height = parseInt($("#tblFhd_cp").css("height"));
-                var len = $("#tblFhd_cp tr").length;
-                var pages = Math.floor((height - 1) / 350) + 1;
-                var rowIndex = 0;
-                var printPages = [];
-                for (var i = 0; i < pages; i++) {
-                    $("#tblFhd_cp tr").hide();
-                    $("#tblFhd_cp tr:eq(0)").show();
-                    var printFlag = false;
-                    var tempIndexs = [];
-                    while (true) {
-                        rowIndex++;
-                        if (rowIndex === len || rowIndex > len) {
-                            break;
-                        }
-                        $("#tblFhd_cp tr:eq(" + rowIndex + ")").show();
-                        tempIndexs.push(rowIndex);
-                        printFlag = true;
-                        var tempHeight = parseInt($("#tblFhd_cp").css("height"));
-                        if (tempHeight >= 350) {
-                            break;
-                        }
-                    }
-                    if (printFlag) {
-                        if (tempIndexs.length > 0) {
-                            printPages.push(tempIndexs);
-                        }
-                    }
-                }
-                printTexts = [];
-                index = -1;
-                for (var i = 0; i < printPages.length; i++) {
-                    $("#tblFhd_cp tr").hide();
-                    $("#tblFhd_cp tr:eq(0)").show();
-                    $("#tblYeShu").html("页数：" + printPages.length + "-" + (i + 1));
-                    var tempIndexs = printPages[i];
-                    for (var j = 0; j < tempIndexs.length; j++) {
-                        var tempIndex = tempIndexs[j];
-                        $("#tblFhd_cp tr:eq(" + tempIndex + ")").show();
-                    }
-                    var s = $("#dvFmFaHuoDan").html();
-                    printTexts.push(s);
-                }
-                print();
-            }
-
-            function print() {
-                index = index + 1;
-                var s = printTexts[index];
-                window.PrintText(s, 1, 210, 140);
-            }
-
-            function dyFaHuoDan4Dy() {
-                var s = $("#dvFmFaHuoDan").html();
+            function dyRuKuDan4Dy() {
+                var s = $("#dvFmRuKuDan").html();
                 try {
                     parent.parent.webObject.printTick(s);
                 } catch (e) {
@@ -131,13 +81,13 @@
 
             function paiXu(details) {
                 var i = details.length, j;
-                var fhddetail;
+                var rkddetail;
                 while (i > 0) {
                     for (j = 0; j < i - 1; j++) {
                         if (parseInt(details[j].txm) > parseInt(details[j + 1].txm)) {
-                            fhddetail = details[j];
+                            rkddetail = details[j];
                             details[j] = details[j + 1];
-                            details[j + 1] = fhddetail;
+                            details[j + 1] = rkddetail;
                         }
                     }
                     i--;
@@ -147,18 +97,18 @@
     </head>
     <body>
         <div>
-            <table id="tblFmFaHuoDanTools" style="width:98%;margin-top: 5px;">
+            <table id="tblFmRuKuDanTools" style="width:98%;margin-top: 5px;">
                 <tr class="noBorder">
                     <td>
-                        <input type="button" value="打印" onclick="dyFaHuoDan4Dy();">
+                        <input type="button" value="打印" onclick="dyRuKuDan4Dy();">
                     </td>
                 </tr>
             </table>
         </div>
-        <div id="dvFmFaHuoDan" style="width: 210mm;">
+        <div id="dvFmRuKuDan" style="width: 210mm;">
             <div style="width: 210mm;">
                 <style type="text/css">
-                    table#tblFmFaHuoDan,#tblFhd_cp{
+                    table#tblFmRuKuDan,#tblRkd_cp{
                         font-family:"宋体";
                         position: relative;
                         float: left;
@@ -171,21 +121,21 @@
                         margin: 0;
                         padding: 0;
                     }
-                    table#tblFmFaHuoDan td{
+                    table#tblFmRuKuDan td{
                         font-family:"宋体";
                         font-size: 4mm;
                         height: 8mm;
                         border: 1px #000 solid;
                         padding-left: 3px;
                     }
-                    table#tblFmFaHuoDan tr.noBorder td{
+                    table#tblFmRuKuDan tr.noBorder td{
                         border: none;
                     }
                     tr.tou td{
                         text-align: center;
                     }
                 </style>
-                <table id="tblFmFaHuoDan" style="width:98%;margin-top: 5px;">
+                <table id="tblFmRuKuDan" style="width:98%;margin-top: 5px;">
                     <tr class="noBorder">
                         <td colspan="3" style="padding: 0;">
                             <table style="width: 100%;">
@@ -209,16 +159,16 @@
                                     <td id="djbh" style="width: 35%; vertical-align: bottom; height: 4mm;">单据编号：</td>
                                     <td id="zdr" style="width: 30%; vertical-align: bottom; height: 4mm;">制单人：</td>
                                 </tr><tr style="height: 4mm;">
-                                    <td id="khmc" style="width: 35%; vertical-align: bottom; height: 4mm;border-bottom: none;">往来单位：</td>
-                                    <td id="khlxfs" style="width: 35%; vertical-align: bottom; height: 4mm;border-bottom: none;">联系地址：</td>
-                                    <td id="khlxdh" style="width: 30%; vertical-align: bottom; height: 4mm;border-bottom: none;">联系电话：</td>
+                                    <td id="gysmc" style="width: 35%; vertical-align: bottom; height: 4mm;border-bottom: none;">往来单位：</td>
+                                    <td id="gyslxfs" style="width: 35%; vertical-align: bottom; height: 4mm;border-bottom: none;">联系地址：</td>
+                                    <td id="gyslxdh" style="width: 30%; vertical-align: bottom; height: 4mm;border-bottom: none;">联系电话：</td>
                                 </tr>
                             </table>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="3" style="border: none">
-                            <table id="tblFhd_cp" style="width: 100%;table-layout: fixed;">
+                            <table id="tblRkd_cp" style="width: 100%;table-layout: fixed;">
                                 <tr class="tou">
                                     <td style="width: 5%">行号</td>
                                     <td style="width: 15%">编&nbsp;码</td>
