@@ -37,6 +37,14 @@ public class A01Controller extends BaseController {
         }
         return "zuZhi/a01/a01";
     }
+    
+    @RequestMapping("goPassword.do")
+    public String goPassword() {
+        if (!existsUser()) {
+            return "../index";
+        }
+        return "system/password";
+    }
 
     @RequestMapping(value = "getAllA01s.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
@@ -137,7 +145,7 @@ public class A01Controller extends BaseController {
         return map;
     }
     
-    @RequestMapping(value = "changePassword.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "changePassword.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String, Object> changePassword(@RequestParam String oldPassword,@RequestParam String newPassword) {
         if (!existsUser()) {

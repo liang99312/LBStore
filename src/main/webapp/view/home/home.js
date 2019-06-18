@@ -19,7 +19,7 @@ var goTongJi = "/LBStore/tongJi/goTongJi.do";
 var goBaoBiao = "/LBStore/baoBiao/goBaoBiao.do";
 var goZiDianLeiBie = "/LBStore/ziDianFenLei/goZiDianFenLei.do";
 var goQiYeZiDian = "/LBStore/ziDian/goZiDian.do";
-var goPassword = "/LBStore/goPassword.do";
+var goPassword = "/LBStore/a01/goPassword.do";
 var goSetPrinter = "#";
 
 var allMenu = {data: [
