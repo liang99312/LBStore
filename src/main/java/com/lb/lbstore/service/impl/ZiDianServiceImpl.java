@@ -71,7 +71,7 @@ public class ZiDianServiceImpl implements ZiDianService {
         if (map.containsKey("zdfl_id")) {
             hql += " and zdfl_id = " + map.get("zdfl_id");
         }
-        return ziDianDao.getPageList(hql, null, 1, 20);
+        return ziDianDao.getPageList(hql, null, Integer.parseInt(map.get("beginRow").toString()), Integer.parseInt(map.get("pageSize").toString()));
     }
 
     @Override

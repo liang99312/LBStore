@@ -169,7 +169,9 @@ public class KuCunDao extends BaseDao {
                     .addScalar("ckmc", StandardBasicTypes.STRING)
                     .addScalar("rkrmc", StandardBasicTypes.STRING)
                     .addScalar("sprmc", StandardBasicTypes.STRING)
-                    .addScalar("wzlb", StandardBasicTypes.STRING);
+                    .addScalar("wzlb", StandardBasicTypes.STRING);           
+            navtiveSQL.setFirstResult(Integer.parseInt(map.get("beginRow").toString()));
+            navtiveSQL.setMaxResults(Integer.parseInt(map.get("pageSize").toString()));
             List list = navtiveSQL.list();
             for (Object obj : list) {
                 Object[] objs = (Object[]) obj;

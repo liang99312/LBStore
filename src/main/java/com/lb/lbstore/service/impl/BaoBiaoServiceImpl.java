@@ -75,7 +75,7 @@ public class BaoBiaoServiceImpl implements BaoBiaoService {
         if (map.containsKey("state")) {
             hql += " and state = " + map.get("state");
         }
-        return baoBiaoDao.getPageList(hql, null, 1, 20);
+        return baoBiaoDao.getPageList(hql, null, Integer.parseInt(map.get("beginRow").toString()), Integer.parseInt(map.get("pageSize").toString()));
     }
 
     @Override
@@ -99,7 +99,7 @@ public class BaoBiaoServiceImpl implements BaoBiaoService {
         if (map.containsKey("state")) {
             hql += " and state = " + map.get("state");
         }
-        return baoBiaoDao.getPageList(hql, null, 1, 20);
+        return baoBiaoDao.getPageList(hql, null, Integer.parseInt(map.get("beginRow").toString()), Integer.parseInt(map.get("pageSize").toString()));
     }
 
 }

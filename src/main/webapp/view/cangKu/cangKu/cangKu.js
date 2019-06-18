@@ -5,6 +5,7 @@ var opt = {"data": [], "yxData": [], "unrepeat": true, "unConfirm":false};
 var selKuWei;
 var curCangKu;
 var optKwFlag = 1;
+var lxData = {yl:"原料仓",cp:"成品仓",bcp:"半成品仓",qt:"其他仓"};
 
 $(document).ready(function () {
     getAllA01s(setA01Data);
@@ -23,7 +24,7 @@ function jxCangKu(json) {
         if (item.state === -1) {
             classStr = ' class="danger"';
         }
-        var trStr = '<tr' + classStr + '><td>' + item.mc + '</td><td>' + item.dm + '</td><td>' + item.lx + '</td><td>'
+        var trStr = '<tr' + classStr + '><td>' + item.mc + '</td><td>' + item.dm + '</td><td>' + lxData[item.lx] + '</td><td>'
                 + '<button class="btn btn-info btn-xs icon-edit" onclick="editCangKu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;'
                 + '<button class="btn btn-info btn-xs icon-cog" onclick="setCangKu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;'
                 + '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteCangKu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button></td></tr>';

@@ -77,7 +77,7 @@ public class KeHuServiceImpl implements KeHuService {
         if (map.containsKey("state")) {
             hql += " and state = " + map.get("state");
         }
-        return keHuDao.getPageList(hql, null, 1, 20);
+        return keHuDao.getPageList(hql, null, Integer.parseInt(map.get("beginRow").toString()), Integer.parseInt(map.get("pageSize").toString()));
     }
 
     @Override

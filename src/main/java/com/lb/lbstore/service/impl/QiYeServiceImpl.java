@@ -77,7 +77,7 @@ public class QiYeServiceImpl implements QiYeService {
         if (map.containsKey("state")) {
             hql += " and state = " + map.get("state");
         }
-        return qiYeDao.getPageList(hql, null, 1, 20);
+        return qiYeDao.getPageList(hql, null, Integer.parseInt(map.get("beginRow").toString()), Integer.parseInt(map.get("pageSize").toString()));
     }
 
     @Override

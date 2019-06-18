@@ -77,7 +77,7 @@ public class WuZiLeiBieServiceImpl implements WuZiLeiBieService {
         if (map.containsKey("state")) {
             hql += " and state = " + map.get("state");
         }
-        return wuZiLeiBieDao.getPageList(hql, null, 1, 20);
+        return wuZiLeiBieDao.getPageList(hql, null, Integer.parseInt(map.get("beginRow").toString()), Integer.parseInt(map.get("pageSize").toString()));
     }
 
     @Override

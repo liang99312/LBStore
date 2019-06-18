@@ -129,7 +129,9 @@ public class TuiGongDao extends BaseDao {
                 sql += " and tg.sj <= '" + map.get("zrq") + " 23:59:59'";
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
-            navtiveSQL.addEntity("tg", TuiGong.class).addScalar("ckmc", StandardBasicTypes.STRING).addScalar("gysmc", StandardBasicTypes.STRING).addScalar("khmc", StandardBasicTypes.STRING);
+            navtiveSQL.addEntity("tg", TuiGong.class).addScalar("ckmc", StandardBasicTypes.STRING).addScalar("gysmc", StandardBasicTypes.STRING).addScalar("khmc", StandardBasicTypes.STRING);           
+            navtiveSQL.setFirstResult(Integer.parseInt(map.get("beginRow").toString()));
+            navtiveSQL.setMaxResults(Integer.parseInt(map.get("pageSize").toString()));
             List list = navtiveSQL.list();
             for (Object obj : list) {
                 Object[] objs = (Object[]) obj;
@@ -375,7 +377,9 @@ public class TuiGongDao extends BaseDao {
                     + "left join A01 a01 on thf.skr_id=a01.id "
                     + "where thf.tg_id=" + map.get("tg_id");
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
-            navtiveSQL.addEntity("thf", TuiGongFei.class).addScalar("skrmc", StandardBasicTypes.STRING);
+            navtiveSQL.addEntity("thf", TuiGongFei.class).addScalar("skrmc", StandardBasicTypes.STRING);           
+            navtiveSQL.setFirstResult(Integer.parseInt(map.get("beginRow").toString()));
+            navtiveSQL.setMaxResults(Integer.parseInt(map.get("pageSize").toString()));
             List list = navtiveSQL.list();
             for (Object obj : list) {
                 Object[] objs = (Object[]) obj;

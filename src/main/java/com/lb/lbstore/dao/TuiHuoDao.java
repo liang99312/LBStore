@@ -121,7 +121,9 @@ public class TuiHuoDao extends BaseDao {
                 sql += " and th.sj <= '" + map.get("zrq") + " 23:59:59'";
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
-            navtiveSQL.addEntity("th", TuiHuo.class).addScalar("ckmc", StandardBasicTypes.STRING).addScalar("khmc", StandardBasicTypes.STRING);
+            navtiveSQL.addEntity("th", TuiHuo.class).addScalar("ckmc", StandardBasicTypes.STRING).addScalar("khmc", StandardBasicTypes.STRING);           
+            navtiveSQL.setFirstResult(Integer.parseInt(map.get("beginRow").toString()));
+            navtiveSQL.setMaxResults(Integer.parseInt(map.get("pageSize").toString()));
             List list = navtiveSQL.list();
             for (Object obj : list) {
                 Object[] objs = (Object[]) obj;
@@ -366,7 +368,9 @@ public class TuiHuoDao extends BaseDao {
                     + "left join A01 a01 on thf.skr_id=a01.id "
                     + "where thf.th_id=" + map.get("th_id");
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
-            navtiveSQL.addEntity("thf", TuiHuoFei.class).addScalar("skrmc", StandardBasicTypes.STRING);
+            navtiveSQL.addEntity("thf", TuiHuoFei.class).addScalar("skrmc", StandardBasicTypes.STRING);           
+            navtiveSQL.setFirstResult(Integer.parseInt(map.get("beginRow").toString()));
+            navtiveSQL.setMaxResults(Integer.parseInt(map.get("pageSize").toString()));
             List list = navtiveSQL.list();
             for (Object obj : list) {
                 Object[] objs = (Object[]) obj;

@@ -101,7 +101,7 @@ public class A01ServiceImpl implements A01Service {
         if (map.containsKey("state")) {
             hql += " and state = " + map.get("state");
         }
-        return a01Dao.getPageList(hql, null, 1, 20);
+        return a01Dao.getPageList(hql, null, Integer.parseInt(map.get("beginRow").toString()), Integer.parseInt(map.get("pageSize").toString()));
     }
 
     @Override

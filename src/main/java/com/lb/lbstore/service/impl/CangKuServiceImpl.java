@@ -87,7 +87,7 @@ public class CangKuServiceImpl implements CangKuService {
         if (map.containsKey("state")) {
             hql += " and state = " + map.get("state");
         }
-        return cangKuDao.getPageList(hql, null, 1, 20);
+        return cangKuDao.getPageList(hql, null, Integer.parseInt(map.get("beginRow").toString()), Integer.parseInt(map.get("pageSize").toString()));
     }
 
     @Override

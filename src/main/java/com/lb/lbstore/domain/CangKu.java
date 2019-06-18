@@ -28,7 +28,7 @@ public class CangKu {
     private Integer qy_id;
     private String mc;
     private String dm;
-    private String lx; //ly：原料仓；cp：成品仓；bcp：半成品仓；qt：其他仓
+    private String lx; //yl：原料仓；cp：成品仓；bcp：半成品仓；qt：其他仓
     private String bz;
     private transient List<A01> a01s = new ArrayList();
     private transient List<KuWei> kws = new ArrayList();

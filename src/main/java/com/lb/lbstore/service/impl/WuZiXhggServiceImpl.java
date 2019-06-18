@@ -70,7 +70,7 @@ public class WuZiXhggServiceImpl implements WuZiXhggService {
         if (map.containsKey("state")) {
             hql += " and state = " + map.get("state");
         }
-        return wuZiXhggDao.getPageList(hql, null, 1, 20);
+        return wuZiXhggDao.getPageList(hql, null, Integer.parseInt(map.get("beginRow").toString()), Integer.parseInt(map.get("pageSize").toString()));
     }
 
 }

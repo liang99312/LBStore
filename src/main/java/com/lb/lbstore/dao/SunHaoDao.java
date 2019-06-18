@@ -118,7 +118,9 @@ public class SunHaoDao extends BaseDao {
                 sql += " and sh.sj <= '" + map.get("zrq") + " 23:59:59'";
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
-            navtiveSQL.addEntity("sh", SunHao.class).addScalar("ckmc", StandardBasicTypes.STRING);
+            navtiveSQL.addEntity("sh", SunHao.class).addScalar("ckmc", StandardBasicTypes.STRING);           
+            navtiveSQL.setFirstResult(Integer.parseInt(map.get("beginRow").toString()));
+            navtiveSQL.setMaxResults(Integer.parseInt(map.get("pageSize").toString()));
             List list = navtiveSQL.list();
             for (Object obj : list) {
                 Object[] objs = (Object[]) obj;

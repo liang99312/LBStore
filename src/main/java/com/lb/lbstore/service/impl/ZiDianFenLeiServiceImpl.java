@@ -64,7 +64,7 @@ public class ZiDianFenLeiServiceImpl implements ZiDianFenLeiService {
         if (map.containsKey("mc")) {
             hql += " and mc like '%" + map.get("mc") + "%'";
         }
-        return ziDianFenLeiDao.getPageList(hql, null, 1, 20);
+        return ziDianFenLeiDao.getPageList(hql, null, Integer.parseInt(map.get("beginRow").toString()), Integer.parseInt(map.get("pageSize").toString()));
     }
 
     @Override

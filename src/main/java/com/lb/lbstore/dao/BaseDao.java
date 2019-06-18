@@ -193,28 +193,26 @@ public abstract class BaseDao {
         return Integer.valueOf(list.get(0).toString());
     }
 
-    public List getPageList(String hql, Object[] parameters, int pageNow, int pageSize) {
-        int b_row = (pageNow - 1) * pageSize;
+    public List getPageList(String hql, Object[] parameters, int beginRow, int pageSize) {
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
         if (parameters != null && parameters.length > 0) {
             for (int i = 0; i < parameters.length; i++) {
                 query.setParameter(i, parameters[i]);
             }
         }
-        query.setFirstResult(b_row);
+        query.setFirstResult(beginRow);
         query.setMaxResults(pageSize);
         return query.list();
     }
 
-    public List getPageListBySql(String sql, Object[] parameters, int pageNow, int pageSize) {
-        int b_row = (pageNow - 1) * pageSize;
+    public List getPageListBySql(String sql, Object[] parameters, int beginRow, int pageSize) {
         Query query = sessionFactory.getCurrentSession().createSQLQuery(sql);
         if (parameters != null && parameters.length > 0) {
             for (int i = 0; i < parameters.length; i++) {
                 query.setParameter(i, parameters[i]);
             }
         }
-        query.setFirstResult(b_row);
+        query.setFirstResult(beginRow);
         query.setMaxResults(pageSize);
         return query.list();
     }
