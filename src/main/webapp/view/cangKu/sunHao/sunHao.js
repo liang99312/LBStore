@@ -181,7 +181,7 @@ function jxSunHao(json) {
         var editStr = '<button class="btn btn-info btn-xs icon-edit" onclick="editSunHao(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var dealStr = '<button class="btn btn-info btn-xs icon-legal" onclick="dealSunHao(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var delStr = '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteSunHao(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>';
-        var trStr = '<tr' + classStr + '><td>' + item.ckmc + '</td><td>' + item.lsh + '</td><td>' + item.dh + '</td><td class="longText">' + item.wz + '</td><td>' + item.sj + '</td><td>' + item.sl + '</td><td>'
+        var trStr = '<tr' + classStr + '><td>' + item.ckmc + '</td><td>' + item.lsh + '</td><td>' + item.dh + '</td><td>' + item.wz + '</td><td>' + item.sj + '</td><td>' + item.sl + '</td><td>'
                 + readStr
                 + (item.state === 0 ? editStr : "")
                 + (item.state === 0 ? dealStr : "")
@@ -254,6 +254,7 @@ function addSunHao() {
     $("#btnOk").html("保存");
     $("#divXzmx").show();
     $("#divSpr").hide();
+    $(".bb-element").hide();
     $("#inpGys").val("");
     $("#inpDh").val("");
     $("#inpYy").val("");
@@ -274,6 +275,7 @@ function editSunHao(index) {
     $("#btnOk").html("保存");
     $("#divXzmx").show();
     $("#divSpr").hide();
+    $(".bb-element").hide();
     var sunHao = sunHaos[index];
     editIndex = index;
     selectSunHaoDetail(sunHao.id);
@@ -289,6 +291,7 @@ function readSunHao(index) {
     $("#btnOk").html("关闭");
     $("#divXzmx").hide();
     $("#divSpr").show();
+    $(".bb-element").show();
     var sunHao = sunHaos[index];
     editIndex = index;
     selectSunHaoDetail(sunHao.id);
@@ -339,6 +342,7 @@ function dealSunHao(index) {
     $("#btnOk").html("办理");
     $("#divXzmx").hide();
     $("#divSpr").hide();
+    $(".bb-element").hide();
     var sunHao = sunHaos[index];
     editIndex = index;
     selectSunHaoDetail(sunHao.id);

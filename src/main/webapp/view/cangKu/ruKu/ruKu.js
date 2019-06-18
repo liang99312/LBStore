@@ -267,7 +267,7 @@ function jxRuKu(json) {
         var dealStr = '<button class="btn btn-info btn-xs icon-legal" onclick="dealRuKu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var delStr = '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteRuKu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>';
         var feiStr = '<button class="btn btn-info btn-xs icon-money" onclick="feiRuKu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>';
-        var trStr = '<tr' + classStr + '><td>' + item.ckmc + '</td><td>' + item.lsh + '</td><td>' + item.gysmc + '</td><td>' + item.khmc + '</td><td class="longText">' + item.wz + '</td><td>' + item.sj + '</td><td>' + item.sl + '</td><td>'
+        var trStr = '<tr' + classStr + '><td>' + item.ckmc + '</td><td>' + item.lsh + '</td><td>' + item.gysmc + '</td><td>' + item.khmc + '</td><td>' + item.wz + '</td><td>' + item.sj + '</td><td>' + item.sl + '</td><td>'
                 + readStr
                 + (item.state === 0 ? editStr : "")
                 + (item.state === 0 ? dealStr : "")
@@ -351,6 +351,7 @@ function addRuKu() {
     $("#divXzmx").show();
     $("#dvMxCanKao").show();
     $("#divSpr").hide();
+    $(".bb-element").hide();
     $("#inpGys").val("");
     $("#inpKh").val("");
     $("#inpDh").val("");
@@ -372,6 +373,7 @@ function editRuKu(index) {
     $("#divXzmx").show();
     $("#dvMxCanKao").show();
     $("#divSpr").hide();
+    $(".bb-element").hide();
     var ruKu = ruKus[index];
     editIndex = index;
     selectRuKuDetail(ruKu.id, jxReadRuKu);
@@ -387,6 +389,7 @@ function readRuKu(index) {
     $("#btnOk").html("关闭");
     $("#divXzmx").hide();
     $("#divSpr").show();
+    $(".bb-element").show();
     var ruKu = ruKus[index];
     editIndex = index;
     $("#dvMxCanKao").hide();
@@ -453,6 +456,7 @@ function dealRuKu(index) {
     $("#divXzmx").hide();
     $("#divSpr").hide();
     $("#dvMxCanKao").hide();
+    $(".bb-element").hide();
     var ruKu = ruKus[index];
     editIndex = index;
     selectRuKuDetail(ruKu.id,jxReadRuKu);

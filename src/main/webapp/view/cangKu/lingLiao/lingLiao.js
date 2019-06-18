@@ -184,7 +184,7 @@ function jxLingLiao(json) {
         var editStr = '<button class="btn btn-info btn-xs icon-edit" onclick="editLingLiao(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var dealStr = '<button class="btn btn-info btn-xs icon-legal" onclick="dealLingLiao(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var delStr = '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteLingLiao(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>';
-        var trStr = '<tr' + classStr + '><td>' + item.ckmc + '</td><td>' + item.lsh + '</td><td>' + item.dh + '</td><td class="longText">' + item.wz + '</td><td>' + item.sj + '</td><td>' + item.sl + '</td><td>'
+        var trStr = '<tr' + classStr + '><td>' + item.ckmc + '</td><td>' + item.lsh + '</td><td>' + item.dh + '</td><td>' + item.wz + '</td><td>' + item.sj + '</td><td>' + item.sl + '</td><td>'
                 + readStr
                 + (item.state === 0 ? editStr : "")
                 + (item.state === 0 ? dealStr : "")
@@ -261,6 +261,7 @@ function addLingLiao() {
     $("#btnOk").html("保存");
     $("#divXzmx").show();
     $("#divSpr").hide();
+    $(".bb-element").hide();
     $("#inpGys").val("");
     $("#inpKh").val("");
     $("#inpDh").val("");
@@ -281,6 +282,7 @@ function editLingLiao(index) {
     $("#btnOk").html("保存");
     $("#divXzmx").show();
     $("#divSpr").hide();
+    $(".bb-element").hide();
     var lingLiao = lingLiaos[index];
     editIndex = index;
     selectLingLiaoDetail(lingLiao.id);
@@ -296,6 +298,7 @@ function readLingLiao(index) {
     $("#btnOk").html("关闭");
     $("#divXzmx").hide();
     $("#divSpr").show();
+    $(".bb-element").show();
     var lingLiao = lingLiaos[index];
     editIndex = index;
     selectLingLiaoDetail(lingLiao.id);
@@ -347,6 +350,7 @@ function dealLingLiao(index) {
     $("#btnOk").html("办理");
     $("#divXzmx").hide();
     $("#divSpr").hide();
+    $(".bb-element").hide();
     var lingLiao = lingLiaos[index];
     editIndex = index;
     selectLingLiaoDetail(lingLiao.id);
