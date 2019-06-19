@@ -9,6 +9,7 @@ import com.lb.lbstore.dao.A01Dao;
 import com.lb.lbstore.domain.A01;
 import com.lb.lbstore.service.A01Service;
 import com.lb.lbstore.util.DataUtil;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,27 +82,35 @@ public class A01ServiceImpl implements A01Service {
     }
 
     @Override
-    public int queryRows(HashMap map) {
-        String sql = "select count(1) from A01 where qy_id="+map.get("qy_id")+" and state < 8";
+    public int queryRows(HashMap map) {        
+        List parameters = new ArrayList();
+        parameters.add(map.get("qy_id"));
+        String sql = "select count(1) from A01 where qy_id=? and state < 8";
         if (map.containsKey("mc")) {
-            sql += " and mc like '%" + map.get("mc") + "%'";
+            sql += " and mc like '%?%'";
+            parameters.add(map.get("mc"));
         }
         if (map.containsKey("state")) {
-            sql += " and state = " + map.get("state");
-        }
-        return a01Dao.getCount(sql, null);
+            sql += " and state = ?";
+            parameters.add(map.get("state"));
+        }        
+        return a01Dao.getCount(sql, parameters.toArray());
     }
 
     @Override
-    public List<A01> queryA01sByPage(HashMap map) {
-        String hql = "from A01 where qy_id="+map.get("qy_id")+" and state < 8";
+    public List<A01> queryA01sByPage(HashMap map) {        
+        List parameters = new ArrayList();
+        parameters.add(map.get("qy_id"));
+        String hql = "from A01 where qy_id=? and state < 8";
         if (map.containsKey("mc")) {
-            hql += " and mc like '%" + map.get("mc") + "%'";
+            hql += " and mc like '%?%'";
+            parameters.add(map.get("mc"));
         }
         if (map.containsKey("state")) {
-            hql += " and state = " + map.get("state");
+            hql += " and state = ?";
+            parameters.add(map.get("state"));
         }
-        return a01Dao.getPageList(hql, null, Integer.parseInt(map.get("beginRow").toString()), Integer.parseInt(map.get("pageSize").toString()));
+        return a01Dao.getPageList(hql, parameters.toArray(), Integer.parseInt(map.get("beginRow").toString()), Integer.parseInt(map.get("pageSize").toString()));
     }
 
     @Override
