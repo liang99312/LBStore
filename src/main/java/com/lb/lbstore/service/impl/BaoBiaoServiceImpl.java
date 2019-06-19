@@ -41,7 +41,7 @@ public class BaoBiaoServiceImpl implements BaoBiaoService {
         List parameters = new ArrayList();
         parameters.add(qy_id);
         parameters.add(mkdm);
-        return baoBiaoDao.getResult("from BaoBiao baoBiao where qy_id=? and mkdm='?'", parameters.toArray());
+        return baoBiaoDao.getResult("from BaoBiao baoBiao where qy_id=? and mkdm=?", parameters.toArray());
     }
 
     @Override

@@ -24,7 +24,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class LingLiaoDao extends BaseDao {
-    
+
     public LingLiao getLingLiaoWithDetailById(Integer id) {
         LingLiao lingLiao = null;
         Session session = null;
@@ -35,8 +35,9 @@ public class LingLiaoDao extends BaseDao {
                     + "left join KeHu kh on ll.kh_id=kh.id "
                     + "left join A01 a01 on ll.llr_id=a01.id "
                     + "left join A01 a02 on ll.spr_id=a02.id "
-                    + "where ll.id=" + id;
+                    + "where ll.id=?";
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
+            navtiveSQL.setParameter(0, id);
             navtiveSQL.addEntity("ll", LingLiao.class)
                     .addScalar("khmc", StandardBasicTypes.STRING)
                     .addScalar("ckmc", StandardBasicTypes.STRING)
@@ -62,8 +63,9 @@ public class LingLiaoDao extends BaseDao {
             }
             lingLiao = list_ll.get(0);
 
-            String sql_d = "select {d.*},l.mc as wzlb from LingLiaoDetail d left join WuZiLeiBie l on d.wzlb_id=l.id where d.ll_id=" + id;
+            String sql_d = "select {d.*},l.mc as wzlb from LingLiaoDetail d left join WuZiLeiBie l on d.wzlb_id=l.id where d.ll_id=?";
             SQLQuery navtiveSQL_d = session.createSQLQuery(sql_d);
+            navtiveSQL_d.setParameter(0, id);
             navtiveSQL_d.addEntity("d", LingLiaoDetail.class).addScalar("wzlb", StandardBasicTypes.STRING);
             List<LingLiaoDetail> details = new ArrayList();
             List list_d = navtiveSQL_d.list();
@@ -100,8 +102,9 @@ public class LingLiaoDao extends BaseDao {
                     + "left join KeHu kh on ll.kh_id=kh.id "
                     + "left join A01 a01 on ll.llr_id=a01.id "
                     + "left join WuZiLeiBie l on lld.wzlb_id=l.id "
-                    + "where lld.id=" + id;
+                    + "where lld.id=?";
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
+            navtiveSQL.setParameter(0, id);
             navtiveSQL.addEntity("lld", LingLiaoDetail.class)
                     .addScalar("khmc", StandardBasicTypes.STRING)
                     .addScalar("ckmc", StandardBasicTypes.STRING)
@@ -144,36 +147,49 @@ public class LingLiaoDao extends BaseDao {
         List<LingLiao> result = new ArrayList();
         Session session = null;
         try {
+            List parameters = new ArrayList();
+            parameters.add(map.get("qy_id"));
             session = getSessionFactory().openSession();
             String sql = "select {ll.*},kh.mc as khmc,ck.mc as ckmc from LingLiao ll "
                     + "left join CangKu ck on ll.ck_id=ck.id left join KeHu kh on ll.kh_id=kh.id "
-                    + "where ll.qy_id=" + map.get("qy_id");
+                    + "where ll.qy_id=?";
             if (map.containsKey("ck_id")) {
-                sql += " and ll.ck_id = " + map.get("ck_id");
+                sql += " and ll.ck_id = ?";
+                parameters.add(map.get("ck_id"));
             }
             if (map.containsKey("lsh")) {
-                sql += " and ll.lsh like '%" + map.get("lsh") + "%'";
+                sql += " and ll.lsh like '%?%'";
+                parameters.add(map.get("lsh"));
             }
             if (map.containsKey("wz")) {
-                sql += " and ll.wz like '%" + map.get("wz") + "%'";
+                sql += " and ll.wz like '%?%'";
+                parameters.add(map.get("wz"));
             }
             if (map.containsKey("state")) {
-                sql += " and ll.state = " + map.get("state");
+                sql += " and ll.state = ?";
+                parameters.add(map.get("state"));
             }
             if (map.containsKey("kh_id")) {
-                sql += " and ll.kh_id = " + map.get("kh_id");
+                sql += " and ll.kh_id = ?";
+                parameters.add(map.get("kh_id"));
             }
             if (map.containsKey("gys_id")) {
-                sql += " and ll.gys_id = " + map.get("gys_id");
+                sql += " and ll.gys_id = ?";
+                parameters.add(map.get("gys_id"));
             }
             if (map.containsKey("qrq")) {
-                sql += " and ll.sj >= '" + map.get("qrq") + "'";
+                sql += " and ll.sj >= '?'";
+                parameters.add(map.get("qrq"));
             }
             if (map.containsKey("zrq")) {
-                sql += " and ll.sj <= '" + map.get("zrq") + " 23:59:59'";
+                sql += " and ll.sj <= '?'";
+                parameters.add(map.get("zrq") + " 23:59:59");
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
-            navtiveSQL.addEntity("ll", LingLiao.class).addScalar("khmc", StandardBasicTypes.STRING).addScalar("ckmc", StandardBasicTypes.STRING);           
+            for (int i = 0; i < parameters.size(); i++) {
+                navtiveSQL.setParameter(i, parameters.get(i));
+            }
+            navtiveSQL.addEntity("ll", LingLiao.class).addScalar("khmc", StandardBasicTypes.STRING).addScalar("ckmc", StandardBasicTypes.STRING);
             navtiveSQL.setFirstResult(Integer.parseInt(map.get("beginRow").toString()));
             navtiveSQL.setMaxResults(Integer.parseInt(map.get("pageSize").toString()));
             List list = navtiveSQL.list();
@@ -199,26 +215,34 @@ public class LingLiaoDao extends BaseDao {
         }
         return result;
     }
-    
+
     public List<LingLiaoDetail> queryLingLiaoDetailsByPage(HashMap map) {
         List<LingLiaoDetail> result = new ArrayList();
         Session session = null;
         try {
+            List parameters = new ArrayList();
+            parameters.add(map.get("qy_id"));
             session = getSessionFactory().openSession();
             String sql = "select {lld.*},kh.mc as khmc,ck.mc as ckmc from LingLiaoDetail lld left join LingLiao ll on lld.ll_id=ll.id "
                     + "left join CangKu ck on ll.ck_id=ck.id left join KeHu kh on ll.kh_id=kh.id "
-                    + "where ll.qy_id=" + map.get("qy_id");
+                    + "where ll.qy_id=?";
             if (map.containsKey("mc")) {
-                sql += " and ll.wz like '%" + map.get("mc") + "%'";
+                sql += " and ll.wz like '%?%'";
+                parameters.add(map.get("mc"));
             }
             if (map.containsKey("state")) {
-                sql += " and ll.state = " + map.get("state");
+                sql += " and ll.state = ?";
+                parameters.add(map.get("state"));
             }
             if (map.containsKey("lsh")) {
-                sql += " and ll.lsh = " + map.get("lsh");
+                sql += " and ll.lsh = '?'";
+                parameters.add(map.get("lsh"));
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
-            navtiveSQL.addEntity("lld", LingLiaoDetail.class).addScalar("khmc", StandardBasicTypes.STRING).addScalar("ckmc", StandardBasicTypes.STRING);           
+            for (int i = 0; i < parameters.size(); i++) {
+                navtiveSQL.setParameter(i, parameters.get(i));
+            }
+            navtiveSQL.addEntity("lld", LingLiaoDetail.class).addScalar("khmc", StandardBasicTypes.STRING).addScalar("ckmc", StandardBasicTypes.STRING);
             navtiveSQL.setFirstResult(Integer.parseInt(map.get("beginRow").toString()));
             navtiveSQL.setMaxResults(Integer.parseInt(map.get("pageSize").toString()));
             List list = navtiveSQL.list();
@@ -244,11 +268,13 @@ public class LingLiaoDao extends BaseDao {
         }
         return result;
     }
-    
+
     public List<LingLiaoDetail> queryLingLiaoDetailsTop100(LingLiaoDetail detail) {
         List<LingLiaoDetail> result = new ArrayList();
         Session session = null;
         try {
+            List parameters = new ArrayList();
+            parameters.add(detail.getQy_id());
             session = getSessionFactory().openSession();
             String sql = "select {lld.*},kh.mc as khmc,ck.mc as ckmc,ll.spsj as sj,ll.lsh as lsh,a01.mc as llrmc,l.mc as wzlb from LingLiaoDetail lld "
                     + "left join LingLiao ll on lld.ll_id=ll.id "
@@ -256,41 +282,55 @@ public class LingLiaoDao extends BaseDao {
                     + "left join KeHu kh on ll.kh_id=kh.id "
                     + "left join A01 a01 on ll.llr_id=a01.id "
                     + "left join WuZiLeiBie l on lld.wzlb_id=l.id "
-                    + "where ll.qy_id=" + detail.getQy_id();
+                    + "where ll.qy_id=?";
             if (detail.getLsh() != null && !"".equals(detail.getLsh())) {
-                sql += " and ll.lsh = '" + detail.getLsh() + "'";
+                sql += " and ll.lsh = '?'";
+                parameters.add(detail.getLsh());
             }
             if (detail.getCk_id() != null) {
-                sql += " and lld.ck_id = " + detail.getCk_id();
+                sql += " and lld.ck_id = ?";
+                parameters.add(detail.getCk_id());
             }
             if (detail.getWzlb_id() != null) {
-                sql += " and lld.wzlb_id = " + detail.getWzlb_id();
+                sql += " and lld.wzlb_id = ?";
+                parameters.add(detail.getWzlb_id());
             }
             if (detail.getWzmc() != null && !"".equals(detail.getWzmc())) {
-                sql += " and lld.wzmc = '" + detail.getWzmc() + "'";
+                sql += " and lld.wzmc = '?'";
+                parameters.add(detail.getWzmc());
             }
             if (detail.getXhgg() != null && !"".equals(detail.getXhgg())) {
-                sql += " and lld.xhgg = '" + detail.getXhgg() + "'";
+                sql += " and lld.xhgg = '?'";
+                parameters.add(detail.getXhgg());
             }
             if (detail.getKh_id() != null) {
-                sql += " and lld.kh_id = " + detail.getKh_id();
+                sql += " and lld.kh_id = ?";
+                parameters.add(detail.getKh_id());
             }
             if (detail.getGys_id() != null) {
-                sql += " and lld.ck_id = " + detail.getGys_id();
+                sql += " and lld.ck_id = ?";
+                parameters.add(detail.getGys_id());
             }
             if (detail.getLlr_id() != null) {
-                sql += " and ll.llr_id = " + detail.getLlr_id();
+                sql += " and ll.llr_id = ?";
+                parameters.add(detail.getLlr_id());
             }
             if (detail.getTxm() != null && !"".equals(detail.getTxm())) {
-                sql += " and lld.txm = '" + detail.getTxm() + "'";
+                sql += " and lld.txm = '?'";
+                parameters.add(detail.getTxm());
             }
             if (detail.getQrq() != null && !"".equals(detail.getQrq())) {
-                sql += " and ll.spsj >= '" + detail.getQrq() + "'";
+                sql += " and ll.spsj >= '?'";
+                parameters.add(detail.getQrq());
             }
             if (detail.getZrq() != null && !"".equals(detail.getZrq())) {
-                sql += " and ll.spsj <= '" + detail.getZrq() + " 23:59:59'";
+                sql += " and ll.spsj <= '?'";
+                parameters.add(detail.getZrq() + " 23:59:59");
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
+            for (int i = 0; i < parameters.size(); i++) {
+                navtiveSQL.setParameter(i, parameters.get(i));
+            }
             navtiveSQL.addEntity("lld", LingLiaoDetail.class)
                     .addScalar("khmc", StandardBasicTypes.STRING)
                     .addScalar("ckmc", StandardBasicTypes.STRING)
@@ -377,8 +417,8 @@ public class LingLiaoDao extends BaseDao {
             tx = session.beginTransaction();
             session.update(lingLiao);
             session.flush();
-            String deleteDetail = "delete from LingLiaoDetail where ll_id=" + lingLiao.getId();
-            session.createSQLQuery(deleteDetail).executeUpdate();
+            String deleteDetail = "delete from LingLiaoDetail where ll_id=?";
+            session.createSQLQuery(deleteDetail).setParameter(0, lingLiao.getId()).executeUpdate();
             session.flush();
             for (LingLiaoDetail detail : lingLiao.getDetails()) {
                 detail.setCk_id(lingLiao.getCk_id());
@@ -412,10 +452,10 @@ public class LingLiaoDao extends BaseDao {
         try {
             session = getSessionFactory().openSession();
             tx = session.beginTransaction();
-            String deleteDetail = "delete from LingLiaoDetail where ll_id=" + id;
-            session.createSQLQuery(deleteDetail).executeUpdate();
-            String deleteLl = "delete from LingLiao where id=" + id;
-            session.createSQLQuery(deleteLl).executeUpdate();
+            String deleteDetail = "delete from LingLiaoDetail where ll_id=?";
+            session.createSQLQuery(deleteDetail).setParameter(0, id).executeUpdate();
+            String deleteLl = "delete from LingLiao where id=?";
+            session.createSQLQuery(deleteLl).setParameter(0, id).executeUpdate();
             session.flush();
             tx.commit();
             result = true;
@@ -441,8 +481,8 @@ public class LingLiaoDao extends BaseDao {
         try {
             session = getSessionFactory().openSession();
             tx = session.beginTransaction();
-            String sql = "from LingLiaoDetail where ll_id=" + lingLiao.getId();
-            List<LingLiaoDetail> list = session.createQuery(sql).list();
+            String sql = "from LingLiaoDetail where ll_id=?";
+            List<LingLiaoDetail> list = session.createQuery(sql).setParameter(0, lingLiao.getId()).list();
             Hashtable<Integer, LingLiaoDetail> detailTable = new Hashtable();
             StringBuilder sb = new StringBuilder();
             sb.append("(-1");

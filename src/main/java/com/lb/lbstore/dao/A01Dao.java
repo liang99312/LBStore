@@ -17,7 +17,7 @@ public class A01Dao extends BaseDao {
     public A01 checkLogin(String bh, String password) {
         List parameters = new ArrayList();
         parameters.add(bh);
-        List list = this.getResult("from A01 where bh='?'", parameters.toArray());
+        List list = this.getResult("from A01 where bh=?", parameters.toArray());
         if (!list.isEmpty()) {
             Object obj = list.get(0);
             if (obj != null) {

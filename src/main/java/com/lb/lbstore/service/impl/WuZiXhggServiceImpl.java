@@ -8,6 +8,7 @@ package com.lb.lbstore.service.impl;
 import com.lb.lbstore.dao.WuZiXhggDao;
 import com.lb.lbstore.domain.WuZiXhgg;
 import com.lb.lbstore.service.WuZiXhggService;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,9 @@ public class WuZiXhggServiceImpl implements WuZiXhggService {
 
     @Override
     public List<WuZiXhgg> getWuZiXhgg4zd(Integer wzzd_id) {
-        return wuZiXhggDao.getResult("from WuZiXhgg wuZiXhgg where wzzd_id="+wzzd_id, null);
+        List parameters = new ArrayList();
+        parameters.add(wzzd_id);
+        return wuZiXhggDao.getResult("from WuZiXhgg wuZiXhgg where wzzd_id=?", parameters.toArray());
     }
 
     @Override
@@ -51,26 +54,36 @@ public class WuZiXhggServiceImpl implements WuZiXhggService {
 
     @Override
     public int queryRows(HashMap map) {
-        String sql = "select count(1) from WuZiXhgg where qy_id="+map.get("qy_id") + " and wzzd_id=" + map.get("wzzd_id");
+        List parameters = new ArrayList();
+        parameters.add(map.get("qy_id"));
+        parameters.add(map.get("wzzd_id"));
+        String sql = "select count(1) from WuZiXhgg where qy_id=? and wzzd_id=?";
         if (map.containsKey("mc")) {
-            sql += " and mc like '%" + map.get("mc") + "%'";
+            sql += " and mc like '%?%'";
+            parameters.add(map.get("mc"));
         }
         if (map.containsKey("state")) {
-            sql += " and state = " + map.get("state");
+            sql += " and state = ?";
+            parameters.add(map.get("state"));
         }
-        return wuZiXhggDao.getCount(sql, null);
+        return wuZiXhggDao.getCount(sql, parameters.toArray());
     }
 
     @Override
     public List<WuZiXhgg> queryWuZiXhggsByPage(HashMap map) {
-        String hql = "from WuZiXhgg where qy_id="+map.get("qy_id") + " and wzzd_id=" + map.get("wzzd_id");
+        List parameters = new ArrayList();
+        parameters.add(map.get("qy_id"));
+        parameters.add(map.get("wzzd_id"));
+        String hql = "from WuZiXhgg where qy_id=? and wzzd_id=?";
         if (map.containsKey("mc")) {
-            hql += " and mc like '%" + map.get("mc") + "%'";
+            hql += " and mc like '%?%'";
+            parameters.add(map.get("mc"));
         }
         if (map.containsKey("state")) {
-            hql += " and state = " + map.get("state");
+            hql += " and state = ?";
+            parameters.add(map.get("state"));
         }
-        return wuZiXhggDao.getPageList(hql, null, Integer.parseInt(map.get("beginRow").toString()), Integer.parseInt(map.get("pageSize").toString()));
+        return wuZiXhggDao.getPageList(hql, parameters.toArray(), Integer.parseInt(map.get("beginRow").toString()), Integer.parseInt(map.get("pageSize").toString()));
     }
 
 }

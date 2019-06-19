@@ -9,6 +9,7 @@ import com.lb.lbstore.dao.LingLiaoDao;
 import com.lb.lbstore.domain.LingLiao;
 import com.lb.lbstore.domain.LingLiaoDetail;
 import com.lb.lbstore.service.LingLiaoService;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,20 +29,22 @@ public class LingLiaoServiceImpl implements LingLiaoService {
     public LingLiao getLingLiaoById(Integer id) {
         return (LingLiao) lingLiaoDao.findObjectById(LingLiao.class, id);
     }
-    
+
     @Override
     public LingLiao getLingLiaoWithDetailById(Integer id) {
-        return  lingLiaoDao.getLingLiaoWithDetailById(id);
+        return lingLiaoDao.getLingLiaoWithDetailById(id);
     }
-    
+
     @Override
     public LingLiaoDetail getLingLiaoDetailById(Integer id) {
-        return  lingLiaoDao.getLingLiaoDetailById(id);
+        return lingLiaoDao.getLingLiaoDetailById(id);
     }
 
     @Override
     public List<LingLiao> getAllLingLiaos(Integer qy_id) {
-        return lingLiaoDao.getResult("from LingLiao lingLiao where qy_id="+qy_id, null);
+        List parameters = new ArrayList();
+        parameters.add(qy_id);
+        return lingLiaoDao.getResult("from LingLiao lingLiao where qy_id=?", parameters.toArray());
     }
 
     @Override
@@ -62,32 +65,42 @@ public class LingLiaoServiceImpl implements LingLiaoService {
 
     @Override
     public int queryRows(HashMap map) {
-        String sql = "select count(1) from LingLiao where qy_id="+map.get("qy_id");
+        List parameters = new ArrayList();
+        parameters.add(map.get("qy_id"));
+        String sql = "select count(1) from LingLiao where qy_id=?";
         if (map.containsKey("ck_id")) {
-            sql += " and ck_id = " + map.get("ck_id");
+            sql += " and ck_id = ?";
+            parameters.add(map.get("ck_id"));
         }
         if (map.containsKey("lsh")) {
-            sql += " and lsh like '%" + map.get("lsh") + "%'";
+            sql += " and lsh like '%?%'";
+            parameters.add(map.get("lsh"));
         }
         if (map.containsKey("wz")) {
-            sql += " and wz like '%" + map.get("wz") + "%'";
+            sql += " and wz like '%?%'";
+            parameters.add(map.get("wz"));
         }
         if (map.containsKey("state")) {
-            sql += " and state = " + map.get("state");
+            sql += " and state = ?";
+            parameters.add(map.get("state"));
         }
         if (map.containsKey("kh_id")) {
-            sql += " and kh_id = " + map.get("kh_id");
+            sql += " and kh_id = ?";
+            parameters.add(map.get("kh_id"));
         }
         if (map.containsKey("gys_id")) {
-            sql += " and gys_id = " + map.get("gys_id");
+            sql += " and gys_id = ?";
+            parameters.add(map.get("gys_id"));
         }
         if (map.containsKey("qrq")) {
-            sql += " and sj >= '" + map.get("qrq") + "'";
+            sql += " and sj >= '?'";
+            parameters.add(map.get("qrq"));
         }
         if (map.containsKey("zrq")) {
-            sql += " and sj <= '" + map.get("zrq") + " 23:59:59'";
+            sql += " and sj <= '?'";
+            parameters.add(map.get("zrq") + " 23:59:59");
         }
-        return lingLiaoDao.getCount(sql, null);
+        return lingLiaoDao.getCount(sql, parameters.toArray());
     }
 
     @Override
@@ -96,20 +109,24 @@ public class LingLiaoServiceImpl implements LingLiaoService {
     }
 
     @Override
-    public boolean dealLingLiao(LingLiao lingLiao,Integer a01_id) {
+    public boolean dealLingLiao(LingLiao lingLiao, Integer a01_id) {
         return lingLiaoDao.dealLingLiao(lingLiao, a01_id);
     }
-    
+
     @Override
     public int queryDetailRows(HashMap map) {
-        String sql = "select count(1) from LingLiao where qy_id="+map.get("qy_id");
+        List parameters = new ArrayList();
+        parameters.add(map.get("qy_id"));
+        String sql = "select count(1) from LingLiao where qy_id=?";
         if (map.containsKey("mc")) {
-            sql += " and mc like '%" + map.get("mc") + "%'";
+            sql += " and mc like '%?%'";
+            parameters.add(map.get("mc"));
         }
         if (map.containsKey("state")) {
-            sql += " and state = " + map.get("state");
+            sql += " and state = ?";
+            parameters.add(map.get("state"));
         }
-        return lingLiaoDao.getCount(sql, null);
+        return lingLiaoDao.getCount(sql, parameters.toArray());
     }
 
     @Override

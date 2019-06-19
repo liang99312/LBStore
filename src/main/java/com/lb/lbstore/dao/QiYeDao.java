@@ -7,6 +7,7 @@ package com.lb.lbstore.dao;
 
 import com.lb.lbstore.domain.A01;
 import com.lb.lbstore.domain.QiYe;
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class QiYeDao extends BaseDao {
-    
+
     public Integer saveQiYe(QiYe qy) {
         Integer result = -1;
         Session session = null;
@@ -44,19 +45,23 @@ public class QiYeDao extends BaseDao {
             } catch (Exception he) {
                 he.printStackTrace();
             }
-            
+
         }
         return result;
     }
-    
+
     public boolean existQiYe(Integer id, String mc) {
+        List parameters = new ArrayList();
         String sql = "";
         if (id > -1) {
-            sql = "select 1 from qiye where id!=" + id + " and mc ='" + mc + "'";
+            sql = "select 1 from qiye where id!=? and mc ='?'";
+            parameters.add(id);
+            parameters.add(mc);
         } else {
-            sql = "select 1 from qiye where mc ='" + mc + "'";
+            sql = "select 1 from qiye where mc ='?'";
+            parameters.add(mc);
         }
-        List list = this.getSqlResult(sql);
+        List list = this.getSqlResult(sql, parameters.toArray());
         return !list.isEmpty();
     }
 }

@@ -8,6 +8,7 @@ package com.lb.lbstore.service.impl;
 import com.lb.lbstore.dao.QiYeDao;
 import com.lb.lbstore.domain.QiYe;
 import com.lb.lbstore.service.QiYeService;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,26 +59,32 @@ public class QiYeServiceImpl implements QiYeService {
 
     @Override
     public int queryRows(HashMap map) {
+        List parameters = new ArrayList();
         String sql = "select count(1) from QiYe where 1=1";
         if (map.containsKey("mc")) {
-            sql += " and mc like '%" + map.get("mc") + "%'";
+            sql += " and mc like '%?%'";
+            parameters.add(map.get("mc"));
         }
         if (map.containsKey("state")) {
-            sql += " and state = " + map.get("state");
+            sql += " and state = ?";
+            parameters.add(map.get("state"));
         }
-        return qiYeDao.getCount(sql, null);
+        return qiYeDao.getCount(sql, parameters.toArray());
     }
 
     @Override
     public List<QiYe> queryQiYesByPage(HashMap map) {
+        List parameters = new ArrayList();
         String hql = "from QiYe where 1=1";
         if (map.containsKey("mc")) {
-            hql += " and mc like '%" + map.get("mc") + "%'";
+            hql += " and mc like '%?%'";
+            parameters.add(map.get("mc"));
         }
         if (map.containsKey("state")) {
-            hql += " and state = " + map.get("state");
+            hql += " and state = ?";
+            parameters.add(map.get("state"));
         }
-        return qiYeDao.getPageList(hql, null, Integer.parseInt(map.get("beginRow").toString()), Integer.parseInt(map.get("pageSize").toString()));
+        return qiYeDao.getPageList(hql, parameters.toArray(), Integer.parseInt(map.get("beginRow").toString()), Integer.parseInt(map.get("pageSize").toString()));
     }
 
     @Override

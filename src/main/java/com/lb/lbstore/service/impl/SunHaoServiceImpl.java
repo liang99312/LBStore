@@ -8,6 +8,7 @@ package com.lb.lbstore.service.impl;
 import com.lb.lbstore.dao.SunHaoDao;
 import com.lb.lbstore.domain.SunHao;
 import com.lb.lbstore.service.SunHaoService;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,10 @@ public class SunHaoServiceImpl implements SunHaoService {
     public SunHao getSunHaoById(Integer id) {
         return (SunHao) sunHaoDao.findObjectById(SunHao.class, id);
     }
-    
+
     @Override
     public SunHao getSunHaoDetailById(Integer id) {
-        return  sunHaoDao.getSunHaoDetailById(id);
+        return sunHaoDao.getSunHaoDetailById(id);
     }
 
     @Override
@@ -51,32 +52,42 @@ public class SunHaoServiceImpl implements SunHaoService {
 
     @Override
     public int queryRows(HashMap map) {
-        String sql = "select count(1) from SunHao where qy_id="+map.get("qy_id");
+        List parameters = new ArrayList();
+        parameters.add(map.get("qy_id"));
+        String sql = "select count(1) from SunHao where qy_id=?";
         if (map.containsKey("ck_id")) {
-            sql += " and ck_id = " + map.get("ck_id");
+            sql += " and ck_id = ?";
+            parameters.add(map.get("ck_id"));
         }
         if (map.containsKey("lsh")) {
-            sql += " and lsh like '%" + map.get("lsh") + "%'";
+            sql += " and lsh like '%?%'";
+            parameters.add(map.get("lsh"));
         }
         if (map.containsKey("wz")) {
-            sql += " and wz like '%" + map.get("wz") + "%'";
+            sql += " and wz like '%?%'";
+            parameters.add(map.get("wz"));
         }
         if (map.containsKey("state")) {
-            sql += " and state = " + map.get("state");
+            sql += " and state = ?";
+            parameters.add(map.get("state"));
         }
         if (map.containsKey("kh_id")) {
-            sql += " and kh_id = " + map.get("kh_id");
+            sql += " and kh_id = ?";
+            parameters.add(map.get("kh_id"));
         }
         if (map.containsKey("gys_id")) {
-            sql += " and gys_id = " + map.get("gys_id");
+            sql += " and gys_id = ?";
+            parameters.add(map.get("gys_id"));
         }
         if (map.containsKey("qrq")) {
-            sql += " and sj >= '" + map.get("qrq") + "'";
+            sql += " and sj >= '?'";
+            parameters.add(map.get("qrq"));
         }
         if (map.containsKey("zrq")) {
-            sql += " and sj <= '" + map.get("zrq") + " 23:59:59'";
+            sql += " and sj <= '?'";
+            parameters.add(map.get("zrq") + " 23:59:59");
         }
-        return sunHaoDao.getCount(sql, null);
+        return sunHaoDao.getCount(sql, parameters.toArray());
     }
 
     @Override
@@ -85,7 +96,7 @@ public class SunHaoServiceImpl implements SunHaoService {
     }
 
     @Override
-    public boolean dealSunHao(SunHao sunHao,Integer a01_id) {
+    public boolean dealSunHao(SunHao sunHao, Integer a01_id) {
         return sunHaoDao.dealSunHao(sunHao, a01_id);
     }
 

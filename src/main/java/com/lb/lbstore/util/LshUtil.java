@@ -35,7 +35,7 @@ public class LshUtil {
             }
             String sql = "select max(lsh) from ruku where lsh like '"+dateStr+"%'";
             CommonDao commonDao = (CommonDao) ApplicationUtil.getBean("commonDao");
-            List list = commonDao.getSqlResult(sql);
+            List list = commonDao.getSqlResult(sql, null);
             if(list.isEmpty()){
                 i = 1;
             }else{
@@ -68,7 +68,7 @@ public class LshUtil {
             }
             String sql = "select max(lsh) from lingliao where lsh like '"+dateStr+"%'";
             CommonDao commonDao = (CommonDao) ApplicationUtil.getBean("commonDao");
-            List list = commonDao.getSqlResult(sql);
+            List list = commonDao.getSqlResult(sql, null);
             if(list.isEmpty()){
                 i = 1;
             }else{
@@ -101,7 +101,7 @@ public class LshUtil {
             }
             String sql = "select max(lsh) from fahuo where lsh like '"+dateStr+"%'";
             CommonDao commonDao = (CommonDao) ApplicationUtil.getBean("commonDao");
-            List list = commonDao.getSqlResult(sql);
+            List list = commonDao.getSqlResult(sql, null);
             if(list.isEmpty()){
                 i = 1;
             }else{
@@ -134,7 +134,7 @@ public class LshUtil {
             }
             String sql = "select max(lsh) from tuigong where lsh like '"+dateStr+"%'";
             CommonDao commonDao = (CommonDao) ApplicationUtil.getBean("commonDao");
-            List list = commonDao.getSqlResult(sql);
+            List list = commonDao.getSqlResult(sql, null);
             if(list.isEmpty()){
                 i = 1;
             }else{
@@ -167,7 +167,7 @@ public class LshUtil {
             }
             String sql = "select max(lsh) from huanku where lsh like '"+dateStr+"%'";
             CommonDao commonDao = (CommonDao) ApplicationUtil.getBean("commonDao");
-            List list = commonDao.getSqlResult(sql);
+            List list = commonDao.getSqlResult(sql, null);
             if(list.isEmpty()){
                 i = 1;
             }else{
@@ -200,7 +200,7 @@ public class LshUtil {
             }
             String sql = "select max(lsh) from tuihuo where lsh like '"+dateStr+"%'";
             CommonDao commonDao = (CommonDao) ApplicationUtil.getBean("commonDao");
-            List list = commonDao.getSqlResult(sql);
+            List list = commonDao.getSqlResult(sql, null);
             if(list.isEmpty()){
                 i = 1;
             }else{
@@ -233,7 +233,7 @@ public class LshUtil {
             }
             String sql = "select max(lsh) from sunhao where lsh like '"+dateStr+"%'";
             CommonDao commonDao = (CommonDao) ApplicationUtil.getBean("commonDao");
-            List list = commonDao.getSqlResult(sql);
+            List list = commonDao.getSqlResult(sql, null);
             if(list.isEmpty()){
                 i = 1;
             }else{
@@ -266,7 +266,7 @@ public class LshUtil {
             }
             String sql = "select max(lsh) from ckkc where lsh like '"+dateStr+"%'";
             CommonDao commonDao = (CommonDao) ApplicationUtil.getBean("commonDao");
-            List list = commonDao.getSqlResult(sql);
+            List list = commonDao.getSqlResult(sql, null);
             if(list.isEmpty()){
                 i = 1;
             }else{

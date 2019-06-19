@@ -36,8 +36,9 @@ public class TuiHuoDao extends BaseDao {
                     + "left join A01 a01 on th.thr_id=a01.id "
                     + "left join A01 a02 on th.spr_id=a02.id "
                     + "left join KeHu kh on th.kh_id=kh.id "
-                    + "where th.id=" + id;
+                    + "where th.id=?";
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
+            navtiveSQL.setParameter(0, id);
             navtiveSQL.addEntity("th", TuiHuo.class)
                     .addScalar("ckmc", StandardBasicTypes.STRING)
                     .addScalar("thrmc", StandardBasicTypes.STRING)
@@ -63,8 +64,9 @@ public class TuiHuoDao extends BaseDao {
             }
             tuiHuo = list_th.get(0);
 
-            String sql_d = "select {d.*},l.mc as wzlb from TuiHuoDetail d left join WuZiLeiBie l on d.wzlb_id=l.id where d.th_id=" + id;
+            String sql_d = "select {d.*},l.mc as wzlb from TuiHuoDetail d left join WuZiLeiBie l on d.wzlb_id=l.id where d.th_id=?";
             SQLQuery navtiveSQL_d = session.createSQLQuery(sql_d);
+            navtiveSQL_d.setParameter(0, id);
             navtiveSQL_d.addEntity("d", TuiHuoDetail.class).addScalar("wzlb", StandardBasicTypes.STRING);
             List<TuiHuoDetail> details = new ArrayList();
             List list_d = navtiveSQL_d.list();
@@ -94,34 +96,46 @@ public class TuiHuoDao extends BaseDao {
         List<TuiHuo> result = new ArrayList();
         Session session = null;
         try {
+            List parameters = new ArrayList();
+            parameters.add(map.get("qy_id"));
             session = getSessionFactory().openSession();
             String sql = "select {th.*},ck.mc as ckmc,kh.mc as khmc from TuiHuo th "
                     + "left join CangKu ck on th.ck_id=ck.id "
                     + "left join KeHu kh on th.kh_id=kh.id "
-                    + "where th.qy_id=" + map.get("qy_id");
+                    + "where th.qy_id=?";
             if (map.containsKey("ck_id")) {
-                sql += " and th.ck_id = " + map.get("ck_id");
+                sql += " and th.ck_id = ?";
+                parameters.add(map.get("ck_id"));
             }
             if (map.containsKey("lsh")) {
-                sql += " and th.lsh like '%" + map.get("lsh") + "%'";
+                sql += " and th.lsh like '%?%'";
+                parameters.add(map.get("lsh"));
             }
             if (map.containsKey("wz")) {
-                sql += " and th.wz like '%" + map.get("wz") + "%'";
+                sql += " and th.wz like '%?%'";
+                parameters.add(map.get("wz"));
             }
             if (map.containsKey("state")) {
-                sql += " and th.state = " + map.get("state");
+                sql += " and th.state = ?";
+                parameters.add(map.get("state"));
             }
             if (map.containsKey("kh_id")) {
-                sql += " and th.kh_id = " + map.get("kh_id");
+                sql += " and th.kh_id = ?";
+                parameters.add(map.get("kh_id"));
             }
             if (map.containsKey("qrq")) {
-                sql += " and th.sj >= '" + map.get("qrq") + "'";
+                sql += " and th.sj >= '?'";
+                parameters.add(map.get("qrq"));
             }
             if (map.containsKey("zrq")) {
-                sql += " and th.sj <= '" + map.get("zrq") + " 23:59:59'";
+                sql += " and th.sj <= '?'";
+                parameters.add(map.get("zrq") + " 23:59:59");
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
-            navtiveSQL.addEntity("th", TuiHuo.class).addScalar("ckmc", StandardBasicTypes.STRING).addScalar("khmc", StandardBasicTypes.STRING);           
+            for (int i = 0; i < parameters.size(); i++) {
+                navtiveSQL.setParameter(i, parameters.get(i));
+            }
+            navtiveSQL.addEntity("th", TuiHuo.class).addScalar("ckmc", StandardBasicTypes.STRING).addScalar("khmc", StandardBasicTypes.STRING);
             navtiveSQL.setFirstResult(Integer.parseInt(map.get("beginRow").toString()));
             navtiveSQL.setMaxResults(Integer.parseInt(map.get("pageSize").toString()));
             List list = navtiveSQL.list();
@@ -192,12 +206,12 @@ public class TuiHuoDao extends BaseDao {
         Transaction tx = null;
         try {
             session = getSessionFactory().openSession();
-            tx = session.beginTransaction();            
+            tx = session.beginTransaction();
             tuiHuo.setDfje(tuiHuo.getJe() - tuiHuo.getYfje());
             session.update(tuiHuo);
             session.flush();
-            String deleteDetail = "delete from TuiHuoDetail where th_id=" + tuiHuo.getId();
-            session.createSQLQuery(deleteDetail).executeUpdate();
+            String deleteDetail = "delete from TuiHuoDetail where th_id=?";
+            session.createSQLQuery(deleteDetail).setParameter(0, tuiHuo.getId()).executeUpdate();
             session.flush();
             for (TuiHuoDetail detail : tuiHuo.getDetails()) {
                 detail.setCk_id(tuiHuo.getCk_id());
@@ -230,12 +244,12 @@ public class TuiHuoDao extends BaseDao {
         try {
             session = getSessionFactory().openSession();
             tx = session.beginTransaction();
-            String deleteDetail = "delete from TuiHuoDetail where th_id=" + id;
-            session.createSQLQuery(deleteDetail).executeUpdate();
-            String deleteFei = "delete from TuiHuoFei where th_id=" + id;
-            session.createSQLQuery(deleteFei).executeUpdate();
-            String deleteLl = "delete from TuiHuo where id=" + id;
-            session.createSQLQuery(deleteLl).executeUpdate();
+            String deleteDetail = "delete from TuiHuoDetail where th_id=?";
+            session.createSQLQuery(deleteDetail).setParameter(0, id).executeUpdate();
+            String deleteFei = "delete from TuiHuoFei where th_id=?";
+            session.createSQLQuery(deleteFei).setParameter(0, id).executeUpdate();
+            String deleteLl = "delete from TuiHuo where id=?";
+            session.createSQLQuery(deleteLl).setParameter(0, id).executeUpdate();
             session.flush();
             tx.commit();
             result = true;
@@ -261,8 +275,8 @@ public class TuiHuoDao extends BaseDao {
         try {
             session = getSessionFactory().openSession();
             tx = session.beginTransaction();
-            String sql = "from TuiHuoDetail where th_id=" + tuiHuo.getId();
-            List<TuiHuoDetail> list = session.createQuery(sql).list();
+            String sql = "from TuiHuoDetail where th_id=?";
+            List<TuiHuoDetail> list = session.createQuery(sql).setParameter(0, tuiHuo.getId()).list();
             Hashtable<Integer, TuiHuoDetail> detailTable = new Hashtable();
             StringBuilder sb = new StringBuilder();
             sb.append("(-1");
@@ -366,9 +380,10 @@ public class TuiHuoDao extends BaseDao {
             session = getSessionFactory().openSession();
             String sql = "select {thf.*},a01.mc as skrmc from TuiHuoFei thf "
                     + "left join A01 a01 on thf.skr_id=a01.id "
-                    + "where thf.th_id=" + map.get("th_id");
+                    + "where thf.th_id=?";
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
-            navtiveSQL.addEntity("thf", TuiHuoFei.class).addScalar("skrmc", StandardBasicTypes.STRING);           
+            navtiveSQL.setParameter(0, map.get("th_id"));
+            navtiveSQL.addEntity("thf", TuiHuoFei.class).addScalar("skrmc", StandardBasicTypes.STRING);
             navtiveSQL.setFirstResult(Integer.parseInt(map.get("beginRow").toString()));
             navtiveSQL.setMaxResults(Integer.parseInt(map.get("pageSize").toString()));
             List list = navtiveSQL.list();
@@ -400,14 +415,14 @@ public class TuiHuoDao extends BaseDao {
         try {
             session = getSessionFactory().openSession();
             tx = session.beginTransaction();
-            String deleteFei = "delete from TuiHuoFei where id=" + id;
-            session.createSQLQuery(deleteFei).executeUpdate();
+            String deleteFei = "delete from TuiHuoFei where id=?";
+            session.createSQLQuery(deleteFei).setParameter(0, id).executeUpdate();
             session.flush();
-            String updateTuiHuo = "update tuihuo set yfje = ifnull((select sum(ifnull(f.je,0)) from tuihuofei f where f.th_id = " + th_id + "),0) where tuihuo.id=" + th_id;
-            session.createSQLQuery(updateTuiHuo).executeUpdate();
+            String updateTuiHuo = "update tuihuo set yfje = ifnull((select sum(ifnull(f.je,0)) from tuihuofei f where f.th_id = ?),0) where tuihuo.id=?";
+            session.createSQLQuery(updateTuiHuo).setParameter(0, th_id).setParameter(1, th_id).executeUpdate();
             session.flush();
-            updateTuiHuo = "update tuihuo set dfje = je - yfje where id=" + th_id;
-            session.createSQLQuery(updateTuiHuo).executeUpdate();
+            updateTuiHuo = "update tuihuo set dfje = je - yfje where id=?";
+            session.createSQLQuery(updateTuiHuo).setParameter(0, th_id).executeUpdate();
             session.flush();
             tx.commit();
             result = true;
@@ -436,11 +451,11 @@ public class TuiHuoDao extends BaseDao {
             Integer id = (Integer) session.save(tuiHuoFei);
             session.flush();
             int th_id = tuiHuoFei.getTh_id();
-            String updateTuiHuo = "update tuihuo set yfje = ifnull((select sum(ifnull(f.je,0)) from tuihuofei f where f.th_id = " + th_id + "),0) where tuihuo.id=" + th_id;
-            session.createSQLQuery(updateTuiHuo).executeUpdate();
+            String updateTuiHuo = "update tuihuo set yfje = ifnull((select sum(ifnull(f.je,0)) from tuihuofei f where f.th_id = ?),0) where tuihuo.id=?";
+            session.createSQLQuery(updateTuiHuo).setParameter(0, th_id).setParameter(1, th_id).executeUpdate();
             session.flush();
-            updateTuiHuo = "update tuihuo set dfje = je - yfje where id=" + th_id;
-            session.createSQLQuery(updateTuiHuo).executeUpdate();
+            updateTuiHuo = "update tuihuo set dfje = je - yfje where id=?";
+            session.createSQLQuery(updateTuiHuo).setParameter(0, th_id).executeUpdate();
             session.flush();
             tx.commit();
             result = id;
@@ -469,11 +484,11 @@ public class TuiHuoDao extends BaseDao {
             session.update(tuiHuoFei);
             session.flush();
             int th_id = tuiHuoFei.getTh_id();
-            String updateTuiHuo = "update tuihuo set yfje = ifnull((select sum(ifnull(f.je,0)) from tuihuofei f where f.th_id = " + th_id + "),0) where tuihuo.id=" + th_id;
-            session.createSQLQuery(updateTuiHuo).executeUpdate();
+            String updateTuiHuo = "update tuihuo set yfje = ifnull((select sum(ifnull(f.je,0)) from tuihuofei f where f.th_id = ?),0) where tuihuo.id=?";
+            session.createSQLQuery(updateTuiHuo).setParameter(0, th_id).setParameter(1, th_id).executeUpdate();
             session.flush();
-            updateTuiHuo = "update tuihuo set dfje = je - yfje where id=" + th_id;
-            session.createSQLQuery(updateTuiHuo).executeUpdate();
+            updateTuiHuo = "update tuihuo set dfje = je - yfje where id=?";
+            session.createSQLQuery(updateTuiHuo).setParameter(0, th_id).executeUpdate();
             session.flush();
             tx.commit();
             result = true;

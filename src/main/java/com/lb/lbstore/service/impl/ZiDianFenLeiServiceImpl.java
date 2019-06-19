@@ -8,6 +8,7 @@ package com.lb.lbstore.service.impl;
 import com.lb.lbstore.dao.ZiDianFenLeiDao;
 import com.lb.lbstore.domain.ZiDianFenLei;
 import com.lb.lbstore.service.ZiDianFenLeiService;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,9 @@ public class ZiDianFenLeiServiceImpl implements ZiDianFenLeiService {
 
     @Override
     public List<ZiDianFenLei> getAllZiDianFenLeis(Integer qy_id) {
-        return ziDianFenLeiDao.getResult("from ZiDianFenLei ziDianFenLei where qy_id="+qy_id, null);
+        List parameters = new ArrayList();
+        parameters.add(qy_id);
+        return ziDianFenLeiDao.getResult("from ZiDianFenLei ziDianFenLei where qy_id=?", parameters.toArray());
     }
 
     @Override
@@ -51,20 +54,26 @@ public class ZiDianFenLeiServiceImpl implements ZiDianFenLeiService {
 
     @Override
     public int queryRows(HashMap map) {
-        String sql = "select count(1) from ZiDianFenLei where qy_id="+map.get("qy_id");
+        List parameters = new ArrayList();
+        parameters.add(map.get("qy_id"));
+        String sql = "select count(1) from ZiDianFenLei where qy_id=?";
         if (map.containsKey("mc")) {
-            sql += " and mc like '%" + map.get("mc") + "%'";
+            sql += " and mc like '%?%'";
+            parameters.add(map.get("mc"));
         }
-        return ziDianFenLeiDao.getCount(sql, null);
+        return ziDianFenLeiDao.getCount(sql, parameters.toArray());
     }
 
     @Override
     public List<ZiDianFenLei> queryZiDianFenLeisByPage(HashMap map) {
-        String hql = "from ZiDianFenLei where qy_id="+map.get("qy_id");
+        List parameters = new ArrayList();
+        parameters.add(map.get("qy_id"));
+        String hql = "from ZiDianFenLei where qy_id=?";
         if (map.containsKey("mc")) {
-            hql += " and mc like '%" + map.get("mc") + "%'";
+            hql += " and mc like '%?%'";
+            parameters.add(map.get("mc"));
         }
-        return ziDianFenLeiDao.getPageList(hql, null, Integer.parseInt(map.get("beginRow").toString()), Integer.parseInt(map.get("pageSize").toString()));
+        return ziDianFenLeiDao.getPageList(hql, parameters.toArray(), Integer.parseInt(map.get("beginRow").toString()), Integer.parseInt(map.get("pageSize").toString()));
     }
 
     @Override
