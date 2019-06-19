@@ -8,6 +8,7 @@ package com.lb.lbstore.service.impl;
 import com.lb.lbstore.dao.KeHuDao;
 import com.lb.lbstore.domain.KeHu;
 import com.lb.lbstore.service.KeHuService;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,9 @@ public class KeHuServiceImpl implements KeHuService {
 
     @Override
     public List<KeHu> getAllKeHus(Integer qy_id) {
-        return keHuDao.getResult("from KeHu keHu where qy_id="+qy_id, null);
+        List parameters = new ArrayList();
+        parameters.add(qy_id);
+        return keHuDao.getResult("from KeHu keHu where qy_id=?", parameters.toArray());
     }
 
     @Override
@@ -47,10 +50,10 @@ public class KeHuServiceImpl implements KeHuService {
     @Override
     public boolean deleteKeHu(Integer id) {
         KeHu keHu = (KeHu) keHuDao.findObjectById(KeHu.class, id);
-        if(keHu.getState() == 0){
+        if (keHu.getState() == 0) {
             keHu.setState(-1);
             return keHuDao.update(keHu);
-        }else if(keHu.getState() == -1){
+        } else if (keHu.getState() == -1) {
             return keHuDao.deleteObjById("keHu", id);
         }
         return false;
@@ -58,26 +61,34 @@ public class KeHuServiceImpl implements KeHuService {
 
     @Override
     public int queryRows(HashMap map) {
-        String sql = "select count(1) from KeHu where qy_id="+map.get("qy_id");
+        List parameters = new ArrayList();
+        parameters.add(map.get("qy_id"));
+        String sql = "select count(1) from KeHu where qy_id=?";
         if (map.containsKey("mc")) {
-            sql += " and mc like '%" + map.get("mc") + "%'";
+            sql += " and mc like '%?%'";
+            parameters.add(map.get("mc"));
         }
         if (map.containsKey("state")) {
-            sql += " and state = " + map.get("state");
+            sql += " and state = ?";
+            parameters.add(map.get("state"));
         }
-        return keHuDao.getCount(sql, null);
+        return keHuDao.getCount(sql, parameters.toArray());
     }
 
     @Override
     public List<KeHu> queryKeHusByPage(HashMap map) {
-        String hql = "from KeHu where qy_id="+map.get("qy_id");
+        List parameters = new ArrayList();
+        parameters.add(map.get("qy_id"));
+        String hql = "from KeHu where qy_id=?";
         if (map.containsKey("mc")) {
-            hql += " and mc like '%" + map.get("mc") + "%'";
+            hql += " and mc like '%?%'";
+            parameters.add(map.get("mc"));
         }
         if (map.containsKey("state")) {
-            hql += " and state = " + map.get("state");
+            hql += " and state = ?";
+            parameters.add(map.get("state"));
         }
-        return keHuDao.getPageList(hql, null, Integer.parseInt(map.get("beginRow").toString()), Integer.parseInt(map.get("pageSize").toString()));
+        return keHuDao.getPageList(hql, parameters.toArray(), Integer.parseInt(map.get("beginRow").toString()), Integer.parseInt(map.get("pageSize").toString()));
     }
 
     @Override
