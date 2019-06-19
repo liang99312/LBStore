@@ -8,6 +8,7 @@ package com.lb.lbstore.service.impl;
 import com.lb.lbstore.dao.GongYingShangDao;
 import com.lb.lbstore.domain.GongYingShang;
 import com.lb.lbstore.service.GongYingShangService;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,9 @@ public class GongYingShangServiceImpl implements GongYingShangService {
 
     @Override
     public List<GongYingShang> getAllGongYingShangs(Integer qy_id) {
-        return gongYingShangDao.getResult("from GongYingShang gongYingShang where qy_id="+qy_id, null);
+        List parameters = new ArrayList();
+        parameters.add(qy_id);
+        return gongYingShangDao.getResult("from GongYingShang gongYingShang where qy_id=?", parameters.toArray());
     }
 
     @Override
@@ -47,10 +50,10 @@ public class GongYingShangServiceImpl implements GongYingShangService {
     @Override
     public boolean deleteGongYingShang(Integer id) {
         GongYingShang gongYingShang = (GongYingShang) gongYingShangDao.findObjectById(GongYingShang.class, id);
-        if(gongYingShang.getState() == 0){
+        if (gongYingShang.getState() == 0) {
             gongYingShang.setState(-1);
             return gongYingShangDao.update(gongYingShang);
-        }else if(gongYingShang.getState() == -1){
+        } else if (gongYingShang.getState() == -1) {
             return gongYingShangDao.deleteObjById("gongYingShang", id);
         }
         return false;
@@ -58,26 +61,34 @@ public class GongYingShangServiceImpl implements GongYingShangService {
 
     @Override
     public int queryRows(HashMap map) {
-        String sql = "select count(1) from GongYingShang where qy_id="+map.get("qy_id");
+        List parameters = new ArrayList();
+        parameters.add(map.get("qy_id"));
+        String sql = "select count(1) from GongYingShang where qy_id=?";
         if (map.containsKey("mc")) {
-            sql += " and mc like '%" + map.get("mc") + "%'";
+            sql += " and mc like '%?%'";
+            parameters.add(map.get("mc"));
         }
         if (map.containsKey("state")) {
-            sql += " and state = " + map.get("state");
+            sql += " and state = ?";
+            parameters.add(map.get("state"));
         }
-        return gongYingShangDao.getCount(sql, null);
+        return gongYingShangDao.getCount(sql, parameters.toArray());
     }
 
     @Override
     public List<GongYingShang> queryGongYingShangsByPage(HashMap map) {
-        String hql = "from GongYingShang where qy_id="+map.get("qy_id");
+        List parameters = new ArrayList();
+        parameters.add(map.get("qy_id"));
+        String hql = "from GongYingShang where qy_id=?";
         if (map.containsKey("mc")) {
-            hql += " and mc like '" + map.get("mc") + "'";
+            hql += " and mc like '%?%'";
+            parameters.add(map.get("mc"));
         }
         if (map.containsKey("state")) {
-            hql += " and state = " + map.get("state");
+            hql += " and state = ?";
+            parameters.add(map.get("state"));
         }
-        return gongYingShangDao.getPageList(hql, null, Integer.parseInt(map.get("beginRow").toString()), Integer.parseInt(map.get("pageSize").toString()));
+        return gongYingShangDao.getPageList(hql, parameters.toArray(), Integer.parseInt(map.get("beginRow").toString()), Integer.parseInt(map.get("pageSize").toString()));
     }
 
     @Override
