@@ -11,6 +11,7 @@ import com.lb.lbstore.domain.CangKu;
 import com.lb.lbstore.domain.CangKuA01;
 import com.lb.lbstore.domain.KuWei;
 import com.lb.lbstore.service.CangKuService;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +29,12 @@ public class CangKuServiceImpl implements CangKuService {
 
     @Override
     public CangKu getCangKuById(Integer id) {
-        String a01Hql = "from A01 where id in(select a01_id from CangKuA01 where ck_id="+id +")";
-        String kwHql = "from KuWei where ck_id="+id;
-        List<A01> a01s = cangKuDao.getResult(a01Hql, null);
-        List<KuWei> kws = cangKuDao.getResult(kwHql, null);
+        List parameters = new ArrayList();
+        parameters.add(id);
+        String a01Hql = "from A01 where id in(select a01_id from CangKuA01 where ck_id=?)";
+        String kwHql = "from KuWei where ck_id=?";
+        List<A01> a01s = cangKuDao.getResult(a01Hql, parameters.toArray());
+        List<KuWei> kws = cangKuDao.getResult(kwHql, parameters.toArray());
         CangKu ck = (CangKu) cangKuDao.findObjectById(CangKu.class, id);
         ck.setA01s(a01s);
         ck.setKws(kws);
@@ -40,7 +43,9 @@ public class CangKuServiceImpl implements CangKuService {
 
     @Override
     public List<CangKu> getAllCangKus(Integer qy_id) {
-        return cangKuDao.getResult("from CangKu cangKu where qy_id="+qy_id, null);
+        List parameters = new ArrayList();
+        parameters.add(qy_id);
+        return cangKuDao.getResult("from CangKu cangKu where qy_id=?", parameters.toArray());
     }
 
     @Override
@@ -57,10 +62,10 @@ public class CangKuServiceImpl implements CangKuService {
     @Override
     public boolean deleteCangKu(Integer id) {
         CangKu cangKu = (CangKu) cangKuDao.findObjectById(CangKu.class, id);
-        if(cangKu.getState() == 0){
+        if (cangKu.getState() == 0) {
             cangKu.setState(-1);
             return cangKuDao.update(cangKu);
-        }else if(cangKu.getState() == -1){
+        } else if (cangKu.getState() == -1) {
             return cangKuDao.deleteObjById("cangKu", id);
         }
         return false;
@@ -68,43 +73,55 @@ public class CangKuServiceImpl implements CangKuService {
 
     @Override
     public int queryRows(HashMap map) {
-        String sql = "select count(1) from CangKu where qy_id="+map.get("qy_id");
+        List parameters = new ArrayList();
+        parameters.add(map.get("qy_id"));
+        String sql = "select count(1) from CangKu where qy_id=?";
         if (map.containsKey("mc")) {
-            sql += " and mc like '%" + map.get("mc") + "%'";
+            sql += " and mc like '%?%'";
+            parameters.add(map.get("mc"));
         }
         if (map.containsKey("state")) {
-            sql += " and state = " + map.get("state");
+            sql += " and state = ?";
+            parameters.add(map.get("state"));
         }
-        return cangKuDao.getCount(sql, null);
+        return cangKuDao.getCount(sql, parameters.toArray());
     }
 
     @Override
     public List<CangKu> queryCangKusByPage(HashMap map) {
-        String hql = "from CangKu where qy_id="+map.get("qy_id");
+        List parameters = new ArrayList();
+        parameters.add(map.get("qy_id"));
+        String hql = "from CangKu where qy_id=?";
         if (map.containsKey("mc")) {
-            hql += " and mc like '%" + map.get("mc") + "%'";
+            hql += " and mc like '%?%'";
+            parameters.add(map.get("mc"));
         }
         if (map.containsKey("state")) {
-            hql += " and state = " + map.get("state");
+            hql += " and state = ?";
+            parameters.add(map.get("state"));
         }
-        return cangKuDao.getPageList(hql, null, Integer.parseInt(map.get("beginRow").toString()), Integer.parseInt(map.get("pageSize").toString()));
+        return cangKuDao.getPageList(hql, parameters.toArray(), Integer.parseInt(map.get("beginRow").toString()), Integer.parseInt(map.get("pageSize").toString()));
     }
 
     @Override
     public List<KuWei> getCangKuKuWeiById(Integer id) {
-        String hql = "from KuWei where ck_id="+id;
-        return cangKuDao.getResult(hql, null);
+        List parameters = new ArrayList();
+        parameters.add(id);
+        String hql = "from KuWei where ck_id=?";
+        return cangKuDao.getResult(hql, parameters.toArray());
     }
 
     @Override
-    public boolean saveCangKuA01Kw(List<CangKuA01> a01s, List<KuWei> kws,Integer ck_id) {
+    public boolean saveCangKuA01Kw(List<CangKuA01> a01s, List<KuWei> kws, Integer ck_id) {
         return cangKuDao.saveCangKuA01Kw(a01s, kws, ck_id);
     }
 
     @Override
     public List<A01> getCangKuA01ById(Integer id) {
-        String hql = "from A01 where id in(select a01_id from CangKuA01 where ck_id="+id +")";
-        return cangKuDao.getResult(hql, null);
+        List parameters = new ArrayList();
+        parameters.add(id);
+        String hql = "from A01 where id in(select a01_id from CangKuA01 where ck_id=?)";
+        return cangKuDao.getResult(hql, parameters.toArray());
     }
 
     @Override
