@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -53,7 +54,7 @@ public abstract class BaseDao {
             } catch (Exception he) {
                 he.printStackTrace();
             }
-            
+
         }
         return result;
     }
@@ -110,14 +111,20 @@ public abstract class BaseDao {
         return result;
     }
 
-    public boolean excuteSql(String sql) {
+    public boolean excuteSql(String sql, Object[] parameters) {
         boolean result = false;
         Session session = null;
         Transaction tx = null;
         try {
             session = sessionFactory.openSession();
             tx = session.beginTransaction();
-            session.createSQLQuery(sql).executeUpdate();
+            SQLQuery query = session.createSQLQuery(sql);
+            if (parameters != null && parameters.length > 0) {
+                for (int i = 0; i < parameters.length; i++) {
+                    query.setParameter(i, parameters[i]);
+                }
+            }
+            query.executeUpdate();
             session.flush();
             tx.commit();
             result = true;
@@ -164,8 +171,13 @@ public abstract class BaseDao {
         return result;
     }
 
-    public List getSqlResult(String sql) {
+    public List getSqlResult(String sql, Object[] parameters) {
         Query query = sessionFactory.getCurrentSession().createSQLQuery(sql);
+        if (parameters != null && parameters.length > 0) {
+            for (int i = 0; i < parameters.length; i++) {
+                query.setParameter(i, parameters[i]);
+            }
+        }
         return query.list();
     }
 
@@ -293,8 +305,8 @@ public abstract class BaseDao {
         return result;
     }
 
-    public Map<String,Object> getPages(String sql, int pageNow) {
-        Map<String,Object> result = new HashMap<String,Object>();
+    public Map<String, Object> getPages(String sql, int pageNow) {
+        Map<String, Object> result = new HashMap<String, Object>();
         int total = getCount("select count(1) " + sql, null);
         int zys = (total - 1) / 20 + 1;
         result.put("zys", zys);
@@ -302,15 +314,15 @@ public abstract class BaseDao {
         result.put("jls", total);
         return result;
     }
-    
-    public boolean deleteObjById(String tblName,int id){
+
+    public boolean deleteObjById(String tblName, int id) {
         boolean result = false;
         Session session = null;
         Transaction tx = null;
         try {
             session = this.sessionFactory.openSession();
             tx = session.beginTransaction();
-            session.createSQLQuery("delete from "+tblName+" where id=" + id).executeUpdate();
+            session.createSQLQuery("delete from " + tblName + " where id=" + id).executeUpdate();
             session.flush();
             tx.commit();
             result = true;
