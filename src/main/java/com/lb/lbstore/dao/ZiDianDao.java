@@ -17,11 +17,11 @@ public class ZiDianDao extends BaseDao {
         parameters.add(qy_id);
         String sql = "";
         if (id > -1) {
-            sql = "select 1 from zidian where qy_id=? and id!=? and mc ='?'";
+            sql = "select 1 from zidian where qy_id=? and id!=? and mc =?";
             parameters.add(id);
             parameters.add(mc);
         } else {
-            sql = "select 1 from zidian where qy_id=? and mc ='?'";
+            sql = "select 1 from zidian where qy_id=? and mc =?";
             parameters.add(mc);
         }
         List list = this.getSqlResult(sql, parameters.toArray());

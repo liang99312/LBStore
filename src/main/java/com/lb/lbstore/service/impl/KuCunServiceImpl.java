@@ -45,16 +45,16 @@ public class KuCunServiceImpl implements KuCunService {
         parameters.add(map.get("qy_id"));
         String sql = "select count(1) from KuCun where qy_id=?";
         if (map.containsKey("wzmc")) {
-            sql += " and wzmc like '%?%'";
-            parameters.add(map.get("wzmc"));
+            sql += " and wzmc like ?";
+            parameters.add("%" + map.get("wzmc") + "%");
         }
         if (map.containsKey("txm")) {
-            sql += " and txm like '%?%'";
-            parameters.add(map.get("txm"));
+            sql += " and txm like ?";
+            parameters.add("%" + map.get("txm") + "%");
         }
         if (map.containsKey("xhgg")) {
-            sql += " and xhgg like '%?%'";
-            parameters.add(map.get("xhgg"));
+            sql += " and xhgg like ?";
+            parameters.add("%" + map.get("xhgg") + "%");
         }
         if (map.containsKey("wzlb_id")) {
             sql += " and wzlb_id = ?";
@@ -77,11 +77,11 @@ public class KuCunServiceImpl implements KuCunService {
             parameters.add(map.get("gys_id"));
         }
         if (map.containsKey("qrq")) {
-            sql += " and rksj >= '?'";
+            sql += " and rksj >= ?";
             parameters.add(map.get("qrq"));
         }
         if (map.containsKey("zrq")) {
-            sql += " and rksj <= '?'";
+            sql += " and rksj <= ?";
             parameters.add(map.get("zrq") + " 23:59:59");
         }
         if (map.containsKey("qsl")) {

@@ -164,7 +164,7 @@ public class RuKuDao extends BaseDao {
                     + "left join WuZiLeiBie l on rkd.wzlb_id=l.id "
                     + "where rk.qy_id=?";
             if (detail.getLsh() != null && !"".equals(detail.getLsh())) {
-                sql += " and rk.lsh = '?'";
+                sql += " and rk.lsh = ?";
                 parameters.add(detail.getLsh());
             }
             if (detail.getCk_id() != null) {
@@ -176,11 +176,11 @@ public class RuKuDao extends BaseDao {
                 parameters.add(detail.getWzlb_id());
             }
             if (detail.getWzmc() != null && !"".equals(detail.getWzmc())) {
-                sql += " and rkd.wzmc = '?'";
+                sql += " and rkd.wzmc = ?";
                 parameters.add(detail.getWzmc());
             }
             if (detail.getXhgg() != null && !"".equals(detail.getXhgg())) {
-                sql += " and rkd.xhgg = '?'";
+                sql += " and rkd.xhgg = ?";
                 parameters.add(detail.getXhgg());
             }
             if (detail.getKh_id() != null) {
@@ -196,15 +196,15 @@ public class RuKuDao extends BaseDao {
                 parameters.add(detail.getRkr_id());
             }
             if (detail.getTxm() != null && !"".equals(detail.getTxm())) {
-                sql += " and rkd.txm = '?'";
+                sql += " and rkd.txm = ?";
                 parameters.add(detail.getTxm());
             }
             if (detail.getQrq() != null && !"".equals(detail.getQrq())) {
-                sql += " and rk.spsj >= '?'";
+                sql += " and rk.spsj >= ?";
                 parameters.add(detail.getQrq());
             }
             if (detail.getZrq() != null && !"".equals(detail.getZrq())) {
-                sql += " and rk.spsj <= '?'";
+                sql += " and rk.spsj <= ?";
                 parameters.add(detail.getZrq() + " 23:59:59");
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
@@ -296,12 +296,12 @@ public class RuKuDao extends BaseDao {
                 parameters.add(map.get("ck_id"));
             }
             if (map.containsKey("lsh")) {
-                sql += " and rk.lsh like '%?%'";
-                parameters.add(map.get("lsh"));
+                sql += " and rk.lsh like ?";
+                parameters.add("%" + map.get("lsh") + "%");
             }
             if (map.containsKey("wz")) {
-                sql += " and rk.wz like '%?%'";
-                parameters.add(map.get("wz"));
+                sql += " and rk.wz like ?";
+                parameters.add("%" + map.get("wz") + "%");
             }
             if (map.containsKey("state")) {
                 sql += " and rk.state = ?";
@@ -316,11 +316,11 @@ public class RuKuDao extends BaseDao {
                 parameters.add(map.get("gys_id"));
             }
             if (map.containsKey("qrq")) {
-                sql += " and rk.sj >= '?'";
+                sql += " and rk.sj >= ?";
                 parameters.add(map.get("qrq"));
             }
             if (map.containsKey("zrq")) {
-                sql += " and rk.sj <= '?'";
+                sql += " and rk.sj <= ?";
                 parameters.add(map.get("zrq") + " 23:59:59");
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);

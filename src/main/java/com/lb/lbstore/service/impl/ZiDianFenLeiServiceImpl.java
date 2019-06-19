@@ -58,8 +58,8 @@ public class ZiDianFenLeiServiceImpl implements ZiDianFenLeiService {
         parameters.add(map.get("qy_id"));
         String sql = "select count(1) from ZiDianFenLei where qy_id=?";
         if (map.containsKey("mc")) {
-            sql += " and mc like '%?%'";
-            parameters.add(map.get("mc"));
+            sql += " and mc like ?";
+            parameters.add("%" + map.get("mc") + "%");
         }
         return ziDianFenLeiDao.getCount(sql, parameters.toArray());
     }
@@ -70,8 +70,8 @@ public class ZiDianFenLeiServiceImpl implements ZiDianFenLeiService {
         parameters.add(map.get("qy_id"));
         String hql = "from ZiDianFenLei where qy_id=?";
         if (map.containsKey("mc")) {
-            hql += " and mc like '%?%'";
-            parameters.add(map.get("mc"));
+            hql += " and mc like ?";
+            parameters.add("%" + map.get("mc") + "%");
         }
         return ziDianFenLeiDao.getPageList(hql, parameters.toArray(), Integer.parseInt(map.get("beginRow").toString()), Integer.parseInt(map.get("pageSize").toString()));
     }

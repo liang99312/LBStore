@@ -54,11 +54,11 @@ public class QiYeDao extends BaseDao {
         List parameters = new ArrayList();
         String sql = "";
         if (id > -1) {
-            sql = "select 1 from qiye where id!=? and mc ='?'";
+            sql = "select 1 from qiye where id!=? and mc =?";
             parameters.add(id);
             parameters.add(mc);
         } else {
-            sql = "select 1 from qiye where mc ='?'";
+            sql = "select 1 from qiye where mc =?";
             parameters.add(mc);
         }
         List list = this.getSqlResult(sql, parameters.toArray());

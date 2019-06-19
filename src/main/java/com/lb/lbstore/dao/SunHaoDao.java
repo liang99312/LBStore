@@ -102,12 +102,12 @@ public class SunHaoDao extends BaseDao {
                 parameters.add(map.get("ck_id"));
             }
             if (map.containsKey("lsh")) {
-                sql += " and sh.lsh like '%?%'";
-                parameters.add(map.get("lsh"));
+                sql += " and sh.lsh like ?";
+                parameters.add("%" + map.get("lsh") + "%");
             }
             if (map.containsKey("wz")) {
-                sql += " and sh.wz like '%?%'";
-                parameters.add(map.get("wz"));
+                sql += " and sh.wz like ?";
+                parameters.add("%" + map.get("wz") + "%");
             }
             if (map.containsKey("state")) {
                 sql += " and sh.state = ?";
@@ -122,11 +122,11 @@ public class SunHaoDao extends BaseDao {
                 parameters.add(map.get("gys_id"));
             }
             if (map.containsKey("qrq")) {
-                sql += " and sh.sj >= '?'";
+                sql += " and sh.sj >= ?";
                 parameters.add(map.get("qrq"));
             }
             if (map.containsKey("zrq")) {
-                sql += " and sh.sj <= '?'";
+                sql += " and sh.sj <= ?";
                 parameters.add(map.get("zrq") + " 23:59:59");
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);

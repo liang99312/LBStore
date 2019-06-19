@@ -62,8 +62,8 @@ public class QiYeServiceImpl implements QiYeService {
         List parameters = new ArrayList();
         String sql = "select count(1) from QiYe where 1=1";
         if (map.containsKey("mc")) {
-            sql += " and mc like '%?%'";
-            parameters.add(map.get("mc"));
+            sql += " and mc like ?";
+            parameters.add("%" + map.get("mc") + "%");
         }
         if (map.containsKey("state")) {
             sql += " and state = ?";
@@ -77,8 +77,8 @@ public class QiYeServiceImpl implements QiYeService {
         List parameters = new ArrayList();
         String hql = "from QiYe where 1=1";
         if (map.containsKey("mc")) {
-            hql += " and mc like '%?%'";
-            parameters.add(map.get("mc"));
+            hql += " and mc like ?";
+            parameters.add("%" + map.get("mc") + "%");
         }
         if (map.containsKey("state")) {
             hql += " and state = ?";

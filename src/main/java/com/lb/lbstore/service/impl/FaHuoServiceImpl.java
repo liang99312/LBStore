@@ -62,12 +62,12 @@ public class FaHuoServiceImpl implements FaHuoService {
             parameters.add(map.get("ck_id"));
         }
         if (map.containsKey("lsh")) {
-            sql += " and lsh like '%?%'";
-            parameters.add(map.get("lsh"));
+            sql += " and lsh like ?";
+            parameters.add("%" + map.get("lsh") + "%");
         }
         if (map.containsKey("wz")) {
-            sql += " and wz like '%?%'";
-            parameters.add(map.get("wz"));
+            sql += " and wz like ?";
+            parameters.add("%" + map.get("wz") + "%");
         }
         if (map.containsKey("state")) {
             sql += " and state = ?";
@@ -82,11 +82,11 @@ public class FaHuoServiceImpl implements FaHuoService {
             parameters.add(map.get("gys_id"));
         }
         if (map.containsKey("qrq")) {
-            sql += " and sj >= '?'";
+            sql += " and sj >= ?";
             parameters.add(map.get("qrq"));
         }
         if (map.containsKey("zrq")) {
-            sql += " and sj <= '?'";
+            sql += " and sj <= ?";
             parameters.add(map.get("zrq") + " 23:59:59");
         }
         return faHuoDao.getCount(sql, parameters.toArray());

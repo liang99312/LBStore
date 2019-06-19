@@ -107,12 +107,12 @@ public class FaHuoDao extends BaseDao {
                 parameters.add(map.get("ck_id"));
             }
             if (map.containsKey("lsh")) {
-                sql += " and fh.lsh like '%?%'";
-                parameters.add(map.get("lsh"));
+                sql += " and fh.lsh like ?";
+                parameters.add("%" + map.get("lsh") + "%");
             }
             if (map.containsKey("wz")) {
-                sql += " and fh.wz like '%?%'";
-                parameters.add(map.get("wz"));
+                sql += " and fh.wz like ?";
+                parameters.add("%" + map.get("wz") + "%");
             }
             if (map.containsKey("state")) {
                 sql += " and fh.state = ?";
@@ -127,11 +127,11 @@ public class FaHuoDao extends BaseDao {
                 parameters.add(map.get("gys_id"));
             }
             if (map.containsKey("qrq")) {
-                sql += " and fh.sj >= '?'";
+                sql += " and fh.sj >= ?";
                 parameters.add(map.get("qrq"));
             }
             if (map.containsKey("zrq")) {
-                sql += " and fh.sj <= '?'";
+                sql += " and fh.sj <= ?";
                 parameters.add(map.get("zrq") + " 23:59:59");
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
@@ -553,7 +553,7 @@ public class FaHuoDao extends BaseDao {
                     + "left join WuZiLeiBie l on fhd.wzlb_id=l.id "
                     + "where fh.qy_id=?";
             if (detail.getLsh() != null && !"".equals(detail.getLsh())) {
-                sql += " and fh.lsh = '?'";
+                sql += " and fh.lsh = ?";
                 parameters.add(detail.getLsh());
             }
             if (detail.getCk_id() != null) {
@@ -565,11 +565,11 @@ public class FaHuoDao extends BaseDao {
                 parameters.add(detail.getWzlb_id());
             }
             if (detail.getWzmc() != null && !"".equals(detail.getWzmc())) {
-                sql += " and fhd.wzmc = '?'";
+                sql += " and fhd.wzmc = ?";
                 parameters.add(detail.getWzmc());
             }
             if (detail.getXhgg() != null && !"".equals(detail.getXhgg())) {
-                sql += " and fhd.xhgg = '?'";
+                sql += " and fhd.xhgg = ?";
                 parameters.add(detail.getXhgg());
             }
             if (detail.getKh_id() != null) {
@@ -585,15 +585,15 @@ public class FaHuoDao extends BaseDao {
                 parameters.add(detail.getFhr_id());
             }
             if (detail.getTxm() != null && !"".equals(detail.getTxm())) {
-                sql += " and fhd.txm = '?'";
+                sql += " and fhd.txm = ?";
                 parameters.add(detail.getTxm());
             }
             if (detail.getQrq() != null && !"".equals(detail.getQrq())) {
-                sql += " and fh.spsj >= '?'";
+                sql += " and fh.spsj >= ?";
                 parameters.add(detail.getQrq());
             }
             if (detail.getZrq() != null && !"".equals(detail.getZrq())) {
-                sql += " and fh.spsj <= '?'";
+                sql += " and fh.spsj <= ?";
                 parameters.add(detail.getZrq() + " 23:59:59");
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);

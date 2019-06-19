@@ -113,12 +113,12 @@ public class TuiGongDao extends BaseDao {
                 parameters.add(map.get("ck_id"));
             }
             if (map.containsKey("lsh")) {
-                sql += " and tg.lsh like '%?%'";
-                parameters.add(map.get("lsh"));
+                sql += " and tg.lsh like ?";
+                parameters.add("%" + map.get("lsh") + "%");
             }
             if (map.containsKey("wz")) {
-                sql += " and tg.wz like '%?%'";
-                parameters.add(map.get("wz"));
+                sql += " and tg.wz like ?";
+                parameters.add("%" + map.get("wz") + "%");
             }
             if (map.containsKey("state")) {
                 sql += " and tg.state = ?";
@@ -133,11 +133,11 @@ public class TuiGongDao extends BaseDao {
                 parameters.add(map.get("gys_id"));
             }
             if (map.containsKey("qrq")) {
-                sql += " and tg.sj >= '?'";
+                sql += " and tg.sj >= ?";
                 parameters.add(map.get("qrq"));
             }
             if (map.containsKey("zrq")) {
-                sql += " and tg.sj <= '?'";
+                sql += " and tg.sj <= ?";
                 parameters.add(map.get("zrq") + " 23:59:59");
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);

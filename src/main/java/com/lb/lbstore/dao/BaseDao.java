@@ -14,7 +14,6 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.type.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**

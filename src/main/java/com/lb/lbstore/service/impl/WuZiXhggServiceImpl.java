@@ -59,8 +59,8 @@ public class WuZiXhggServiceImpl implements WuZiXhggService {
         parameters.add(map.get("wzzd_id"));
         String sql = "select count(1) from WuZiXhgg where qy_id=? and wzzd_id=?";
         if (map.containsKey("mc")) {
-            sql += " and mc like '%?%'";
-            parameters.add(map.get("mc"));
+            sql += " and mc like ?";
+            parameters.add("%" + map.get("mc") + "%");
         }
         if (map.containsKey("state")) {
             sql += " and state = ?";
@@ -76,8 +76,8 @@ public class WuZiXhggServiceImpl implements WuZiXhggService {
         parameters.add(map.get("wzzd_id"));
         String hql = "from WuZiXhgg where qy_id=? and wzzd_id=?";
         if (map.containsKey("mc")) {
-            hql += " and mc like '%?%'";
-            parameters.add(map.get("mc"));
+            hql += " and mc like ?";
+            parameters.add("%" + map.get("mc") + "%");
         }
         if (map.containsKey("state")) {
             hql += " and state = ?";

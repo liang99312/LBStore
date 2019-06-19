@@ -17,12 +17,12 @@ public class WuZiZiDianDao extends BaseDao {
         parameters.add(qy_id);
         String sql = "";
         if (id > -1) {
-            sql = "select 1 from wuzizidian where qy_id=? and id!=? and (mc ='?' or bm='?')";
+            sql = "select 1 from wuzizidian where qy_id=? and id!=? and (mc =? or bm=?)";
             parameters.add(id);
             parameters.add(mc);
             parameters.add(bm);
         } else {
-            sql = "select 1 from wuzizidian where qy_id=? and (mc ='?' or bm='?')";
+            sql = "select 1 from wuzizidian where qy_id=? and (mc =? or bm=?)";
             parameters.add(mc);
             parameters.add(bm);
         }

@@ -127,16 +127,16 @@ public class KuCunDao extends BaseDao {
                     + "left join WuZiLeiBie wzlb on kc.wzlb_id=wzlb.id "
                     + "where kc.qy_id=?";
             if (map.containsKey("wzmc")) {
-                sql += " and kc.wzmc like '%?%'";
-                parameters.add(map.get("wzmc"));
+                sql += " and kc.wzmc like ?";
+                parameters.add("%" + map.get("wzmc") + "%");
             }
             if (map.containsKey("txm")) {
-                sql += " and kc.txm like '%?%'";
-                parameters.add(map.get("txm"));
+                sql += " and kc.txm like ?";
+                parameters.add("%" + map.get("txm") + "%");
             }
             if (map.containsKey("xhgg")) {
-                sql += " and kc.xhgg like '%?%'";
-                parameters.add(map.get("xhgg"));
+                sql += " and kc.xhgg like ?";
+                parameters.add("%" + map.get("xhgg") + "%");
             }
             if (map.containsKey("wzlb_id")) {
                 sql += " and kc.wzlb_id = ?";
@@ -159,11 +159,11 @@ public class KuCunDao extends BaseDao {
                 parameters.add(map.get("gys_id"));
             }
             if (map.containsKey("qrq")) {
-                sql += " and kc.rksj >= '?'";
+                sql += " and kc.rksj >= ?";
                 parameters.add(map.get("qrq"));
             }
             if (map.containsKey("zrq")) {
-                sql += " and kc.rksj <= '?'";
+                sql += " and kc.rksj <= ?";
                 parameters.add(map.get("zrq") + " 23:59:59");
             }
             if (map.containsKey("qsl")) {
@@ -239,12 +239,12 @@ public class KuCunDao extends BaseDao {
                     + "left join WuZiLeiBie wzlb on kc.wzlb_id=wzlb.id "
                     + "where kc.qy_id=?";
             if (kuCun.getWzmc() != null && !"".equals(kuCun.getWzmc())) {
-                sql += " and kc.wzmc like '%?%'";
-                parameters.add(kuCun.getWzmc());
+                sql += " and kc.wzmc like ?";
+                parameters.add("%" + kuCun.getWzmc() + "%");
             }
             if (kuCun.getXhgg() != null && !"".equals(kuCun.getXhgg())) {
-                sql += " and kc.xhgg like '%?%'";
-                parameters.add(kuCun.getXhgg());
+                sql += " and kc.xhgg like ?";
+                parameters.add("%" + kuCun.getXhgg() + "%");
             }
             if (kuCun.getWzlb_id() != null) {
                 sql += " and kc.wzlb_id = ?";
@@ -267,11 +267,11 @@ public class KuCunDao extends BaseDao {
                 parameters.add(kuCun.getGys_id());
             }
             if (kuCun.getQrq() != null) {
-                sql += " and kc.rksj >= '?'";
+                sql += " and kc.rksj >= ?";
                 parameters.add(kuCun.getQrq());
             }
             if (kuCun.getZrq() != null) {
-                sql += " and kc.rksj <= '?'";
+                sql += " and kc.rksj <= ?";
                 parameters.add(kuCun.getZrq() + " 23:59:59");
             }
             if (kuCun.getSyl() != null && kuCun.getSyl() > 999999) {
@@ -338,12 +338,12 @@ public class KuCunDao extends BaseDao {
                     + "left join WuZiLeiBie wzlb on kc.wzlb_id=wzlb.id "
                     + "where kc.qy_id=? and kc.syzl < kc.zl";
             if (kuCun.getWzmc() != null && !"".equals(kuCun.getWzmc())) {
-                sql += " and kc.wzmc like '%?%'";
-                parameters.add(kuCun.getWzmc());
+                sql += " and kc.wzmc like ?";
+                parameters.add("%" + kuCun.getWzmc() + "%");
             }
             if (kuCun.getXhgg() != null && !"".equals(kuCun.getXhgg())) {
-                sql += " and kc.xhgg like '%?%'";
-                parameters.add(kuCun.getXhgg());
+                sql += " and kc.xhgg like ?";
+                parameters.add("%" + kuCun.getXhgg() + "%");
             }
             if (kuCun.getWzlb_id() != null) {
                 sql += " and kc.wzlb_id = ?";
@@ -366,11 +366,11 @@ public class KuCunDao extends BaseDao {
                 parameters.add(kuCun.getGys_id());
             }
             if (kuCun.getQrq() != null) {
-                sql += " and kc.rksj >= '?'";
+                sql += " and kc.rksj >= ?";
                 parameters.add(kuCun.getQrq());
             }
             if (kuCun.getZrq() != null) {
-                sql += " and kc.rksj <= '?'";
+                sql += " and kc.rksj <= ?";
                 parameters.add(kuCun.getZrq() + " 23:59:59");
             }
             sql += " limit 100";

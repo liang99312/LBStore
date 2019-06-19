@@ -18,11 +18,11 @@ public class BuMenDao extends BaseDao {
         List list = null;
         String sql = "";
         if (id > -1) {
-            sql = "select 1 from a01 where qy_id=? and id!=? and mc ='?'";
+            sql = "select 1 from bumen where qy_id=? and id!=? and mc =?";
             parameters.add(id);
             parameters.add(mc);
         } else {
-            sql = "select 1 from a01 where qy_id=? and mc ='?'";
+            sql = "select 1 from bumen where qy_id=? and mc =?";
             parameters.add(mc);
         }
         list = this.getSqlResult(sql, parameters.toArray());

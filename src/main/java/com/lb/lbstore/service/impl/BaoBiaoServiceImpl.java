@@ -66,8 +66,8 @@ public class BaoBiaoServiceImpl implements BaoBiaoService {
         parameters.add(map.get("qy_id"));
         String sql = "select count(1) from BaoBiao where qy_id=?";
         if (map.containsKey("mc")) {
-            sql += " and mc like '%?%'";
-            parameters.add(map.get("mc"));
+            sql += " and mc like ?";
+            parameters.add("%" + map.get("mc") + "%");
         }
         if (map.containsKey("state")) {
             sql += " and state = ?";
@@ -82,8 +82,8 @@ public class BaoBiaoServiceImpl implements BaoBiaoService {
         parameters.add(map.get("qy_id"));
         String hql = "from BaoBiao where qy_id=?";
         if (map.containsKey("mc")) {
-            hql += " and mc like '%?%'";
-            parameters.add(map.get("mc"));
+            hql += " and mc like ?";
+            parameters.add("%" + map.get("mc") + "%");
         }
         if (map.containsKey("state")) {
             hql += " and state = ?";
@@ -97,10 +97,10 @@ public class BaoBiaoServiceImpl implements BaoBiaoService {
         List parameters = new ArrayList();
         parameters.add(map.get("qy_id"));
         parameters.add(map.get("mkdm"));
-        String sql = "select count(1) from BaoBiao where qy_id=? and mkdm='?'";
+        String sql = "select count(1) from BaoBiao where qy_id=? and mkdm=?";
         if (map.containsKey("mc")) {
-            sql += " and mc like '%?%'";
-            parameters.add(map.get("mc"));
+            sql += " and mc like ?";
+            parameters.add("%" + map.get("mc") + "%");
         }
         return baoBiaoDao.getCount(sql, parameters.toArray());
     }
@@ -110,10 +110,10 @@ public class BaoBiaoServiceImpl implements BaoBiaoService {
         List parameters = new ArrayList();
         parameters.add(map.get("qy_id"));
         parameters.add(map.get("mkdm"));
-        String hql = "from BaoBiao where qy_id=? and mkdm='?'";
+        String hql = "from BaoBiao where qy_id=? and mkdm=?";
         if (map.containsKey("mc")) {
-            hql += " and mc like '%?%'";
-            parameters.add(map.get("mc"));
+            hql += " and mc like ?";
+            parameters.add("%" + map.get("mc") + "%");
         }
         return baoBiaoDao.getPageList(hql, parameters.toArray(), Integer.parseInt(map.get("beginRow").toString()), Integer.parseInt(map.get("pageSize").toString()));
     }

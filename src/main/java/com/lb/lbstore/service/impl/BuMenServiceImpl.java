@@ -65,8 +65,8 @@ public class BuMenServiceImpl implements BuMenService {
         parameters.add(map.get("qy_id"));
         String sql = "select count(1) from BuMen where qy_id=?";
         if (map.containsKey("mc")) {
-            sql += " and mc like '%?%'";
-            parameters.add(map.get("mc"));
+            sql += " and mc like ?";
+            parameters.add("%" + map.get("mc") + "%");
         }
         if (map.containsKey("state")) {
             sql += " and state = ?";
@@ -81,8 +81,8 @@ public class BuMenServiceImpl implements BuMenService {
         parameters.add(map.get("qy_id"));
         String hql = "from BuMen where qy_id=?";
         if (map.containsKey("mc")) {
-            hql += " and mc like '%?%'";
-            parameters.add(map.get("mc"));
+            hql += " and mc like ?";
+            parameters.add("%" + map.get("mc") + "%");
         }
         if (map.containsKey("state")) {
             hql += " and state = ?";

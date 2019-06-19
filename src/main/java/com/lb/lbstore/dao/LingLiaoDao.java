@@ -158,12 +158,12 @@ public class LingLiaoDao extends BaseDao {
                 parameters.add(map.get("ck_id"));
             }
             if (map.containsKey("lsh")) {
-                sql += " and ll.lsh like '%?%'";
-                parameters.add(map.get("lsh"));
+                sql += " and ll.lsh like ?";
+                parameters.add("%" + map.get("lsh") + "%");
             }
             if (map.containsKey("wz")) {
-                sql += " and ll.wz like '%?%'";
-                parameters.add(map.get("wz"));
+                sql += " and ll.wz like ?";
+                parameters.add("%" + map.get("wz") + "%");
             }
             if (map.containsKey("state")) {
                 sql += " and ll.state = ?";
@@ -178,11 +178,11 @@ public class LingLiaoDao extends BaseDao {
                 parameters.add(map.get("gys_id"));
             }
             if (map.containsKey("qrq")) {
-                sql += " and ll.sj >= '?'";
+                sql += " and ll.sj >= ?";
                 parameters.add(map.get("qrq"));
             }
             if (map.containsKey("zrq")) {
-                sql += " and ll.sj <= '?'";
+                sql += " and ll.sj <= ?";
                 parameters.add(map.get("zrq") + " 23:59:59");
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
@@ -227,15 +227,15 @@ public class LingLiaoDao extends BaseDao {
                     + "left join CangKu ck on ll.ck_id=ck.id left join KeHu kh on ll.kh_id=kh.id "
                     + "where ll.qy_id=?";
             if (map.containsKey("mc")) {
-                sql += " and ll.wz like '%?%'";
-                parameters.add(map.get("mc"));
+                sql += " and ll.wz like ?";
+                parameters.add("%" + map.get("mc") + "%");
             }
             if (map.containsKey("state")) {
                 sql += " and ll.state = ?";
                 parameters.add(map.get("state"));
             }
             if (map.containsKey("lsh")) {
-                sql += " and ll.lsh = '?'";
+                sql += " and ll.lsh = ?";
                 parameters.add(map.get("lsh"));
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
@@ -284,7 +284,7 @@ public class LingLiaoDao extends BaseDao {
                     + "left join WuZiLeiBie l on lld.wzlb_id=l.id "
                     + "where ll.qy_id=?";
             if (detail.getLsh() != null && !"".equals(detail.getLsh())) {
-                sql += " and ll.lsh = '?'";
+                sql += " and ll.lsh = ?";
                 parameters.add(detail.getLsh());
             }
             if (detail.getCk_id() != null) {
@@ -296,11 +296,11 @@ public class LingLiaoDao extends BaseDao {
                 parameters.add(detail.getWzlb_id());
             }
             if (detail.getWzmc() != null && !"".equals(detail.getWzmc())) {
-                sql += " and lld.wzmc = '?'";
+                sql += " and lld.wzmc = ?";
                 parameters.add(detail.getWzmc());
             }
             if (detail.getXhgg() != null && !"".equals(detail.getXhgg())) {
-                sql += " and lld.xhgg = '?'";
+                sql += " and lld.xhgg = ?";
                 parameters.add(detail.getXhgg());
             }
             if (detail.getKh_id() != null) {
@@ -316,15 +316,15 @@ public class LingLiaoDao extends BaseDao {
                 parameters.add(detail.getLlr_id());
             }
             if (detail.getTxm() != null && !"".equals(detail.getTxm())) {
-                sql += " and lld.txm = '?'";
+                sql += " and lld.txm = ?";
                 parameters.add(detail.getTxm());
             }
             if (detail.getQrq() != null && !"".equals(detail.getQrq())) {
-                sql += " and ll.spsj >= '?'";
+                sql += " and ll.spsj >= ?";
                 parameters.add(detail.getQrq());
             }
             if (detail.getZrq() != null && !"".equals(detail.getZrq())) {
-                sql += " and ll.spsj <= '?'";
+                sql += " and ll.spsj <= ?";
                 parameters.add(detail.getZrq() + " 23:59:59");
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);

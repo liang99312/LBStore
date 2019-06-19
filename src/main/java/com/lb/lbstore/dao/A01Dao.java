@@ -65,12 +65,12 @@ public class A01Dao extends BaseDao {
         parameters.add(qy_id);
         String sql = "";
         if (id > -1) {
-            sql = "select 1 from a01 where qy_id=? and id!=? and (mc ='?' or bh ='?')";
+            sql = "select 1 from a01 where qy_id=? and id!=? and (mc =? or bh =?)";
             parameters.add(id);
             parameters.add(mc);
             parameters.add(bh);
         } else {
-            sql = "select 1 from a01 where qy_id=? and (mc ='?' or bh ='?')";
+            sql = "select 1 from a01 where qy_id=? and (mc =? or bh =?)";
             parameters.add(mc);
             parameters.add(bh);
         }

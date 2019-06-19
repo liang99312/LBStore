@@ -62,8 +62,8 @@ public class ZiDianServiceImpl implements ZiDianService {
         parameters.add(map.get("qy_id"));
         String sql = "select count(1) from ZiDian where qy_id=?";
         if (map.containsKey("mc")) {
-            sql += " and mc like '%?%'";        
-            parameters.add(map.get("mc"));
+            sql += " and mc like ?";        
+            parameters.add("%" + map.get("mc") + "%");
         }
         if (map.containsKey("zdfl_id")) {
             sql += " and zdfl_id = ?";        
@@ -78,8 +78,8 @@ public class ZiDianServiceImpl implements ZiDianService {
         parameters.add(map.get("qy_id"));
         String hql = "from ZiDian where qy_id=?";
         if (map.containsKey("mc")) {
-            hql += " and mc like '%?%'";        
-            parameters.add(map.get("mc"));
+            hql += " and mc like ?";        
+            parameters.add("%" + map.get("mc") + "%");
         }
         if (map.containsKey("zdfl_id")) {
             hql += " and zdfl_id = ?";        

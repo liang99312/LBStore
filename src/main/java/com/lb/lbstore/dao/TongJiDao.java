@@ -39,11 +39,11 @@ public class TongJiDao extends BaseDao {
                 parameters.add(map.get("kh_id"));
             }
             if (map.containsKey("qrq")) {
-                sql += " and fh.sj >= '?'";
+                sql += " and fh.sj >= ?";
                 parameters.add(map.get("qrq"));
             }
             if (map.containsKey("zrq")) {
-                sql += " and fh.sj <= '?'";
+                sql += " and fh.sj <= ?";
                 parameters.add(map.get("zrq") + " 23:59:59");
             }
             sql += " group by fh.kh_id";
@@ -86,11 +86,11 @@ public class TongJiDao extends BaseDao {
                 parameters.add(map.get("kh_id"));
             }
             if (map.containsKey("qrq")) {
-                sql += " and fh.sj >= '?'";
+                sql += " and fh.sj >= ?";
                 parameters.add(map.get("qrq"));
             }
             if (map.containsKey("zrq")) {
-                sql += " and fh.sj <= '?'";
+                sql += " and fh.sj <= ?";
                 parameters.add(map.get("zrq") + " 23:59:59");
             }
             sql += " group by fh.kh_id,fhd.wzbm,fhd.wzmc,fhd.xhgg order by fh.kh_id";
@@ -134,11 +134,11 @@ public class TongJiDao extends BaseDao {
                     parameters.add(map.get("kh_id"));
                 }
                 if (map.containsKey("qrq")) {
-                    sql += " and rk.sj >= '?'";
+                    sql += " and rk.sj >= ?";
                     parameters.add(map.get("qrq"));
                 }
                 if (map.containsKey("zrq")) {
-                    sql += " and rk.sj <= '?'";
+                    sql += " and rk.sj <= ?";
                     parameters.add(map.get("zrq") + " 23:59:59");
                 }
                 sql += " group by rk.kh_id";
@@ -161,11 +161,11 @@ public class TongJiDao extends BaseDao {
                     parameters.add(map.get("gys_id"));
                 }
                 if (map.containsKey("qrq")) {
-                    sql += " and rk.sj >= '?'";
+                    sql += " and rk.sj >= ?";
                     parameters.add(map.get("qrq"));
                 }
                 if (map.containsKey("zrq")) {
-                    sql += " and rk.sj <= '?'";
+                    sql += " and rk.sj <= ?";
                     parameters.add(map.get("zrq") + " 23:59:59");
                 }
                 sql += " group by rk.gys_id";
