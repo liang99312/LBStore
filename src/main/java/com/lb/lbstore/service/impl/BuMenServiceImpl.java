@@ -8,6 +8,7 @@ package com.lb.lbstore.service.impl;
 import com.lb.lbstore.dao.BuMenDao;
 import com.lb.lbstore.domain.BuMen;
 import com.lb.lbstore.service.BuMenService;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,9 @@ public class BuMenServiceImpl implements BuMenService {
 
     @Override
     public List<BuMen> getAllBuMens(Integer qy_id) {
-        return buMenDao.getResult("from BuMen buMen where qy_id="+qy_id, null);
+        List parameters = new ArrayList();
+        parameters.add(qy_id);
+        return buMenDao.getResult("from BuMen buMen where qy_id=?", parameters.toArray());
     }
 
     @Override
@@ -47,10 +50,10 @@ public class BuMenServiceImpl implements BuMenService {
     @Override
     public boolean deleteBuMen(Integer id) {
         BuMen buMen = (BuMen) buMenDao.findObjectById(BuMen.class, id);
-        if(buMen.getState() == 0){
+        if (buMen.getState() == 0) {
             buMen.setState(-1);
             return buMenDao.update(buMen);
-        }else if(buMen.getState() == -1){
+        } else if (buMen.getState() == -1) {
             return buMenDao.deleteObjById("buMen", id);
         }
         return false;
@@ -58,26 +61,34 @@ public class BuMenServiceImpl implements BuMenService {
 
     @Override
     public int queryRows(HashMap map) {
-        String sql = "select count(1) from BuMen where  qy_id="+map.get("qy_id");
+        List parameters = new ArrayList();
+        parameters.add(map.get("qy_id"));
+        String sql = "select count(1) from BuMen where qy_id=?";
         if (map.containsKey("mc")) {
-            sql += " and mc like '%" + map.get("mc") + "%'";
+            sql += " and mc like '%?%'";
+            parameters.add(map.get("mc"));
         }
         if (map.containsKey("state")) {
-            sql += " and state = " + map.get("state");
+            sql += " and state = ?";
+            parameters.add(map.get("state"));
         }
-        return buMenDao.getCount(sql, null);
+        return buMenDao.getCount(sql, parameters.toArray());
     }
 
     @Override
     public List<BuMen> queryBuMensByPage(HashMap map) {
-        String hql = "from BuMen where qy_id="+map.get("qy_id");
+        List parameters = new ArrayList();
+        parameters.add(map.get("qy_id"));
+        String hql = "from BuMen where qy_id=?";
         if (map.containsKey("mc")) {
-            hql += " and mc like '%" + map.get("mc") + "%'";
+            hql += " and mc like '%?%'";
+            parameters.add(map.get("mc"));
         }
         if (map.containsKey("state")) {
-            hql += " and state = " + map.get("state");
+            hql += " and state = ?";
+            parameters.add(map.get("state"));
         }
-        return buMenDao.getPageList(hql, null, Integer.parseInt(map.get("beginRow").toString()), Integer.parseInt(map.get("pageSize").toString()));
+        return buMenDao.getPageList(hql, parameters.toArray(), Integer.parseInt(map.get("beginRow").toString()), Integer.parseInt(map.get("pageSize").toString()));
     }
 
     @Override
