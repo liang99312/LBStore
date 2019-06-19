@@ -34,8 +34,9 @@ public class HuanKuDao extends BaseDao {
                     + "left join CangKu ck on hk.ck_id=ck.id "
                     + "left join A01 a01 on hk.hkr_id=a01.id "
                     + "left join A01 a02 on hk.spr_id=a02.id "
-                    + "where hk.id=" + id;
+                    + "where hk.id=?";
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
+            navtiveSQL.setParameter(0, id);
             navtiveSQL.addEntity("hk", HuanKu.class)
                     .addScalar("ckmc", StandardBasicTypes.STRING)
                     .addScalar("hkrmc", StandardBasicTypes.STRING)
@@ -58,8 +59,9 @@ public class HuanKuDao extends BaseDao {
             }
             huanKu = list_hk.get(0);
 
-            String sql_d = "select {d.*},l.mc as wzlb from HuanKuDetail d left join WuZiLeiBie l on d.wzlb_id=l.id where d.hk_id=" + id;
+            String sql_d = "select {d.*},l.mc as wzlb from HuanKuDetail d left join WuZiLeiBie l on d.wzlb_id=l.id where d.hk_id=?";
             SQLQuery navtiveSQL_d = session.createSQLQuery(sql_d);
+            navtiveSQL_d.setParameter(0, id);
             navtiveSQL_d.addEntity("d", HuanKuDetail.class).addScalar("wzlb", StandardBasicTypes.STRING);
             List<HuanKuDetail> details = new ArrayList();
             List list_d = navtiveSQL_d.list();
@@ -89,36 +91,49 @@ public class HuanKuDao extends BaseDao {
         List<HuanKu> result = new ArrayList();
         Session session = null;
         try {
+            List parameters = new ArrayList();
+            parameters.add(map.get("qy_id"));
             session = getSessionFactory().openSession();
             String sql = "select {hk.*},ck.mc as ckmc from HuanKu hk "
                     + "left join CangKu ck on hk.ck_id=ck.id "
-                    + "where hk.qy_id=" + map.get("qy_id");
+                    + "where hk.qy_id=?";
             if (map.containsKey("ck_id")) {
-                sql += " and hk.ck_id = " + map.get("ck_id");
+                sql += " and hk.ck_id = ?";
+                parameters.add(map.get("ck_id"));
             }
             if (map.containsKey("lsh")) {
-                sql += " and hk.lsh like '%" + map.get("lsh") + "%'";
+                sql += " and hk.lsh like '%?%'";
+                parameters.add(map.get("lsh"));
             }
             if (map.containsKey("wz")) {
-                sql += " and hk.wz like '%" + map.get("wz") + "%'";
+                sql += " and hk.wz like '%?%'";
+                parameters.add(map.get("wz"));
             }
             if (map.containsKey("state")) {
-                sql += " and hk.state = " + map.get("state");
+                sql += " and hk.state = ?";
+                parameters.add(map.get("state"));
             }
             if (map.containsKey("kh_id")) {
-                sql += " and hk.kh_id = " + map.get("kh_id");
+                sql += " and hk.kh_id = ?";
+                parameters.add(map.get("kh_id"));
             }
             if (map.containsKey("gys_id")) {
-                sql += " and hk.gys_id = " + map.get("gys_id");
+                sql += " and hk.gys_id = ?";
+                parameters.add(map.get("gys_id"));
             }
             if (map.containsKey("qrq")) {
-                sql += " and hk.sj >= '" + map.get("qrq") + "'";
+                sql += " and hk.sj >= '?'";
+                parameters.add(map.get("qrq"));
             }
             if (map.containsKey("zrq")) {
-                sql += " and hk.sj <= '" + map.get("zrq") + " 23:59:59'";
+                sql += " and hk.sj <= '?'";
+                parameters.add(map.get("zrq") + " 23:59:59");
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
-            navtiveSQL.addEntity("hk", HuanKu.class).addScalar("ckmc", StandardBasicTypes.STRING);           
+            for (int i = 0; i < parameters.size(); i++) {
+                navtiveSQL.setParameter(i, parameters.get(i));
+            }
+            navtiveSQL.addEntity("hk", HuanKu.class).addScalar("ckmc", StandardBasicTypes.STRING);
             navtiveSQL.setFirstResult(Integer.parseInt(map.get("beginRow").toString()));
             navtiveSQL.setMaxResults(Integer.parseInt(map.get("pageSize").toString()));
             List list = navtiveSQL.list();
@@ -189,8 +204,8 @@ public class HuanKuDao extends BaseDao {
             tx = session.beginTransaction();
             session.update(huanKu);
             session.flush();
-            String deleteDetail = "delete from HuanKuDetail where hk_id=" + huanKu.getId();
-            session.createSQLQuery(deleteDetail).executeUpdate();
+            String deleteDetail = "delete from HuanKuDetail where hk_id=?";
+            session.createSQLQuery(deleteDetail).setParameter(0, huanKu.getId()).executeUpdate();
             session.flush();
             for (HuanKuDetail detail : huanKu.getDetails()) {
                 detail.setCk_id(huanKu.getCk_id());
@@ -223,10 +238,10 @@ public class HuanKuDao extends BaseDao {
         try {
             session = getSessionFactory().openSession();
             tx = session.beginTransaction();
-            String deleteDetail = "delete from HuanKuDetail where hk_id=" + id;
-            session.createSQLQuery(deleteDetail).executeUpdate();
-            String deleteLl = "delete from HuanKu where id=" + id;
-            session.createSQLQuery(deleteLl).executeUpdate();
+            String deleteDetail = "delete from HuanKuDetail where hk_id=?";
+            session.createSQLQuery(deleteDetail).setParameter(0, id).executeUpdate();
+            String deleteLl = "delete from HuanKu where id=?";
+            session.createSQLQuery(deleteLl).setParameter(0, id).executeUpdate();
             session.flush();
             tx.commit();
             result = true;
@@ -252,8 +267,8 @@ public class HuanKuDao extends BaseDao {
         try {
             session = getSessionFactory().openSession();
             tx = session.beginTransaction();
-            String sql = "from HuanKuDetail where hk_id=" + huanKu.getId();
-            List<HuanKuDetail> list = session.createQuery(sql).list();
+            String sql = "from HuanKuDetail where hk_id=?";
+            List<HuanKuDetail> list = session.createQuery(sql).setParameter(0, huanKu.getId()).list();
             Hashtable<Integer, HuanKuDetail> detailTable = new Hashtable();
             StringBuilder sb = new StringBuilder();
             sb.append("(-1");
