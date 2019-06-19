@@ -36,8 +36,9 @@ public class FaHuoDao extends BaseDao {
                     + "left join KeHu kh on fh.kh_id=kh.id "
                     + "left join A01 a01 on fh.fhr_id=a01.id "
                     + "left join A01 a02 on fh.spr_id=a02.id "
-                    + "where fh.id=" + id;
+                    + "where fh.id=?";
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
+            navtiveSQL.setParameter(0, id);
             navtiveSQL.addEntity("fh", FaHuo.class)
                     .addScalar("khmc", StandardBasicTypes.STRING)
                     .addScalar("ckmc", StandardBasicTypes.STRING)
@@ -63,8 +64,9 @@ public class FaHuoDao extends BaseDao {
             }
             faHuo = list_fh.get(0);
 
-            String sql_d = "select {d.*},l.mc as wzlb from FaHuoDetail d left join WuZiLeiBie l on d.wzlb_id=l.id where d.fh_id=" + id;
+            String sql_d = "select {d.*},l.mc as wzlb from FaHuoDetail d left join WuZiLeiBie l on d.wzlb_id=l.id where d.fh_id=?";
             SQLQuery navtiveSQL_d = session.createSQLQuery(sql_d);
+            navtiveSQL_d.setParameter(0, id);
             navtiveSQL_d.addEntity("d", FaHuoDetail.class).addScalar("wzlb", StandardBasicTypes.STRING);
             List<FaHuoDetail> details = new ArrayList();
             List list_d = navtiveSQL_d.list();
@@ -94,36 +96,49 @@ public class FaHuoDao extends BaseDao {
         List<FaHuo> result = new ArrayList();
         Session session = null;
         try {
+            List parameters = new ArrayList();
+            parameters.add(map.get("qy_id"));
             session = getSessionFactory().openSession();
             String sql = "select {fh.*},kh.mc as khmc,ck.mc as ckmc from FaHuo fh "
                     + "left join CangKu ck on fh.ck_id=ck.id left join KeHu kh on fh.kh_id=kh.id "
-                    + "where fh.qy_id=" + map.get("qy_id");
+                    + "where fh.qy_id=?";
             if (map.containsKey("ck_id")) {
-                sql += " and fh.ck_id = " + map.get("ck_id");
+                sql += " and fh.ck_id = ?";
+                parameters.add(map.get("ck_id"));
             }
             if (map.containsKey("lsh")) {
-                sql += " and fh.lsh like '%" + map.get("lsh") + "%'";
+                sql += " and fh.lsh like '%?%'";
+                parameters.add(map.get("lsh"));
             }
             if (map.containsKey("wz")) {
-                sql += " and fh.wz like '%" + map.get("wz") + "%'";
+                sql += " and fh.wz like '%?%'";
+                parameters.add(map.get("wz"));
             }
             if (map.containsKey("state")) {
-                sql += " and fh.state = " + map.get("state");
+                sql += " and fh.state = ?";
+                parameters.add(map.get("state"));
             }
             if (map.containsKey("kh_id")) {
-                sql += " and fh.kh_id = " + map.get("kh_id");
+                sql += " and fh.kh_id = ?";
+                parameters.add(map.get("kh_id"));
             }
             if (map.containsKey("gys_id")) {
-                sql += " and fh.gys_id = " + map.get("gys_id");
+                sql += " and fh.gys_id = ?";
+                parameters.add(map.get("gys_id"));
             }
             if (map.containsKey("qrq")) {
-                sql += " and fh.sj >= '" + map.get("qrq") + "'";
+                sql += " and fh.sj >= '?'";
+                parameters.add(map.get("qrq"));
             }
             if (map.containsKey("zrq")) {
-                sql += " and fh.sj <= '" + map.get("zrq") + " 23:59:59'";
+                sql += " and fh.sj <= '?'";
+                parameters.add(map.get("zrq") + " 23:59:59");
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
-            navtiveSQL.addEntity("fh", FaHuo.class).addScalar("khmc", StandardBasicTypes.STRING).addScalar("ckmc", StandardBasicTypes.STRING);           
+            for (int i = 0; i < parameters.size(); i++) {
+                navtiveSQL.setParameter(i, parameters.get(i));
+            }
+            navtiveSQL.addEntity("fh", FaHuo.class).addScalar("khmc", StandardBasicTypes.STRING).addScalar("ckmc", StandardBasicTypes.STRING);
             navtiveSQL.setFirstResult(Integer.parseInt(map.get("beginRow").toString()));
             navtiveSQL.setMaxResults(Integer.parseInt(map.get("pageSize").toString()));
             List list = navtiveSQL.list();
@@ -149,7 +164,7 @@ public class FaHuoDao extends BaseDao {
         }
         return result;
     }
-    
+
     public List<FaHuoFei> queryFaHuoFeisByPage(HashMap map) {
         List<FaHuoFei> result = new ArrayList();
         Session session = null;
@@ -157,9 +172,10 @@ public class FaHuoDao extends BaseDao {
             session = getSessionFactory().openSession();
             String sql = "select {fhf.*},a01.mc as skrmc from FaHuoFei fhf "
                     + "left join A01 a01 on fhf.skr_id=a01.id "
-                    + "where fhf.fh_id=" + map.get("fh_id");
+                    + "where fhf.fh_id=?";
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
-            navtiveSQL.addEntity("fhf", FaHuoFei.class).addScalar("skrmc", StandardBasicTypes.STRING);           
+            navtiveSQL.setParameter(0, map.get("fh_id"));
+            navtiveSQL.addEntity("fhf", FaHuoFei.class).addScalar("skrmc", StandardBasicTypes.STRING);
             navtiveSQL.setFirstResult(Integer.parseInt(map.get("beginRow").toString()));
             navtiveSQL.setMaxResults(Integer.parseInt(map.get("pageSize").toString()));
             List list = navtiveSQL.list();
@@ -233,8 +249,8 @@ public class FaHuoDao extends BaseDao {
             faHuo.setDfje(faHuo.getJe() - faHuo.getYfje());
             session.update(faHuo);
             session.flush();
-            String deleteDetail = "delete from FaHuoDetail where fh_id=" + faHuo.getId();
-            session.createSQLQuery(deleteDetail).executeUpdate();
+            String deleteDetail = "delete from FaHuoDetail where fh_id=?";
+            session.createSQLQuery(deleteDetail).setParameter(0, faHuo.getId()).executeUpdate();
             session.flush();
             for (FaHuoDetail detail : faHuo.getDetails()) {
                 detail.setCk_id(faHuo.getCk_id());
@@ -268,12 +284,12 @@ public class FaHuoDao extends BaseDao {
         try {
             session = getSessionFactory().openSession();
             tx = session.beginTransaction();
-            String deleteDetail = "delete from FaHuoDetail where fh_id=" + id;
-            session.createSQLQuery(deleteDetail).executeUpdate();
-            String deleteFei = "delete from FaHuoFei where fh_id=" + id;
-            session.createSQLQuery(deleteFei).executeUpdate();
-            String deleteFh = "delete from FaHuo where id=" + id;
-            session.createSQLQuery(deleteFh).executeUpdate();
+            String deleteDetail = "delete from FaHuoDetail where fh_id=?";
+            session.createSQLQuery(deleteDetail).setParameter(0, id).executeUpdate();
+            String deleteFei = "delete from FaHuoFei where fh_id=?";
+            session.createSQLQuery(deleteFei).setParameter(0, id).executeUpdate();
+            String deleteFh = "delete from FaHuo where id=?";
+            session.createSQLQuery(deleteFh).setParameter(0, id).executeUpdate();
             session.flush();
             tx.commit();
             result = true;
@@ -299,8 +315,8 @@ public class FaHuoDao extends BaseDao {
         try {
             session = getSessionFactory().openSession();
             tx = session.beginTransaction();
-            String sql = "from FaHuoDetail where fh_id=" + faHuo.getId();
-            List<FaHuoDetail> list = session.createQuery(sql).list();
+            String sql = "from FaHuoDetail where fh_id=?";
+            List<FaHuoDetail> list = session.createQuery(sql).setParameter(0, faHuo.getId()).list();
             Hashtable<Integer, FaHuoDetail> detailTable = new Hashtable();
             StringBuilder sb = new StringBuilder();
             sb.append("(-1");
@@ -378,14 +394,14 @@ public class FaHuoDao extends BaseDao {
         try {
             session = getSessionFactory().openSession();
             tx = session.beginTransaction();
-            String deleteFei = "delete from FaHuoFei where id=" + id;
-            session.createSQLQuery(deleteFei).executeUpdate();
+            String deleteFei = "delete from FaHuoFei where id=?";
+            session.createSQLQuery(deleteFei).setParameter(0, id).executeUpdate();
             session.flush();
-            String updateFaHuo = "update fahuo set yfje = ifnull((select sum(ifnull(f.je,0)) from fahuofei f where f.fh_id = " + fh_id + "),0) where fahuo.id=" + fh_id;
-            session.createSQLQuery(updateFaHuo).executeUpdate();
+            String updateFaHuo = "update fahuo set yfje = ifnull((select sum(ifnull(f.je,0)) from fahuofei f where f.fh_id = ?),0) where fahuo.id=?";
+            session.createSQLQuery(updateFaHuo).setParameter(0, fh_id).setParameter(1, fh_id).executeUpdate();
             session.flush();
-            updateFaHuo = "update fahuo set dfje = je - yfje where id=" + fh_id;
-            session.createSQLQuery(updateFaHuo).executeUpdate();
+            updateFaHuo = "update fahuo set dfje = je - yfje where id=?";
+            session.createSQLQuery(updateFaHuo).setParameter(0, fh_id).executeUpdate();
             session.flush();
             tx.commit();
             result = true;
@@ -403,7 +419,7 @@ public class FaHuoDao extends BaseDao {
         }
         return result;
     }
-    
+
     public Integer saveFaHuoFei(FaHuoFei faHuoFei) {
         Integer result = -1;
         Session session = null;
@@ -414,11 +430,11 @@ public class FaHuoDao extends BaseDao {
             Integer id = (Integer) session.save(faHuoFei);
             session.flush();
             int fh_id = faHuoFei.getFh_id();
-            String updateFaHuo = "update fahuo set yfje = ifnull((select sum(ifnull(f.je,0)) from fahuofei f where f.fh_id = " + fh_id + "),0) where fahuo.id=" + fh_id;
-            session.createSQLQuery(updateFaHuo).executeUpdate();
+            String updateFaHuo = "update fahuo set yfje = ifnull((select sum(ifnull(f.je,0)) from fahuofei f where f.fh_id = ?),0) where fahuo.id=?";
+            session.createSQLQuery(updateFaHuo).setParameter(0, fh_id).setParameter(1, fh_id).executeUpdate();
             session.flush();
-            updateFaHuo = "update fahuo set dfje = je - yfje where id=" + fh_id;
-            session.createSQLQuery(updateFaHuo).executeUpdate();
+            updateFaHuo = "update fahuo set dfje = je - yfje where id=?";
+            session.createSQLQuery(updateFaHuo).setParameter(0, fh_id).executeUpdate();
             session.flush();
             tx.commit();
             result = id;
@@ -436,7 +452,7 @@ public class FaHuoDao extends BaseDao {
         }
         return result;
     }
-    
+
     public boolean updateFaHuoFei(FaHuoFei faHuoFei) {
         boolean result = false;
         Session session = null;
@@ -447,11 +463,11 @@ public class FaHuoDao extends BaseDao {
             session.update(faHuoFei);
             session.flush();
             int fh_id = faHuoFei.getFh_id();
-            String updateFaHuo = "update fahuo set yfje = ifnull((select sum(ifnull(f.je,0)) from fahuofei f where f.fh_id = " + fh_id + "),0) where fahuo.id=" + fh_id;
-            session.createSQLQuery(updateFaHuo).executeUpdate();
+            String updateFaHuo = "update fahuo set yfje = ifnull((select sum(ifnull(f.je,0)) from fahuofei f where f.fh_id = ?),0) where fahuo.id=?";
+            session.createSQLQuery(updateFaHuo).setParameter(0, fh_id).setParameter(1, fh_id).executeUpdate();
             session.flush();
-            updateFaHuo = "update fahuo set dfje = je - yfje where id=" + fh_id;
-            session.createSQLQuery(updateFaHuo).executeUpdate();
+            updateFaHuo = "update fahuo set dfje = je - yfje where id=?";
+            session.createSQLQuery(updateFaHuo).setParameter(0, fh_id).executeUpdate();
             session.flush();
             tx.commit();
             result = true;
@@ -469,7 +485,7 @@ public class FaHuoDao extends BaseDao {
         }
         return result;
     }
-    
+
     public FaHuoDetail getFaHuoDetailById(Integer id) {
         FaHuoDetail faHuoDetail = null;
         Session session = null;
@@ -481,8 +497,9 @@ public class FaHuoDao extends BaseDao {
                     + "left join KeHu kh on fh.kh_id=kh.id "
                     + "left join A01 a01 on fh.fhr_id=a01.id "
                     + "left join WuZiLeiBie l on fhd.wzlb_id=l.id "
-                    + "where fhd.id=" + id;
+                    + "where fhd.id=?";
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
+            navtiveSQL.setParameter(0, id);
             navtiveSQL.addEntity("fhd", FaHuoDetail.class)
                     .addScalar("khmc", StandardBasicTypes.STRING)
                     .addScalar("ckmc", StandardBasicTypes.STRING)
@@ -520,11 +537,13 @@ public class FaHuoDao extends BaseDao {
         }
         return faHuoDetail;
     }
-    
+
     public List<FaHuoDetail> queryFaHuoDetailsTop100(FaHuoDetail detail) {
         List<FaHuoDetail> result = new ArrayList();
         Session session = null;
         try {
+            List parameters = new ArrayList();
+            parameters.add(detail.getQy_id());
             session = getSessionFactory().openSession();
             String sql = "select {fhd.*},kh.mc as khmc,ck.mc as ckmc,fh.spsj as sj,fh.lsh as lsh,a01.mc as fhrmc,l.mc as wzlb from FaHuoDetail fhd "
                     + "left join FaHuo fh on fhd.fh_id=fh.id "
@@ -532,41 +551,55 @@ public class FaHuoDao extends BaseDao {
                     + "left join KeHu kh on fh.kh_id=kh.id "
                     + "left join A01 a01 on fh.fhr_id=a01.id "
                     + "left join WuZiLeiBie l on fhd.wzlb_id=l.id "
-                    + "where fh.qy_id=" + detail.getQy_id();
+                    + "where fh.qy_id=?";
             if (detail.getLsh() != null && !"".equals(detail.getLsh())) {
-                sql += " and fh.lsh = '" + detail.getLsh() + "'";
+                sql += " and fh.lsh = '?'";
+                parameters.add(detail.getLsh());
             }
             if (detail.getCk_id() != null) {
-                sql += " and fhd.ck_id = " + detail.getCk_id();
+                sql += " and fhd.ck_id = ?";
+                parameters.add(detail.getCk_id());
             }
             if (detail.getWzlb_id() != null) {
-                sql += " and fhd.wzlb_id = " + detail.getWzlb_id();
+                sql += " and fhd.wzlb_id = ?";
+                parameters.add(detail.getWzlb_id());
             }
             if (detail.getWzmc() != null && !"".equals(detail.getWzmc())) {
-                sql += " and fhd.wzmc = '" + detail.getWzmc() + "'";
+                sql += " and fhd.wzmc = '?'";
+                parameters.add(detail.getWzmc());
             }
             if (detail.getXhgg() != null && !"".equals(detail.getXhgg())) {
-                sql += " and fhd.xhgg = '" + detail.getXhgg() + "'";
+                sql += " and fhd.xhgg = '?'";
+                parameters.add(detail.getXhgg());
             }
             if (detail.getKh_id() != null) {
-                sql += " and fhd.kh_id = " + detail.getKh_id();
+                sql += " and fhd.kh_id = ?";
+                parameters.add(detail.getKh_id());
             }
             if (detail.getGys_id() != null) {
-                sql += " and fhd.ck_id = " + detail.getGys_id();
+                sql += " and fhd.ck_id = ?";
+                parameters.add(detail.getGys_id());
             }
             if (detail.getFhr_id() != null) {
-                sql += " and fh.fhr_id = " + detail.getFhr_id();
+                sql += " and fh.fhr_id = ?";
+                parameters.add(detail.getFhr_id());
             }
             if (detail.getTxm() != null && !"".equals(detail.getTxm())) {
-                sql += " and fhd.txm = '" + detail.getTxm() + "'";
+                sql += " and fhd.txm = '?'";
+                parameters.add(detail.getTxm());
             }
             if (detail.getQrq() != null && !"".equals(detail.getQrq())) {
-                sql += " and fh.spsj >= '" + detail.getQrq() + "'";
+                sql += " and fh.spsj >= '?'";
+                parameters.add(detail.getQrq());
             }
             if (detail.getZrq() != null && !"".equals(detail.getZrq())) {
-                sql += " and fh.spsj <= '" + detail.getZrq() + " 23:59:59'";
+                sql += " and fh.spsj <= '?'";
+                parameters.add(detail.getZrq() + " 23:59:59");
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
+            for (int i = 0; i < parameters.size(); i++) {
+                navtiveSQL.setParameter(i, parameters.get(i));
+            }
             navtiveSQL.addEntity("fhd", FaHuoDetail.class)
                     .addScalar("khmc", StandardBasicTypes.STRING)
                     .addScalar("ckmc", StandardBasicTypes.STRING)
