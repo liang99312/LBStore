@@ -8,6 +8,7 @@ package com.lb.lbstore.service.impl;
 import com.lb.lbstore.dao.KuCunDao;
 import com.lb.lbstore.domain.KuCun;
 import com.lb.lbstore.service.KuCunService;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,44 +41,62 @@ public class KuCunServiceImpl implements KuCunService {
 
     @Override
     public int queryRows(HashMap map) {
-        String sql = "select count(1) from KuCun where qy_id="+map.get("qy_id");
+        List parameters = new ArrayList();
+        parameters.add(map.get("qy_id"));
+        String sql = "select count(1) from KuCun where qy_id=?";
         if (map.containsKey("wzmc")) {
-            sql += " and wzmc like '%" + map.get("wzmc") + "%'";
+            sql += " and wzmc like '%?%'";
+            parameters.add(map.get("wzmc"));
+        }
+        if (map.containsKey("txm")) {
+            sql += " and txm like '%?%'";
+            parameters.add(map.get("txm"));
         }
         if (map.containsKey("xhgg")) {
-            sql += " and xhgg like '%" + map.get("xhgg") + "%'";
+            sql += " and xhgg like '%?%'";
+            parameters.add(map.get("xhgg"));
         }
         if (map.containsKey("wzlb_id")) {
-            sql += " and wzlb_id = " + map.get("wzlb_id");
+            sql += " and wzlb_id = ?";
+            parameters.add(map.get("wzlb_id"));
         }
         if (map.containsKey("rkr_id")) {
-            sql += " and rkr_id = " + map.get("rkr_id");
+            sql += " and rkr_id = ?";
+            parameters.add(map.get("rkr_id"));
         }
         if (map.containsKey("ck_id")) {
-            sql += " and ck_id = " + map.get("ck_id");
+            sql += " and ck_id = ?";
+            parameters.add(map.get("ck_id"));
         }
         if (map.containsKey("kh_id")) {
-            sql += " and kh_id = " + map.get("kh_id");
+            sql += " and kh_id = ?";
+            parameters.add(map.get("kh_id"));
         }
         if (map.containsKey("gys_id")) {
-            sql += " and gys_id = " + map.get("gys_id");
+            sql += " and gys_id = ?";
+            parameters.add(map.get("gys_id"));
         }
         if (map.containsKey("qrq")) {
-            sql += " and rksj > '" + map.get("qrq") + "'";
+            sql += " and rksj >= '?'";
+            parameters.add(map.get("qrq"));
         }
         if (map.containsKey("zrq")) {
-            sql += " and rksj <= '" + map.get("zrq") + " 23:59:59'";
+            sql += " and rksj <= '?'";
+            parameters.add(map.get("zrq") + " 23:59:59");
         }
         if (map.containsKey("qsl")) {
-            sql += " and syl >= " + map.get("qsl");
+            sql += " and syl >= ?";
+            parameters.add(map.get("qsl"));
         }
         if (map.containsKey("zsl")) {
-            sql += " and syl <= " + map.get("zsl");
+            sql += " and syl <= ?";
+            parameters.add(map.get("zsl"));
         }
         if (map.containsKey("lqq")) {
-            sql += " and datediff(bzrq,now()) <= " + map.get("lqq");
+            sql += " and datediff(bzrq,now()) <= ?";
+            parameters.add(map.get("lqq"));
         }
-        return kuCunDao.getCount(sql, null);
+        return kuCunDao.getCount(sql, parameters.toArray());
     }
 
     @Override
