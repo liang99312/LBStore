@@ -618,7 +618,7 @@ function saveTuiHuoMingXi() {
     if (!editLeiBie || editLeiBie === null) {
         return alert("物资类别不能为空");
     }
-    if ($("#inpMxThl").val() === "") {
+    if ($("#inpMxThl").val() === "" || parseFloat($("#inpMxThl").val()) < 0.00001) {
         return alert("请输入退货数量");
     }
     if(curFaHuoDetail.kh_id !== editKeHu.id){
@@ -807,7 +807,7 @@ function setFhdData(detail, index) {
     editXhgg = {"id": detail.xhgg_id, "mc": detail.xhgg};
     $("#inpMxXhgg").val(detail.xhgg);
     $("#inpMxScc").val(detail.scc);
-    $("#inpMxBz").val(detail.bz);
+    $("#inpMxBz").val(m.bz ? m.bz : detail.bz);
     $("#inpMxTxm").val(detail.txm);
     $("#inpMxPc").val(detail.pc);
     $("#inpMxScrq").val(detail.scrq);

@@ -613,7 +613,7 @@ function saveFaHuoMingXi() {
     if (!editLeiBie || editLeiBie === null) {
         return alert("物资类别不能为空");
     }
-    if ($("#inpMxFhl").val() === "") {
+    if ($("#inpMxFhl").val() === "" || parseFloat($("#inpMxFhl").val()) < 0.00001) {
         return alert("请输入发货数量");
     }
     var mx = {};
@@ -716,7 +716,7 @@ function cxKuCun() {
     if ($("#inpKcSelZrq").val() !== "") {
         kuCun.zrq = $("#inpKcSelZrq").val();
     }
-    if($("#inpKcSelFlag").prop("checked")){
+    if ($("#inpKcSelFlag").prop("checked")) {
         kuCun.syl = 999999.9;
     }
     $.ajax({
@@ -792,7 +792,7 @@ function setKcCunData(kc, index) {
     editXhgg = {"id": kc.xhgg_id, "mc": kc.xhgg};
     $("#inpMxXhgg").val(kc.xhgg);
     $("#inpMxScc").val(kc.scc);
-    $("#inpMxBz").val(kc.bz);
+    $("#inpMxBz").val(m.bz ? m.bz : kc.bz);
     $("#inpMxTxm").val(kc.txm);
     $("#inpMxPc").val(kc.pc);
     $("#inpMxScrq").val(kc.scrq);
@@ -825,7 +825,7 @@ function cxKuCunById(id, index) {
     $.ajax({
         url: "/LBStore/kuCun/getKuCunById.do?id=" + id,
         contentType: "application/json",
-        type: "post",
+        type: "get",
         cache: false,
         error: function (msg, textStatus) {
             alert("查询库存失败");

@@ -583,7 +583,7 @@ function saveHuanKuMingXi() {
     if (!editLeiBie || editLeiBie === null) {
         return alert("物资类别不能为空");
     }
-    if ($("#inpMxHkl").val() === "") {
+    if ($("#inpMxHkl").val() === "" || parseFloat($("#inpMxHkl").val()) < 0.00001) {
         return alert("请输入还库数量");
     }
     var mx = {};
@@ -766,7 +766,7 @@ function setLldData(detail, index) {
     editXhgg = {"id": detail.xhgg_id, "mc": detail.xhgg};
     $("#inpMxXhgg").val(detail.xhgg);
     $("#inpMxScc").val(detail.scc);
-    $("#inpMxBz").val(detail.bz);
+    $("#inpMxBz").val(m.bz ? m.bz : detail.bz);
     $("#inpMxTxm").val(detail.txm);
     $("#inpMxPc").val(detail.pc);
     $("#inpMxScrq").val(detail.scrq);

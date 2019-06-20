@@ -657,7 +657,7 @@ function saveTuiGongMingXi() {
     if (!editLeiBie || editLeiBie === null) {
         return alert("物资类别不能为空");
     }
-    if ($("#inpMxTgl").val() === "") {
+    if ($("#inpMxTgl").val() === "" || parseFloat($("#inpMxTgl").val()) < 0.00001) {
         return alert("请输入退供数量");
     }
     if ("供应商" === $("#inpLy").val()) {
@@ -866,6 +866,7 @@ function setKcdData(detail, index) {
     $("#inpMxKwh").val(detail.kw);
     $("#inpMxRkr").val(detail.rkrmc);
     buildTysx(detail.tysx);
+    $("#inpMxBz").val(m.bz ? m.bz : detail.bz);
     $("#inpMxTgl").val(m.tgl);
     $("#inpMxTgzl").val(m.tgzl);
     buildDymx();
