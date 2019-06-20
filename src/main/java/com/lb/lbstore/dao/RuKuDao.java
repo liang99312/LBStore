@@ -369,15 +369,22 @@ public class RuKuDao extends BaseDao {
             for (RuKuDetail detail : ruKu.getDetails()) {
                 Integer zd_id = detail.getWzzd_id();
                 if (detail.getWzzd_id() < 1) {
-                    WuZiZiDian zd = new WuZiZiDian();
-                    zd.setDw(detail.getDw());
-                    zd.setMc(detail.getWzmc());
-                    zd.setBm(detail.getWzbm());
-                    zd.setQy_id(ruKu.getQy_id());
-                    zd.setState(0);
-                    zd.setWzlb_id(detail.getWzlb_id());
-                    zd_id = (Integer) session.save(zd);
-                    session.flush();
+                    List tempList = session.createQuery("from WuZiZiDian where mc='" + detail.getWzmc() + "' and bm='" + detail.getWzbm() + "'").list();
+                    WuZiZiDian zd = null;
+                    if(tempList.isEmpty() || tempList.get(0) == null){
+                        zd = new WuZiZiDian();
+                        zd.setDw(detail.getDw());
+                        zd.setMc(detail.getWzmc());
+                        zd.setBm(detail.getWzbm());
+                        zd.setQy_id(ruKu.getQy_id());
+                        zd.setState(0);
+                        zd.setWzlb_id(detail.getWzlb_id());
+                        zd_id = (Integer) session.save(zd);
+                        session.flush();
+                    }else{
+                        zd = (WuZiZiDian) tempList.get(0);
+                        zd_id = zd.getId();
+                    }
                     detail.setWzzd_id(zd_id);
                 }
                 Integer xhgg_id = detail.getXhgg_id();
