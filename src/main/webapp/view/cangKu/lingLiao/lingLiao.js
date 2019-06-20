@@ -207,7 +207,7 @@ function selectLingLiao() {
         lingLiao.wz = $('#selWzmc').val();
     }
     if ($("#selState").val() !== '' && $("#selState").val() !== "-9") {
-        lingLiao.state = $("#selState").val();
+        lingLiao.state = parseInt($("#selState").val());
     }
     if ($("#selCangKu").val() !== "" && $("#selCangKu").val() === selCangKu.mc) {
         lingLiao.ck_id = selCangKu.id;
@@ -228,7 +228,7 @@ function selectLingLiao_m() {
         lingLiao.wz = $("#inpSelWz").val();
     }
     if ($("#inpSelState").val() !== '' && $("#inpSelState").val() !== "-9") {
-        lingLiao.state = $("#inpSelState").val();
+        lingLiao.state = parseInt($("#inpSelState").val());
     }
     if ($("#inpSelCk").val() !== "" && $("#inpSelCk").val() === selCangKu.mc) {
         lingLiao.ck_id = selCangKu.id;
@@ -446,8 +446,8 @@ function saveLingLiao() {
     lingLiao.wz = wz;
     lingLiao.dh = $("#inpDh").val();
     lingLiao.bz = $("#inpBz").val();
-    lingLiao.sl = $("#inpSl").val();
-    lingLiao.je = $("#inpJe").val();
+    lingLiao.sl = parseFloat($("#inpSl").val());
+    lingLiao.je = parseFloat($("#inpJe").val());
     lingLiao.sj = $("#inpSj").val();
     lingLiao.state = 0;
     var tsStr = optFlag === 3 ? "办理" : "保存";
@@ -641,7 +641,7 @@ function saveLingLiaoMingXi() {
     mx.dj = parseFloat($("#inpMxDj").val());
     mx.dw = $("#inpMxDw").val();
     mx.jlfs = $("#inpMxJlfs").val();
-    mx.bzgg = $("#inpMxBzgg").val();
+    mx.bzgg = parseFloat($("#inpMxBzgg").val());
     mx.zldw = $("#inpMxZldw").val();
     mx.kw = $("#inpMxKwh").val();
     mx.dymx = JSON.stringify(dymx_opt.yxData);

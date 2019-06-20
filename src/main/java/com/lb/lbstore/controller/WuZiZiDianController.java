@@ -167,6 +167,26 @@ public class WuZiZiDianController extends BaseController {
         }
         return map;
     }
+    
+    @RequestMapping(value = "calcXhggSL.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> calcXhggSL(@RequestParam Integer id) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            HashMap parameters = new HashMap<String, Object>();
+            parameters.put("qy_id", getDlA01().getQy_id());
+            parameters.put("wzzd_id", id);
+            boolean result = wuZiZiDianServiceImpl.calcXhggSL(parameters);
+            map.put("result", result? 0:-1);
+        } catch (Exception e) {
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
+    }
 
     //分页查询
     @RequestMapping(value = "listWuZiZiDiansByPage.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")

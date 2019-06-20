@@ -28,7 +28,7 @@ function selectBuMen() {
         buMen.mc = $("#selName").val();
     }
     if ($("#selState").val() !== '' && $("#selState").val() !== "-9") {
-        buMen.state = $("#selState").val();
+        buMen.state = parseInt($("#selState").val());
     }
     tj.paramters = buMen;
     var options = {};

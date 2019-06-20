@@ -204,7 +204,7 @@ function selectSunHao() {
         sunHao.wz = $('#selWzmc').val();
     }
     if ($("#selState").val() !== '' && $("#selState").val() !== "-9") {
-        sunHao.state = $("#selState").val();
+        sunHao.state = parseInt($("#selState").val());
     }
     if ($("#selCangKu").val() !== "" && $("#selCangKu").val() === selCangKu.mc) {
         sunHao.ck_id = selCangKu.id;
@@ -225,7 +225,7 @@ function selectSunHao_m() {
         sunHao.wz = $("#inpSelWz").val();
     }
     if ($("#inpSelState").val() !== '' && $("#inpSelState").val() !== "-9") {
-        sunHao.state = $("#inpSelState").val();
+        sunHao.state = parseInt($("#inpSelState").val());
     }
     if ($("#inpSelCk").val() !== "" && $("#inpSelCk").val() === selCangKu.mc) {
         sunHao.ck_id = selCangKu.id;
@@ -430,8 +430,8 @@ function saveSunHao() {
     sunHao.dh = $("#inpDh").val();
     sunHao.yy = $("#inpYy").val();
     sunHao.bz = $("#inpBz").val();
-    sunHao.sl = $("#inpSl").val();
-    sunHao.je = $("#inpJe").val();
+    sunHao.sl = parseFloat($("#inpSl").val());
+    sunHao.je = parseFloat($("#inpJe").val());
     sunHao.sj = $("#inpSj").val();
     sunHao.state = 0;
     var tsStr = optFlag === 3 ? "办理" : "保存";
@@ -622,7 +622,7 @@ function saveSunHaoMingXi() {
     mx.dj = parseFloat($("#inpMxDj").val());
     mx.dw = $("#inpMxDw").val();
     mx.jlfs = $("#inpMxJlfs").val();
-    mx.bzgg = $("#inpMxBzgg").val();
+    mx.bzgg = parseFloat($("#inpMxBzgg").val());
     mx.zldw = $("#inpMxZldw").val();
     mx.kw = $("#inpMxKwh").val();
     mx.dymx = JSON.stringify(dymx_opt.yxData);

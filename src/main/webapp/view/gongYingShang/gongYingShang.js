@@ -28,7 +28,7 @@ function selectGongYingShang() {
         gongYingShang.mc = $("#selName").val();
     }
     if ($("#selState").val() !== '' && $("#selState").val() !== "-9") {
-        gongYingShang.state = $("#selState").val();
+        gongYingShang.state = parseInt($("#selState").val());
     }
     tj.paramters = gongYingShang;
     var options = {};

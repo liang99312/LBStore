@@ -39,8 +39,11 @@ function selectWuZiZiDian() {
     if ($("#selName").val() !== "") {
         wuZiZiDian.mc = $("#selName").val();
     }
+    if ($("#selLeiBie").val() !== "" && selLeiBie && $("#selLeiBie").val() === selLeiBie.mc) {
+        wuZiZiDian.wzlb_id = selLeiBie.id;
+    }
     if ($("#selState").val() !== '' && $("#selState").val() !== "-9") {
-        wuZiZiDian.state = $("#selState").val();
+        wuZiZiDian.state = parseInt($("#selState").val());
     }
     tj.paramters = wuZiZiDian;
     var options = {};
@@ -59,7 +62,7 @@ function addWuZiZiDian() {
     $("#inpBm").val("");
     $("#inpDw").val("");
     $("#inpBz").val("");
-    $("#wuZiZiDianModal").modal({backdrop:'static'});
+    $("#wuZiZiDianModal").modal({backdrop: 'static'});
 }
 
 function editWuZiZiDian(index) {
@@ -86,7 +89,7 @@ function editWuZiZiDian(index) {
     if (editLeiBie && editLeiBie !== null) {
         $("#inpLeiBie").val(editLeiBie.mc);
     }
-    $("#wuZiZiDianModal").modal({backdrop:'static'});
+    $("#wuZiZiDianModal").modal({backdrop: 'static'});
 }
 
 function saveWuZiZiDian() {
@@ -106,10 +109,10 @@ function saveWuZiZiDian() {
     } else {
         return alert("请选择物资类别");
     }
-    if($("#inpMc").val() === ""){
+    if ($("#inpMc").val() === "") {
         return alert("请输入物资名称");
     }
-    if($("#inpBm").val() === ""){
+    if ($("#inpBm").val() === "") {
         return alert("请输入物资编码");
     }
     wuZiZiDian.mc = $("#inpMc").val();
@@ -162,7 +165,7 @@ function deleteWuZiZiDian(index) {
     }
 }
 
-function chkXhgg(index){
+function chkXhgg(index) {
     $("#tblWuZiXhgg_body tr").remove();
     if (wuZiZiDians[index] === undefined) {
         return alert("请选择物资字典");
@@ -199,13 +202,13 @@ function selectWuZiXhgg(json) {
     options.func = jxWuZiXhgg;
     options.ul = "#example2";
     queryPaginator(options);
-    $("#wuZiXhggModal").modal({backdrop:'static'});
+    $("#wuZiXhggModal").modal({backdrop: 'static'});
 }
 
 function addWuZiXhgg() {
     xhggOptFlag = 1;
     var wuZiZiDian = wuZiZiDians[editIndex];
-    if(!wuZiZiDian){
+    if (!wuZiZiDian) {
         return;
     }
     $("#wuZiXhggEditModel_title").html("新增物资规格");
@@ -214,12 +217,12 @@ function addWuZiXhgg() {
     $("#inpGgdm").val("");
     $("#inpGgjb").val("0");
     $("#inpGgbzq").val("0");
-    $("#wuZiXhggEditModal").modal({backdrop:'static'});
+    $("#wuZiXhggEditModal").modal({backdrop: 'static'});
 }
 
 function editWuZiXhgg(index) {
     var wuZiZiDian = wuZiZiDians[editIndex];
-    if(!wuZiZiDian){
+    if (!wuZiZiDian) {
         return;
     }
     xhggOptFlag = 2;
@@ -235,12 +238,12 @@ function editWuZiXhgg(index) {
     $("#inpGgdm").val(wuZiXhgg.dm);
     $("#inpGgjb").val(wuZiXhgg.jb);
     $("#inpGgbzq").val(wuZiXhgg.bzq);
-    $("#wuZiXhggEditModal").modal({backdrop:'static'});
+    $("#wuZiXhggEditModal").modal({backdrop: 'static'});
 }
 
 function saveWuZiXhgg() {
     var wuZiZiDian = wuZiZiDians[editIndex];
-    if(!wuZiZiDian){
+    if (!wuZiZiDian) {
         return;
     }
     var wuZiXhgg = {};
@@ -302,6 +305,32 @@ function delWuZiXhgg(index) {
                     selectWuZiXhgg(wuZiZiDian);
                 } else {
                     alert("删除失败：" + json.msg ? json.msg : "");
+                }
+            }
+        });
+    }
+}
+
+function calcWuZiXhgg() {
+    var wuZiZiDian = wuZiZiDians[editIndex];
+    if (!wuZiZiDian) {
+        return;
+    }
+    if (confirm("确定更新数量?")) {
+        $.ajax({
+            url: "/LBStore/wuZiZiDian/calcXhggSL.do?id=" + wuZiZiDian.id,
+            contentType: "application/json",
+            type: "get",
+            dataType: "json",
+            cache: false,
+            error: function (msg, textStatus) {
+                alert("更新失败");
+            },
+            success: function (json) {
+                if (json.result === 0) {
+                    selectWuZiXhgg(wuZiZiDian);
+                } else {
+                    alert("更新失败：" + json.msg ? json.msg : "");
                 }
             }
         });

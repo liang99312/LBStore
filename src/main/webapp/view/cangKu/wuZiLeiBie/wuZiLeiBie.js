@@ -46,7 +46,7 @@ function selectWuZiLeiBie() {
         wuZiLeiBie.mc = $("#selName").val();
     }
     if ($("#selState").val() !== '' && $("#selState").val() !== "-9") {
-        wuZiLeiBie.state = $("#selState").val();
+        wuZiLeiBie.state = parseInt($("#selState").val());
     }
     tj.paramters = wuZiLeiBie;
     var options = {};

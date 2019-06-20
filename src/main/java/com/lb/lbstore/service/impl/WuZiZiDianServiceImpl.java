@@ -63,7 +63,10 @@ public class WuZiZiDianServiceImpl implements WuZiZiDianService {
     public int queryRows(HashMap map) {
         List parameters = new ArrayList();
         parameters.add(map.get("qy_id"));
-        String sql = "select count(1) from WuZiZiDian where qy_id=?";
+        String sql = "select count(1) from WuZiZiDian where qy_id=?";if (map.containsKey("wzlb_id")) {
+            sql += " and wzlb_id = ?";
+            parameters.add(map.get("wzlb_id"));
+        }
         if (map.containsKey("mc")) {
             sql += " and mc like ?";
             parameters.add("%" + map.get("mc") + "%");
@@ -80,6 +83,10 @@ public class WuZiZiDianServiceImpl implements WuZiZiDianService {
         List parameters = new ArrayList();
         parameters.add(map.get("qy_id"));
         String hql = "from WuZiZiDian where qy_id=?";
+        if (map.containsKey("wzlb_id")) {
+            hql += " and wzlb_id = ?";
+            parameters.add(map.get("wzlb_id"));
+        }
         if (map.containsKey("mc")) {
             hql += " and mc like ?";
             parameters.add("%" + map.get("mc") + "%");
@@ -102,6 +109,11 @@ public class WuZiZiDianServiceImpl implements WuZiZiDianService {
     @Override
     public boolean existWuZiZiDian(Integer qy_id, Integer id, String mc, String bm) {
         return wuZiZiDianDao.existWuZiZiDian(qy_id, id, mc, bm);
+    }
+
+    @Override
+    public boolean calcXhggSL(HashMap map) {
+        return wuZiZiDianDao.calcXhggSL(map);
     }
 
 }

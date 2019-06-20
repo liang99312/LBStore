@@ -39,7 +39,7 @@ function selectCangKu() {
         cangKu.mc = $("#selName").val();
     }
     if ($("#selState").val() !== '' && $("#selState").val() !== "-9") {
-        cangKu.state = $("#selState").val();
+        cangKu.state = parseInt($("#selState").val());
     }
     tj.paramters = cangKu;
     var options = {};

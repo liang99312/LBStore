@@ -29,7 +29,7 @@ function selectQiYe() {
         qiYe.mc = $("#selName").val();
     }
     if ($("#selState").val() !== '' && $("#selState").val() !== "-9") {
-        qiYe.state = $("#selState").val();
+        qiYe.state = parseInt($("#selState").val());
     }
     tj.paramters = qiYe;
     var options = {};

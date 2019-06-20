@@ -111,10 +111,10 @@ function selectKuCun_m() {
         kuCun.lqq = $("#inpSelLqq").val();
     }
     if ($("#inpSelQsl").val() !== "") {
-        kuCun.qsl = $("#inpSelQsl").val();
+        kuCun.qsl = parseFloat($("#inpSelQsl").val());
     }
     if ($("#inpSelZsl").val() !== "") {
-        kuCun.zsl = $("#inpSelZsl").val();
+        kuCun.zsl = parseFloat($("#inpSelZsl").val());
     }
     tj.paramters = kuCun;
     var options = {};

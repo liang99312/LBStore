@@ -28,7 +28,7 @@ function selectKeHu() {
         keHu.mc = $("#selName").val();
     }
     if ($("#selState").val() !== '' && $("#selState").val() !== "-9") {
-        keHu.state = $("#selState").val();
+        keHu.state = parseInt($("#selState").val());
     }
     tj.paramters = keHu;
     var options = {};

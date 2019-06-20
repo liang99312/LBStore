@@ -30,7 +30,7 @@ function selectA01() {
         a01.mc = $("#selName").val();
     }
     if ($("#selState").val() !== '' && $("#selState").val() !== "-9") {
-        a01.state = $("#selState").val();
+        a01.state = parseInt($("#selState").val());
     }
     tj.paramters = a01;
     var options = {};

@@ -55,7 +55,7 @@ public class Page {
         this.totalPage = totalPage;
     }
 
-    public int getBegin() {
+    public Integer getBegin() {
 // 在mapper.xml使用begin属性时，对其进行计算
         begin = (currentPage - 1) * pageSize;
         return begin;
@@ -83,7 +83,7 @@ public class Page {
         this.currentPage = currentPage;
     }
 
-    public int getPageSize() {
+    public Integer getPageSize() {
         return pageSize;
     }
 

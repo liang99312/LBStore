@@ -42,7 +42,7 @@ function selectBaoBiao() {
         baoBiao.mc = $("#selName").val();
     }
     if ($("#selState").val() !== '' && $("#selState").val() !== "-9") {
-        baoBiao.state = $("#selState").val();
+        baoBiao.state = parseInt($("#selState").val());
     }
     tj.paramters = baoBiao;
     var options = {};

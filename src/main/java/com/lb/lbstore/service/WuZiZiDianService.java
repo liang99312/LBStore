@@ -29,6 +29,8 @@ public interface WuZiZiDianService {
     
     public boolean deleteWuZiZiDian(Integer id);
     
+    public boolean calcXhggSL(HashMap map);
+    
     public int queryRows(HashMap map);
     
     public List<WuZiZiDian> queryWuZiZiDiansByPage(HashMap map);

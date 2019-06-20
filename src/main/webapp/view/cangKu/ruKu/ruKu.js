@@ -189,7 +189,7 @@ function setDetails(m) {
         m.dymx = JSON.parse(m.dymx);
     }
     dymx_opt = {data: [], yxData: [], func: calcDymx};
-    editWzzd = {"id": m.wzzd_id, "mc": m.wzmc};
+    editWzzd = {"id": m.wzzd_id, "mc": m.wzmc, "bm": m.wzbm};
     editLeiBie = {"id": m.wzlb_id, "mc": m.wzlb};
     $("#inpMxPp").val(m.pp);
     editXhgg = {"id": m.xhgg_id, "mc": m.xhgg};
@@ -292,7 +292,7 @@ function selectRuKu() {
         ruKu.wz = $('#selWzmc').val();
     }
     if ($("#selState").val() !== '' && $("#selState").val() !== "-9") {
-        ruKu.state = $("#selState").val();
+        ruKu.state = parseInt($("#selState").val());
     }
     if ($("#selCangKu").val() !== "" && $("#selCangKu").val() === selCangKu.mc) {
         ruKu.ck_id = selCangKu.id;
@@ -313,7 +313,7 @@ function selectRuKu_m() {
         ruKu.wz = $("#inpSelWz").val();
     }
     if ($("#inpSelState").val() !== '' && $("#inpSelState").val() !== "-9") {
-        ruKu.state = $("#inpSelState").val();
+        ruKu.state = parseInt($("#inpSelState").val());
     }
     if ($("#inpSelCk").val() !== "" && $("#inpSelCk").val() === selCangKu.mc) {
         ruKu.ck_id = selCangKu.id;
@@ -565,8 +565,8 @@ function saveRuKu() {
     ruKu.wz = wz;
     ruKu.dh = $("#inpDh").val();
     ruKu.bz = $("#inpBz").val();
-    ruKu.sl = $("#inpSl").val();
-    ruKu.je = $("#inpJe").val();
+    ruKu.sl = parseFloat($("#inpSl").val());
+    ruKu.je = parseFloat($("#inpJe").val());
     ruKu.sj = $("#inpSj").val();
     ruKu.state = 0;
     var tsStr = optFlag === 3 ? "办理" : "保存";
@@ -836,7 +836,7 @@ function saveRuKuMingXi() {
     mx.dw = $("#inpMxDw").val();
     mx.sl = parseFloat($("#inpMxSl").val());
     mx.jlfs = $("#inpMxJlfs").val();
-    mx.bzgg = $("#inpMxBzgg").val();
+    mx.bzgg = parseFloat($("#inpMxBzgg").val());
     mx.zldw = $("#inpMxZldw").val();
     mx.zl = $("#inpMxZl").val();
     mx.kw = $("#inpMxKwh").val();

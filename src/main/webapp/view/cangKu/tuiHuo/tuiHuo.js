@@ -215,7 +215,7 @@ function selectTuiHuo() {
         tuiHuo.wz = $('#selWzmc').val();
     }
     if ($("#selState").val() !== '' && $("#selState").val() !== "-9") {
-        tuiHuo.state = $("#selState").val();
+        tuiHuo.state = parseInt($("#selState").val());
     }
     if ($("#selCangKu").val() !== "" && $("#selCangKu").val() === selCangKu.mc) {
         tuiHuo.ck_id = selCangKu.id;
@@ -236,7 +236,7 @@ function selectTuiHuo_m() {
         tuiHuo.wz = $("#inpSelWz").val();
     }
     if ($("#inpSelState").val() !== '' && $("#inpSelState").val() !== "-9") {
-        tuiHuo.state = $("#inpSelState").val();
+        tuiHuo.state = parseInt($("#inpSelState").val());
     }
     if ($("#inpSelCk").val() !== "" && $("#inpSelCk").val() === selCangKu.mc) {
         tuiHuo.ck_id = selCangKu.id;
@@ -462,8 +462,8 @@ function saveTuiHuo() {
     tuiHuo.dh = $("#inpDh").val();
     tuiHuo.yy = $("#inpYy").val();
     tuiHuo.bz = $("#inpBz").val();
-    tuiHuo.sl = $("#inpSl").val();
-    tuiHuo.je = $("#inpJe").val();
+    tuiHuo.sl = parseFloat($("#inpSl").val());
+    tuiHuo.je = parseFloat($("#inpJe").val());
     tuiHuo.sj = $("#inpSj").val();
     tuiHuo.state = 0;
     var tsStr = optFlag === 3 ? "办理" : "保存";
@@ -661,7 +661,7 @@ function saveTuiHuoMingXi() {
     mx.fhdj = parseFloat($("#inpMxFhdj").val());
     mx.dw = $("#inpMxDw").val();
     mx.jlfs = $("#inpMxJlfs").val();
-    mx.bzgg = $("#inpMxBzgg").val();
+    mx.bzgg = parseFloat($("#inpMxBzgg").val());
     mx.zldw = $("#inpMxZldw").val();
     mx.kw = $("#inpMxKwh").val();
     mx.dymx = JSON.stringify(dymx_opt.yxData);
