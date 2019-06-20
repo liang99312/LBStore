@@ -316,7 +316,7 @@ public class FaHuoDao extends BaseDao {
             session = getSessionFactory().openSession();
             tx = session.beginTransaction();
             String sql = "from FaHuoDetail where fh_id=?";
-            List<FaHuoDetail> list = session.createQuery(sql).setParameter(0, faHuo.getId()).list();
+            //List<FaHuoDetail> list = session.createQuery(sql).setParameter(0, faHuo.getId()).list();
             Hashtable<Integer, FaHuoDetail> detailTable = new Hashtable();
             StringBuilder sb = new StringBuilder();
             sb.append("(-1");

@@ -63,7 +63,8 @@ public class WuZiZiDianServiceImpl implements WuZiZiDianService {
     public int queryRows(HashMap map) {
         List parameters = new ArrayList();
         parameters.add(map.get("qy_id"));
-        String sql = "select count(1) from WuZiZiDian where qy_id=?";if (map.containsKey("wzlb_id")) {
+        String sql = "select count(1) from WuZiZiDian where qy_id=?";
+        if (map.containsKey("wzlb_id")) {
             sql += " and wzlb_id = ?";
             parameters.add(map.get("wzlb_id"));
         }
