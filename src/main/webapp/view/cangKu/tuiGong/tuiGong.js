@@ -285,7 +285,9 @@ function addTuiGong() {
     $("#divXzmx").show();
     $("#divSpr").hide();
     $(".bb-element").hide();
-    $("#inpGys").val("");
+    $("#inpCk").val("");
+    $("#inpGys").val("");    
+    $("#inpKh").val("");
     $("#inpDh").val("");
     $("#inpYy").val("");
     $("#inpBz").val("");

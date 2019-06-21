@@ -271,6 +271,7 @@ function addFaHuo() {
     $("#btnOk").html("保存");
     $("#divXzmx").show();
     $("#divSpr").hide();
+    $("#inpCk").val("");
     $("#inpGys").val("");
     $("#inpKh").val("");
     $("#inpDh").val("");

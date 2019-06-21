@@ -264,11 +264,14 @@ function addTuiHuo() {
     optFlag = 1;
     thmx = [];
     editCangKu = {};
+    editKeHu = {};
     $("#tuiHuoModel_title").html("新增退货单");
     $("#btnOk").html("保存");
     $("#divXzmx").show();
     $("#divSpr").hide();
     $(".bb-element").hide();
+    $("#inpCk").val("");
+    $("#inpKh").val("");
     $("#inpGys").val("");
     $("#inpDh").val("");
     $("#inpYy").val("");

@@ -255,6 +255,7 @@ function addHuanKu() {
     $("#divXzmx").show();
     $("#divSpr").hide();
     $(".bb-element").hide();
+    $("#inpCk").val("");
     $("#inpGys").val("");
     $("#inpDh").val("");
     $("#inpYy").val("");

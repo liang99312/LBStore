@@ -352,6 +352,7 @@ function addRuKu() {
     $("#dvMxCanKao").show();
     $("#divSpr").hide();
     $(".bb-element").hide();
+    $("#inpCk").val("");
     $("#inpGys").val("");
     $("#inpKh").val("");
     $("#inpDh").val("");
