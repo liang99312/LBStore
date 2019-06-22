@@ -41,9 +41,6 @@ function selectBaoBiao() {
     if ($("#selName").val() !== "") {
         baoBiao.mc = $("#selName").val();
     }
-    if ($("#selState").val() !== '' && $("#selState").val() !== "-9") {
-        baoBiao.state = parseInt($("#selState").val());
-    }
     tj.paramters = baoBiao;
     var options = {};
     options.url = "/LBStore/baoBiao/listBaoBiaosByPage.do";
