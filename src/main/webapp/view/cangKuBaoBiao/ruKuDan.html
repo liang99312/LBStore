@@ -28,8 +28,8 @@
                         if (json.result === 0) {
                             var gys = json.gongYingShang;
                             $("#gysmc").html("往来单位：" + gys.mc);
-                            $("#gyslxfs").html("联系地址：" + gys.dz);
-                            $("#gyslxdh").html("联系电话：" + gys.lxdh);
+                            $("#gyslxfs").html("地址：" + gys.dz);
+                            $("#gyslxdh").html("电话：" + gys.lxdh);
                         }
                     }
                 });
@@ -39,9 +39,9 @@
                 var a01 = window.top.loadUser;
                 if (json.lsh && json.lsh !== null) {
                     $("#tblZiHao").barcode(json.lsh, "code128", {barWidth: 2, barHeight: 40, fontSize: 17, marginHRI: 0});
-                    $("#djbh").html("单据编号：" + json.lsh);
+                    $("#djbh").html("编号：" + json.lsh);
                 }
-                $("#djrq").html("单据日期：" + json.sj.substring(0, 10));
+                $("#djrq").html("日期：" + json.sj.substring(0, 10));
                 $("#zdr").html("制单人：" + a01.mc);
                 $("#tblRkd_cp tr:not(:first)").remove();
                 paiXu(json.details);
@@ -141,12 +141,12 @@
                             <table style="width: 100%;">
                                 <tr>
                                     <td style="width: 20%;"></td>
-                                    <td id="biaoTi" style="text-align: left; width: 54%; font-weight:900; font-size: 9mm; text-decoration: underline;">柳州市车库里销售公司</td>
+                                    <td id="biaoTi" style="text-align: left; width: 54%; font-weight:900; font-size: 9mm; text-decoration: underline;">柳州市阡陌贸易有限公司</td>
                                     <td rowspan="2"><div id="tblZiHao"></div></td>
                                 </tr>
                                 <tr>
                                     <td style="width: 20%;"></td>
-                                    <td id="biaoTi" style="vertical-align: top;height: 8mm;text-align: left; width: 54%; font-size: 4.5mm;">电话：2529283</td>
+                                    <td id="biaoTi" style="vertical-align: top;height: 8mm;text-align: left; width: 54%; font-size: 4.5mm;">电话：</td>
                                 </tr>
                             </table>
                         </td>
@@ -155,13 +155,13 @@
                         <td colspan="3" style="height: 4mm;border: none;">
                             <table style="width: 100%;">
                                 <tr style="height: 4mm;">
-                                    <td id="djrq" style="width: 35%; vertical-align: bottom; height: 4mm;">单据日期：</td>
-                                    <td id="djbh" style="width: 35%; vertical-align: bottom; height: 4mm;">单据编号：</td>
+                                    <td id="djrq" style="width: 35%; vertical-align: bottom; height: 4mm;">日期：</td>
+                                    <td id="djbh" style="width: 35%; vertical-align: bottom; height: 4mm;">编号：</td>
                                     <td id="zdr" style="width: 30%; vertical-align: bottom; height: 4mm;">制单人：</td>
                                 </tr><tr style="height: 4mm;">
                                     <td id="gysmc" style="width: 35%; vertical-align: bottom; height: 4mm;border-bottom: none;">往来单位：</td>
-                                    <td id="gyslxfs" style="width: 35%; vertical-align: bottom; height: 4mm;border-bottom: none;">联系地址：</td>
-                                    <td id="gyslxdh" style="width: 30%; vertical-align: bottom; height: 4mm;border-bottom: none;">联系电话：</td>
+                                    <td id="gyslxfs" style="width: 35%; vertical-align: bottom; height: 4mm;border-bottom: none;">地址：</td>
+                                    <td id="gyslxdh" style="width: 30%; vertical-align: bottom; height: 4mm;border-bottom: none;">电话：</td>
                                 </tr>
                             </table>
                         </td>
