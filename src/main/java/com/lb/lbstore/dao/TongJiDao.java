@@ -74,7 +74,7 @@ public class TongJiDao extends BaseDao {
             List parameters = new ArrayList();
             parameters.add(map.get("qy_id"));
             session = getSessionFactory().openSession();
-            String sql = "select kh.mc,fhd.wzbm,fhd.wzmc,fhd.xhgg,sum(fh.sl) as sl "
+            String sql = "select kh.mc,fhd.wzbm,fhd.wzmc,fhd.xhgg,fhd.sl as sl,fh.sj as sj "
                     + "from fahuodetail fhd left join kehu kh on fhd.kh_id=kh.id left join fahuo fh on fhd.fh_id=fh.id "
                     + "where fh.qy_id=? and fh.state = 1 ";
             if (map.containsKey("ck_id")) {
@@ -93,7 +93,7 @@ public class TongJiDao extends BaseDao {
                 sql += " and fh.sj <= ?";
                 parameters.add(map.get("zrq") + " 23:59:59");
             }
-            sql += " group by fh.kh_id,fhd.wzbm,fhd.wzmc,fhd.xhgg order by fh.kh_id";
+            sql += " order by fh.kh_id,fh.sj";
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
             for (int i = 0; i < parameters.size(); i++) {
                 navtiveSQL.setParameter(i, parameters.get(i));
