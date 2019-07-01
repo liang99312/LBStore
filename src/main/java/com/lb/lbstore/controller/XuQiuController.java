@@ -34,7 +34,7 @@ public class XuQiuController extends BaseController {
         if (!existsUser()) {
             return "../index";
         }
-        return "cangKu/xuQiu/xuQiu";
+        return "xiangMu/xuQiu/xuQiu";
     }
 
     @RequestMapping(value = "getAllXuQius.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
