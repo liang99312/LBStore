@@ -56,9 +56,39 @@ $(document).ready(function () {
             $(".rk_kh").hide();
         }
     });
+
+    $("#inpMxSl").keyup(function () {
+        calcSl("sl");
+    });
+    $("#inpMxZl").keyup(function () {
+        calcSl("zl");
+    });
 });
 
-function refreshWuZiZiDian(){
+function calcSl(t) {
+    if ($("#inpMxJlfs").val() === "zl") {
+        var temp_sl = parseFloat($("#inpMxSl").val());
+        var temp_zl = parseFloat($("#inpMxZl").val());
+        var temp_bzgg = parseFloat($("#inpMxBzgg").val());
+        if ("sl" === t) {
+            temp_zl = temp_sl * temp_bzgg;
+            $("#inpMxZl").val(temp_zl.toFixed(3));
+        } else if ("zl" === t) {
+            temp_sl = temp_zl / temp_bzgg;
+            $("#inpMxSl").val(temp_sl.toFixed(3));
+        } else {
+            if (temp_sl > 0.000001) {
+                temp_zl = temp_sl * temp_bzgg;
+                $("#inpMxZl").val(temp_zl.toFixed(3));
+            } else {
+                temp_sl = temp_zl / temp_bzgg;
+                $("#inpMxSl").val(temp_sl.toFixed(3));
+            }
+        }
+    }
+}
+
+function refreshWuZiZiDian() {
     getWuZiZiDians(setTrager_ziDian);
 }
 
@@ -88,7 +118,7 @@ function setTrager_ziDian() {
     $('#selWzmc').AutoComplete({'data': lb_wuZiZiDians});
     $('#inpMxWz').AutoComplete({'data': lb_wuZiZiDians, 'afterSelectedHandler': selectWuZiZiDian});
     var temp_wuZiZiDians = $.extend(true, [], lb_wuZiZiDians);
-    $('#inpMxWzbm').AutoComplete({'data': temp_wuZiZiDians, 'fieldName':'bm', 'afterSelectedHandler': selectWuZiZiDian});
+    $('#inpMxWzbm').AutoComplete({'data': temp_wuZiZiDians, 'fieldName': 'bm', 'afterSelectedHandler': selectWuZiZiDian});
 }
 
 function setTrager_leiBie() {
@@ -111,7 +141,7 @@ function selectWuZiLeiBie(json) {
 }
 
 function selectRuKu_m() {
-    $("#ruKuSelectModal").modal({backdrop:'static'});
+    $("#ruKuSelectModal").modal({backdrop: 'static'});
 }
 
 function selectWuZiZiDian(json) {
@@ -239,6 +269,7 @@ function selectMxJlfs() {
     if (val === "zl") {
         $("#dvMxBzgg").show();
         $("#dvMxZl").show();
+        calcSl("z");
     } else if (val === "mx") {
         $("#dvMxBzgg").val("1").show();
         $("#dvMxZl").show();
@@ -279,7 +310,7 @@ function jxRuKu(json) {
 }
 
 function showSelectRuKu() {
-    $("#ruKuSelectModal").modal({backdrop:'static'});
+    $("#ruKuSelectModal").modal({backdrop: 'static'});
 }
 
 function selectRuKu() {
@@ -360,7 +391,7 @@ function addRuKu() {
     $("#inpSl").val(0);
     $("#inpJe").val(0);
     jxRuKuMingXi();
-    $("#ruKuModal").modal({backdrop:'static'});
+    $("#ruKuModal").modal({backdrop: 'static'});
 }
 
 function editRuKu(index) {
@@ -423,7 +454,7 @@ function jxReadRuKu(ruKu) {
     $("#inpSpr").val(ruKu.sprmc);
     $("#inpSpsj").val(ruKu.spsj);
     jxRuKuMingXi();
-    $("#ruKuModal").modal({backdrop:'static'});
+    $("#ruKuModal").modal({backdrop: 'static'});
 }
 
 function selectRuKuDetail(id, func) {
@@ -460,7 +491,7 @@ function dealRuKu(index) {
     $(".bb-element").hide();
     var ruKu = ruKus[index];
     editIndex = index;
-    selectRuKuDetail(ruKu.id,jxReadRuKu);
+    selectRuKuDetail(ruKu.id, jxReadRuKu);
 }
 
 function saveRuKu() {
@@ -690,7 +721,7 @@ function addRuKuMingXi() {
     $("#inpMxDw").val("");
     $("#inpMxSl").val("0");
     $("#inpMxJlfs").val("pt");
-    $("#inpMxBzgg").val("");
+    $("#inpMxBzgg").val("1");
     $("#inpMxZldw").val("");
     $("#inpMxZl").val("");
     buildTysx([]);
@@ -698,7 +729,7 @@ function addRuKuMingXi() {
     $("#divMxDymx").hide();
     $("#dvMxBzgg").hide();
     $("#dvMxZl").hide();
-    $("#ruKuMingXiModal").modal({backdrop:'static'});
+    $("#ruKuMingXiModal").modal({backdrop: 'static'});
 }
 
 function editRuKuMingXi(index) {
@@ -727,7 +758,7 @@ function setRuKuMingXiData(index) {
         m.dymx = JSON.parse(m.dymx);
     }
     dymx_opt = {data: [], yxData: m.dymx, func: calcDymx};
-    editWzzd = {"id": m.wzzd_id, "mc": m.wzmc, "bm":m.wzbm};
+    editWzzd = {"id": m.wzzd_id, "mc": m.wzmc, "bm": m.wzbm};
     $("#inpMxWz").val(m.wzmc);
     $("#inpMxWzbm").val(m.wzbm);
     editLeiBie = {"id": m.wzlb_id, "mc": m.wzlb};
@@ -763,7 +794,7 @@ function setRuKuMingXiData(index) {
         $("#dvMxBzgg").hide();
         $("#dvMxZl").hide();
     }
-    $("#ruKuMingXiModal").modal({backdrop:'static'});
+    $("#ruKuMingXiModal").modal({backdrop: 'static'});
 }
 
 function deleteRuKuMingXi(index) {
@@ -843,7 +874,7 @@ function saveRuKuMingXi() {
     mx.kw = $("#inpMxKwh").val();
     mx.dymx = JSON.stringify(dymx_opt.yxData);
     mx.tysx = JSON.stringify(tysx_opt.data);
-    if("pt" === $("#inpMxJlfs").val()){
+    if ("pt" === $("#inpMxJlfs").val()) {
         mx.zl = mx.sl;
     }
     if (optMxFlag === 1) {
@@ -900,7 +931,7 @@ function selectRuKuFei(json) {
     options.func = jxRuKuFei;
     options.ul = "#example2";
     queryPaginator(options);
-    $("#ruKuFeiModal").modal({backdrop:'static'});
+    $("#ruKuFeiModal").modal({backdrop: 'static'});
 }
 
 function addRuKuFei(type) {
@@ -921,7 +952,7 @@ function addRuKuFei(type) {
         $("#inpFeiSkr").val("");
         $("#inpFeiBz").val("");
     }
-    $("#ruKuFeiEditModal").modal({backdrop:'static'});
+    $("#ruKuFeiEditModal").modal({backdrop: 'static'});
 }
 
 function editRuKuFei(index) {
@@ -941,7 +972,7 @@ function editRuKuFei(index) {
     $("#inpFeiJe").val(ruKuFei.je);
     $("#inpFeiSkr").val(ruKuFei.skrmc);
     $("#inpFeiBz").val(ruKuFei.bz);
-    $("#ruKuFeiEditModal").modal({backdrop:'static'});
+    $("#ruKuFeiEditModal").modal({backdrop: 'static'});
 }
 
 function checkFei(type, index, je) {
