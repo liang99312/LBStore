@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="/LBStore/content/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="/LBStore/content/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/LBStore/content/bootstrap/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+        <link href="/LBStore/content/autocomplete/autocomplete.css" rel="stylesheet" />
+        <link href="/LBStore/css/base.css" rel="stylesheet" />
+        <script src="/LBStore/js/jquery2.js"></script>
+        <script src="/LBStore/js/jquery.form.js"></script>
+        <script src="/LBStore/content/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/LBStore/content/bootstrap/js/bootstrap-paginator.js"></script>
+        <script src="/LBStore/content/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+        <script src="/LBStore/content/bootstrap/js/bootstrap-datetimepicker.zh-CN.js"></script>
+        <script src="/LBStore/content/autocomplete/autocomplete.js"></script>
+        <script src="/LBStore/view/common/common.js"></script>
+        <script src="/LBStore/view/common/detail.js"></script>
+        <script src="/LBStore/view/common/spesx.js"></script>
+        <script src="/LBStore/view/xiangMu/xiangMu/xiangMu.js"></script>
+    </head>
+    <body style='height:800px;'>
+        <div style="float:left; width: 100%">
+            <div style="width: 100%">
+                <div style="width: 100%;float:left; padding-top: 5px;">
+                    <span>&nbsp;名称：</span><input id="selMc" type="text" style="width: 120px;" />
+                    <span>&nbsp;产品：</span><input id="selWzmc" type="text" style="width: 120px;" />
+                    <span>&nbsp;流水号：</span><input id="selLsh" type="text" style="width: 120px;" />
+                    <span>&nbsp;状态：</span>
+                    <select id="selState" style="width: 100px; height: 26px;line-height: 26px;">
+                        <option value="-9" selected = "selected">全部</option>
+                        <option value="0">未审批</option>
+                        <option value="1">已审批</option>
+                        <option value="-1">已删除</option>
+                    </select>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="selectXiangMu();" style="margin-left: 2px;">查找</button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="showSelectXiangMu();" style="margin-left: 2px;">更多查找</button>
+                </div>
+                <div style="width: 100%;float:left; padding-top: 5px;">
+                    <button type="button" class="btn btn-primary btn-sm" onclick="addXiangMu();">新增项目</button>
+                </div>
+            </div>
+            <div id="list1" class="table-responsive" style="height: 678px;width:100%;padding-top: 5px;">
+                <table id="data_table" class="table table-striped table-bordered table-hover table-list" style="table-layout:fixed;">
+                    <thead>
+                        <tr style="background: #e9f7ff;">
+                            <th style="width:8%">名称</th>
+                            <th style="width:10%">流水号</th>
+                            <th style="width:8%">客户</th>
+                            <th style="width:15%">产品</th>
+                            <th style="width:11%">交货时间</th>
+                            <th style="width:8%">数量</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id='data_table_body'>
+                        <tr><td colspan="8">请查询项目记录</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <ul id="example"></ul>
+        </div>
+
+        <div class="modal fade" id="xiangMuSelectModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #ace1ff;height: 40px;border-top-left-radius: 6px;border-top-right-radius: 6px;padding:10px">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="xiangMuSelectModel_title">查询项目</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="content">
+                            <div class="form-group">
+                                <label for="inpSelState">状&ensp;&ensp;态：</label>
+                                <select id="inpSelState" style="width: 170px; height: 26px;line-height: 26px;">
+                                    <option value="-9" selected = "selected">全部</option>
+                                    <option value="0">未审批</option>
+                                    <option value="1">已审批</option>
+                                    <option value="-1">已删除</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="inpSelMc">名&ensp;&ensp;称：</label>
+                                <input type="text" id="inpSelMc" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpSelWz">流水号：</label>
+                                <input type="text" id="inpSelWz" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpSelWz">产&ensp;&ensp;品：</label>
+                                <input type="text" id="inpSelWz" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpSelKh">客&ensp;&ensp;户：</label>
+                                <input type="text" id="inpSelKh" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpSelRq">日&ensp;&ensp;期：</label>
+                                <input type="text" id="inpSelQrq" />-<input type="text" id="inpSelZrq" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="text-align: center;padding: 8px;">
+                        <button type="submit" class="btn btn-primary" onclick="selectXiangMu_m()">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="xiangMuModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style="width: 800px;">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #ace1ff;height: 40px;border-top-left-radius: 6px;border-top-right-radius: 6px;padding:10px">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="xiangMuModel_title">添加项目</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="content">
+                            <div class="form-group">
+                                <label class="xm_kh" for="inpKh">客&ensp;&ensp;户：</label>
+                                <input class="xm_kh" type="text" id="inpKh" />
+                                <label for="inpDh">单&ensp;&ensp;号：</label>
+                                <input type="text" id="inpDh" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpSl">数&ensp;&ensp;量：</label>
+                                <input type="number" id="inpSl" />
+                                <label for="inpJe">金&ensp;&ensp;额：</label>
+                                <input type="number" id="inpJe" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpKdr">开单人：</label>
+                                <input type="text" id="inpKdr" />
+                                <label for="inpSj">开单日：</label>
+                                <input type="text" id="inpSj" />
+                            </div>
+                            <div id="divSpr" class="form-group">
+                                <label for="inpSpr">审批人：</label>
+                                <input type="text" id="inpSpr" />
+                                <label for="inpSpsj">审批日：</label>
+                                <input type="text" id="inpSpsj" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpBz">备&ensp;&ensp;注：</label>
+                                <input type="text" id="inpBz" style="width: 415px;"/>
+                            </div>
+                            <div id="divXzmx" class="form-group">
+                                <button type="button" class="btn btn-primary btn-sm" onclick="addXiangMuMingXi();">新增明细</button>
+                            </div>
+                            <div style="min-height: 100px;max-height: 300px;overflow-y: auto;">
+                                <table id="tblWuZiMingXi" class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr style="background: #e9f7ff;">
+                                            <th style="width:25%">产品</th>
+                                            <th style="width:20%">型号规格</th>
+                                            <th style="width:12%">数量</th>
+                                            <th style="width:12%">单价</th>
+                                            <th style="width:12%">金额</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id='tblWuZiMingXi_body'>
+                                        <tr><td>无明细记录</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="text-align: center;padding: 8px;">
+                        <label class="bb-element"  for="inpSelBb">报表：</label>
+                        <input class="bb-element" type="text" id="inpSelBb" />
+                        <button id="btnBb" type="submit" class="bb-element btn btn-primary" onclick="execBaoBiao()">执行</button>
+                        <button id="btnOk" type="submit" class="btn btn-primary" onclick="saveXiangMu()">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="xiangMuMingXiModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #ace1ff;height: 40px;border-top-left-radius: 6px;border-top-right-radius: 6px;padding:10px">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="xiangMuMingXiModel_title">添加明细</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="content">
+                            <div class="form-group">
+                                <label for="inpMxWzbm">产品编码：</label>
+                                <input type="text" id="inpMxWzbm" />
+                                <label for="inpMxWz">产品名称：</label>
+                                <input type="text" id="inpMxWz" />
+                                <input type="button" onclick ="refreshWuZiZiDian();" style="position: fixed; width: 25px;height: 25px; border:none; background: url('/LBStore/img/refresh_32.png') no-repeat;background-size: 100% 100%;" />
+                            </div>
+                            <div id="dvMxCanKao" class="form-group">
+                                <label for="inpMxCkdh">参考单号：</label>
+                                <input type="text" id="inpMxCkdh" />
+                                <label for="inpMxZhu" style="color: red;">&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;注：</label>
+                                <label for="inpMxZhu" style="color: red;">选参考单号可获取相关信息</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="inpMxLb">产品类别：</label>
+                                <input type="text" id="inpMxLb" />
+                                <label for="inpMxXhgg">型号规格：</label>
+                                <input type="text" id="inpMxXhgg" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpMxDj">单&ensp;&ensp;&ensp;&ensp;价：</label>
+                                <input type="number" id="inpMxDj" />
+                                <label for="inpMxDw">单&ensp;&ensp;&ensp;&ensp;位：</label>
+                                <input type="text" id="inpMxDw" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpMxSl">数&ensp;&ensp;&ensp;&ensp;量：</label>
+                                <input type="number" id="inpMxSl" />
+                                <label for="inpMxWcsl">完成数量：</label>
+                                <input type="number" id="inpMxWcsl" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpMxLsh">流水号：</label>
+                                <input type="number" id="inpMxLsh" />
+                                <label for="inpMxWcsj">完成时间：</label>
+                                <input type="text" id="inpMxWcsj" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpMxBz">备&ensp;&ensp;&ensp;&ensp;注：</label>
+                                <input type="text" id="inpMxBz" style="width: 425px;"/>
+                            </div>
+                            <div id='divMxTysx'></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="text-align: center;padding: 8px;">
+                        <button id="btnMxReset" type="button" class="btn btn-primary" onclick="resetXiangMuMingXi()">重置</button>
+                        <button id="btnMxOk" type="submit" class="btn btn-primary" onclick="saveXiangMuMingXi()">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="xiangMuFeiModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div  id="xiangMuFeiModalDlg" class="modal-dialog" style="width: 800px;">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #ace1ff;height: 40px;border-top-left-radius: 6px;border-top-right-radius: 6px;padding:10px">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="xiangMuFeiModel_title">收款记录</h4>
+                    </div>
+                    <div class="modal-body" style="height: 400px;padding:0;">
+                        <div style="width: 100%;float:left;padding-top: 5px;padding-left: 5px;">
+                            <button type="button" class="btn btn-primary btn-sm" onclick="addXiangMuFei(0);">新增记录</button>
+                            <button type="button" class="btn btn-primary btn-sm" onclick="addXiangMuFei(1);">一次结清</button>
+                            <span id="xiangMuJexx"></span>
+                        </div>
+                        <div class="content" style="width: 100%;float:left;padding-top: 5px;">
+                            <table id="tblXiangMuFei" class="table table-striped table-bordered table-hover">
+                                <thead>
+                                    <tr style="background: #e9f7ff;">
+                                        <th>日期</th>
+                                        <th>金额</th>
+                                        <th>收款人</th>
+                                        <th>备注</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id='tblXiangMuFei_body'>
+                                    <tr><td>无收款记录</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <ul id="example2"></ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="xiangMuFeiEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #ace1ff;height: 40px;border-top-left-radius: 6px;border-top-right-radius: 6px;padding:10px">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="xiangMuFeiEditModel_title">新增记录</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="content">
+                            <div class="form-group">
+                                <label for="inpFeiRq">日&ensp;&ensp;期：</label>
+                                <input type="text" id="inpFeiRq"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="inpFeiJe">金&ensp;&ensp;额：</label>
+                                <input type="number" id="inpFeiJe" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpFeiSkr">收款人：</label>
+                                <input type="text" id="inpFeiSkr" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpFeiBz">备&ensp;&ensp;注：</label>
+                                <input type="text" id="inpFeiBz" style="width: 415px;"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="text-align: center;padding: 8px;">
+                        <button type="submit" class="btn btn-primary" onclick="saveXiangMuFei()">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="baoBiaoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style="width: 100%">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #ace1ff;height: 40px;border-top-left-radius: 6px;border-top-right-radius: 6px;padding:10px">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="baoBiaoModel_title">执行报表</h4>
+                    </div>
+                    <div id="dvBbnr" class="modal-body" style="height:700px;padding: 0;overflow-y: auto;">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </body>
+</html>

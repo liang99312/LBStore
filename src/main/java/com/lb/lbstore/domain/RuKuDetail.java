@@ -54,13 +54,12 @@ public class RuKuDetail {
     private String zldw;
     private String jlfs = "pt"; //普通记录(pt)；总量记录(zl)；单元明细(mx)
     private Double bzgg = 1.0D; //包装规格
-    private Double sl = 1.0D;
-    private Double zl = 1.0D;
+    private Double sl = 0D;
+    private Double zl = 0D;
     private String tysx;
     private String dymx;
     private String kw;
     private String bz;
-    
     private transient String ckmc;
     private transient String khmc;
     private transient String rkrmc;

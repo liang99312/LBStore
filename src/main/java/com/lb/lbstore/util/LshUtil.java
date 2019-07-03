@@ -281,6 +281,72 @@ public class LshUtil {
         return result;
     }
     
+    public static String getXmLsh(){
+        String dateStr = DateUtil.DateToStr(new Date());
+        String result = DateUtil.DateToStr(new Date(), "yyyyMMdd");
+        String key = "xm" + DateUtil.DateToStr(new Date());
+        Integer i = 0;
+        if(lshMap.get(key) == null){
+            Set<String> keySet = lshMap.keySet();
+            for(String k : keySet){
+                if(k.startsWith("xm")){
+                    lshMap.remove(k);
+                }
+            }
+            String sql = "select max(lsh) from xiangmu where lsh like '"+dateStr+"%'";
+            CommonDao commonDao = (CommonDao) ApplicationUtil.getBean("commonDao");
+            List list = commonDao.getSqlResult(sql, null);
+            if(list.isEmpty()){
+                i = 1;
+            }else{
+                Object obj = list.get(0);
+                if(obj == null){
+                    i=1;
+                }else{
+                    i = Integer.valueOf(obj.toString().substring(10)) + 1;
+                }
+            }
+        }else{
+            i = lshMap.get(key) + 1;
+        }
+        result += getNewNumber(i,4);
+        lshMap.put(key, i);
+        return result;
+    }
+    
+    public static String getXmdLsh(){
+        String dateStr = DateUtil.DateToStr(new Date());
+        String result = DateUtil.DateToStr(new Date(), "yyyyMMdd");
+        String key = "xmd" + DateUtil.DateToStr(new Date());
+        Integer i = 0;
+        if(lshMap.get(key) == null){
+            Set<String> keySet = lshMap.keySet();
+            for(String k : keySet){
+                if(k.startsWith("xmd")){
+                    lshMap.remove(k);
+                }
+            }
+            String sql = "select max(lsh) from xiangmudetail where lsh like '"+dateStr+"%'";
+            CommonDao commonDao = (CommonDao) ApplicationUtil.getBean("commonDao");
+            List list = commonDao.getSqlResult(sql, null);
+            if(list.isEmpty()){
+                i = 1;
+            }else{
+                Object obj = list.get(0);
+                if(obj == null){
+                    i=1;
+                }else{
+                    i = Integer.valueOf(obj.toString().substring(10)) + 1;
+                }
+            }
+        }else{
+            i = lshMap.get(key) + 1;
+        }
+        result += getNewNumber(i,4);
+        lshMap.put(key, i);
+        return result;
+    }
+    
     public static String getNewNumber(Integer i,int len){
         String result = i.toString();
         while(result.length() < len){
