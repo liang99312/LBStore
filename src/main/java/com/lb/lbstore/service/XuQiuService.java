@@ -19,7 +19,7 @@ public interface XuQiuService {
     
     public List<XuQiu> getAllXuQius(Integer qy_id);
     
-    public boolean existXuQiu(Integer qy_id, Integer id, String mc);
+    public boolean existXuQiu(Integer qy_id, Integer id, String mc, Integer kh_id);
     
     public boolean updateXuQiu(XuQiu xuQiu);
     

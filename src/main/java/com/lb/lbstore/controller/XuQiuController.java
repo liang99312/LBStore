@@ -65,7 +65,9 @@ public class XuQiuController extends BaseController {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             model.setQy_id(getDlA01().getQy_id());
-            if(xuQiuServiceImpl.existXuQiu(model.getQy_id(), -1, model.getMc())){
+            model.setState(0);
+            model.setCjr_id(getDlA01().getId());
+            if(xuQiuServiceImpl.existXuQiu(model.getQy_id(), -1, model.getMc(), model.getKh_id())){
                 map.put("result", -1);
                 map.put("msg", "物资类别名称已存在");
             }else{
@@ -89,7 +91,7 @@ public class XuQiuController extends BaseController {
         }
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            if(xuQiuServiceImpl.existXuQiu(model.getQy_id(), model.getId(), model.getMc())){
+            if(xuQiuServiceImpl.existXuQiu(model.getQy_id(), model.getId(), model.getMc(), model.getKh_id())){
                 map.put("result", -1);
                 map.put("msg", "物资类别名称已存在");
             }else{

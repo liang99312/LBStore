@@ -670,9 +670,10 @@ CREATE TABLE `store`.`xuqiu` (
   `kh_id` INT NULL,
   `cjr_id` INT NOT NULL,
   `mc` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `bm` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `dm` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `tysx` varchar(2000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `bz` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `state` int(11) DEFAULT 0,
   PRIMARY KEY (`id`))ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `store`.`wuliaodetail` (

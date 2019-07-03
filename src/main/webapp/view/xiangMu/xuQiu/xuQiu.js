@@ -38,7 +38,11 @@ function jxXuQiu(json) {
         } else {
             item.tysx = [];
         }
-        var trStr = '<tr' + classStr + '><td>' + item.mc + '</td><td>' + item.dm + '</td><td>' + item.khmc + '</td><td>'
+        var tysx = "";
+        for (var i = 0; i < item.tysx.length; i++) {
+            tysx += item.tysx[i].mc + "; ";
+        }
+        var trStr = '<tr' + classStr + '><td>' + item.mc + '</td><td>' + item.dm + '</td><td>' + item.khmc + '</td><td>' + tysx + '</td><td>'
                 + '<button class="btn btn-info btn-xs icon-edit" onclick="editXuQiu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;'
                 + '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteXuQiu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button></td></tr>';
         $("#data_table_body").append(trStr);
@@ -73,7 +77,7 @@ function addXuQiu() {
     $("#inpKh").val("");
     $("#inpBz").val("");
     buildTysx(tysx);
-    $("#xuQiuModal").modal({backdrop:'static'});
+    $("#xuQiuModal").modal({backdrop: 'static'});
 }
 
 function editXuQiu(index) {
@@ -91,7 +95,7 @@ function editXuQiu(index) {
     $("#inpKh").val(xuQiu.khmc);
     $("#inpBz").val(xuQiu.bz);
     setTysx(xuQiu);
-    $("#xuQiuModal").modal({backdrop:'static'});
+    $("#xuQiuModal").modal({backdrop: 'static'});
 }
 
 function setTysx(json) {
@@ -112,8 +116,17 @@ function saveXuQiu() {
         url = "/LBStore/xuQiu/saveXuQiu.do";
     }
     xuQiu.tysx = JSON.stringify(tysx);
-    if($("#inpMc").val() === ""){
+    if ($("#inpMc").val() === "") {
         return alert("请输入需求名称");
+    }
+    if ($("#inpKh").val() === "") {
+        return alert("请输入客户信息");
+    } else {
+        if ($("#inpKh").val() !== editKeHu.mc) {
+            return alert("请输入客户信息");
+        } else {
+            xuQiu.kh_id = editKeHu.id;
+        }
     }
     xuQiu.mc = $("#inpMc").val();
     xuQiu.dm = $("#inpDm").val();
@@ -210,7 +223,7 @@ function addTeYouShuXing() {
     $("#inpTsMc").val("");
     editFenLei = null;
     $("#inpTsType").val("");
-    $("#teYouShuXingModal").modal({backdrop:'static'});
+    $("#teYouShuXingModal").modal({backdrop: 'static'});
 }
 
 function editTeYouShuXing(index) {
@@ -225,7 +238,7 @@ function editTeYouShuXing(index) {
             editFenLei = {id: t.zdfl, mc: t.zdfl_mc};
             $("#inpTsZiDian").val(editFenLei.mc);
         }
-        $("#teYouShuXingModal").modal({backdrop:'static'});
+        $("#teYouShuXingModal").modal({backdrop: 'static'});
     }
 }
 

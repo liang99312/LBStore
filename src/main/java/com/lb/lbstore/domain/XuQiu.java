@@ -30,6 +30,7 @@ public class XuQiu {
     private String tysx;
     private String bz;
     private Integer state;
+    private transient String khmc;
 
     public Integer getId() {
         return id;
@@ -103,6 +104,13 @@ public class XuQiu {
         this.state = state;
     }
 
+    public String getKhmc() {
+        return khmc;
+    }
+
+    public void setKhmc(String khmc) {
+        this.khmc = khmc;
+    }
 
     @Override
     public int hashCode() {

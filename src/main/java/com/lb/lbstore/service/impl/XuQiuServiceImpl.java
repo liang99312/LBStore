@@ -68,6 +68,10 @@ public class XuQiuServiceImpl implements XuQiuService {
             sql += " and mc like ?";
             parameters.add("%" + map.get("mc") + "%");
         }
+        if (map.containsKey("kh_id")) {
+            sql += " and kh_id = ?";
+            parameters.add(map.get("kh_id"));
+        }
         if (map.containsKey("state")) {
             sql += " and state = ?";
             parameters.add(map.get("state"));
@@ -77,23 +81,12 @@ public class XuQiuServiceImpl implements XuQiuService {
 
     @Override
     public List<XuQiu> queryXuQiusByPage(HashMap map) {
-        List parameters = new ArrayList();
-        parameters.add(map.get("qy_id"));
-        String hql = "from XuQiu where qy_id=?";
-        if (map.containsKey("mc")) {
-            hql += " and mc like ?";
-            parameters.add("%" + map.get("mc") + "%");
-        }
-        if (map.containsKey("state")) {
-            hql += " and state = ?";
-            parameters.add(map.get("state"));
-        }
-        return xuQiuDao.getPageList(hql, parameters.toArray(), Integer.parseInt(map.get("beginRow").toString()), Integer.parseInt(map.get("pageSize").toString()));
+        return xuQiuDao.queryLingLiaosByPage(map);
     }
 
     @Override
-    public boolean existXuQiu(Integer qy_id, Integer id, String mc) {
-        return xuQiuDao.existXuQiu(qy_id, id, mc);
+    public boolean existXuQiu(Integer qy_id, Integer id, String mc, Integer kh_id) {
+        return xuQiuDao.existXuQiu(qy_id, id, mc, kh_id);
     }
 
 }
