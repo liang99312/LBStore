@@ -241,6 +241,7 @@ function addXiangMu() {
     $("#dvMxCanKao").show();
     $("#divSpr").hide();
     $(".bb-element").hide();
+    $(".item-view").hide();
     $("#inpKh").val("");
     $("#inpDh").val("");
     $("#inpBz").val("");
