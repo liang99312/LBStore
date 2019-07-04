@@ -39,14 +39,18 @@ public class XiangMuDetail {
     private String xhgg;
     private Double dj;
     private String dw;
-    private Double sl = 0D;
-    private Double jhsl = 0D;
+    private Double jhsl = 0D;    
+    private Double wcsl = 0D;
+    private Double fhsl = 0D;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
     private Date jhsj;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
     private Date wcsj;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
+    private Date fhsj;
     private Integer xq_id;
     private String xq;
     private String bz;
@@ -170,15 +174,7 @@ public class XiangMuDetail {
     public void setDw(String dw) {
         this.dw = dw;
     }
-
-    public Double getSl() {
-        return sl;
-    }
-
-    public void setSl(Double sl) {
-        this.sl = sl;
-    }
-
+    
     public Double getJhsl() {
         return jhsl;
     }
@@ -281,6 +277,30 @@ public class XiangMuDetail {
 
     public void setZrq(String zrq) {
         this.zrq = zrq;
+    }
+
+    public Double getWcsl() {
+        return wcsl;
+    }
+
+    public void setWcsl(Double wcsl) {
+        this.wcsl = wcsl;
+    }
+
+    public Double getFhsl() {
+        return fhsl;
+    }
+
+    public void setFhsl(Double fhsl) {
+        this.fhsl = fhsl;
+    }
+
+    public Date getFhsj() {
+        return fhsj;
+    }
+
+    public void setFhsj(Date fhsj) {
+        this.fhsj = fhsj;
     }
        
     @Override

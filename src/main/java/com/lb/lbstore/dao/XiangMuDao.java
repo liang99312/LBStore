@@ -249,7 +249,7 @@ public class XiangMuDao extends BaseDao {
         try {
             session = getSessionFactory().openSession();
             tx = session.beginTransaction();
-            xiangMu.setDfje(xiangMu.getJe() - xiangMu.getYfje());
+            xiangMu.setDfje(xiangMu.getFhje() - xiangMu.getYfje());
             Integer id = (Integer) session.save(xiangMu);
             session.flush();
             for (XiangMuDetail detail : xiangMu.getDetails()) {
@@ -326,7 +326,7 @@ public class XiangMuDao extends BaseDao {
         try {
             session = getSessionFactory().openSession();
             tx = session.beginTransaction();
-            xiangMu.setDfje(xiangMu.getJe() - xiangMu.getYfje());
+            xiangMu.setDfje(xiangMu.getFhje() - xiangMu.getYfje());
             session.update(xiangMu);
             session.flush();
             String deleteDetail = "delete from XiangMuDetail where xm_id=?";
@@ -457,7 +457,7 @@ public class XiangMuDao extends BaseDao {
             xiangMu.setSpr_id(a01_id);
             xiangMu.setSpsj(new Date());
             xiangMu.setLsh(LshUtil.getXmdLsh());
-            xiangMu.setDfje(xiangMu.getJe() - xiangMu.getYfje());
+            xiangMu.setDfje(xiangMu.getFhje() - xiangMu.getYfje());
             session.update(xiangMu);
             session.flush();
             tx.commit();

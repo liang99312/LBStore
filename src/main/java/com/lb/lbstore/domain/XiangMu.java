@@ -31,13 +31,16 @@ public class XiangMu {
     private Integer kh_id;
     private Integer kdr_id;
     private Integer spr_id;
+    private String mc;
     private String lsh;
     private String wz;
     private String dh;
     private Double jhsl = 0D;
+    private Double wcsl = 0D;
+    private Double fhsl = 0D;
     private Double jhje = 0D;
-    private Double sl = 0D;
-    private Double je = 0D;
+    private Double wcje = 0D;
+    private Double fhje = 0D;
     private Double yfje = 0D;
     private Double dfje = 0D;
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
@@ -51,7 +54,7 @@ public class XiangMu {
     private Date wcsj;
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm",timezone = "GMT+8")
-    private Date jhsj;
+    private Date fhsj;
     private String bz;
     private Integer state;//0:未办理；1：已办理
     private transient List<XiangMuDetail> details = new ArrayList();
@@ -101,6 +104,14 @@ public class XiangMu {
         this.spr_id = spr_id;
     }
 
+    public String getMc() {
+        return mc;
+    }
+
+    public void setMc(String mc) {
+        this.mc = mc;
+    }
+
     public String getLsh() {
         return lsh;
     }
@@ -139,22 +150,6 @@ public class XiangMu {
 
     public void setJhje(Double jhje) {
         this.jhje = jhje;
-    }
-
-    public Double getSl() {
-        return sl;
-    }
-
-    public void setSl(Double sl) {
-        this.sl = sl;
-    }
-
-    public Double getJe() {
-        return je;
-    }
-
-    public void setJe(Double je) {
-        this.je = je;
     }
 
     public Double getYfje() {
@@ -197,12 +192,44 @@ public class XiangMu {
         this.wcsj = wcsj;
     }
 
-    public Date getJhsj() {
-        return jhsj;
+    public Double getWcsl() {
+        return wcsl;
     }
 
-    public void setJhsj(Date jhsj) {
-        this.jhsj = jhsj;
+    public void setWcsl(Double wcsl) {
+        this.wcsl = wcsl;
+    }
+
+    public Double getFhsl() {
+        return fhsl;
+    }
+
+    public void setFhsl(Double fhsl) {
+        this.fhsl = fhsl;
+    }
+
+    public Double getWcje() {
+        return wcje;
+    }
+
+    public void setWcje(Double wcje) {
+        this.wcje = wcje;
+    }
+
+    public Double getFhje() {
+        return fhje;
+    }
+
+    public void setFhje(Double fhje) {
+        this.fhje = fhje;
+    }
+
+    public Date getFhsj() {
+        return fhsj;
+    }
+
+    public void setFhsj(Date fhsj) {
+        this.fhsj = fhsj;
     }
 
     public String getBz() {
