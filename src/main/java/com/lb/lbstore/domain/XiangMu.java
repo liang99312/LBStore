@@ -56,7 +56,7 @@ public class XiangMu {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm",timezone = "GMT+8")
     private Date fhsj;
     private String bz;
-    private Integer state;//0:未办理；1：已办理
+    private Integer state;//0:未审批；1：已审批；2:已完成；3:已发货；-1:已删除
     private transient List<XiangMuDetail> details = new ArrayList();
     private transient String qrq;
     private transient String zrq;
