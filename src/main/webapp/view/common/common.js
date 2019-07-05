@@ -18,6 +18,7 @@ var lb_wuZiZiDians;
 var lb_cangKus;
 var lb_keHus;
 var lb_gongYingShangs;
+var lb_xuQius;
 
 function getAllA01s(func) {
     hajax("/LBStore/a01/getAllA01s.do", {}, "lb_allA01s", func);
@@ -57,6 +58,10 @@ function getKeHus(func){
 
 function getGongYingShangs(func){
     hajax("/LBStore/gongYingShang/getAllGongYingShangs.do", {}, "lb_gongYingShangs", func);
+}
+
+function getAllXuQius(func){
+    hajax("/LBStore/xuQiu/getAllXuQius.do", {}, "lb_xuQius", func);
 }
 
 function findCode(list, id) {

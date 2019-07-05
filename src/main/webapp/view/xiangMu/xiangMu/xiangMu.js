@@ -14,6 +14,7 @@ var selWzzd;
 var editWzzd;
 var editXhgg;
 var editLeiBie;
+var editXuQiu;
 var selKeHu;
 var editKeHu;
 var selKuWei;
@@ -30,6 +31,7 @@ $(document).ready(function () {
     getKeHus(setTrager_keHu);
     getWuZiZiDians(setTrager_ziDian);
     getWuZiLeiBies(setTrager_leiBie);
+    getAllXuQius(setTrager_xuQiu);
     getBaoBiaosByMk("503", setTrager_baoBiao);
     $("#inpMxScrq").datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, minView: 2, startView: 2, forceParse: 0, showMeridian: 1});   
 });
@@ -57,22 +59,26 @@ function setTrager_ziDian() {
 }
 
 function setTrager_leiBie() {
-    $('#inpMxLb').AutoComplete({'data': lb_wuZiLeiBies, 'afterSelectedHandler': selectWuZiLeiBie});
+    $('#inpMxLb').AutoComplete({'data': lb_wuZiLeiBies, 'paramName': editLeiBie});
+}
+
+function setTrager_xuQiu() {
+    $('#inpMxXq').AutoComplete({'data': lb_xuQius, 'afterSelectedHandler': selectXuQiu});
 }
 
 function setTrager_baoBiao() {
     $('#inpSelBb').AutoComplete({'data': lb_baoBiaos, 'paramName': 'selBaoBiao'});
 }
 
-function selectWuZiLeiBie(json) {
-    editLeiBie = json;
-    $("#inpMxLb").val(editLeiBie.mc);
-    if (editLeiBie.tysx && editLeiBie.tysx !== null && editLeiBie.tysx !== "") {
-        editLeiBie.tysx = JSON.parse(editLeiBie.tysx);
+function selectXuQiu(json) {
+    editXuQiu = json;
+    $("#inpMxXq").val(editXuQiu.mc);
+    if (editXuQiu.tysx && editXuQiu.tysx !== null && editXuQiu.tysx !== "") {
+        editXuQiu.tysx = JSON.parse(editXuQiu.tysx);
     } else {
-        editLeiBie.tysx = [];
+        editXuQiu.tysx = [];
     }
-    buildTysx(editLeiBie.tysx);
+    buildTysx(editXuQiu.tysx);
 }
 
 function selectXiangMu_m() {
