@@ -21,19 +21,23 @@ var selKuWei;
 var editA01;
 var editFeiA01;
 var selBaoBiao;
-var tysx_opt = {data: [], ls: 2, lw: 70};
+var tsType = [{id: 1, mc: "文本"}, {id: 2, mc: "数字"}];
+var tysx = [];
+var optTsFlag = 1;
+var editTsIndex = -1;
+var tgIndex = 0;
 
 $(document).ready(function () {
     $('#inpSj').val(dateFormat(new Date()));
     $('#inpSj,#inpFeiRq').datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd hh:ii', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, startView: 2, forceParse: 0, showMeridian: 1});
-    $('#inpSelQrq,#inpSelZrq,#inpMxScrq').datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, minView: 2, startView: 2, forceParse: 0, showMeridian: 1});
+    $('#inpSelQrq,#inpSelZrq').datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, minView: 2, startView: 2, forceParse: 0, showMeridian: 1});
+    $('#inpTsType').AutoComplete({'data': tsType, 'paramName': 'editType'});
     getAllA01s(setTrager_a01);
     getKeHus(setTrager_keHu);
     getWuZiZiDians(setTrager_ziDian);
     getWuZiLeiBies(setTrager_leiBie);
     getAllXuQius(setTrager_xuQiu);
     getBaoBiaosByMk("503", setTrager_baoBiao);
-    $("#inpMxScrq").datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, minView: 2, startView: 2, forceParse: 0, showMeridian: 1});   
 });
 
 function refreshWuZiZiDian() {
@@ -78,6 +82,7 @@ function selectXuQiu(json) {
     } else {
         editXuQiu.tysx = [];
     }
+    $.extend(true, tysx, editXuQiu.tysx);
     buildTysx(editXuQiu.tysx);
 }
 
@@ -139,22 +144,14 @@ function selectXiangMuDetailsTop100(id) {
 function setDetails(m) {
     editWzzd = {"id": m.wzzd_id, "mc": m.wzmc, "bm": m.wzbm};
     editLeiBie = {"id": m.wzlb_id, "mc": m.wzlb};
-    $("#inpMxPp").val(m.pp);
     editXhgg = {"id": m.xhgg_id, "mc": m.xhgg};
     $("#inpMxXhgg").val(m.xhgg);
-    $("#inpMxScc").val(m.scc);
     $("#inpMxBz").val(m.bz);
-    $("#inpMxTxm").val(m.txm);
-    $("#inpMxPc").val(m.pc);
-    $("#inpMxScrq").val(m.scrq);
-    $("#inpMxBzq").val(m.bzq);
     $("#inpMxDj").val(m.dj);
     $("#inpMxDw").val(m.dw);
     $("#inpMxSl").val(m.sl);
-    $("#inpMxBzgg").val(m.bzgg);
-    $("#inpMxZldw").val(m.zldw);
-    $("#inpMxZl").val(m.zl);
-    buildTysx(m.tysx);
+    tysx = m.xq;
+    buildTysx(m.xq);
 }
 
 function jxXiangMu(json) {
@@ -404,8 +401,8 @@ function saveXiangMu() {
                 return alert("项目明细需要设置单价！");
             }
         }
-        if (typeof e.tysx !== "string") {
-            e.tysx = JSON.stringify(e.tysx);
+        if (typeof e.xq !== "string") {
+            e.xq = JSON.stringify(e.xq);
         }
         if (wzs.indexOf(e.wzmc) > -1) {
             continue;
@@ -471,31 +468,15 @@ function deleteXiangMu(index) {
     }
 }
 
-function buildTysx(data) {
-    if (data && "" !== data) {
-        if (typeof data === "string") {
-            data = JSON.parse(data);
-        }
-        if (data.length === 0) {
-            $("#divMxTysx").hide();
-            return;
-        }
-        $("#divMxTysx").show();
-        tysx_opt.data = data;
-        $("#divMxTysx").empty();
-        $("#divMxTysx").setTysxDiv(tysx_opt);
-    }
-}
-
 function jxXiangMuMingXi() {
     $("#tblWuZiMingXi_body tr").remove();
     $.each(xmmx, function (index, item) { //遍历返回的json
-        if (item.tysx && item.tysx !== null && item.tysx !== "" && typeof item.tysx === 'string') {
-            item.tysx = JSON.parse(item.tysx);
-        } else if (item.tysx && typeof item.tysx === 'object') {
+        if (item.xq && item.xq !== null && item.xq !== "" && typeof item.xq === 'string') {
+            item.xq = JSON.parse(item.xq);
+        } else if (item.xq && typeof item.xq === 'object') {
 
         } else {
-            item.tysx = [];
+            item.xq = [];
         }
         var je = parseFloat(item.sl) * parseFloat(item.dj);
         var bj = optFlag === 4 ? '' : '<button class="btn btn-info btn-xs icon-edit" onclick="editXiangMuMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
@@ -509,6 +490,14 @@ function jxXiangMuMingXi() {
 }
 
 function addXiangMuMingXi() {
+    if ($("#inpKh").val() === "") {
+        return alert("请输入客户信息");
+    } else {
+        if ($("#inpKh").val() !== editKeHu.mc) {
+            return alert("请输入客户信息");
+        }
+    }
+    editXuQiu = {};
     optMxFlag = 1;
     editLeiBie = null;
     $("#xiangMuMingXiModal_title").html("增加明细");
@@ -516,20 +505,12 @@ function addXiangMuMingXi() {
     $("#inpMxWz").val("");
     $("#inpMxWzbm").val("");
     $("#inpMxLb").val("");
-    $("#inpMxPp").val("");
     $("#inpMxXhgg").val("");
-    $("#inpMxScc").val("");
     $("#inpMxBz").val("");
-    $("#inpMxTxm").val("");
-    $("#inpMxPc").val("");
-    $("#inpMxScrq").val("");
-    $("#inpMxBzq").val("0");
     $("#inpMxDj").val("1");
     $("#inpMxDw").val("");
     $("#inpMxSl").val("0");
-    $("#inpMxBzgg").val("1");
-    $("#inpMxZldw").val("");
-    $("#inpMxZl").val("");
+    tysx = [];
     buildTysx([]);
     $("#dvMxBzgg").hide();
     $("#dvMxZl").hide();
@@ -557,29 +538,45 @@ function readXiangMuMingXi(index) {
 }
 
 function setXiangMuMingXiData(index) {
+    editXuQiu = {};
     var m = xmmx[index];
     editWzzd = {"id": m.wzzd_id, "mc": m.wzmc, "bm": m.wzbm};
     $("#inpMxWz").val(m.wzmc);
     $("#inpMxWzbm").val(m.wzbm);
     editLeiBie = {"id": m.wzlb_id, "mc": m.wzlb};
     $("#inpMxLb").val(m.wzlb);
-    $("#inpMxPp").val(m.pp);
     editXhgg = {"id": m.xhgg_id, "mc": m.xhgg};
     $("#inpMxXhgg").val(m.xhgg);
-    $("#inpMxScc").val(m.scc);
     $("#inpMxBz").val(m.bz);
-    $("#inpMxTxm").val(m.txm);
-    $("#inpMxPc").val(m.pc);
-    $("#inpMxScrq").val(m.scrq);
-    $("#inpMxBzq").val(m.bzq);
     $("#inpMxDj").val(m.dj);
     $("#inpMxDw").val(m.dw);
     $("#inpMxSl").val(m.sl);
-    $("#inpMxBzgg").val(m.bzgg);
-    $("#inpMxZldw").val(m.zldw);
-    $("#inpMxZl").val(m.zl);
-    buildTysx(m.tysx);
+    if (m.xq_id !== null && m.xq_id > 0) {
+        fetchXuQiuById(m.xq_id);
+    }
+    tysx = m.xq;
+    buildTysx(m.xq);
     $("#xiangMuMingXiModal").modal({backdrop: 'static'});
+}
+
+function fetchXuQiuById(id) {
+    $.ajax({
+        url: "/LBStore/xuQiu/getXuQiuById.do?id=" + id,
+        contentType: "application/json",
+        type: "get",
+        dataType: "json",
+        cache: false,
+        error: function (msg, textStatus) {
+            alert("获取需求详细信息");
+        },
+        success: function (json) {
+            if (json.result === 0) {
+                editXuQiu = json.xuQiu;
+                $("#inpMxXq").val(editXuQiu.mc);
+            } else
+                alert("获取需求详细信息:" + json.msg ? json.msg : "");
+        }
+    });
 }
 
 function deleteXiangMuMingXi(index) {
@@ -625,7 +622,6 @@ function saveXiangMuMingXi() {
     mx.wzmc = $("#inpMxWz").val();
     mx.wzbm = $("#inpMxWzbm").val();
     mx.wzlb = $("#inpMxLb").val();
-    mx.pp = $("#inpMxPp").val();
     if ($("#inpMxXhgg").val() === "") {
         return alert("请输入产品型号规格");
     } else {
@@ -638,24 +634,13 @@ function saveXiangMuMingXi() {
     if ($("#inpMxDw").val() === '') {
         return alert("请输入单位");
     }
-    if ($("#inpMxBzq").val() === '') {
-        mx.bzq = -1;
-    } else {
-        mx.bzq = parseInt($("#inpMxBzq").val());
-    }
     mx.xhgg = $("#inpMxXhgg").val();
-    mx.scc = $("#inpMxScc").val();
     mx.bz = $("#inpMxBz").val();
-    mx.txm = $("#inpMxTxm").val();
-    mx.pc = $("#inpMxPc").val();
-    mx.scrq = $("#inpMxScrq").val();
     mx.dj = parseFloat($("#inpMxDj").val());
     mx.dw = $("#inpMxDw").val();
     mx.sl = parseFloat($("#inpMxSl").val());
-    mx.bzgg = parseFloat($("#inpMxBzgg").val());
-    mx.zldw = $("#inpMxZldw").val();
-    mx.zl = $("#inpMxZl").val();
-    mx.tysx = JSON.stringify(tysx_opt.data);
+    setTysx();
+    mx.xq = JSON.stringify(tysx);
     if (optMxFlag === 1) {
         xmmx.push(mx);
     } else if (optMxFlag === 2) {
@@ -866,6 +851,204 @@ function execBaoBiao() {
         success: function (text) {
             $("#dvBbnr").html(text);
             $("#baoBiaoModal").modal({backdrop: 'static'});
+        }
+    });
+}
+
+function buildTysx(data) {
+    $("#divMxTysx").empty();
+    for (var i = 0; i < data.length; i++) {
+        var e = data[i];
+        if (!e.value || e.value === null) {
+            e.value = "";
+        }
+        var s = "<div class='form-group'><label for='edts_inp_" + e.id + "'>" + e.mc + "：</label>\n\
+                <input type='text' id='edts_inp_" + e.id + "' value='" + e.value + "' />\n\
+                <button class='btn btn-info btn-xs icon-edit ts_edit'></button><button class='btn btn-danger btn-xs icon-minus ts_del'></div>";
+        $("#divMxTysx").append(s);
+    }
+    tgIndex = 0;
+    setEvent(data);
+    $("#divMxTysx .ts_edit").each(function (i) {
+        $(this).click(function () {
+            editTeYouShuXing(i);
+        });
+    });
+    $("#divMxTysx .ts_del").each(function (i) {
+        $(this).click(function () {
+            delTeYouShuXing(i);
+        });
+    });
+}
+
+function setEvent(data) {
+    var e = data[tgIndex];
+    if (e) {
+        if (e.zdfl && e.zdfl > 0) {
+            getZiDian4FenLei(e.zdfl, function () {
+                $("#edts_inp_" + e.id).AutoComplete({'data': lb_ziDian4fl});
+                tgIndex++;
+                setEvent(data);
+            });
+        } else {
+            tgIndex++;
+            setEvent(data);
+        }
+    }
+}
+
+function addTeYouShuXing() {
+    setTysx();
+    optTsFlag = 1;
+    $("#xuQiuModel_title").html("增加条目");
+    $("#inpTsMc").val("");
+    editFenLei = null;
+    $("#inpTsType").val("");
+    $("#teYouShuXingModal").modal({backdrop: 'static'});
+}
+
+function editTeYouShuXing(index) {
+    setTysx();
+    if (tysx[index]) {
+        optTsFlag = 2;
+        editTsIndex = index;
+        var t = tysx[index];
+        $("#xuQiuModel_title").html("修改条目");
+        $("#inpTsMc").val(t.mc);
+        $("#inpTsType").val(t.type);
+        if (t.zdfl && t.zdfl > 0) {
+            editFenLei = {id: t.zdfl, mc: t.zdfl_mc};
+            $("#inpTsZiDian").val(editFenLei.mc);
+        }
+        $("#teYouShuXingModal").modal({backdrop: 'static'});
+    }
+}
+
+function delTeYouShuXing(index) {
+    setTysx();
+    if (tysx[index]) {
+        if (confirm("确定删除条目：" + tysx[index].mc + "?")) {
+            tysx.splice(index, 1);
+            for (var i = 0; i < tysx.length; i++) {
+                tysx[i].id = i;
+            }
+            buildTysx(tysx);
+        }
+    }
+}
+
+function saveTeYouShuXing() {
+    if (optTsFlag === 1) {
+        var ts = {};
+        ts.id = tysx.length;
+        ts.mc = $("#inpTsMc").val();
+        ts.type = $("#inpTsType").val();
+        if (editFenLei && editFenLei !== null) {
+            ts.zdfl = editFenLei.id;
+            ts.zdfl_mc = editFenLei.mc;
+        }
+        tysx.push(ts);
+    } else if (optTsFlag === 2) {
+        var ts = {};
+        ts.mc = $("#inpTsMc").val();
+        ts.type = $("#inpTsType").val();
+        if (editFenLei && editFenLei !== null) {
+            ts.zdfl = editFenLei.id;
+            ts.zdfl_mc = editFenLei.mc;
+        }
+        tysx.splice(editTsIndex, 1, ts);
+    }
+    for (var i = 0; i < tysx.length; i++) {
+        tysx[i].id = i;
+    }
+    buildTysx(tysx);
+    $("#teYouShuXingModal").modal("hide");
+}
+
+function setTysx() {
+    for (var i = 0; i < tysx.length; i++) {
+        tysx[i].value = $("#edts_inp_" + i).val();
+    }
+}
+
+function saveXuQiu() {
+    if ($("#inpMxXq").val() === "") {
+        return alert("请选择需求或者点击后面图标另存需求");
+    } else {
+        if ($("#inpMxXq").val() !== editXuQiu.mc) {
+            return alert("请选择需求或者点击后面图标另存需求");
+        }
+    }
+    if (confirm("确定保存需求?")) {
+        var newTysx = [];
+        $.extend(true, newTysx, tysx);
+        for (var i = 0; i < tysx.length; i++) {
+            newTysx[i].value = "";
+        }
+        var xuQiu = {};
+        var url = "/LBStore/xuQiu/updateXuQiu.do";
+        xuQiu.id = editXuQiu.id;
+        xuQiu.qy_id = editXuQiu.qy_id;
+        xuQiu.cjr_id = editXuQiu.cjr_id;
+        xuQiu.mc = editXuQiu.mc;
+        xuQiu.dm = editXuQiu.dm;
+        xuQiu.bz = editXuQiu.bz;
+        xuQiu.kh_id = editXuQiu.kh_id;
+        xuQiu.tysx = JSON.stringify(newTysx);
+        xuQiu.state = editXuQiu.state;
+        $.ajax({
+            url: url,
+            data: JSON.stringify(xuQiu),
+            contentType: "application/json",
+            type: "post",
+            cache: false,
+            error: function (msg, textStatus) {
+                alert("保存失败");
+            },
+            success: function (json) {
+                if (json.result === 0) {
+                    alert("保存成功");
+                    getAllXuQius(setTrager_xuQiu);
+                } else {
+                    alert("保存失败:" + json.msg ? json.msg : "");
+                }
+            }
+        });
+    }
+}
+
+function saveasXuQiu() {
+    var newTysx = [];
+    $.extend(true, newTysx, tysx);
+    for (var i = 0; i < tysx.length; i++) {
+        newTysx[i].value = "";
+    }
+    var xuQiu = {};
+    var url = "/LBStore/xuQiu/saveXuQiu.do";
+    xuQiu.kh_id = editKeHu.id;
+    xuQiu.tysx = JSON.stringify(newTysx);
+    var name = prompt("请输入需求名称", "");
+    if (name !== null && name !== "") {
+        xuQiu.mc = name;
+    } else {
+        return;
+    }
+    $.ajax({
+        url: url,
+        data: JSON.stringify(xuQiu),
+        contentType: "application/json",
+        type: "post",
+        cache: false,
+        error: function (msg, textStatus) {
+            alert("保存失败");
+        },
+        success: function (json) {
+            if (json.result === 0) {
+                alert("保存成功");
+                getAllXuQius(setTrager_xuQiu);
+            } else {
+                alert("保存失败:" + json.msg ? json.msg : "");
+            }
         }
     });
 }

@@ -270,7 +270,7 @@ and open the template in the editor.
                             <div class="form-group">
                                 <label for="inpMxXq">项目需求：</label>
                                 <input type="text" id="inpMxXq" />
-                                <input type="button" onclick ="saveXuQiu();" style="padding: 8px;width: 25px;height: 25px; border:none; background: url('/LBStore/img/add_32.png') no-repeat;background-size: 100% 100%;" />
+                                <input type="button" onclick ="addTeYouShuXing();" style="padding: 8px;width: 25px;height: 25px; border:none; background: url('/LBStore/img/add_32.png') no-repeat;background-size: 100% 100%;" />
                                 <input type="button" onclick ="saveXuQiu();" style="padding: 8px;width: 25px;height: 25px; border:none; background: url('/LBStore/img/save_32.png') no-repeat;background-size: 100% 100%;" />
                                 <input type="button" onclick ="saveasXuQiu();" style="padding: 8px;width: 25px;height: 25px; border:none; background: url('/LBStore/img/saveas_32.png') no-repeat;background-size: 100% 100%;" />
                             </div>
@@ -363,6 +363,36 @@ and open the template in the editor.
                     </div>
                     <div id="dvBbnr" class="modal-body" style="height:700px;padding: 0;overflow-y: auto;">
                         
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="teYouShuXingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #ace1ff;height: 40px;border-top-left-radius: 6px;border-top-right-radius: 6px;padding:10px">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="xuQiuModel_title">添加条目</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="content">
+                            <div class="form-group">
+                                <label for="inpTsMc">名称：</label>
+                                <input type="text" id="inpTsMc" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpTsType">类型：</label>
+                                <input type="text" id="inpTsType" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpTsZiDian">字典：</label>
+                                <input type="text" id="inpTsZiDian" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="text-align: center;padding: 8px;">
+                        <button type="submit" class="btn btn-primary" onclick="saveTeYouShuXing()">保存</button>
                     </div>
                 </div>
             </div>
