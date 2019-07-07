@@ -170,7 +170,7 @@ function jxXiangMu(json) {
         var dealStr = '<button class="btn btn-info btn-xs icon-legal" onclick="dealXiangMu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var delStr = '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteXiangMu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>';
         var feiStr = '<button class="btn btn-info btn-xs icon-money" onclick="feiXiangMu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>';
-        var trStr = '<tr' + classStr + '><td>' + item.ckmc + '</td><td>' + item.lsh + '</td><td>' + item.khmc + '</td><td>' + item.wz + '</td><td>' + item.sj + '</td><td>' + item.sl + '</td><td>'
+        var trStr = '<tr' + classStr + '><td>' + item.mc + '</td><td>' + item.lsh + '</td><td>' + item.khmc + '</td><td>' + item.wz + '</td><td>' + item.jhsj + '</td><td>' + item.jhsl + '</td><td>'
                 + readStr
                 + (item.state === 0 ? editStr : "")
                 + (item.state === 0 ? dealStr : "")
@@ -188,6 +188,9 @@ function showSelectXiangMu() {
 function selectXiangMu() {
     var xiangMu = {};
     var tj = {"pageSize": 20, "currentPage": 1};
+    if ($("#selMc").val() !== "") {
+        xiangMu.mc = $("#selMc").val();
+    }
     if ($("#selLsh").val() !== "") {
         xiangMu.lsh = $("#selLsh").val();
     }
@@ -209,6 +212,12 @@ function selectXiangMu() {
 function selectXiangMu_m() {
     var xiangMu = {};
     var tj = {"pageSize": 20, "currentPage": 1};
+    if ($("#inpSelMc").val() !== "") {
+        xiangMu.mc = $("#inpSelMc").val();
+    }
+    if ($("#inpSelLsh").val() !== "") {
+        xiangMu.lsh = $("#inpSelLsh").val();
+    }
     if ($("#inpSelWz").val() !== "") {
         xiangMu.wz = $("#inpSelWz").val();
     }
@@ -248,8 +257,8 @@ function addXiangMu() {
     $("#inpKh").val("");
     $("#inpDh").val("");
     $("#inpBz").val("");
-    $("#inpSl").val(0);
-    $("#inpJe").val(0);
+    $("#inpJhsl").val(0);
+    $("#inpJhje").val(0);
     jxXiangMuMingXi();
     $("#xiangMuModal").modal({backdrop: 'static'});
 }
@@ -266,6 +275,7 @@ function editXiangMu(index) {
     $("#dvMxCanKao").show();
     $("#divSpr").hide();
     $(".bb-element").hide();
+    $(".item-view").hide();
     var xiangMu = xiangMus[index];
     editIndex = index;
     selectXiangMuDetail(xiangMu.id, jxReadXiangMu);
@@ -338,6 +348,7 @@ function dealXiangMu(index) {
     $("#divSpr").hide();
     $("#dvMxCanKao").hide();
     $(".bb-element").hide();
+    $(".item-view").hide();
     var xiangMu = xiangMus[index];
     editIndex = index;
     selectXiangMuDetail(xiangMu.id, jxReadXiangMu);
@@ -478,10 +489,10 @@ function jxXiangMuMingXi() {
         } else {
             item.xq = [];
         }
-        var je = parseFloat(item.sl) * parseFloat(item.dj);
+        var jhje = parseFloat(item.jhsl) * parseFloat(item.dj);
         var bj = optFlag === 4 ? '' : '<button class="btn btn-info btn-xs icon-edit" onclick="editXiangMuMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var cz = optFlag === 3 || optFlag === 4 ? '' : '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteXiangMuMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>';
-        var trStr = '<tr><td>' + item.wzmc + '</td><td>' + item.pp + '</td><td>' + item.xhgg + '</td><td>' + item.sl + '</td><td>' + je + '</td><td>'
+        var trStr = '<tr><td>' + item.wzmc + '</td><td>' + item.xhgg + '</td><td>' + item.jhsl + '</td><td>' + item.dj + '</td><td>' + jhje + '</td><td>'
                 + '<button class="btn btn-info btn-xs icon-file-alt" onclick="readXiangMuMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;'
                 + bj
                 + cz + '</td></tr>';
