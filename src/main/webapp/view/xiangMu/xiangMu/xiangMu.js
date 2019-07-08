@@ -63,7 +63,7 @@ function setTrager_ziDian() {
 }
 
 function setTrager_leiBie() {
-    $('#inpMxLb').AutoComplete({'data': lb_wuZiLeiBies, 'paramName': editLeiBie});
+    $('#inpMxLb').AutoComplete({'data': lb_wuZiLeiBies, 'paramName': 'editLeiBie'});
 }
 
 function setTrager_xuQiu() {
@@ -149,7 +149,7 @@ function setDetails(m) {
     $("#inpMxBz").val(m.bz);
     $("#inpMxDj").val(m.dj);
     $("#inpMxDw").val(m.dw);
-    $("#inpMxSl").val(m.sl);
+    $("#inpMxJhsl").val(m.sl);
     tysx = m.xq;
     buildTysx(m.xq);
 }
@@ -510,7 +510,7 @@ function addXiangMuMingXi() {
     }
     editXuQiu = {};
     optMxFlag = 1;
-    editLeiBie = null;
+    editLeiBie = {};
     $("#xiangMuMingXiModal_title").html("增加明细");
     $("#btnMxOk").html("保存");
     $("#inpMxWz").val("");
@@ -520,7 +520,7 @@ function addXiangMuMingXi() {
     $("#inpMxBz").val("");
     $("#inpMxDj").val("1");
     $("#inpMxDw").val("");
-    $("#inpMxSl").val("0");
+    $("#inpMxJhsl").val("0");
     tysx = [];
     buildTysx([]);
     $("#dvMxBzgg").hide();
@@ -561,7 +561,7 @@ function setXiangMuMingXiData(index) {
     $("#inpMxBz").val(m.bz);
     $("#inpMxDj").val(m.dj);
     $("#inpMxDw").val(m.dw);
-    $("#inpMxSl").val(m.sl);
+    $("#inpMxJhsl").val(m.jhsl);
     if (m.xq_id !== null && m.xq_id > 0) {
         fetchXuQiuById(m.xq_id);
     }
@@ -611,7 +611,7 @@ function saveXiangMuMingXi() {
     if (!editLeiBie || editLeiBie === null) {
         return alert("产品类别不能为空");
     }
-    if ($("#inpMxSl").val() === "") {
+    if ($("#inpMxJhsl").val() === "") {
         return alert("请输入产品名称");
     }
     var mx = {};
@@ -649,7 +649,7 @@ function saveXiangMuMingXi() {
     mx.bz = $("#inpMxBz").val();
     mx.dj = parseFloat($("#inpMxDj").val());
     mx.dw = $("#inpMxDw").val();
-    mx.sl = parseFloat($("#inpMxSl").val());
+    mx.jhsl = parseFloat($("#inpMxJhsl").val());
     setTysx();
     mx.xq = JSON.stringify(tysx);
     if (optMxFlag === 1) {
