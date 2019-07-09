@@ -175,7 +175,7 @@ public class XiangMuDao extends BaseDao {
             List parameters = new ArrayList();
             parameters.add(map.get("qy_id"));
             session = getSessionFactory().openSession();
-            String sql = "select {xm.*},kh.mc as khmc,ck.mc as ckmc from XiangMu xm "
+            String sql = "select {xm.*},kh.mc as khmc from XiangMu xm "
                     + "left join KeHu kh on xm.kh_id=kh.id "
                     + "where xm.qy_id=?";
             if (map.containsKey("ck_id")) {
@@ -223,8 +223,6 @@ public class XiangMuDao extends BaseDao {
                 Object[] objs = (Object[]) obj;
                 XiangMu xm = (XiangMu) objs[0];
                 String khmc = (String) objs[1];
-                String gysmc = (String) objs[2];
-                String ckmc = (String) objs[3];
                 xm.setKhmc(khmc);
                 result.add(xm);
             }

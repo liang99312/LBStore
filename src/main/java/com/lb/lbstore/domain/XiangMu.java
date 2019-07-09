@@ -55,6 +55,9 @@ public class XiangMu {
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm",timezone = "GMT+8")
     private Date fhsj;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
+    private Date jhsj;
     private String bz;
     private Integer state;//0:未审批；1：已审批；2:已完成；3:已发货；-1:已删除
     private transient List<XiangMuDetail> details = new ArrayList();
@@ -230,6 +233,14 @@ public class XiangMu {
 
     public void setFhsj(Date fhsj) {
         this.fhsj = fhsj;
+    }
+
+    public Date getJhsj() {
+        return jhsj;
+    }
+
+    public void setJhsj(Date jhsj) {
+        this.jhsj = jhsj;
     }
 
     public String getBz() {

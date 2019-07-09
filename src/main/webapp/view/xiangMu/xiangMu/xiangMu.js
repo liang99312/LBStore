@@ -28,9 +28,8 @@ var editTsIndex = -1;
 var tgIndex = 0;
 
 $(document).ready(function () {
-    $('#inpSj').val(dateFormat(new Date()));
-    $('#inpSj,#inpFeiRq').datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd hh:ii', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, startView: 2, forceParse: 0, showMeridian: 1});
-    $('#inpSelQrq,#inpSelZrq').datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, minView: 2, startView: 2, forceParse: 0, showMeridian: 1});
+    $('#inpKdsj,#inpFeiRq').datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd hh:ii', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, startView: 2, forceParse: 0, showMeridian: 1});
+    $('#inpJhsj,#inpSelQrq,#inpSelZrq').datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, minView: 2, startView: 2, forceParse: 0, showMeridian: 1});
     $('#inpTsType').AutoComplete({'data': tsType, 'paramName': 'editType'});
     getAllA01s(setTrager_a01);
     getKeHus(setTrager_keHu);
@@ -150,7 +149,8 @@ function setDetails(m) {
     $("#inpMxDj").val(m.dj);
     $("#inpMxDw").val(m.dw);
     $("#inpMxJhsl").val(m.sl);
-    tysx = m.xq;
+    tysx = [];
+    $.extend(true,tysx,m.xq);
     buildTysx(m.xq);
 }
 
@@ -254,11 +254,14 @@ function addXiangMu() {
     $("#divSpr").hide();
     $(".bb-element").hide();
     $(".item-view").hide();
+    $("#inpMc").val("");
     $("#inpKh").val("");
     $("#inpDh").val("");
     $("#inpBz").val("");
     $("#inpJhsl").val(0);
     $("#inpJhje").val(0);
+    $('#inpKdsj').val(dateFormat(new Date()));
+    $('#inpJhsj').val(dateFormat_d(new Date()));
     jxXiangMuMingXi();
     $("#xiangMuModal").modal({backdrop: 'static'});
 }
@@ -292,6 +295,7 @@ function readXiangMu(index) {
     $("#divXzmx").hide();
     $("#divSpr").show();
     $(".bb-element").show();
+    $(".item-view").show();
     var xiangMu = xiangMus[index];
     editIndex = index;
     $("#dvMxCanKao").hide();
@@ -301,17 +305,22 @@ function readXiangMu(index) {
 function jxReadXiangMu(xiangMu) {
     bbXiangMu = xiangMu;
     xmmx = xiangMu.details;
+    $("#inpMc").val(xiangMu.mc);
     $("#inpKh").val(xiangMu.khmc);
     editKeHu = {"id": xiangMu.kh_id, "mc": xiangMu.khmc};
-    $("#inpKdr").val(xiangMu.xmrmc);
-    editA01 = {"id": xiangMu.xmr_id, "mc": xiangMu.xmrmc};
+    $("#inpKdr").val(xiangMu.kdrmc);
+    editA01 = {"id": xiangMu.kdr_id, "mc": xiangMu.kdrmc};
     $("#inpDh").val(xiangMu.dh);
     $("#inpBz").val(xiangMu.bz);
-    $("#inpSl").val(xiangMu.sl);
-    $("#inpJe").val(xiangMu.je);
+    $("#inpJhsl").val(xiangMu.sl);
+    $("#inpJhje").val(xiangMu.je);
     $("#inpSj").val(xiangMu.sj);
     $("#inpSpr").val(xiangMu.sprmc);
     $("#inpSpsj").val(xiangMu.spsj);
+    $("#inpJhsl").val(xiangMu.jhsl);
+    $("#inpJhje").val(xiangMu.jhje);
+    $("#inpJhsj").val(xiangMu.jhsj);
+    $("#inpKdsj").val(xiangMu.kdsj);
     jxXiangMuMingXi();
     $("#xiangMuModal").modal({backdrop: 'static'});
 }
@@ -397,7 +406,7 @@ function saveXiangMu() {
         if ($("#inpKdr").val() !== editA01.mc) {
             return alert("请输入开单人信息");
         } else {
-            xiangMu.xmr_id = editA01.id;
+            xiangMu.kdr_id = editA01.id;
         }
     }
     if ($("#inpDh").val() === "") {
@@ -425,13 +434,15 @@ function saveXiangMu() {
         var e = wzs[i];
         wz += e + ";";
     }
+    xiangMu.mc = $("#inpMc").val();
     xiangMu.details = xmmx;
     xiangMu.wz = wz;
     xiangMu.dh = $("#inpDh").val();
     xiangMu.bz = $("#inpBz").val();
-    xiangMu.sl = parseFloat($("#inpSl").val());
-    xiangMu.je = parseFloat($("#inpJe").val());
-    xiangMu.sj = $("#inpSj").val();
+    xiangMu.jhsl = parseFloat($("#inpJhsl").val());
+    xiangMu.jhje = parseFloat($("#inpJhje").val());
+    xiangMu.kdsj = $("#inpKdsj").val();
+    xiangMu.jhsj = $("#inpJhsj").val();
     xiangMu.state = 0;
     var tsStr = optFlag === 3 ? "办理" : "保存";
     $.ajax({
@@ -490,11 +501,13 @@ function jxXiangMuMingXi() {
             item.xq = [];
         }
         var jhje = parseFloat(item.jhsl) * parseFloat(item.dj);
+        var cp = optFlag === 3 || optFlag === 4 ? '' :  '<button class="btn btn-info btn-xs icon-copy" onclick="copyXiangMuMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var bj = optFlag === 4 ? '' : '<button class="btn btn-info btn-xs icon-edit" onclick="editXiangMuMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var cz = optFlag === 3 || optFlag === 4 ? '' : '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteXiangMuMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>';
         var trStr = '<tr><td>' + item.wzmc + '</td><td>' + item.xhgg + '</td><td>' + item.jhsl + '</td><td>' + item.dj + '</td><td>' + jhje + '</td><td>'
                 + '<button class="btn btn-info btn-xs icon-file-alt" onclick="readXiangMuMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;'
                 + bj
+                + cp;
                 + cz + '</td></tr>';
         $("#tblWuZiMingXi_body").append(trStr);
     });
@@ -538,6 +551,16 @@ function editXiangMuMingXi(index) {
     }
 }
 
+function copyXiangMuMingXi(index) {
+    if (xmmx[index]) {
+        optMxFlag = 1;
+        editMxIndex = index;
+        $("#xiangMuMingXiModal_title").html("修改明细");
+        $("#btnMxOk").html("保存");
+        setXiangMuMingXiData(index);
+    }
+}
+
 function readXiangMuMingXi(index) {
     if (xmmx[index]) {
         optMxFlag = 4;
@@ -565,8 +588,9 @@ function setXiangMuMingXiData(index) {
     if (m.xq_id !== null && m.xq_id > 0) {
         fetchXuQiuById(m.xq_id);
     }
-    tysx = m.xq;
-    buildTysx(m.xq);
+    tysx = [];
+    $.extend(true,tysx,m.xq);
+    buildTysx(tysx);
     $("#xiangMuMingXiModal").modal({backdrop: 'static'});
 }
 
@@ -662,11 +686,11 @@ function saveXiangMuMingXi() {
     var zje = 0;
     for (var i = 0; i < xmmx.length; i++) {
         var e = xmmx[i];
-        zsl = e.sl + zsl;
-        zje = e.sl * e.dj + zje;
+        zsl = e.jhsl + zsl;
+        zje = e.jhsl * e.dj + zje;
     }
-    $("#inpSl").val(zsl);
-    $("#inpJe").val(zje.toFixed(3));
+    $("#inpJhsl").val(zsl);
+    $("#inpJhje").val(zje.toFixed(3));
     $("#xiangMuMingXiModal").modal("hide");
 }
 

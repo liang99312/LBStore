@@ -643,6 +643,7 @@ CREATE TABLE `store`.`xiangmu` (
   `spsj` datetime DEFAULT NULL,
   `wcsj` datetime DEFAULT NULL,
   `fhsj` datetime DEFAULT NULL,
+  `jhsj` datetime DEFAULT NULL,
   `bz` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `state` int(11) DEFAULT 0,
   PRIMARY KEY (`id`))ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
