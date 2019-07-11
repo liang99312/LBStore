@@ -69,9 +69,9 @@ public class XiangMuServiceImpl implements XiangMuService {
         List parameters = new ArrayList();
         parameters.add(map.get("qy_id"));
         String sql = "select count(1) from XiangMu where qy_id=?";
-        if (map.containsKey("ck_id")) {
-            sql += " and ck_id = ?";
-            parameters.add(map.get("ck_id"));
+        if (map.containsKey("mc")) {
+            sql += " and mc like ?";
+            parameters.add("%" + map.get("mc") + "%");
         }
         if (map.containsKey("lsh")) {
             sql += " and lsh like ?";
@@ -89,16 +89,12 @@ public class XiangMuServiceImpl implements XiangMuService {
             sql += " and kh_id = ?";
             parameters.add(map.get("kh_id"));
         }
-        if (map.containsKey("gys_id")) {
-            sql += " and gys_id = ?";
-            parameters.add(map.get("gys_id"));
-        }
         if (map.containsKey("qrq")) {
-            sql += " and sj >= ?";
+            sql += " and kdsj >= ?";
             parameters.add(map.get("qrq"));
         }
         if (map.containsKey("zrq")) {
-            sql += " and sj <= ?";
+            sql += " and kdsj <= ?";
             parameters.add(map.get("zrq") + " 23:59:59");
         }
         return xiangMuDao.getCount(sql, parameters.toArray());

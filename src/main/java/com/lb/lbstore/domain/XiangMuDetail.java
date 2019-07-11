@@ -62,7 +62,7 @@ public class XiangMuDetail {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm",timezone = "GMT+8")
     private transient Date sj;
     private transient Integer kdr_id;
-    private transient String qrq,zrq,xqmc;
+    private transient String qrq,zrq,xqmc,dh;
 
     public Integer getId() {
         return id;
@@ -318,6 +318,14 @@ public class XiangMuDetail {
 
     public void setXqmc(String xqmc) {
         this.xqmc = xqmc;
+    }
+
+    public String getDh() {
+        return dh;
+    }
+
+    public void setDh(String dh) {
+        this.dh = dh;
     }
        
     @Override

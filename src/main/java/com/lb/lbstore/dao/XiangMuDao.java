@@ -61,17 +61,22 @@ public class XiangMuDao extends BaseDao {
             }
             xiangMu = list_xm.get(0);
 
-            String sql_d = "select {d.*},l.mc as wzlb from XiangMuDetail d left join WuZiLeiBie l on d.wzlb_id=l.id where d.xm_id=?";
+            String sql_d = "select {d.*},l.mc as wzlb,xq.mc as xqmc from XiangMuDetail d "
+                    + "left join WuZiLeiBie l on d.wzlb_id=l.id "
+                    + "left join XuQiu xq on d.xq_id=xq.id "
+                    + "where d.xm_id=?";
             SQLQuery navtiveSQL_d = session.createSQLQuery(sql_d);
             navtiveSQL_d.setParameter(0, id);
-            navtiveSQL_d.addEntity("d", XiangMuDetail.class).addScalar("wzlb", StandardBasicTypes.STRING);
+            navtiveSQL_d.addEntity("d", XiangMuDetail.class).addScalar("wzlb", StandardBasicTypes.STRING).addScalar("xqmc", StandardBasicTypes.STRING);
             List<XiangMuDetail> details = new ArrayList();
             List list_d = navtiveSQL_d.list();
             for (Object obj : list_d) {
                 Object[] objs = (Object[]) obj;
                 XiangMuDetail xmd = (XiangMuDetail) objs[0];
                 String wzlb = (String) objs[1];
+                String xqmc = (String) objs[2];
                 xmd.setWzlb(wzlb);
+                xmd.setXqmc(xqmc);
                 details.add(xmd);
             }
             xiangMu.setDetails(details);
@@ -94,10 +99,11 @@ public class XiangMuDao extends BaseDao {
         Session session = null;
         try {
             session = getSessionFactory().openSession();
-            String sql = "select {xmd.*},kh.mc as khmc,xm.spsj as sj,xm.lsh as lsh,a01.mc as kdrmc,l.mc as wzlb from XiangMuDetail xmd "
+            String sql = "select {xmd.*},kh.mc as khmc,xm.spsj as sj,a01.mc as kdrmc,l.mc as wzlb,a02.mc as sprmc from XiangMuDetail xmd "
                     + "left join XiangMu xm on xmd.xm_id=xm.id "
                     + "left join KeHu kh on xm.kh_id=kh.id "
                     + "left join A01 a01 on xm.rkr_id=a01.id "
+                    + "left join A01 a02 on xm.spr_id=a02.id "
                     + "left join WuZiLeiBie l on xmd.wzlb_id=l.id "
                     + "where xmd.id=?";
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
@@ -105,23 +111,23 @@ public class XiangMuDao extends BaseDao {
             navtiveSQL.addEntity("xmd", XiangMuDetail.class)
                     .addScalar("khmc", StandardBasicTypes.STRING)
                     .addScalar("sj", StandardBasicTypes.DATE)
-                    .addScalar("lsh", StandardBasicTypes.STRING)
                     .addScalar("kdrmc", StandardBasicTypes.STRING)
-                    .addScalar("wzlb", StandardBasicTypes.STRING);
+                    .addScalar("wzlb", StandardBasicTypes.STRING)
+                    .addScalar("sprmc", StandardBasicTypes.STRING);
             List list = navtiveSQL.list();
             for (Object obj : list) {
                 Object[] objs = (Object[]) obj;
                 xiangMuDetail = (XiangMuDetail) objs[0];
                 String khmc = (String) objs[1];
                 Date sj = (Date) objs[2];
-                String lsh = (String) objs[3];
-                String kdrmc = (String) objs[4];
-                String wzlb = (String) objs[5];
+                String kdrmc = (String) objs[3];
+                String wzlb = (String) objs[4];
+                String sprmc = (String) objs[5];
                 xiangMuDetail.setKhmc(khmc);
                 xiangMuDetail.setSj(sj);
-                xiangMuDetail.setLsh(lsh);
                 xiangMuDetail.setKdrmc(kdrmc);
                 xiangMuDetail.setWzlb(wzlb);
+                xiangMuDetail.setSprmc(sprmc);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -142,16 +148,27 @@ public class XiangMuDao extends BaseDao {
         Session session = null;
         try {
             session = getSessionFactory().openSession();
-            String sql_d = "select {d.*},l.mc as wzlb from XiangMuDetail d left join WuZiLeiBie l on d.wzlb_id=l.id where d.wzzd_id=? order by d.id desc limit 0,100";
+            String sql_d = "select {d.*},l.mc as wzlb,xq.mc as xqmc,xm.dh as dh from XiangMuDetail d "
+                    + "left join XiangMu xm on d.xm_id=xm.id "
+                    + "left join WuZiLeiBie l on d.wzlb_id=l.id "
+                    + "left join XuQiu xq on d.xq_id=xq.id "
+                    + "where d.wzzd_id=? order by d.id desc limit 0,100";
             SQLQuery navtiveSQL_d = session.createSQLQuery(sql_d);
             navtiveSQL_d.setParameter(0, wzzd_id);
-            navtiveSQL_d.addEntity("d", XiangMuDetail.class).addScalar("wzlb", StandardBasicTypes.STRING);
+            navtiveSQL_d.addEntity("d", XiangMuDetail.class)
+                    .addScalar("wzlb", StandardBasicTypes.STRING)
+                    .addScalar("xqmc", StandardBasicTypes.STRING)
+                    .addScalar("dh", StandardBasicTypes.STRING);
             List list_d = navtiveSQL_d.list();
             for (Object obj : list_d) {
                 Object[] objs = (Object[]) obj;
                 XiangMuDetail xmd = (XiangMuDetail) objs[0];
                 String wzlb = (String) objs[1];
+                String xqmc = (String) objs[2];
+                String dh = (String) objs[3];
                 xmd.setWzlb(wzlb);
+                xmd.setXqmc(xqmc);
+                xmd.setDh(dh);
                 details.add(xmd);
             }
         } catch (Exception e) {
@@ -178,9 +195,10 @@ public class XiangMuDao extends BaseDao {
             String sql = "select {xm.*},kh.mc as khmc from XiangMu xm "
                     + "left join KeHu kh on xm.kh_id=kh.id "
                     + "where xm.qy_id=?";
-            if (map.containsKey("ck_id")) {
-                sql += " and xm.ck_id = ?";
+            if (map.containsKey("mc")) {
+                sql += " and xm.mc like ?";
                 parameters.add(map.get("ck_id"));
+                parameters.add("%" + map.get("mc") + "%");
             }
             if (map.containsKey("lsh")) {
                 sql += " and xm.lsh like ?";
@@ -198,16 +216,12 @@ public class XiangMuDao extends BaseDao {
                 sql += " and xm.kh_id = ?";
                 parameters.add(map.get("kh_id"));
             }
-            if (map.containsKey("gys_id")) {
-                sql += " and xm.gys_id = ?";
-                parameters.add(map.get("gys_id"));
-            }
             if (map.containsKey("qrq")) {
-                sql += " and xm.sj >= ?";
+                sql += " and xm.kdsj >= ?";
                 parameters.add(map.get("qrq"));
             }
             if (map.containsKey("zrq")) {
-                sql += " and xm.sj <= ?";
+                sql += " and xm.kdsj <= ?";
                 parameters.add(map.get("zrq") + " 23:59:59");
             }
             SQLQuery navtiveSQL = session.createSQLQuery(sql);
@@ -446,7 +460,7 @@ public class XiangMuDao extends BaseDao {
                 if (detail == null) {
                     continue;
                 }
-                d.setDj(detail.getDj());
+                d.setLsh(LshUtil.getXmdLsh());
                 session.update(d);
             }
             session.flush();
@@ -454,7 +468,7 @@ public class XiangMuDao extends BaseDao {
             xiangMu.setState(1);
             xiangMu.setSpr_id(a01_id);
             xiangMu.setSpsj(new Date());
-            xiangMu.setLsh(LshUtil.getXmdLsh());
+            xiangMu.setLsh(LshUtil.getXmLsh());
             xiangMu.setDfje(xiangMu.getFhje() - xiangMu.getYfje());
             session.update(xiangMu);
             session.flush();

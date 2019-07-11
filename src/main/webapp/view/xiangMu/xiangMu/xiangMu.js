@@ -144,13 +144,19 @@ function setDetails(m) {
     editWzzd = {"id": m.wzzd_id, "mc": m.wzmc, "bm": m.wzbm};
     editLeiBie = {"id": m.wzlb_id, "mc": m.wzlb};
     editXhgg = {"id": m.xhgg_id, "mc": m.xhgg};
+    editXuQiu = {"id": m.xq_id, "mc": m.xqmc, "tysx": m.xq};
     $("#inpMxXhgg").val(m.xhgg);
     $("#inpMxBz").val(m.bz);
     $("#inpMxDj").val(m.dj);
     $("#inpMxDw").val(m.dw);
-    $("#inpMxJhsl").val(m.sl);
+    $("#inpMxJhsl").val(m.jhsl);
+    $("#inpMxLb").val(m.wzlb);
+    $("#inpMxXq").val(m.xqmc);
     tysx = [];
-    $.extend(true,tysx,m.xq);
+    if (m.xq && m.xq !== null && m.xq !== "" && typeof m.xq === 'string') {
+        m.xq = JSON.parse(m.xq);
+    }
+    $.extend(true, tysx, m.xq);
     buildTysx(m.xq);
 }
 
@@ -501,14 +507,14 @@ function jxXiangMuMingXi() {
             item.xq = [];
         }
         var jhje = parseFloat(item.jhsl) * parseFloat(item.dj);
-        var cp = optFlag === 3 || optFlag === 4 ? '' :  '<button class="btn btn-info btn-xs icon-copy" onclick="copyXiangMuMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
+        var cp = optFlag === 3 || optFlag === 4 ? '' : '<button class="btn btn-info btn-xs icon-copy" onclick="copyXiangMuMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var bj = optFlag === 4 ? '' : '<button class="btn btn-info btn-xs icon-edit" onclick="editXiangMuMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var cz = optFlag === 3 || optFlag === 4 ? '' : '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteXiangMuMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>';
         var trStr = '<tr><td>' + item.wzmc + '</td><td>' + item.xhgg + '</td><td>' + item.jhsl + '</td><td>' + item.dj + '</td><td>' + jhje + '</td><td>'
                 + '<button class="btn btn-info btn-xs icon-file-alt" onclick="readXiangMuMingXi(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;'
                 + bj
                 + cp;
-                + cz + '</td></tr>';
+        +cz + '</td></tr>';
         $("#tblWuZiMingXi_body").append(trStr);
     });
 }
@@ -589,7 +595,7 @@ function setXiangMuMingXiData(index) {
         fetchXuQiuById(m.xq_id);
     }
     tysx = [];
-    $.extend(true,tysx,m.xq);
+    $.extend(true, tysx, m.xq);
     buildTysx(tysx);
     $("#xiangMuMingXiModal").modal({backdrop: 'static'});
 }
@@ -674,6 +680,11 @@ function saveXiangMuMingXi() {
     mx.dj = parseFloat($("#inpMxDj").val());
     mx.dw = $("#inpMxDw").val();
     mx.jhsl = parseFloat($("#inpMxJhsl").val());
+    if (!editXuQiu || $("#inpMxXq").val() !== editXuQiu.mc) {
+        mx.xq_id = -1;
+    } else {
+        mx.xq_id = editXuQiu.id;
+    }
     setTysx();
     mx.xq = JSON.stringify(tysx);
     if (optMxFlag === 1) {
