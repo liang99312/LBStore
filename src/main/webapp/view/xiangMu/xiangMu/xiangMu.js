@@ -176,11 +176,13 @@ function jxXiangMu(json) {
         var dealStr = '<button class="btn btn-info btn-xs icon-legal" onclick="dealXiangMu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var delStr = '<button class="btn btn-danger btn-xs icon-remove" onclick="deleteXiangMu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>';
         var feiStr = '<button class="btn btn-info btn-xs icon-money" onclick="feiXiangMu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>';
+        var finishStr = '<button class="btn btn-info btn-xs icon-ok-sign" onclick="finishXiangMu(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var trStr = '<tr' + classStr + '><td>' + item.mc + '</td><td>' + item.lsh + '</td><td>' + item.khmc + '</td><td>' + item.wz + '</td><td>' + item.jhsj + '</td><td>' + item.jhsl + '</td><td>'
                 + readStr
                 + (item.state === 0 ? editStr : "")
                 + (item.state === 0 ? dealStr : "")
                 + (item.state === 0 || item.state === -1 ? delStr : "")
+                + (item.state > 0 ? finishStr : "")
                 + (item.state > 0 ? feiStr : "")
                 + '</td></tr>';
         $("#data_table_body").append(trStr);
