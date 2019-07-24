@@ -165,6 +165,52 @@ public class XiangMuController extends BaseController {
         return map;
     }
     
+    @RequestMapping(value = "stopXiangMu.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> stopXiangMu(@RequestParam Integer id) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            XiangMu model = xiangMuServiceImpl.getXiangMuById(id);
+            if(model.getState() == 0){
+                map.put("result", -1);
+                map.put("msg", "未办理项目单不需要终止！");
+                return map;
+            }
+            boolean result = xiangMuServiceImpl.changeXiangMuState(id,4);
+            map.put("result", result? 0:-1);
+        } catch (Exception e) {
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
+    }
+    
+     @RequestMapping(value = "finishXiangMu.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> finishXiangMu(@RequestParam Integer id) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            XiangMu model = xiangMuServiceImpl.getXiangMuById(id);
+            if(model.getState() == 0){
+                map.put("result", -1);
+                map.put("msg", "未办理项目单不可以完成！");
+                return map;
+            }
+            boolean result = xiangMuServiceImpl.changeXiangMuState(id,3);
+            map.put("result", result? 0:-1);
+        } catch (Exception e) {
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
+    }
+    
     @RequestMapping(value = "getXiangMuById.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String, Object> getXiangMuById(@RequestParam Integer id) {

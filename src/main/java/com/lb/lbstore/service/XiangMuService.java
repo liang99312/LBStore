@@ -33,6 +33,8 @@ public interface XiangMuService {
     
     public boolean deleteXiangMu(Integer id);
     
+    public boolean changeXiangMuState(Integer id, Integer state);
+    
     public int queryRows(HashMap map);
     
     public List<XiangMu> queryXiangMusByPage(HashMap map);

@@ -24,7 +24,6 @@ and open the template in the editor.
         <script src="/LBStore/view/common/detail.js"></script>
         <script src="/LBStore/view/common/spesx.js"></script>
         <script src="/LBStore/view/xiangMu/xiangMu/xiangMu.js"></script>
-        <script src="/LBStore/view/xiangMu/xiangMu/xiangMuChanPin.js"></script>
     </head>
     <body style='height:800px;'>
         <div style="float:left; width: 100%">
@@ -40,6 +39,7 @@ and open the template in the editor.
                         <option value="1">已审批</option>
                         <option value="2">已完成</option>
                         <option value="3">已交货</option>
+                        <option value="4">已终止</option>
                         <option value="-1">已删除</option>
                     </select>
                     <button type="button" class="btn btn-primary btn-sm" onclick="selectXiangMu();" style="margin-left: 2px;">查找</button>
@@ -87,8 +87,13 @@ and open the template in the editor.
                                     <option value="1">已审批</option>
                                     <option value="2">已完成</option>
                                     <option value="3">已交货</option>
+                                    <option value="4">已终止</option>
                                     <option value="-1">已删除</option>
                                 </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="inpSelKh">客&ensp;&ensp;户：</label>
+                                <input type="text" id="inpSelKh" />
                             </div>
                             <div class="form-group">
                                 <label for="inpSelMc">名&ensp;&ensp;称：</label>
@@ -101,10 +106,6 @@ and open the template in the editor.
                             <div class="form-group">
                                 <label for="inpSelWz">产&ensp;&ensp;品：</label>
                                 <input type="text" id="inpSelWz" />
-                            </div>
-                            <div class="form-group">
-                                <label for="inpSelKh">客&ensp;&ensp;户：</label>
-                                <input type="text" id="inpSelKh" />
                             </div>
                             <div class="form-group">
                                 <label for="inpSelRq">开单日：</label>
@@ -212,6 +213,8 @@ and open the template in the editor.
                         <label class="bb-element"  for="inpSelBb">报表：</label>
                         <input class="bb-element" type="text" id="inpSelBb" />
                         <button id="btnBb" type="submit" class="bb-element btn btn-primary" onclick="execBaoBiao()">执行</button>
+                        <button id="btnFinish" type="submit" class="btn btn-primary" onclick="wancXiangMu()">完成</button>
+                        <button id="btnStop" type="submit" class="btn btn-primary" onclick="stopXiangMu()">终止</button>
                         <button id="btnOk" type="submit" class="btn btn-primary" onclick="saveXiangMu()">保存</button>
                     </div>
                 </div>

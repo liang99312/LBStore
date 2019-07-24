@@ -1,36 +1,27 @@
-var xiangMus;
-var bbXiangMu;
+var xiangMuDetails;
+var bbXiangMuDetail;
 var xiangMuFeis;
 var feiOptFlag = -1;
 var optFlag = 1;
 var editIndex = -1;
-var editType;
-var xmmx = [];
 var optMxFlag = 1;
 var editMxIndex = -1;
 var editFeiIndex = -1;
 var tgIndex = 0;
-var selWzzd;
-var editWzzd;
-var editXhgg;
-var editLeiBie;
-var editXuQiu;
 var selKeHu;
 var editKeHu;
 var selKuWei;
 var editA01;
 var editFeiA01;
 var selBaoBiao;
-var tsType = [{id: 1, mc: "文本"}, {id: 2, mc: "数字"}];
 var tysx = [];
 var optTsFlag = 1;
 var editTsIndex = -1;
 var tgIndex = 0;
 
 $(document).ready(function () {
-    $('#inpKdsj,#inpFeiRq').datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd hh:ii', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, startView: 2, forceParse: 0, showMeridian: 1});
-    $('#inpJhsj,#inpSelQrq,#inpSelZrq').datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, minView: 2, startView: 2, forceParse: 0, showMeridian: 1});
-    $('#inpTsType').AutoComplete({'data': tsType, 'paramName': 'editType'});
+    $('#inpFeiRq').datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd hh:ii', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, startView: 2, forceParse: 0, showMeridian: 1});
+    $('#inpSelQrq,#inpSelZrq').datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, minView: 2, startView: 2, forceParse: 0, showMeridian: 1});
     getAllA01s(setTrager_a01);
     getKeHus(setTrager_keHu);
     getWuZiZiDians(setTrager_ziDian);
@@ -44,7 +35,6 @@ function refreshWuZiZiDian() {
 }
 
 function setTrager_a01() {
-    $('#inpKdr').AutoComplete({'data': lb_allA01s, 'paramName': 'editA01'});
     $('#inpFeiSkr').AutoComplete({'data': lb_allA01s, 'paramName': 'editFeiA01'});
 }
 
@@ -73,71 +63,8 @@ function setTrager_baoBiao() {
     $('#inpSelBb').AutoComplete({'data': lb_baoBiaos, 'paramName': 'selBaoBiao'});
 }
 
-function selectXuQiu(json) {
-    editXuQiu = json;
-    $("#inpMxXq").val(editXuQiu.mc);
-    if (editXuQiu.tysx && editXuQiu.tysx !== null && editXuQiu.tysx !== "") {
-        editXuQiu.tysx = JSON.parse(editXuQiu.tysx);
-    } else {
-        editXuQiu.tysx = [];
-    }
-    $.extend(true, tysx, editXuQiu.tysx);
-    buildTysx(editXuQiu.tysx);
-}
-
 function selectXiangMu_m() {
     $("#xiangMuSelectModal").modal({backdrop: 'static'});
-}
-
-function selectWuZiZiDian(json) {
-    editWzzd = json;
-    $("#inpMxWzbm").val(editWzzd.bm);
-    $("#inpMxWz").val(editWzzd.mc);
-    if (json.id > -1) {
-        $.ajax({
-            url: "/LBStore/wuZiZiDian/getWuZiZiDianById.do?id=" + json.id,
-            contentType: "application/json",
-            type: "get",
-            dataType: "json",
-            cache: false,
-            error: function (msg, textStatus) {
-
-            },
-            success: function (json) {
-                if (json.result === 0) {
-                    $('#inpMxXhgg').AutoComplete({'data': json.wuZiZiDian.xhggs, 'paramName': 'editXhgg'});
-                    selectWuZiLeiBie(json.wuZiZiDian.wzlb);
-                }
-            }
-        });
-        $('#inpMxCkdh').val("");
-        selectXiangMuDetailsTop100(json.id);
-    } else {
-        $('#inpMxXhgg').AutoComplete({'data': [], 'paramName': 'editXhgg'});
-    }
-}
-
-function selectXiangMuDetailsTop100(id) {
-    $.ajax({
-        url: "/LBStore/xiangMu/getXiangMuByWzid_100.do?id=" + id,
-        contentType: "application/json",
-        type: "get",
-        cache: false,
-        error: function (msg, textStatus) {
-            $('#inpMxCkdh').AutoComplete({'data': [], 'afterSelectedHandler': setDetails});
-        },
-        success: function (json) {
-            if (json.result === 0) {
-                var editDetails = [];
-                for (var i = 0; i < json.details.length; i++) {
-                    var e = json.details[i];
-                    e.mc = e.dh;
-                    editDetails.push(e);
-                }
-                $('#inpMxCkdh').AutoComplete({'data': editDetails, 'afterSelectedHandler': setDetails});
-            }
-        }
-    });
 }
 
 function setDetails(m) {
@@ -251,49 +178,6 @@ function selectXiangMu_m() {
     $("#xiangMuSelectModal").modal("hide");
 }
 
-function addXiangMu() {
-    optFlag = 1;
-    xmmx = [];
-    editKeHu = {};
-    $("#xiangMuModel_title").html("新增项目");
-    $("#btnOk").html("保存");
-    $("#divXzmx").show();
-    $("#dvMxCanKao").show();
-    $("#divSpr").hide();
-    $(".bb-element").hide();
-    $(".item-view").hide();
-    $("#btnStop").hide();
-    $("#inpMc").val("");
-    $("#inpKh").val("");
-    $("#inpDh").val("");
-    $("#inpBz").val("");
-    $("#inpJhsl").val(0);
-    $("#inpJhje").val(0);
-    $('#inpKdsj').val(dateFormat(new Date()));
-    $('#inpJhsj').val(dateFormat_d(new Date()));
-    jxXiangMuMingXi();
-    $("#xiangMuModal").modal({backdrop: 'static'});
-}
-
-function editXiangMu(index) {
-    optFlag = 2;
-    if (xiangMus[index] === undefined) {
-        optFlag = 1;
-        return alert("请选择项目");
-    }
-    $("#xiangMuModel_title").html("修改项目");
-    $("#btnOk").html("保存");
-    $("#divXzmx").show();
-    $("#dvMxCanKao").show();
-    $("#divSpr").hide();
-    $(".bb-element").hide();
-    $(".item-view").hide();
-    $("#btnStop").hide();
-    var xiangMu = xiangMus[index];
-    editIndex = index;
-    selectXiangMuDetail(xiangMu.id, jxReadXiangMu);
-}
-
 function readXiangMu(index) {
     optFlag = 4;
     if (xiangMus[index] === undefined) {
@@ -307,25 +191,6 @@ function readXiangMu(index) {
     $(".bb-element").show();
     $(".item-view").show();
     $("#btnStop").hide();
-    var xiangMu = xiangMus[index];
-    editIndex = index;
-    $("#dvMxCanKao").hide();
-    selectXiangMuDetail(xiangMu.id, jxReadXiangMu);
-}
-
-function finishXiangMu(index) {
-    optFlag = 5;
-    if (xiangMus[index] === undefined) {
-        optFlag = 1;
-        return alert("请选择项目");
-    }
-    $("#xiangMuModel_title").html("管理项目");
-    $("#btnOk").html("关闭");
-    $("#divXzmx").hide();
-    $("#divSpr").show();
-    $(".bb-element").hide();
-    $(".item-view").hide();
-    $("#btnStop").show();
     var xiangMu = xiangMus[index];
     editIndex = index;
     $("#dvMxCanKao").hide();
@@ -375,126 +240,6 @@ function selectXiangMuDetail(id, func) {
     });
 }
 
-function dealXiangMu(index) {
-    optFlag = 3;
-    if (xiangMus[index] === undefined) {
-        optFlag = 1;
-        return alert("请选择项目");
-    }
-    $("#xiangMuModel_title").html("办理项目");
-    $("#btnOk").html("办理");
-    $("#divXzmx").hide();
-    $("#divSpr").hide();
-    $("#dvMxCanKao").hide();
-    $(".bb-element").hide();
-    $(".item-view").hide();
-    var xiangMu = xiangMus[index];
-    editIndex = index;
-    selectXiangMuDetail(xiangMu.id, jxReadXiangMu);
-}
-
-function saveXiangMu() {
-    if (optFlag === 4) {
-        $("#xiangMuModal").modal("hide");
-        return;
-    }
-    if (xmmx.length < 1) {
-        return alert("请增加项目明细！");
-    }
-    var xiangMu = {};
-    var url = "";
-    if (optFlag === 3) {
-        if (xiangMus[editIndex] === undefined) {
-            return;
-        }
-        if (!confirm("确定办理项目?")) {
-            return;
-        }
-        xiangMu = xiangMus[editIndex];
-        url = "/LBStore/xiangMu/dealXiangMu.do";
-    } else if (optFlag === 2) {
-        if (xiangMus[editIndex] === undefined) {
-            return;
-        }
-        xiangMu = xiangMus[editIndex];
-        url = "/LBStore/xiangMu/updateXiangMu.do";
-    } else if (optFlag === 1) {
-        url = "/LBStore/xiangMu/saveXiangMu.do";
-    }
-    if ($("#inpKh").val() === "") {
-        return alert("请输入客户信息");
-    } else {
-        if ($("#inpKh").val() !== editKeHu.mc) {
-            return alert("请输入客户信息");
-        } else {
-            xiangMu.kh_id = editKeHu.id;
-        }
-    }
-    if ($("#inpKdr").val() === "") {
-        return alert("请输入开单人信息");
-    } else {
-        if ($("#inpKdr").val() !== editA01.mc) {
-            return alert("请输入开单人信息");
-        } else {
-            xiangMu.kdr_id = editA01.id;
-        }
-    }
-    if ($("#inpDh").val() === "") {
-        return alert("请输入项目单号，可用于下次录入相同产品项目，可节省部分信息录入");
-    }
-    var wz = "";
-    var wzs = [];
-    for (var i = 0; i < xmmx.length; i++) {
-        var e = xmmx[i];
-        if (optFlag === 3) {
-            if (e.dj === undefined || e.dj === null || e.dj === "") {
-                return alert("项目明细需要设置单价！");
-            }
-        }
-        if (typeof e.xq !== "string") {
-            e.xq = JSON.stringify(e.xq);
-        }
-        if (wzs.indexOf(e.wzmc) > -1) {
-            continue;
-        } else {
-            wzs.push(e.wzmc);
-        }
-    }
-    for (var i = 0; i < wzs.length; i++) {
-        var e = wzs[i];
-        wz += e + ";";
-    }
-    xiangMu.mc = $("#inpMc").val();
-    xiangMu.details = xmmx;
-    xiangMu.wz = wz;
-    xiangMu.dh = $("#inpDh").val();
-    xiangMu.bz = $("#inpBz").val();
-    xiangMu.jhsl = parseFloat($("#inpJhsl").val());
-    xiangMu.jhje = parseFloat($("#inpJhje").val());
-    xiangMu.kdsj = $("#inpKdsj").val();
-    xiangMu.jhsj = $("#inpJhsj").val();
-    xiangMu.state = 0;
-    var tsStr = optFlag === 3 ? "办理" : "保存";
-    $.ajax({
-        url: url,
-        data: JSON.stringify(xiangMu),
-        contentType: "application/json",
-        type: "post",
-        cache: false,
-        error: function (msg, textStatus) {
-            alert(tsStr + "失败");
-        },
-        success: function (json) {
-            if (json.result === 0) {
-                $("#xiangMuModal").modal("hide");
-                selectXiangMu();
-            } else {
-                alert(tsStr + "失败:" + json.msg ? json.msg : "");
-            }
-        }
-    });
-}
-
 function stopXiangMu() {
     changeState("终止","/LBStore/xiangMu/stopXiangMu.do?");
 }
@@ -532,31 +277,6 @@ function changeState(cz, url) {
     }
 }
 
-function deleteXiangMu(index) {
-    if (xiangMus[index] === undefined) {
-        return alert("请选择项目");
-    }
-    var xiangMu = xiangMus[index];
-    if (confirm("确定删除项目：" + xiangMu.wz + "?")) {
-        $.ajax({
-            url: "/LBStore/xiangMu/deleteXiangMu.do?id=" + xiangMu.id,
-            contentType: "application/json",
-            type: "get",
-            dataType: "json",
-            cache: false,
-            error: function (msg, textStatus) {
-                alert("删除失败");
-            },
-            success: function (json) {
-                if (json.result === 0)
-                    selectXiangMu();
-                else
-                    alert("删除失败:" + json.msg ? json.msg : "");
-            }
-        });
-    }
-}
-
 function jxXiangMuMingXi() {
     $("#tblWuZiMingXi_body tr").remove();
     $.each(xmmx, function (index, item) { //遍历返回的json
@@ -581,47 +301,9 @@ function jxXiangMuMingXi() {
     });
 }
 
-function addXiangMuMingXi() {
-    if ($("#inpKh").val() === "") {
-        return alert("请输入客户信息");
-    } else {
-        if ($("#inpKh").val() !== editKeHu.mc) {
-            return alert("请输入客户信息");
-        }
-    }
-    editXuQiu = {};
-    optMxFlag = 1;
-    editLeiBie = {};
-    $("#xiangMuMingXiModal_title").html("增加明细");
-    $("#btnMxOk").html("保存");
-    $("#inpMxWz").val("");
-    $("#inpMxWzbm").val("");
-    $("#inpMxLb").val("");
-    $("#inpMxXhgg").val("");
-    $("#inpMxBz").val("");
-    $("#inpMxDj").val("1");
-    $("#inpMxDw").val("");
-    $("#inpMxJhsl").val("0");
-    tysx = [];
-    buildTysx([]);
-    $("#dvMxBzgg").hide();
-    $("#dvMxZl").hide();
-    $("#xiangMuMingXiModal").modal({backdrop: 'static'});
-}
-
 function editXiangMuMingXi(index) {
     if (xmmx[index]) {
         optMxFlag = 2;
-        editMxIndex = index;
-        $("#xiangMuMingXiModal_title").html("修改明细");
-        $("#btnMxOk").html("保存");
-        setXiangMuMingXiData(index);
-    }
-}
-
-function copyXiangMuMingXi(index) {
-    if (xmmx[index]) {
-        optMxFlag = 1;
         editMxIndex = index;
         $("#xiangMuMingXiModal_title").html("修改明细");
         $("#btnMxOk").html("保存");
@@ -670,111 +352,6 @@ function setXiangMuMingXiData(index) {
     $.extend(true, tysx, m.xq);
     buildTysx(tysx);
     $("#xiangMuMingXiModal").modal({backdrop: 'static'});
-}
-
-function fetchXuQiuById(id) {
-    $.ajax({
-        url: "/LBStore/xuQiu/getXuQiuById.do?id=" + id,
-        contentType: "application/json",
-        type: "get",
-        dataType: "json",
-        cache: false,
-        error: function (msg, textStatus) {
-            alert("获取需求详细信息");
-        },
-        success: function (json) {
-            if (json.result === 0) {
-                editXuQiu = json.xuQiu;
-                $("#inpMxXq").val(editXuQiu.mc);
-            } else
-                alert("获取需求详细信息:" + json.msg ? json.msg : "");
-        }
-    });
-}
-
-function deleteXiangMuMingXi(index) {
-    if (xmmx[index]) {
-        if (confirm("确定删除明细：" + xmmx[index].wzmc + "?")) {
-            xmmx.splice(index, 1);
-            jxXiangMuMingXi();
-        }
-    }
-}
-
-function resetXiangMuMingXi() {
-    addXiangMuMingXi();
-}
-
-function saveXiangMuMingXi() {
-    if (optMxFlag === 4) {
-        $("#xiangMuMingXiModal").modal("hide");
-        return;
-    }
-    if (!editLeiBie || editLeiBie === null) {
-        return alert("产品类别不能为空");
-    }
-    if ($("#inpMxJhsl").val() === "") {
-        return alert("请输入产品名称");
-    }
-    var mx = {};
-    if (optFlag === 3) {
-        mx = xmmx[editMxIndex];
-    }
-    if ($("#inpMxWz").val() === "") {
-        return alert("请输入产品名称");
-    } else if ($("#inpMxWzbm").val() === "") {
-        return alert("请输入产品编码");
-    } else {
-        if (!editWzzd || $("#inpMxWz").val() !== editWzzd.mc || $("#inpMxWzbm").val() !== editWzzd.bm) {
-            mx.wzzd_id = -1;
-        } else {
-            mx.wzzd_id = editWzzd.id;
-        }
-    }
-    mx.wzlb_id = editLeiBie.id;
-    mx.wzmc = $("#inpMxWz").val();
-    mx.wzbm = $("#inpMxWzbm").val();
-    mx.wzlb = $("#inpMxLb").val();
-    if ($("#inpMxXhgg").val() === "") {
-        return alert("请输入产品型号规格");
-    } else {
-        if (!editXhgg || $("#inpMxXhgg").val() !== editXhgg.mc) {
-            mx.xhgg_id = -1;
-        } else {
-            mx.xhgg_id = editXhgg.id;
-        }
-    }
-    if ($("#inpMxDw").val() === '') {
-        return alert("请输入单位");
-    }
-    mx.xhgg = $("#inpMxXhgg").val();
-    mx.bz = $("#inpMxBz").val();
-    mx.dj = parseFloat($("#inpMxDj").val());
-    mx.dw = $("#inpMxDw").val();
-    mx.jhsl = parseFloat($("#inpMxJhsl").val());
-    if (!editXuQiu || $("#inpMxXq").val() !== editXuQiu.mc) {
-        mx.xq_id = -1;
-    } else {
-        mx.xq_id = editXuQiu.id;
-    }
-    setTysx();
-    mx.xq = JSON.stringify(tysx);
-    if (optMxFlag === 1) {
-        xmmx.push(mx);
-    } else if (optMxFlag === 2) {
-        xmmx[editMxIndex] = mx;
-    }
-    jxXiangMuMingXi();
-    var zsl = 0;
-    var zje = 0;
-    for (var i = 0; i < xmmx.length; i++) {
-        var e = xmmx[i];
-        zsl = e.jhsl + zsl;
-        zje = e.jhsl * e.dj + zje;
-    }
-    $("#inpJhsl").val(zsl);
-    $("#inpJhje").val(zje.toFixed(3));
-    $("#xiangMuMingXiModal").modal("hide");
 }
 
 function feiXiangMu(index) {
@@ -1013,160 +590,4 @@ function setEvent(data) {
             setEvent(data);
         }
     }
-}
-
-function addTeYouShuXing() {
-    setTysx();
-    optTsFlag = 1;
-    $("#xuQiuModel_title").html("增加条目");
-    $("#inpTsMc").val("");
-    editFenLei = null;
-    $("#inpTsType").val("");
-    $("#teYouShuXingModal").modal({backdrop: 'static'});
-}
-
-function editTeYouShuXing(index) {
-    setTysx();
-    if (tysx[index]) {
-        optTsFlag = 2;
-        editTsIndex = index;
-        var t = tysx[index];
-        $("#xuQiuModel_title").html("修改条目");
-        $("#inpTsMc").val(t.mc);
-        $("#inpTsType").val(t.type);
-        if (t.zdfl && t.zdfl > 0) {
-            editFenLei = {id: t.zdfl, mc: t.zdfl_mc};
-            $("#inpTsZiDian").val(editFenLei.mc);
-        }
-        $("#teYouShuXingModal").modal({backdrop: 'static'});
-    }
-}
-
-function delTeYouShuXing(index) {
-    setTysx();
-    if (tysx[index]) {
-        if (confirm("确定删除条目：" + tysx[index].mc + "?")) {
-            tysx.splice(index, 1);
-            for (var i = 0; i < tysx.length; i++) {
-                tysx[i].id = i;
-            }
-            buildTysx(tysx);
-        }
-    }
-}
-
-function saveTeYouShuXing() {
-    if (optTsFlag === 1) {
-        var ts = {};
-        ts.id = tysx.length;
-        ts.mc = $("#inpTsMc").val();
-        ts.type = $("#inpTsType").val();
-        if (editFenLei && editFenLei !== null) {
-            ts.zdfl = editFenLei.id;
-            ts.zdfl_mc = editFenLei.mc;
-        }
-        tysx.push(ts);
-    } else if (optTsFlag === 2) {
-        var ts = {};
-        ts.mc = $("#inpTsMc").val();
-        ts.type = $("#inpTsType").val();
-        if (editFenLei && editFenLei !== null) {
-            ts.zdfl = editFenLei.id;
-            ts.zdfl_mc = editFenLei.mc;
-        }
-        tysx.splice(editTsIndex, 1, ts);
-    }
-    for (var i = 0; i < tysx.length; i++) {
-        tysx[i].id = i;
-    }
-    buildTysx(tysx);
-    $("#teYouShuXingModal").modal("hide");
-}
-
-function setTysx() {
-    for (var i = 0; i < tysx.length; i++) {
-        tysx[i].value = $("#edts_inp_" + i).val();
-    }
-}
-
-function saveXuQiu() {
-    if ($("#inpMxXq").val() === "") {
-        return alert("请选择需求或者点击后面图标另存需求");
-    } else {
-        if ($("#inpMxXq").val() !== editXuQiu.mc) {
-            return alert("请选择需求或者点击后面图标另存需求");
-        }
-    }
-    if (confirm("确定保存需求?")) {
-        var newTysx = [];
-        $.extend(true, newTysx, tysx);
-        for (var i = 0; i < tysx.length; i++) {
-            newTysx[i].value = "";
-        }
-        var xuQiu = {};
-        var url = "/LBStore/xuQiu/updateXuQiu.do";
-        xuQiu.id = editXuQiu.id;
-        xuQiu.qy_id = editXuQiu.qy_id;
-        xuQiu.cjr_id = editXuQiu.cjr_id;
-        xuQiu.mc = editXuQiu.mc;
-        xuQiu.dm = editXuQiu.dm;
-        xuQiu.bz = editXuQiu.bz;
-        xuQiu.kh_id = editXuQiu.kh_id;
-        xuQiu.tysx = JSON.stringify(newTysx);
-        xuQiu.state = editXuQiu.state;
-        $.ajax({
-            url: url,
-            data: JSON.stringify(xuQiu),
-            contentType: "application/json",
-            type: "post",
-            cache: false,
-            error: function (msg, textStatus) {
-                alert("保存失败");
-            },
-            success: function (json) {
-                if (json.result === 0) {
-                    alert("保存成功");
-                    getAllXuQius(setTrager_xuQiu);
-                } else {
-                    alert("保存失败:" + json.msg ? json.msg : "");
-                }
-            }
-        });
-    }
-}
-
-function saveasXuQiu() {
-    var newTysx = [];
-    $.extend(true, newTysx, tysx);
-    for (var i = 0; i < tysx.length; i++) {
-        newTysx[i].value = "";
-    }
-    var xuQiu = {};
-    var url = "/LBStore/xuQiu/saveXuQiu.do";
-    xuQiu.kh_id = editKeHu.id;
-    xuQiu.tysx = JSON.stringify(newTysx);
-    var name = prompt("请输入需求名称", "");
-    if (name !== null && name !== "") {
-        xuQiu.mc = name;
-    } else {
-        return;
-    }
-    $.ajax({
-        url: url,
-        data: JSON.stringify(xuQiu),
-        contentType: "application/json",
-        type: "post",
-        cache: false,
-        error: function (msg, textStatus) {
-            alert("保存失败");
-        },
-        success: function (json) {
-            if (json.result === 0) {
-                alert("保存成功");
-                getAllXuQius(setTrager_xuQiu);
-            } else {
-                alert("保存失败:" + json.msg ? json.msg : "");
-            }
-        }
-    });
 }

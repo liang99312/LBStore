@@ -149,4 +149,9 @@ public class XiangMuServiceImpl implements XiangMuService {
         return xiangMuDao.deleteXiangMuFei(id, rk_id);
     }
 
+    @Override
+    public boolean changeXiangMuState(Integer id, Integer state) {
+        return xiangMuDao.changeXiangMuState(id, state);
+    }
+
 }

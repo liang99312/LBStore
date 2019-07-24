@@ -521,6 +521,33 @@ public class XiangMuDao extends BaseDao {
         }
         return result;
     }
+    
+    public boolean changeXiangMuState(Integer id, Integer state) {
+        boolean result = false;
+        Session session = null;
+        Transaction tx = null;
+        try {
+            session = getSessionFactory().openSession();
+            tx = session.beginTransaction();
+            String deleteFei = "update XiangMu set state=? where id=?";
+            session.createSQLQuery(deleteFei).setParameter(0, id).setParameter(1, state).executeUpdate();
+            session.flush();
+            tx.commit();
+            result = true;
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            try {
+                if (session != null) {
+                    session.close();
+                }
+            } catch (Exception he) {
+                he.printStackTrace();
+            }
+        }
+        return result;
+    }
 
     public Integer saveXiangMuFei(XiangMuFei xiangMuFei) {
         Integer result = -1;
