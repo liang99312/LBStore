@@ -33,7 +33,7 @@ public class XiangMuDetailServiceImpl implements XiangMuDetailService {
     public int queryRows(HashMap map) {
         List parameters = new ArrayList();
         parameters.add(map.get("qy_id"));
-        String sql = "select count(1) from XiangMuDetail xmd left join XiangMu xm on xmd.xm_id = xm.id where qy_id=?";
+        String sql = "select count(1) from XiangMuDetail xmd left join XiangMu xm on xmd.xm_id = xm.id where xmd.qy_id=?";
         if (map.containsKey("xmmc")) {
             sql += " and xm.xmmc like ?";
             parameters.add("%" + map.get("xmmc") + "%");

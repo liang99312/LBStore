@@ -34,7 +34,7 @@ public class XiangMuDetailController extends BaseController {
         if (!existsUser()) {
             return "../index";
         }
-        return "ziDian/xiangMuDetail/xiangMuDetail";
+        return "xiangMu/xiangMuDetail/xiangMuDetail";
     }
     
     @RequestMapping(value = "getXiangMuDetailById.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")

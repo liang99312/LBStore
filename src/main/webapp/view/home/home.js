@@ -22,6 +22,7 @@ var goQiYeZiDian = "/LBStore/ziDian/goZiDian.do";
 var goPassword = "/LBStore/a01/goPassword.do";
 var goXuQiu = "/LBStore/xuQiu/goXuQiu.do";
 var goXiangMu = "/LBStore/xiangMu/goXiangMu.do";
+var goXiangMuDetail = "/LBStore/xiangMuDetail/goXiangMuDetail.do";
 var goSetPrinter = "#";
 
 var allMenu = {data: [
@@ -50,7 +51,8 @@ var allMenu = {data: [
                 {id: '509', text: '统计分析', icon: 'icon-glass', url: goTongJi}]},
          {id: '6', text:'项目管理', icon: 'icon-leaf', url: '', menus: [
                 {id: '601', text: '需求管理', icon: 'icon-glass', url: goXuQiu},
-                {id: '602', text: '项目管理', icon: 'icon-glass', url: goXiangMu}]},
+                {id: '602', text: '项目管理', icon: 'icon-glass', url: goXiangMu},
+                {id: '603', text: '项目明细', icon: 'icon-glass', url: goXiangMuDetail}]},
         {id: '7', text: '企业字典', icon: 'icon-leaf', url: '', menus: [
                 {id: '701', text: '字典类别', icon: 'icon-glass', url: goZiDianLeiBie},
                 {id: '702', text: '企业字典', icon: 'icon-glass', url: goQiYeZiDian}]},

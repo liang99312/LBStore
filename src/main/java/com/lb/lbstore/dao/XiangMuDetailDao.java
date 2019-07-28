@@ -24,7 +24,7 @@ public class XiangMuDetailDao extends BaseDao {
             List parameters = new ArrayList();
             parameters.add(map.get("qy_id"));
             session = getSessionFactory().openSession();
-            String sql = "select {xmd.*},kh.mc as khmc,xm.mc as xmmc from XiangMuDetail xmd "
+            String sql = "select {xmd.*},kh.mc as khmc,xm.mc as xmmc,xm.lsh as xmlsh from XiangMuDetail xmd "
                     + "left join XiangMu xm on xmd.xm_id=xm.id "
                     + "left join KeHu kh on xmd.kh_id=kh.id "
                     + "where xm.qy_id=?";
@@ -62,7 +62,8 @@ public class XiangMuDetailDao extends BaseDao {
             }
             navtiveSQL.addEntity("xmd", XiangMuDetail.class)
                     .addScalar("khmc", StandardBasicTypes.STRING)
-                    .addScalar("xmmc", StandardBasicTypes.STRING);
+                    .addScalar("xmmc", StandardBasicTypes.STRING)
+                    .addScalar("xmlsh", StandardBasicTypes.STRING);
             navtiveSQL.setFirstResult(Integer.parseInt(map.get("beginRow").toString()));
             navtiveSQL.setMaxResults(Integer.parseInt(map.get("pageSize").toString()));
             List list = navtiveSQL.list();
@@ -71,8 +72,10 @@ public class XiangMuDetailDao extends BaseDao {
                 XiangMuDetail xmd = (XiangMuDetail) objs[0];
                 String khmc = (String) objs[1];
                 String xmmc = (String) objs[2];
+                String xmlsh = (String) objs[3];
                 xmd.setKhmc(khmc);
                 xmd.setXmmc(xmmc);
+                xmd.setXmlsh(xmlsh);
                 result.add(xmd);
             }
         } catch (Exception e) {

@@ -43,7 +43,7 @@ and open the template in the editor.
                         <option value="-1">已删除</option>
                     </select>
                     <button type="button" class="btn btn-primary btn-sm" onclick="selectXiangMuDetail();" style="margin-left: 2px;">查找</button>
-                    <button type="button" class="btn btn-primary btn-sm" onclick="showSelectXiangMuDetail();" style="margin-left: 2px;">更多查找</button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="showXiangMuDetail_m();" style="margin-left: 2px;">更多查找</button>
                 </div>
             </div>
             <div id="list1" class="table-responsive" style="height: 678px;width:100%;padding-top: 5px;">
@@ -53,7 +53,7 @@ and open the template in the editor.
                             <th style="width:8%">项目名称</th>
                             <th style="width:10%">项目流水号</th>
                             <th style="width:8%">客户</th>
-                            <th style="width:10%">项目流水号</th>
+                            <th style="width:10%">流水号</th>
                             <th style="width:8%">产品</th>
                             <th style="width:8%">型号规格</th>
                             <th style="width:10%">数量</th>
@@ -63,7 +63,7 @@ and open the template in the editor.
                         </tr>
                     </thead>
                     <tbody id='data_table_body'>
-                        <tr><td colspan="7">请查询项目明细记录</td></tr>
+                        <tr><td colspan="10">请查询项目明细记录</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -80,7 +80,7 @@ and open the template in the editor.
                     <div class="modal-body">
                         <div class="content">
                             <div class="form-group">
-                                <label for="inpSelState">状&ensp;&ensp;态：</label>
+                                <label for="inpSelState">状&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;态：</label>
                                 <select id="inpSelState" style="width: 170px; height: 26px;line-height: 26px;">
                                     <option value="-9" selected = "selected">全部</option>
                                     <option value="0">未审批</option>
@@ -92,11 +92,11 @@ and open the template in the editor.
                                 </select>
                             </div>                            
                             <div class="form-group">
-                                <label for="inpSelKh">客&ensp;&ensp;&ensp;&ensp;户：</label>
+                                <label for="inpSelKh">客&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;户：</label>
                                 <input type="text" id="inpSelKh" />
                             </div>
                             <div class="form-group">
-                                <label for="inpSelMc">项目名称：</label>
+                                <label for="inpSelMc">项目名称&ensp;&ensp;：</label>
                                 <input type="text" id="inpSelMc" />
                             </div>
                             <div class="form-group">
@@ -104,15 +104,15 @@ and open the template in the editor.
                                 <input type="text" id="inpSelWz" />
                             </div>
                             <div class="form-group">
-                                <label for="inpSelWz">产&ensp;&ensp;&ensp;&ensp;品：</label>
+                                <label for="inpSelWz">产&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;品：</label>
                                 <input type="text" id="inpSelWz" />
                             </div>
                             <div class="form-group">
-                                <label for="inpSelWz">流&ensp;水&ensp;号：</label>
+                                <label for="inpSelWz">流&ensp;&ensp;水&ensp;&ensp;号：</label>
                                 <input type="text" id="inpSelWz" />
                             </div>
                             <div class="form-group">
-                                <label for="inpSelRq">开单日：</label>
+                                <label for="inpSelRq">开&ensp;&ensp;单&ensp;&ensp;日：</label>
                                 <input type="text" id="inpSelQrq" />-<input type="text" id="inpSelZrq" />
                             </div>
                         </div>
