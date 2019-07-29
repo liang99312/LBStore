@@ -29,8 +29,12 @@ public class XiangMuDetailDao extends BaseDao {
                     + "left join KeHu kh on xmd.kh_id=kh.id "
                     + "where xm.qy_id=?";
             if (map.containsKey("xmmc")) {
-                sql += " and xm.xmmc like ?";
+                sql += " and xm.mc like ?";
                 parameters.add("%" + map.get("xmmc") + "%");
+            }
+            if (map.containsKey("xmlsh")) {
+                sql += " and xm.lsh like ?";
+                parameters.add("%" + map.get("xmlsh") + "%");
             }
             if (map.containsKey("lsh")) {
                 sql += " and xmd.lsh like ?";

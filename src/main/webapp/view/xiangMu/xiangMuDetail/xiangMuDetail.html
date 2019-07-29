@@ -96,20 +96,20 @@ and open the template in the editor.
                                 <input type="text" id="inpSelKh" />
                             </div>
                             <div class="form-group">
-                                <label for="inpSelMc">项目名称&ensp;&ensp;：</label>
-                                <input type="text" id="inpSelMc" />
+                                <label for="inpSelXmmc">项目名称&ensp;&ensp;：</label>
+                                <input type="text" id="inpSelXmmc" />
                             </div>
                             <div class="form-group">
-                                <label for="inpSelWz">项目流水号：</label>
-                                <input type="text" id="inpSelWz" />
+                                <label for="inpSelXmlsh">项目流水号：</label>
+                                <input type="text" id="inpSelXmlsh" />
                             </div>
                             <div class="form-group">
                                 <label for="inpSelWz">产&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;品：</label>
                                 <input type="text" id="inpSelWz" />
                             </div>
                             <div class="form-group">
-                                <label for="inpSelWz">流&ensp;&ensp;水&ensp;&ensp;号：</label>
-                                <input type="text" id="inpSelWz" />
+                                <label for="inpSelLsh">流&ensp;&ensp;水&ensp;&ensp;号：</label>
+                                <input type="text" id="inpSelLsh" />
                             </div>
                             <div class="form-group">
                                 <label for="inpSelRq">开&ensp;&ensp;单&ensp;&ensp;日：</label>
@@ -125,8 +125,12 @@ and open the template in the editor.
         </div>
 
         <div class="modal fade" id="xiangMuDetailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog" style="width: 800px;">
+            <div class="modal-dialog">
                 <div class="modal-content">
+                    <div class="modal-header" style="background: #ace1ff;height: 40px;border-top-left-radius: 6px;border-top-right-radius: 6px;padding:10px">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="xiangMuDetailModal_title">项目明细</h4>
+                    </div>
                     <div class="modal-body">
                         <div class="content">
                             <div class="form-group">
@@ -134,13 +138,6 @@ and open the template in the editor.
                                 <input type="text" id="inpWzbm" />
                                 <label for="inpWz">产品名称：</label>
                                 <input type="text" id="inpWz" />
-                                <input type="button" onclick ="refreshWuZiZiDian();" style="padding: 8px; width: 25px;height: 25px; border:none; background: url('/LBStore/img/refresh_32.png') no-repeat;background-size: 100% 100%;" />
-                            </div>
-                            <div id="dvMxCanKao" class="form-group">
-                                <label for="inpCkdh">参考单号：</label>
-                                <input type="text" id="inpCkdh" />
-                                <label for="inpZhu" style="color: red;">&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;注：</label>
-                                <label for="inpZhu" style="color: red;">选参考单号可获取相关信息</label>
                             </div>
                             <div class="form-group">
                                 <label for="inpLb">产品类别：</label>
@@ -178,21 +175,17 @@ and open the template in the editor.
                             </div>
                             <div class="form-group">
                                 <label for="inpXq">项目需求：</label>
-                                <input type="text" id="inpXq" />
-                                <input type="button" onclick ="addTeYouShuXing();" style="padding: 8px;width: 25px;height: 25px; border:none; background: url('/LBStore/img/add_32.png') no-repeat;background-size: 100% 100%;" />
-                                <input type="button" onclick ="saveXuQiu();" style="padding: 8px;width: 25px;height: 25px; border:none; background: url('/LBStore/img/save_32.png') no-repeat;background-size: 100% 100%;" />
-                                <input type="button" onclick ="saveasXuQiu();" style="padding: 8px;width: 25px;height: 25px; border:none; background: url('/LBStore/img/saveas_32.png') no-repeat;background-size: 100% 100%;" />
                             </div>
-                            <div id='divMxTysx'></div>
+                            <div id='divTysx'></div>
                         </div>
                     </div>
                     <div class="modal-footer" style="text-align: center;padding: 8px;">
                         <label class="bb-element"  for="inpSelBb">报表：</label>
                         <input class="bb-element" type="text" id="inpSelBb" />
                         <button id="btnBb" type="submit" class="bb-element btn btn-primary" onclick="execBaoBiao()">执行</button>
-                        <button id="btnFinish" type="submit" class="btn btn-primary" onclick="wancXiangMu()">完成</button>
-                        <button id="btnStop" type="submit" class="btn btn-primary" onclick="stopXiangMu()">终止</button>
-                        <button id="btnOk" type="submit" class="btn btn-primary" onclick="saveXiangMu()">保存</button>
+                        <button id="btnFinish" type="submit" class="btn btn-primary" onclick="wancXiangMuDetail()">完成</button>
+                        <button id="btnStop" type="submit" class="btn btn-primary" onclick="stopXiangMuDetail()">终止</button>
+                        <button id="btnOk" type="submit" class="btn btn-primary" onclick="saveXiangMuDetail()">保存</button>
                     </div>
                 </div>
             </div>

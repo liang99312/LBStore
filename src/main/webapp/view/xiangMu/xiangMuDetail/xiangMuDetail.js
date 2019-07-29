@@ -51,7 +51,7 @@ function jxXiangMuDetail(json) {
         var finishStr = '<button class="btn btn-info btn-xs icon-ok-sign" onclick="finishXiangMuDetail(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var trStr = '<tr' + classStr + '><td>' + item.xmmc + '</td><td>' + item.xmlsh + '</td><td>' + item.khmc + '</td><td>' + item.lsh + '</td><td>' + item.wzmc + '</td><td>' + item.xhgg + '</td><td>' + item.jhsl + '</td><td>' + item.dj + '</td><td>' + (item.jhsl*item.dj).toFixed(2) + '</td><td>'
                 + readStr
-                + (item.state > 0 ? finishStr : "")
+                + finishStr
                 + '</td></tr>';
         $("#data_table_body").append(trStr);
     });
@@ -61,13 +61,13 @@ function selectXiangMuDetail() {
     var xiangMuDetail = {};
     var tj = {"pageSize": 20, "currentPage": 1};
     if ($("#selMc").val() !== "") {
-        xiangMuDetail.mc = $("#selMc").val();
+        xiangMuDetail.xmmc = $("#selMc").val();
     }
     if ($("#selLsh").val() !== "") {
         xiangMuDetail.lsh = $("#selLsh").val();
     }
     if ($('#selWzmc').val() !== "") {
-        xiangMuDetail.wz = $('#selWzmc').val();
+        xiangMuDetail.wzmc = $('#selWzmc').val();
     }
     if ($("#selState").val() !== '' && $("#selState").val() !== "-9") {
         xiangMuDetail.state = parseInt($("#selState").val());
@@ -82,30 +82,32 @@ function selectXiangMuDetail() {
 }
 
 function selectXiangMuDetail_m() {
-    var xiangMu = {};
+    var xiangMuDetail = {};
     var tj = {"pageSize": 20, "currentPage": 1};
-    if ($("#inpSelMc").val() !== "") {
-        xiangMu.mc = $("#inpSelMc").val();
+    if ($("#inpSelXmmc").val() !== "") {
+        xiangMuDetail.xmmc = $("#inpSelXmmc").val();
+    }if ($("#inpSelXmlsh").val() !== "") {
+        xiangMuDetail.xmlsh = $("#inpSelXmlsh").val();
     }
     if ($("#inpSelLsh").val() !== "") {
-        xiangMu.lsh = $("#inpSelLsh").val();
+        xiangMuDetail.lsh = $("#inpSelLsh").val();
     }
     if ($("#inpSelWz").val() !== "") {
-        xiangMu.wz = $("#inpSelWz").val();
+        xiangMuDetail.wzmc = $("#inpSelWz").val();
     }
     if ($("#inpSelState").val() !== '' && $("#inpSelState").val() !== "-9") {
-        xiangMu.state = parseInt($("#inpSelState").val());
+        xiangMuDetail.state = parseInt($("#inpSelState").val());
     }
     if ($("#inpSelKh").val() !== "" && $("#inpSelKh").val() === selKeHu.mc) {
-        xiangMu.kh_id = selKeHu.id;
+        xiangMuDetail.kh_id = selKeHu.id;
     }
     if ($("#inpSelQrq").val() !== "") {
-        xiangMu.qrq = $("#inpSelQrq").val();
+        xiangMuDetail.qrq = $("#inpSelQrq").val();
     }
     if ($("#inpSelZrq").val() !== "") {
-        xiangMu.zrq = $("#inpSelZrq").val();
+        xiangMuDetail.zrq = $("#inpSelZrq").val();
     }
-    tj.paramters = xiangMu;
+    tj.paramters = xiangMuDetail;
     var options = {};
     options.url = "/LBStore/xiangMuDetail/listXiangMuDetailsByPage.do";
     options.tj = tj;
@@ -121,38 +123,35 @@ function readXiangMuDetail(index) {
         optFlag = 1;
         return alert("请选择项目");
     }
-    $("#xiangMuModel_title").html("查看项目");
+    $("#xiangMuDetailModel_title").html("查看项目");
     $("#btnOk").html("关闭");
-    $("#divXzmx").hide();
-    $("#divSpr").show();
-    $(".bb-element").show();
-    $(".item-view").show();
-    $("#btnStop").hide();
     var xiangMuDetail = xiangMuDetails[index];
     editIndex = index;
     $("#dvMxCanKao").hide();
-    selectXiangMuDetail(xiangMuDetail.id, jxReadXiangMuDetail);
+    jxReadXiangMuDetail(xiangMuDetail);
 }
 
 function jxReadXiangMuDetail(xiangMuDetail) {
     bbXiangMu = xiangMuDetail;
-    $("#inpMc").val(xiangMuDetail.mc);
-    $("#inpKh").val(xiangMuDetail.khmc);
-    editKeHu = {"id": xiangMuDetail.kh_id, "mc": xiangMuDetail.khmc};
-    $("#inpKdr").val(xiangMuDetail.kdrmc);
-    editA01 = {"id": xiangMuDetail.kdr_id, "mc": xiangMuDetail.kdrmc};
-    $("#inpDh").val(xiangMuDetail.dh);
-    $("#inpBz").val(xiangMuDetail.bz);
-    $("#inpJhsl").val(xiangMuDetail.sl);
-    $("#inpJhje").val(xiangMuDetail.je);
-    $("#inpSj").val(xiangMuDetail.sj);
-    $("#inpSpr").val(xiangMuDetail.sprmc);
-    $("#inpSpsj").val(xiangMuDetail.spsj);
+    $("#inpWzbm").val(xiangMuDetail.wzbm);
+    $("#inpWz").val(xiangMuDetail.wzmc)
+    $("#inpLb").val(xiangMuDetail.wzlb);
+    $("#inpXhgg").val(xiangMuDetail.xhgg);
+    $("#inpDj").val(xiangMuDetail.dj);
+    $("#inpDw").val(xiangMuDetail.dw);
     $("#inpJhsl").val(xiangMuDetail.jhsl);
-    $("#inpJhje").val(xiangMuDetail.jhje);
-    $("#inpJhsj").val(xiangMuDetail.jhsj);
-    $("#inpKdsj").val(xiangMuDetail.kdsj);
-    jxXiangMuMingXi();
+    $("#inpLsh").val(xiangMuDetail.lsh);
+    $("#inpWcsj").val(xiangMuDetail.wcsj);
+    $("#inpWcsl").val(xiangMuDetail.wcsl);
+    $("#inpFhsj").val(xiangMuDetail.fhsj);
+    $("#inpFhsl").val(xiangMuDetail.jhsl);
+    $("#inpBz").val(xiangMuDetail.bz);
+    tysx = [];
+    if (xiangMuDetail.xq && xiangMuDetail.xq !== null && xiangMuDetail.xq !== "" && typeof xiangMuDetail.xq === 'string') {
+        xiangMuDetail.xq = JSON.parse(xiangMuDetail.xq);
+    }
+    $.extend(true, tysx, xiangMuDetail.xq);
+    buildTysx(tysx);
     $("#xiangMuDetailModal").modal({backdrop: 'static'});
 }
 
@@ -193,39 +192,6 @@ function changeState(cz, url) {
     }
 }
 
-function readXiangMuMingXi(index) {
-    if (xmmx[index]) {
-        optMxFlag = 4;
-        editMxIndex = index;
-        $("#xiangMuMingXiModal_title").html("查看明细");
-        $("#btnMxOk").html("关闭");
-        setXiangMuMingXiData(index);
-    }
-}
-
-function setXiangMuMingXiData(index) {
-    editXuQiu = {};
-    var m = xmmx[index];
-    editWzzd = {"id": m.wzzd_id, "mc": m.wzmc, "bm": m.wzbm};
-    $("#inpMxWz").val(m.wzmc);
-    $("#inpMxWzbm").val(m.wzbm);
-    editLeiBie = {"id": m.wzlb_id, "mc": m.wzlb};
-    $("#inpMxLb").val(m.wzlb);
-    editXhgg = {"id": m.xhgg_id, "mc": m.xhgg};
-    $("#inpMxXhgg").val(m.xhgg);
-    $("#inpMxBz").val(m.bz);
-    $("#inpMxDj").val(m.dj);
-    $("#inpMxDw").val(m.dw);
-    $("#inpMxJhsl").val(m.jhsl);
-    if (m.xq_id !== null && m.xq_id > 0) {
-        fetchXuQiuById(m.xq_id);
-    }
-    tysx = [];
-    $.extend(true, tysx, m.xq);
-    buildTysx(tysx);
-    $("#xiangMuMingXiModal").modal({backdrop: 'static'});
-}
-
 function execBaoBiao() {
     if (selBaoBiao === undefined) {
         return alert("请选择报表");
@@ -247,7 +213,7 @@ function execBaoBiao() {
 }
 
 function buildTysx(data) {
-    $("#divMxTysx").empty();
+    $("#divTysx").empty();
     for (var i = 0; i < data.length; i++) {
         var e = data[i];
         if (!e.value || e.value === null) {
@@ -256,6 +222,13 @@ function buildTysx(data) {
         var s = "<div class='form-group'><label for='edts_inp_" + e.id + "'>" + e.mc + "：</label>\n\
                 <input type='text' id='edts_inp_" + e.id + "' value='" + e.value + "' />\n\
                 <button class='btn btn-info btn-xs icon-edit ts_edit'></button><button class='btn btn-danger btn-xs icon-minus ts_del'></div>";
-        $("#divMxTysx").append(s);
+        $("#divTysx").append(s);
+    }
+}
+
+function saveXiangMuDetail(){
+    if (optFlag === 4) {
+        $("#xiangMuDetailModal").modal("hide");
+        return;
     }
 }
