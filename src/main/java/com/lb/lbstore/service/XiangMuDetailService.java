@@ -16,6 +16,8 @@ import java.util.List;
 public interface XiangMuDetailService {
 
     public XiangMuDetail getXiangMuDetailById(Integer id);
+    
+    public List<XiangMuDetail> getXiangMuDetailsByState(Integer state,Integer qy_id);
                
     public int queryRows(HashMap map);
     

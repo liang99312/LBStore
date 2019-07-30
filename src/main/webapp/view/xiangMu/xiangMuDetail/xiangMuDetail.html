@@ -191,32 +191,31 @@ and open the template in the editor.
             </div>
         </div>
 
-        <div class="modal fade" id="xiangMuFeiModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div  id="xiangMuFeiModalDlg" class="modal-dialog" style="width: 800px;">
+        <div class="modal fade" id="xiangMuLiaoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div  id="xiangMuLiaoModalDlg" class="modal-dialog" style="width: 800px;">
                 <div class="modal-content">
                     <div class="modal-header" style="background: #ace1ff;height: 40px;border-top-left-radius: 6px;border-top-right-radius: 6px;padding:10px">
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title" id="xiangMuFeiModel_title">收款记录</h4>
+                        <h4 class="modal-title" id="xiangMuLiaoModel_title">领料记录</h4>
                     </div>
                     <div class="modal-body" style="height: 400px;padding:0;">
                         <div style="width: 100%;float:left;padding-top: 5px;padding-left: 5px;">
-                            <button type="button" class="btn btn-primary btn-sm" onclick="addXiangMuFei(0);">新增记录</button>
-                            <button type="button" class="btn btn-primary btn-sm" onclick="addXiangMuFei(1);">一次结清</button>
-                            <span id="xiangMuJexx"></span>
+                            <button type="button" class="btn btn-primary btn-sm" onclick="addXiangMuLiao(0);">项目领料</button>
                         </div>
                         <div class="content" style="width: 100%;float:left;padding-top: 5px;">
-                            <table id="tblXiangMuFei" class="table table-striped table-bordered table-hover">
+                            <table id="tblXiangMuLiao" class="table table-striped table-bordered table-hover">
                                 <thead>
                                     <tr style="background: #e9f7ff;">
-                                        <th>日期</th>
-                                        <th>金额</th>
-                                        <th>收款人</th>
-                                        <th>备注</th>
+                                        <th style="width:15%">物资名称</th>
+                                        <th style="width:12%">型号规格</th>
+                                        <th style="width:10%">单价</th>
+                                        <th style="width:10%">数量</th>
+                                        <th style="width:12%">金额</th>
                                         <th>操作</th>
                                     </tr>
                                 </thead>
-                                <tbody id='tblXiangMuFei_body'>
-                                    <tr><td>无收款记录</td></tr>
+                                <tbody id='tblXiangMuLiao_body'>
+                                    <tr><td>无领料记录</td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -226,40 +225,97 @@ and open the template in the editor.
             </div>
         </div>
 
-        <div class="modal fade" id="xiangMuFeiEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade" id="xiangMuLiaoEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header" style="background: #ace1ff;height: 40px;border-top-left-radius: 6px;border-top-right-radius: 6px;padding:10px">
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title" id="xiangMuFeiEditModel_title">新增记录</h4>
+                        <h4 class="modal-title" id="xiangMuLiaoEditModel_title">新增记录</h4>
                     </div>
-                    <div class="modal-body">
+                    <<div class="modal-body">
                         <div class="content">
                             <div class="form-group">
-                                <label for="inpFeiRq">日&ensp;&ensp;期：</label>
-                                <input type="text" id="inpFeiRq"/>
+                                <label for="inpMxWzbm">物资编码：</label>
+                                <input type="text" id="inpMxWzbm" disabled="disabled"/>
+                                <label for="inpMxWz">物资名称：</label>
+                                <input type="text" id="inpMxWz" disabled="disabled"/>
+                                <label for="inpMxLb">物资类别：</label>
+                                <input type="text" id="inpMxLb" disabled="disabled"/>
                             </div>
                             <div class="form-group">
-                                <label for="inpFeiJe">金&ensp;&ensp;额：</label>
-                                <input type="number" id="inpFeiJe" />
+                                <label for="inpMxPp">品&ensp;&ensp;&ensp;&ensp;牌：</label>
+                                <input type="text" id="inpMxPp" disabled="disabled"/>
+                                <label for="inpMxXhgg">型号规格：</label>
+                                <input type="text" id="inpMxXhgg" disabled="disabled"/>
+                                <label for="inpMxTxm">条&ensp;形&ensp;码：</label>
+                                <input type="text" id="inpMxTxm" disabled="disabled"/>
                             </div>
                             <div class="form-group">
-                                <label for="inpFeiSkr">收款人：</label>
-                                <input type="text" id="inpFeiSkr" />
+                                <label for="inpMxScc">生&ensp;产&ensp;厂：</label>
+                                <input type="text" id="inpMxScc" disabled="disabled"/>
+                                <label for="inpMxPc">批&ensp;&ensp;&ensp;&ensp;次：</label>
+                                <input type="text" id="inpMxPc" disabled="disabled"/>                               
+                                <label for="inpMxKw">库&ensp;&ensp;&ensp;&ensp;位：</label>
+                                <input type="text" id="inpMxKwh" disabled="disabled"/>
                             </div>
                             <div class="form-group">
-                                <label for="inpFeiBz">备&ensp;&ensp;注：</label>
-                                <input type="text" id="inpFeiBz" style="width: 415px;"/>
+                                <label for="inpMxScc">生产日期：</label>
+                                <input type="text" id="inpMxScrq" disabled="disabled"/>
+                                <label for="inpMxBzq">保质天数：</label>
+                                <input type="number" id="inpMxBzq" disabled="disabled"/>
+                                <label for="inpMxBzrq">质保日期：</label>
+                                <input type="text" id="inpMxBzrq" disabled="disabled"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="inpMxDj">单&ensp;&ensp;&ensp;&ensp;价：</label>
+                                <input type="number" id="inpMxDj" disabled="disabled"/>
+                                <label for="inpMxDw">单&ensp;&ensp;&ensp;&ensp;位：</label>
+                                <input type="text" id="inpMxDw" disabled="disabled"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="inpMxJlfs">记录方式：</label>
+                                <select id = "inpMxJlfs" disabled="disabled" style="width: 174px;height: 26px;">
+                                    <option value="pt">普通记录</option>
+                                    <option value="zl">总量记录</option>
+                                    <option value="mx">单元明细</option>
+                                </select>
+                                <label class="form-MxBzgg" for="inpMxBzgg" style="display: none;">包装规格：</label>
+                                <input class="form-MxBzgg" type="text" id="inpMxBzgg" disabled="disabled" style="display: none;"/>
+                                <label class="form-MxBzgg" for="inpMxZldw" style="display: none;">总量单位：</label>
+                                <input class="form-MxBzgg" type="text" id="inpMxZldw" disabled="disabled" style="display: none;"/>
+                            </div>
+                            <div id='divMxTysx'></div>                            
+                            <div class="form-group">
+                                <label for="inpMxSl">入库数量：</label>
+                                <input type="number" id="inpMxSl" disabled="disabled"/>
+                                <label for="inpMxSyl">剩&ensp;余&ensp;量：</label>
+                                <input type="number" id="inpMxSyl" disabled="disabled"/>
+                                <label for="inpMxSll">申&ensp;领&ensp;量：</label>
+                                <input type="number" id="inpMxSll" />
+                            </div>
+                            <div id="dvMxZl" class="form-group" style="display: none;">
+                                <label for="inpMxZl">剩余总量：</label>
+                                <input type="number" id="inpMxZl" disabled="disabled"/>
+                                <label for="inpMxSlzl">申领总量：</label>
+                                <input type="number" id="inpMxSlzl" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inpMxBz">备&ensp;&ensp;&ensp;&ensp;注：</label>
+                                <input type="text" id="inpMxBz" style="width: 677px;"/>
+                            </div>
+                            <div id='divMxDymx' class="form-group" style="overflow-y: auto;min-height: 50px;max-height: 250px; display: none;">
+                                <label for="tblMxDymx">单元明细：</label>
+                                <table id="tblMxDymx" cellspacing="0" style="width: 100%"></table>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer" style="text-align: center;padding: 8px;">
-                        <button type="submit" class="btn btn-primary" onclick="saveXiangMuFei()">保存</button>
+                        <button type="submit" class="btn btn-primary" onclick="saveXiangMuLiao()">保存</button>
                     </div>
                 </div>
             </div>
         </div>
-
+        
         <div class="modal fade" id="baoBiaoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog" style="width: 100%">
                 <div class="modal-content">

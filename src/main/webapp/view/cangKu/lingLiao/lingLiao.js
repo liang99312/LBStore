@@ -24,8 +24,14 @@ var curKuCun;
 var selBaoBiao;
 var dymx_opt = {data: [], yxData: [], func: calcDymx};
 var tysx_opt = {data: [], ls: 3, lw: 70, upeditable: 1};
+var xmd_id = 0;
+var xmd_mc;
+var xmd_flag = 0;
+var editXmd;
 
 $(document).ready(function () {
+    xmd_id = GetUrlParam("xmd_id");
+    xmd_mc = GetUrlParam("xmd_mc");
     $('#inpSj').val(dateFormat(new Date()));
     $('#inpSj').datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd hh:ii', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, startView: 2, forceParse: 0, showMeridian: 1});
     $('#inpSelQrq,#inpSelZrq,#inpMxScrq,#inpKcSelQrq,#inpKcSelZrq').datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, minView: 2, startView: 2, forceParse: 0, showMeridian: 1});
@@ -35,6 +41,7 @@ $(document).ready(function () {
     getWuZiZiDians(setTrager_ziDian);
     getWuZiLeiBies(setTrager_leiBie);
     getGongYingShangs(setTrager_gongYingShang);
+    getXiangMuDetail1(setTrager_xmd);
     getBaoBiaosByMk("504", setTrager_baoBiao);
     $("#inpMxScrq").datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, minView: 2, startView: 2, forceParse: 0, showMeridian: 1});
 
@@ -52,6 +59,12 @@ $(document).ready(function () {
             $("#inpMxSll").val(temp_sll.toFixed(3));
         }
     });
+    if(!xmd_id){
+        xmd_id = 0;
+    }else{
+        editXmd = {"id":xmd_id,"mc":xmd_mc};
+        selectLingLiao(xmd_id);
+    }
 });
 
 function setTrager_a01() {
@@ -85,6 +98,10 @@ function setTrager_gongYingShang() {
     $('#inpKcSelGys').AutoComplete({'data': lb_gongYingShangs, 'paramName': 'selGongYingShang'});
 }
 
+function setTrager_xmd(){
+    $("#inpXmdlsh").AutoComplete({'data': lb_xiangMuDetails1, 'afterSelectedHandler': selectXmd});
+}
+
 function setTrager_baoBiao() {
     $('#inpSelBb').AutoComplete({'data': lb_baoBiaos, 'paramName': 'selBaoBiao'});
 }
@@ -98,6 +115,12 @@ function selectCangKu(json) {
         editCangKu = json;
         $("#inpCk").val(editCangKu.mc);
     }
+}
+
+function selectXmd(json){
+    editXmd = json;
+    $("#inpDh").val(editXmd.mc);
+    $("#inpXmdlsh").val(editXmd.mc);
 }
 
 function selectWuZiLeiBie(json) {
@@ -191,26 +214,41 @@ function jxLingLiao(json) {
                 + (item.state === 0 || item.state === -1 ? delStr : "") + '</td></tr>';
         $("#data_table_body").append(trStr);
     });
+    if(xmd_flag === 0 && xmd_id > 0){
+        xmd_flag ++;
+        var temp_index = json.list.length - 1;
+        if(json.list[temp_index]){
+            if(json.list[temp_index].state === 0){
+                editLingLiao(temp_index);
+                return;
+            }
+        }
+        addLingLiao();
+    }
 }
 
 function showSelectLingLiao() {
     $("#lingLiaoSelectModal").modal({backdrop:'static'});
 }
 
-function selectLingLiao() {
+function selectLingLiao(temp_id) {
     var lingLiao = {};
     var tj = {"pageSize": 20, "currentPage": 1};
-    if ($("#selLsh").val() !== "") {
-        lingLiao.lsh = $("#selLsh").val();
-    }
-    if ($('#selWzmc').val() !== "") {
-        lingLiao.wz = $('#selWzmc').val();
-    }
-    if ($("#selState").val() !== '' && $("#selState").val() !== "-9") {
-        lingLiao.state = parseInt($("#selState").val());
-    }
-    if ($("#selCangKu").val() !== "" && $("#selCangKu").val() === selCangKu.mc) {
-        lingLiao.ck_id = selCangKu.id;
+    if(temp_id){        
+        lingLiao.xmd_id = temp_id;
+    }else{
+        if ($("#selLsh").val() !== "") {
+            lingLiao.lsh = $("#selLsh").val();
+        }
+        if ($('#selWzmc').val() !== "") {
+            lingLiao.wz = $('#selWzmc').val();
+        }
+        if ($("#selState").val() !== '' && $("#selState").val() !== "-9") {
+            lingLiao.state = parseInt($("#selState").val());
+        }
+        if ($("#selCangKu").val() !== "" && $("#selCangKu").val() === selCangKu.mc) {
+            lingLiao.ck_id = selCangKu.id;
+        }
     }
     tj.paramters = lingLiao;
     var options = {};
@@ -269,6 +307,10 @@ function addLingLiao() {
     $("#inpBz").val("");
     $("#inpSl").val(0);
     $("#inpJe").val(0);
+    if(editXmd && editXmd.mc){
+        $("#inpDh").val(editXmd.mc);
+        $("#inpXmdlsh").val(editXmd.mc);
+    }
     jxLingLiaoMingXi();
     $("#lingLiaoModal").modal({backdrop:'static'});
 }
@@ -463,6 +505,7 @@ function saveLingLiao() {
         },
         success: function (json) {
             if (json.result === 0) {
+                editXmd = {};
                 $("#lingLiaoModal").modal("hide");
                 selectLingLiao();
             } else {

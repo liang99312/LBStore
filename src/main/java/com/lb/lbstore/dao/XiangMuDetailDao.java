@@ -16,6 +16,54 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class XiangMuDetailDao extends BaseDao {
+    
+    public List<XiangMuDetail> queryXiangMuDetailsByState(Integer state,Integer qy_id){
+        List<XiangMuDetail> result = new ArrayList();
+        Session session = null;
+        try {
+            List parameters = new ArrayList();
+            parameters.add(qy_id);
+            parameters.add(state);
+            session = getSessionFactory().openSession();
+            String sql = "select {xmd.*},kh.mc as khmc,xm.mc as xmmc,xm.lsh as xmlsh from XiangMuDetail xmd "
+                    + "left join XiangMu xm on xmd.xm_id=xm.id "
+                    + "left join KeHu kh on xmd.kh_id=kh.id "
+                    + "where xm.qy_id=? and xmd.state = ?";
+            
+            SQLQuery navtiveSQL = session.createSQLQuery(sql);
+            for (int i = 0; i < parameters.size(); i++) {
+                navtiveSQL.setParameter(i, parameters.get(i));
+            }
+            navtiveSQL.addEntity("xmd", XiangMuDetail.class)
+                    .addScalar("khmc", StandardBasicTypes.STRING)
+                    .addScalar("xmmc", StandardBasicTypes.STRING)
+                    .addScalar("xmlsh", StandardBasicTypes.STRING);
+            List list = navtiveSQL.list();
+            for (Object obj : list) {
+                Object[] objs = (Object[]) obj;
+                XiangMuDetail xmd = (XiangMuDetail) objs[0];
+                xmd.setMc(xmd.getLsh());
+                String khmc = (String) objs[1];
+                String xmmc = (String) objs[2];
+                String xmlsh = (String) objs[3];
+                xmd.setKhmc(khmc);
+                xmd.setXmmc(xmmc);
+                xmd.setXmlsh(xmlsh);
+                result.add(xmd);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (session != null) {
+                    session.close();
+                }
+            } catch (Exception he) {
+                he.printStackTrace();
+            }
+        }
+        return result;
+    }
 
     public List<XiangMuDetail> queryXiangMuDetailsByPage(HashMap map) {
         List<XiangMuDetail> result = new ArrayList();

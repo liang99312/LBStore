@@ -33,6 +33,7 @@ public class LingLiao {
     private Integer kh_id;
     private Integer llr_id;
     private Integer spr_id;
+    private Integer xmd_id;
     private String wz;
     private String dh;
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
@@ -229,6 +230,13 @@ public class LingLiao {
         this.llrmc = llrmc;
     }
 
+    public Integer getXmd_id() {
+        return xmd_id;
+    }
+
+    public void setXmd_id(Integer xmd_id) {
+        this.xmd_id = xmd_id;
+    }
 
     @Override
     public int hashCode() {

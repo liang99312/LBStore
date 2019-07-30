@@ -153,6 +153,10 @@ public class LingLiaoDao extends BaseDao {
             String sql = "select {ll.*},kh.mc as khmc,ck.mc as ckmc from LingLiao ll "
                     + "left join CangKu ck on ll.ck_id=ck.id left join KeHu kh on ll.kh_id=kh.id "
                     + "where ll.qy_id=?";
+            if (map.containsKey("xmd_id")) {
+                sql += " and ll.xmd_id = ?";
+                parameters.add(map.get("xmd_id"));
+            }
             if (map.containsKey("ck_id")) {
                 sql += " and ll.ck_id = ?";
                 parameters.add(map.get("ck_id"));

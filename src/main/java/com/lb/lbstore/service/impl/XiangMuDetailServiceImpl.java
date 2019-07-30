@@ -74,4 +74,9 @@ public class XiangMuDetailServiceImpl implements XiangMuDetailService {
         return xiangMuDetailDao.queryXiangMuDetailsByPage(map);
     }
 
+    @Override
+    public List<XiangMuDetail> getXiangMuDetailsByState(Integer state,Integer qy_id) {
+        return xiangMuDetailDao.queryXiangMuDetailsByState(state,qy_id);
+    }
+
 }

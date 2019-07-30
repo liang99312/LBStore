@@ -27,6 +27,7 @@ public class LingLiaoDetail {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private Integer qy_id;
+    private Integer xmd_id;
     private Integer ck_id;
     private Integer ll_id;
     private Integer kh_id;
@@ -84,6 +85,14 @@ public class LingLiaoDetail {
 
     public void setQy_id(Integer qy_id) {
         this.qy_id = qy_id;
+    }
+
+    public Integer getXmd_id() {
+        return xmd_id;
+    }
+
+    public void setXmd_id(Integer xmd_id) {
+        this.xmd_id = xmd_id;
     }
 
     public Integer getCk_id() {

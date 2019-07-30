@@ -68,6 +68,10 @@ public class LingLiaoServiceImpl implements LingLiaoService {
         List parameters = new ArrayList();
         parameters.add(map.get("qy_id"));
         String sql = "select count(1) from LingLiao where qy_id=?";
+        if (map.containsKey("xmd_id")) {
+            sql += " and xmd_id = ?";
+            parameters.add(map.get("xmd_id"));
+        }
         if (map.containsKey("ck_id")) {
             sql += " and ck_id = ?";
             parameters.add(map.get("ck_id"));

@@ -1,12 +1,12 @@
 var lb_moKuais = [{id: '503', mc: '入库管理'}, {id: '504', mc: '领料管理'}, {id: '505', mc: '发货管理'}, {id: '506', mc: '损耗管理'}, {id: '507', mc: '还库管理'}, {id: '509', mc: '统计分析'}];
 var lb_allMoKuais = [
-    {id: '101', mc: '部门管理'}, {id: '102', mc: '人员管理'}, 
-    {id: '201', mc: '客户管理'}, 
-    {id: '301', mc: '供应商管理'}, 
-    {id: '401', mc: '仓库管理'}, {id: '402', mc: '物资类别'}, {id: '403', mc: '物资字典'}, 
-    {id: '503', mc: '入库管理'}, {id: '504', mc: '领料管理'}, {id: '505', mc: '发货管理'}, {id: '506', mc: '损耗管理'}, {id: '507', mc: '还库管理'}, {id: '5010', mc: '退货管理'},{id: '508', mc: '库存管理'}, {id: '509', mc: '统计分析'},
-    {id: '701', mc: '字典类别'}, {id: '702', mc: '企业字典'}, 
-    {id: '801', mc: '报表管理'}, 
+    {id: '101', mc: '部门管理'}, {id: '102', mc: '人员管理'},
+    {id: '201', mc: '客户管理'},
+    {id: '301', mc: '供应商管理'},
+    {id: '401', mc: '仓库管理'}, {id: '402', mc: '物资类别'}, {id: '403', mc: '物资字典'},
+    {id: '503', mc: '入库管理'}, {id: '504', mc: '领料管理'}, {id: '505', mc: '发货管理'}, {id: '506', mc: '损耗管理'}, {id: '507', mc: '还库管理'}, {id: '5010', mc: '退货管理'}, {id: '508', mc: '库存管理'}, {id: '509', mc: '统计分析'},
+    {id: '701', mc: '字典类别'}, {id: '702', mc: '企业字典'},
+    {id: '801', mc: '报表管理'},
     {id: '901', mc: '修改密码'}];
 var lb_allA01s;
 var lb_baoBiaos;
@@ -19,6 +19,7 @@ var lb_cangKus;
 var lb_keHus;
 var lb_gongYingShangs;
 var lb_xuQius;
+var lb_xiangMuDetails1;
 
 function getAllA01s(func) {
     hajax("/LBStore/a01/getAllA01s.do", {}, "lb_allA01s", func);
@@ -32,36 +33,40 @@ function getQiYes(func) {
     hajax("/LBStore/qiYe/getAllQiYes.do", {}, "lb_qiYes", func);
 }
 
-function getZiDianFenLeis(func){
+function getZiDianFenLeis(func) {
     hajax("/LBStore/ziDianFenLei/getAllZiDianFenLeis.do", {}, "lb_ziDianFenLeis", func);
 }
 
-function getWuZiLeiBies(func){
+function getWuZiLeiBies(func) {
     hajax("/LBStore/wuZiLeiBie/getAllWuZiLeiBies.do", {}, "lb_wuZiLeiBies", func);
 }
 
-function getZiDian4FenLei(id,func){
-    hajax("/LBStore/ziDian/getAllZiDians4fl.do", {id:0,qy_id:0,zdfl_id:id}, "lb_ziDian4fl", func);
+function getZiDian4FenLei(id, func) {
+    hajax("/LBStore/ziDian/getAllZiDians4fl.do", {id: 0, qy_id: 0, zdfl_id: id}, "lb_ziDian4fl", func);
 }
 
-function getWuZiZiDians(func){
+function getWuZiZiDians(func) {
     hajax("/LBStore/wuZiZiDian/getAllWuZiZiDians.do", {}, "lb_wuZiZiDians", func);
 }
 
-function getCangKus(func){
+function getCangKus(func) {
     hajax("/LBStore/cangKu/getAllCangKus.do", {}, "lb_cangKus", func);
 }
 
-function getKeHus(func){
+function getKeHus(func) {
     hajax("/LBStore/keHu/getAllKeHus.do", {}, "lb_keHus", func);
 }
 
-function getGongYingShangs(func){
+function getGongYingShangs(func) {
     hajax("/LBStore/gongYingShang/getAllGongYingShangs.do", {}, "lb_gongYingShangs", func);
 }
 
-function getAllXuQius(func){
+function getAllXuQius(func) {
     hajax("/LBStore/xuQiu/getAllXuQius.do", {}, "lb_xuQius", func);
+}
+
+function getXiangMuDetail1(func) {
+    gajax("/LBStore/xiangMuDetail/getXiangMuDetailsByState.do?state=1", {}, "lb_xiangMuDetails1", func);
 }
 
 function findCode(list, id) {
@@ -81,6 +86,27 @@ function hajax(url, d, result, func) {
         data: JSON.stringify(d),
         contentType: "application/json",
         type: "post",
+        cache: false,
+        error: function (msg, textStatus) {
+            alert("查询数据失败");
+        },
+        success: function (json) {
+            if (json.result === 0) {
+                eval(result + " = json.sz");
+                if (func) {
+                    func();
+                }
+            }
+        }
+    });
+}
+
+function gajax(url, d, result, func) {
+    $.ajax({
+        url: url,
+        data: JSON.stringify(d),
+        contentType: "application/json",
+        type: "get",
         cache: false,
         error: function (msg, textStatus) {
             alert("查询数据失败");
@@ -276,7 +302,7 @@ function getKuWeiHao(mc, qsh, jsh) {
         var end = parseInt(jsh);
         for (var i = begin; i <= end; i++) {
             var s = mc + i;
-            var o = {id:i,mc:s};
+            var o = {id: i, mc: s};
             array.push(o);
         }
     } else if (reg.test(qsh) && reg.test(jsh)) {
@@ -284,33 +310,54 @@ function getKuWeiHao(mc, qsh, jsh) {
         var end = jsh.charCodeAt(0);
         for (var i = begin; i <= end; i++) {
             var s = mc + String.fromCharCode(i);
-            var o = {id:i,mc:s};
+            var o = {id: i, mc: s};
             array.push(o);
         }
     }
     return array;
 }
 
-function getDateFromString(dateStr,separator){
-    if(!separator){
-            separator="-";
-     }
-     var dateArr = dateStr.split(separator);
-     var year = parseInt(dateArr[0]);
-     var month;
-     //处理月份为04这样的情况                         
-     if(dateArr[1].indexOf("0") === 0){
-         month = parseInt(dateArr[1].substring(1));
-     }else{
-          month = parseInt(dateArr[1]);
-     }
-     var day = parseInt(dateArr[2]);
-     var date = new Date(year,month -1,day);
-     return date;
+function getDateFromString(dateStr, separator) {
+    if (!separator) {
+        separator = "-";
+    }
+    var dateArr = dateStr.split(separator);
+    var year = parseInt(dateArr[0]);
+    var month;
+    //处理月份为04这样的情况                         
+    if (dateArr[1].indexOf("0") === 0) {
+        month = parseInt(dateArr[1].substring(1));
+    } else {
+        month = parseInt(dateArr[1]);
+    }
+    var day = parseInt(dateArr[2]);
+    var date = new Date(year, month - 1, day);
+    return date;
 }
 
-function getAddDate(dateStr,days){
-    var date = getDateFromString(dateStr,"-");
-    date.setDate(date.getDate()+days); 
+function getAddDate(dateStr, days) {
+    var date = getDateFromString(dateStr, "-");
+    date.setDate(date.getDate() + days);
     return dateFormat_d(date);
+}
+
+function GetUrlParam(paraName) {
+    var url = document.location.toString();
+    var arrObj = url.split("?");
+
+    if (arrObj.length > 1) {
+        var arrPara = arrObj[1].split("&");
+        var arr;
+
+        for (var i = 0; i < arrPara.length; i++) {
+            arr = arrPara[i].split("=");
+
+            if (arr != null && arr[0] == paraName) {
+                return arr[1];
+            }
+        }
+        return "";
+    } else {
+        return "";
+    }
 }

@@ -48,9 +48,11 @@ function jxXiangMuDetail(json) {
         item.lsh = item.lsh === undefined || item.lsh === null ? "" : item.lsh;
         item.khmc = item.khmc === undefined || item.khmc === null ? "" : item.khmc;
         var readStr = '<button class="btn btn-info btn-xs icon-file-alt" onclick="readXiangMuDetail(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
+        var liaoStr = '<button class="btn btn-info btn-xs icon-shopping-cart" onclick="liaoXiangMuDetail(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var finishStr = '<button class="btn btn-info btn-xs icon-ok-sign" onclick="finishXiangMuDetail(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
-        var trStr = '<tr' + classStr + '><td>' + item.xmmc + '</td><td>' + item.xmlsh + '</td><td>' + item.khmc + '</td><td>' + item.lsh + '</td><td>' + item.wzmc + '</td><td>' + item.xhgg + '</td><td>' + item.jhsl + '</td><td>' + item.dj + '</td><td>' + (item.jhsl*item.dj).toFixed(2) + '</td><td>'
+        var trStr = '<tr' + classStr + '><td>' + item.xmmc + '</td><td>' + item.xmlsh + '</td><td>' + item.khmc + '</td><td>' + item.lsh + '</td><td>' + item.wzmc + '</td><td>' + item.xhgg + '</td><td>' + item.jhsl + '</td><td>' + item.dj + '</td><td>' + (item.jhsl * item.dj).toFixed(2) + '</td><td>'
                 + readStr
+                + liaoStr
                 + finishStr
                 + '</td></tr>';
         $("#data_table_body").append(trStr);
@@ -86,7 +88,8 @@ function selectXiangMuDetail_m() {
     var tj = {"pageSize": 20, "currentPage": 1};
     if ($("#inpSelXmmc").val() !== "") {
         xiangMuDetail.xmmc = $("#inpSelXmmc").val();
-    }if ($("#inpSelXmlsh").val() !== "") {
+    }
+    if ($("#inpSelXmlsh").val() !== "") {
         xiangMuDetail.xmlsh = $("#inpSelXmlsh").val();
     }
     if ($("#inpSelLsh").val() !== "") {
@@ -129,12 +132,13 @@ function readXiangMuDetail(index) {
     editIndex = index;
     $("#dvMxCanKao").hide();
     jxReadXiangMuDetail(xiangMuDetail);
+    xiangMuLingLiao();
 }
 
 function jxReadXiangMuDetail(xiangMuDetail) {
     bbXiangMu = xiangMuDetail;
     $("#inpWzbm").val(xiangMuDetail.wzbm);
-    $("#inpWz").val(xiangMuDetail.wzmc)
+    $("#inpWz").val(xiangMuDetail.wzmc);
     $("#inpLb").val(xiangMuDetail.wzlb);
     $("#inpXhgg").val(xiangMuDetail.xhgg);
     $("#inpDj").val(xiangMuDetail.dj);
@@ -156,11 +160,11 @@ function jxReadXiangMuDetail(xiangMuDetail) {
 }
 
 function stopXiangMuDetail() {
-    changeState("终止","/LBStore/xiangMuDetail/stopXiangMuDetial.do?");
+    changeState("终止", "/LBStore/xiangMuDetail/stopXiangMuDetial.do?");
 }
 
-function wancXiangMuDetail(){
-    changeState("完成","/LBStore/xiangMuDetail/finishXiangMuDetail.do?");
+function wancXiangMuDetail() {
+    changeState("完成", "/LBStore/xiangMuDetail/finishXiangMuDetail.do?");
 }
 
 function changeState(cz, url) {
@@ -174,7 +178,7 @@ function changeState(cz, url) {
         }
         xiangMuDetail = xiangMuDetails[editIndex];
         $.ajax({
-            url: url+"id=" + xiangMuDetail.id,
+            url: url + "id=" + xiangMuDetail.id,
             contentType: "application/json",
             type: "get",
             dataType: "json",
@@ -226,9 +230,17 @@ function buildTysx(data) {
     }
 }
 
-function saveXiangMuDetail(){
+function saveXiangMuDetail() {
     if (optFlag === 4) {
         $("#xiangMuDetailModal").modal("hide");
         return;
     }
+}
+
+function xiangMuLingLiao() {
+    if (xiangMuDetails[editIndex] === undefined) {
+        return;
+    }
+    var xmd_id = xiangMuDetails[editIndex].id;
+    window.top.addTabs({id:'504',title: '领料管理',close: true,url: '/LBStore/view/cangKu/lingLiao/lingLiao.html?xmd_id=' + xmd_id});
 }

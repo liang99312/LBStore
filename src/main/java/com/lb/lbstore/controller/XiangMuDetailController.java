@@ -54,6 +54,25 @@ public class XiangMuDetailController extends BaseController {
         }
         return map;
     }
+    
+    @RequestMapping(value = "getXiangMuDetailsByState.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> getXiangMuDetailsByState(@RequestParam Integer state) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            Integer qy_id = getDlA01().getQy_id();
+            List<XiangMuDetail> xiangMuDetails = xiangMuDetailServiceImpl.getXiangMuDetailsByState(state,qy_id);
+            map.put("result", 0);
+            map.put("sz", xiangMuDetails);
+        } catch (Exception e) {
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
+    }
 
     //分页查询
     @RequestMapping(value = "listXiangMuDetailsByPage.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
