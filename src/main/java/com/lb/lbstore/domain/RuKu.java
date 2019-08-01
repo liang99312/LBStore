@@ -34,6 +34,7 @@ public class RuKu {
     private Integer gys_id;
     private Integer rkr_id;
     private Integer spr_id;
+    private Integer xmd_id;
     private String ly; //供应商；客户；生产
     private String wz;
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
@@ -136,6 +137,14 @@ public class RuKu {
 
     public void setSpr_id(Integer spr_id) {
         this.spr_id = spr_id;
+    }
+
+    public Integer getXmd_id() {
+        return xmd_id;
+    }
+
+    public void setXmd_id(Integer xmd_id) {
+        this.xmd_id = xmd_id;
     }
 
     public Date getSj() {

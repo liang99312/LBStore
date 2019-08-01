@@ -417,6 +417,7 @@ public class RuKuDao extends BaseDao {
                 detail.setLy(ruKu.getLy());
                 detail.setQy_id(ruKu.getQy_id());
                 detail.setRk_id(id);
+                detail.setXmd_id(ruKu.getXmd_id());
                 session.save(detail);
             }
             session.flush();
@@ -501,6 +502,7 @@ public class RuKuDao extends BaseDao {
                 detail.setLy(ruKu.getLy());
                 detail.setQy_id(ruKu.getQy_id());
                 detail.setRk_id(ruKu.getId());
+                detail.setXmd_id(ruKu.getXmd_id());
                 session.save(detail);
             }
             session.flush();

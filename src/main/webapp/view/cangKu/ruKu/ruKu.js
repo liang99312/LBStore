@@ -26,6 +26,7 @@ var editFeiA01;
 var selBaoBiao;
 var dymx_opt = {data: [], yxData: [], func: calcDymx};
 var tysx_opt = {data: [], ls: 2, lw: 70};
+var editXmd;
 
 $(document).ready(function () {
     $('#inpSj').val(dateFormat(new Date()));
@@ -37,6 +38,7 @@ $(document).ready(function () {
     getGongYingShangs(setTrager_gongYingShang);
     getWuZiZiDians(setTrager_ziDian);
     getWuZiLeiBies(setTrager_leiBie);
+    getXiangMuDetail1(setTrager_xmd);
     getBaoBiaosByMk("503", setTrager_baoBiao);
     $("#inpMxJlfs").change(function () {
         $("#tblMxDymx input:last").blur();
@@ -126,6 +128,10 @@ function setTrager_leiBie() {
 
 function setTrager_baoBiao() {
     $('#inpSelBb').AutoComplete({'data': lb_baoBiaos, 'paramName': 'selBaoBiao'});
+}
+
+function setTrager_xmd() {
+    $("#inpDh").AutoComplete({'data': lb_xiangMuDetails1, 'paramName': 'editXmd'});
 }
 
 function selectWuZiLeiBie(json) {
@@ -376,6 +382,7 @@ function addRuKu() {
     editCangKu = {};
     editGongYingShang = {};
     editKeHu = {};
+    editXmd = {};
     $("#ruKuModel_title").html("新增入库单");
     $("#btnOk").html("保存");
     $("#divXzmx").show();
@@ -445,6 +452,9 @@ function jxReadRuKu(ruKu) {
     $("#inpRkr").val(ruKu.rkrmc);
     editA01 = {"id": ruKu.rkr_id, "mc": ruKu.rkrmc};
     selectCangKu(editCangKu);
+    if(ruKu.xmd_id && ruKu.xmd_id > 0){
+        editXmd = {"id":ruKu.xmd_id,"mc":ruKu.dh};
+    }
     $("#inpDh").val(ruKu.dh);
     $("#inpBz").val(ruKu.bz);
     $("#inpSl").val(ruKu.sl);
@@ -550,6 +560,10 @@ function saveRuKu() {
             } else {
                 ruKu.kh_id = editKeHu.id;
             }
+        }
+    } else if ("生产" === $("#inpLy").val()) {
+        if ($("#inpDh").val() === editXmd.mc) {
+            ruKu.xmd_id = editXmd.id;
         }
     }
     if ($("#inpRkr").val() === "") {

@@ -6,6 +6,7 @@
 package com.lb.lbstore.dao;
 
 import com.lb.lbstore.domain.A01;
+import com.lb.lbstore.domain.KeHu;
 import com.lb.lbstore.domain.QiYe;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,14 @@ public class QiYeDao extends BaseDao {
             a01.setState(8);
             a01.setA01qx("-1");
             session.save(a01);
+            session.flush();
+            KeHu kh = new KeHu();
+            kh.setQy_id(result);
+            kh.setMc(qy.getMc());
+            kh.setDm(qy.getDm());
+            kh.setDz(qy.getDz());
+            kh.setState(0);
+            session.save(kh);
             session.flush();
             tx.commit();
         } catch (Exception e) {

@@ -33,6 +33,7 @@ public class RuKuDetail {
     private Integer kh_id;
     private Integer gys_id;
     private Integer wzzd_id;
+    private Integer xmd_id;
     private String wzbm;
     private String wzmc;
     private Integer wzlb_id;
@@ -173,6 +174,14 @@ public class RuKuDetail {
 
     public void setXhgg_id(Integer xhgg_id) {
         this.xhgg_id = xhgg_id;
+    }
+
+    public Integer getXmd_id() {
+        return xmd_id;
+    }
+
+    public void setXmd_id(Integer xmd_id) {
+        this.xmd_id = xmd_id;
     }
 
     public String getXhgg() {
