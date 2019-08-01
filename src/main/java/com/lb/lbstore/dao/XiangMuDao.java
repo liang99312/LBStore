@@ -311,6 +311,7 @@ public class XiangMuDao extends BaseDao {
                 detail.setKh_id(xiangMu.getKh_id());
                 detail.setQy_id(xiangMu.getQy_id());
                 detail.setXm_id(id);
+                detail.setState(0);
                 session.save(detail);
             }
             session.flush();
@@ -391,6 +392,7 @@ public class XiangMuDao extends BaseDao {
                 detail.setKh_id(xiangMu.getKh_id());
                 detail.setQy_id(xiangMu.getQy_id());
                 detail.setXm_id(xiangMu.getId());
+                detail.setState(0);
                 session.save(detail);
             }
             session.flush();
@@ -461,6 +463,7 @@ public class XiangMuDao extends BaseDao {
                     continue;
                 }
                 d.setLsh(LshUtil.getXmdLsh());
+                d.setState(1);
                 session.update(d);
             }
             session.flush();

@@ -71,6 +71,7 @@ public class RuKuDetail {
     private transient Date sj;
     private transient Integer rkr_id;
     private transient String qrq,zrq;
+    private transient Integer state;
 
     public Integer getId() {
         return id;
@@ -414,6 +415,14 @@ public class RuKuDetail {
 
     public void setBz(String bz) {
         this.bz = bz;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
        
     @Override

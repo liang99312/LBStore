@@ -73,6 +73,10 @@ public class RuKuServiceImpl implements RuKuService {
             sql += " and ck_id = ?";
             parameters.add(map.get("ck_id"));
         }
+        if (map.containsKey("xmd_id")) {
+            sql += " and xmd_id = ?";
+            parameters.add(map.get("xmd_id"));
+        }
         if (map.containsKey("lsh")) {
             sql += " and lsh like ?";
             parameters.add("%" + map.get("lsh") + "%");
@@ -80,6 +84,10 @@ public class RuKuServiceImpl implements RuKuService {
         if (map.containsKey("wz")) {
             sql += " and wz like ?";
             parameters.add("%" + map.get("wz") + "%");
+        }
+        if (map.containsKey("dh")) {
+            sql += " and dh = ?";
+            parameters.add(map.get("dh"));
         }
         if (map.containsKey("state")) {
             sql += " and state = ?";
@@ -151,6 +159,27 @@ public class RuKuServiceImpl implements RuKuService {
     @Override
     public boolean deleteRuKuFei(Integer id, Integer rk_id) {
         return ruKuDao.deleteRuKuFei(id, rk_id);
+    }
+    
+    @Override
+    public int queryDetailRows(HashMap map) {
+        List parameters = new ArrayList();
+        parameters.add(map.get("qy_id"));
+        String sql = "select count(1) from RuKuDetail where qy_id=?";
+        if (map.containsKey("xmd_id")) {
+                sql += " and xmd_id = ?";
+                parameters.add(map.get("xmd_id"));
+            }
+        if (map.containsKey("wzmc")) {
+            sql += " and wzmc like ?";
+            parameters.add("%" + map.get("mc") + "%");
+        }
+        return ruKuDao.getCount(sql, parameters.toArray());
+    }
+
+    @Override
+    public List<RuKuDetail> queryRuKuDetailsByPage(HashMap map) {
+        return ruKuDao.queryRuKuDetailsByPage(map);
     }
 
     @Override

@@ -84,6 +84,10 @@ public class LingLiaoServiceImpl implements LingLiaoService {
             sql += " and wz like ?";
             parameters.add("%" + map.get("wz") + "%");
         }
+        if (map.containsKey("dh")) {
+            sql += " and dh = ?";
+            parameters.add(map.get("dh"));
+        }
         if (map.containsKey("state")) {
             sql += " and state = ?";
             parameters.add(map.get("state"));
@@ -121,14 +125,14 @@ public class LingLiaoServiceImpl implements LingLiaoService {
     public int queryDetailRows(HashMap map) {
         List parameters = new ArrayList();
         parameters.add(map.get("qy_id"));
-        String sql = "select count(1) from LingLiao where qy_id=?";
-        if (map.containsKey("mc")) {
-            sql += " and mc like ?";
+        String sql = "select count(1) from LingLiaoDetail where qy_id=?";
+        if (map.containsKey("xmd_id")) {
+                sql += " and xmd_id = ?";
+                parameters.add(map.get("xmd_id"));
+            }
+        if (map.containsKey("wzmc")) {
+            sql += " and wzmc like ?";
             parameters.add("%" + map.get("mc") + "%");
-        }
-        if (map.containsKey("state")) {
-            sql += " and state = ?";
-            parameters.add(map.get("state"));
         }
         return lingLiaoDao.getCount(sql, parameters.toArray());
     }

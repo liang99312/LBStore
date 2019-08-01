@@ -4,6 +4,7 @@ var addTabs = function (options) {
     var url = window.location.protocol + '//' + window.location.host;
     options.url = url + options.url;
     id = "tab_" + options.id;
+    var refresh_flag = options.refresh_flag;
     var active_flag = false;
     if ($("#" + id)) {
         active_flag = $("#" + id).hasClass('active');
@@ -31,8 +32,8 @@ var addTabs = function (options) {
         $(".nav-tabs").append(title);
         $(".tab-content").append(content);
     } else {
-        if (active_flag) {
-            $("#iframe_" + id).attr('src', $("#iframe_" + id).attr('src'));
+        if (active_flag || refresh_flag) {
+            $("#iframe_" + id).attr('src', options.url);
         }
     }
     //激活TAB

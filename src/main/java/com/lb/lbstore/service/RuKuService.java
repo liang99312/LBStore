@@ -51,6 +51,10 @@ public interface RuKuService {
     
     public RuKuDetail getRuKuDetailById(Integer id);
     
+    public int queryDetailRows(HashMap map);
+    
+    public List<RuKuDetail> queryRuKuDetailsByPage(HashMap map);
+    
     public List<RuKuDetail> getRuKuDetailTop100(RuKuDetail detail);
 
 }

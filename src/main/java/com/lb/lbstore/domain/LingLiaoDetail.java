@@ -70,6 +70,7 @@ public class LingLiaoDetail {
     private transient Date sj;
     private transient Integer llr_id;
     private transient String qrq,zrq;
+    private transient Integer state;
 
     public Integer getId() {
         return id;
@@ -342,6 +343,14 @@ public class LingLiaoDetail {
 
     public void setPc(String pc) {
         this.pc = pc;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
     
     @Override

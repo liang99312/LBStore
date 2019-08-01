@@ -59,10 +59,10 @@ $(document).ready(function () {
             $("#inpMxSll").val(temp_sll.toFixed(3));
         }
     });
-    if(!xmd_id){
+    if (!xmd_id) {
         xmd_id = 0;
-    }else{
-        editXmd = {"id":xmd_id,"mc":xmd_mc};
+    } else {
+        editXmd = {"id": xmd_id, "mc": xmd_mc};
         selectLingLiao(xmd_id);
     }
 });
@@ -98,8 +98,9 @@ function setTrager_gongYingShang() {
     $('#inpKcSelGys').AutoComplete({'data': lb_gongYingShangs, 'paramName': 'selGongYingShang'});
 }
 
-function setTrager_xmd(){
-    $("#inpXmdlsh").AutoComplete({'data': lb_xiangMuDetails1, 'afterSelectedHandler': selectXmd});
+function setTrager_xmd() {
+    $("#inpDh").AutoComplete({'data': lb_xiangMuDetails1, 'paramName': 'editXmd'});
+    $("#inpSelDh").AutoComplete({'data': lb_xiangMuDetails1});
 }
 
 function setTrager_baoBiao() {
@@ -115,12 +116,6 @@ function selectCangKu(json) {
         editCangKu = json;
         $("#inpCk").val(editCangKu.mc);
     }
-}
-
-function selectXmd(json){
-    editXmd = json;
-    $("#inpDh").val(editXmd.mc);
-    $("#inpXmdlsh").val(editXmd.mc);
 }
 
 function selectWuZiLeiBie(json) {
@@ -147,7 +142,7 @@ function selectWuZiLeiBie(json) {
 }
 
 function selectLingLiao_m() {
-    $("#lingLiaoSelectModal").modal({backdrop:'static'});
+    $("#lingLiaoSelectModal").modal({backdrop: 'static'});
 }
 
 function selectWuZiZiDian(json) {
@@ -214,29 +209,22 @@ function jxLingLiao(json) {
                 + (item.state === 0 || item.state === -1 ? delStr : "") + '</td></tr>';
         $("#data_table_body").append(trStr);
     });
-    if(xmd_flag === 0 && xmd_id > 0){
-        xmd_flag ++;
-        var temp_index = json.list.length - 1;
-        if(json.list[temp_index]){
-            if(json.list[temp_index].state === 0){
-                editLingLiao(temp_index);
-                return;
-            }
-        }
+    if (xmd_flag === 0 && xmd_id > 0) {
         addLingLiao();
+        xmd_flag++;
     }
 }
 
 function showSelectLingLiao() {
-    $("#lingLiaoSelectModal").modal({backdrop:'static'});
+    $("#lingLiaoSelectModal").modal({backdrop: 'static'});
 }
 
 function selectLingLiao(temp_id) {
     var lingLiao = {};
     var tj = {"pageSize": 20, "currentPage": 1};
-    if(temp_id){        
+    if (temp_id) {
         lingLiao.xmd_id = temp_id;
-    }else{
+    } else {
         if ($("#selLsh").val() !== "") {
             lingLiao.lsh = $("#selLsh").val();
         }
@@ -271,6 +259,9 @@ function selectLingLiao_m() {
     if ($("#inpSelCk").val() !== "" && $("#inpSelCk").val() === selCangKu.mc) {
         lingLiao.ck_id = selCangKu.id;
     }
+    if ($("#inpSelDh").val() !== "") {
+        lingLiao.dh = $("#inpSelDh").val();
+    }
     if ($("#inpSelKh").val() !== "" && $("#inpSelKh").val() === selKeHu.mc) {
         lingLiao.kh_id = selKeHu.id;
     }
@@ -295,6 +286,9 @@ function addLingLiao() {
     llmx = [];
     editCangKu = {};
     editKeHu = {};
+    if (xmd_flag > 0) {
+        editXmd = {};
+    }
     $("#lingLiaoModel_title").html("新增领料单");
     $("#btnOk").html("保存");
     $("#divXzmx").show();
@@ -307,12 +301,11 @@ function addLingLiao() {
     $("#inpBz").val("");
     $("#inpSl").val(0);
     $("#inpJe").val(0);
-    if(editXmd && editXmd.mc){
+    if (editXmd && editXmd.mc) {
         $("#inpDh").val(editXmd.mc);
-        $("#inpXmdlsh").val(editXmd.mc);
     }
     jxLingLiaoMingXi();
-    $("#lingLiaoModal").modal({backdrop:'static'});
+    $("#lingLiaoModal").modal({backdrop: 'static'});
 }
 
 function editLingLiao(index) {
@@ -376,7 +369,7 @@ function selectLingLiaoDetail(id) {
                 $("#inpSpr").val(lingLiao.sprmc);
                 $("#inpSpsj").val(lingLiao.spsj);
                 jxLingLiaoMingXi();
-                $("#lingLiaoModal").modal({backdrop:'static'});
+                $("#lingLiaoModal").modal({backdrop: 'static'});
             } else
                 alert("获取领料单信息失败:" + json.msg !== undefined ? json.msg : "");
         }
@@ -444,6 +437,9 @@ function saveLingLiao() {
         } else {
             lingLiao.kh_id = editKeHu.id;
         }
+    }
+    if ($("#inpDh").val() === editXmd.mc) {
+        lingLiao.xmd_id = editXmd.id;
     }
     if ($("#inpLlr").val() === "") {
         return alert("请输入领料人信息");
@@ -601,7 +597,7 @@ function addLingLiaoMingXi() {
     dymx_opt = {data: [], yxData: [], func: calcDymx};
     editLeiBie = null;
     $("#lingLiaoMingXiModal_title").html("增加明细");
-    $("#selKuCunModal").modal({backdrop:'static'});
+    $("#selKuCunModal").modal({backdrop: 'static'});
 }
 
 function editLingLiaoMingXi(index) {
@@ -658,7 +654,7 @@ function saveLingLiaoMingXi() {
             mx.wzzd_id = editWzzd.id;
         }
     }
-    if(parseFloat($("#inpMxSll").val()) > parseFloat($("#inpMxSyl").val())){
+    if (parseFloat($("#inpMxSll").val()) > parseFloat($("#inpMxSyl").val())) {
         return alert("请输入申领数量不能大于剩余量");
     }
     mx.wzlb_id = editLeiBie.id;
@@ -692,7 +688,7 @@ function saveLingLiaoMingXi() {
     mx.tysx = JSON.stringify(tysx_opt.data);
     mx.sll = parseFloat($("#inpMxSll").val());
     mx.slzl = parseFloat($("#inpMxSlzl").val());
-    if("pt" === $("#inpMxJlfs").val()){
+    if ("pt" === $("#inpMxJlfs").val()) {
         mx.slzl = mx.sll;
     } else {
         if (mx.slzl === undefined || mx.slzl === "" || mx.slzl < 0.001) {
@@ -748,7 +744,7 @@ function cxKuCun() {
     if ($("#inpKcSelZrq").val() !== "") {
         kuCun.zrq = $("#inpKcSelZrq").val();
     }
-    if($("#inpKcSelFlag").prop("checked")){
+    if ($("#inpKcSelFlag").prop("checked")) {
         kuCun.syl = 999999.9;
     }
     $.ajax({
@@ -802,7 +798,7 @@ function setKcCunData(kc, index) {
     var m = llmx[index];
     m = m ? m : {};
     if (m.dymx) {
-        if(typeof m.dymx === "string"){
+        if (typeof m.dymx === "string") {
             m.dymx = JSON.parse(m.dymx);
         }
     } else {
@@ -849,7 +845,7 @@ function setKcCunData(kc, index) {
     }
     selectMxJlfs();
     $("#selKuCunModal").modal("hide");
-    $("#lingLiaoMingXiModal").modal({backdrop:'static'});
+    $("#lingLiaoMingXiModal").modal({backdrop: 'static'});
 }
 
 function cxKuCunById(id, index) {

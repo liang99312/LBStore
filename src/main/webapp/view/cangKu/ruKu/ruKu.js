@@ -27,8 +27,13 @@ var selBaoBiao;
 var dymx_opt = {data: [], yxData: [], func: calcDymx};
 var tysx_opt = {data: [], ls: 2, lw: 70};
 var editXmd;
+var xmd_flag = 0;
+var xmd_id;
+var xmd_mc;
 
 $(document).ready(function () {
+    xmd_id = GetUrlParam("xmd_id");
+    xmd_mc = GetUrlParam("xmd_mc");
     $('#inpSj').val(dateFormat(new Date()));
     $('#inpSj,#inpFeiRq').datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd hh:ii', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, startView: 2, forceParse: 0, showMeridian: 1});
     $('#inpSelQrq,#inpSelZrq,#inpMxScrq').datetimepicker({language: 'zh-CN', format: 'yyyy-mm-dd', weekStart: 7, todayBtn: 1, autoclose: 1, todayHighlight: 1, minView: 2, startView: 2, forceParse: 0, showMeridian: 1});
@@ -64,6 +69,12 @@ $(document).ready(function () {
     $("#inpMxZl").keyup(function () {
         calcSl("zl");
     });
+    if (!xmd_id) {
+        xmd_id = 0;
+    } else {
+        editXmd = {"id": xmd_id, "mc": xmd_mc};
+        selectRuKu(xmd_id);
+    }
 });
 
 function calcSl(t) {
@@ -132,6 +143,7 @@ function setTrager_baoBiao() {
 
 function setTrager_xmd() {
     $("#inpDh").AutoComplete({'data': lb_xiangMuDetails1, 'paramName': 'editXmd'});
+    $("#inpSelDh").AutoComplete({'data': lb_xiangMuDetails1});
 }
 
 function selectWuZiLeiBie(json) {
@@ -312,26 +324,34 @@ function jxRuKu(json) {
                 + '</td></tr>';
         $("#data_table_body").append(trStr);
     });
+    if (xmd_flag === 0 && xmd_id > 0) {
+        addRuKu();
+        xmd_flag++;
+    }
 }
 
 function showSelectRuKu() {
     $("#ruKuSelectModal").modal({backdrop: 'static'});
 }
 
-function selectRuKu() {
+function selectRuKu(temp_id) {
     var ruKu = {};
     var tj = {"pageSize": 20, "currentPage": 1};
-    if ($("#selLsh").val() !== "") {
-        ruKu.lsh = $("#selLsh").val();
-    }
-    if ($('#selWzmc').val() !== "") {
-        ruKu.wz = $('#selWzmc').val();
-    }
-    if ($("#selState").val() !== '' && $("#selState").val() !== "-9") {
-        ruKu.state = parseInt($("#selState").val());
-    }
-    if ($("#selCangKu").val() !== "" && $("#selCangKu").val() === selCangKu.mc) {
-        ruKu.ck_id = selCangKu.id;
+    if (temp_id) {
+        ruKu.xmd_id = temp_id;
+    } else {
+        if ($("#selLsh").val() !== "") {
+            ruKu.lsh = $("#selLsh").val();
+        }
+        if ($('#selWzmc').val() !== "") {
+            ruKu.wz = $('#selWzmc').val();
+        }
+        if ($("#selState").val() !== '' && $("#selState").val() !== "-9") {
+            ruKu.state = parseInt($("#selState").val());
+        }
+        if ($("#selCangKu").val() !== "" && $("#selCangKu").val() === selCangKu.mc) {
+            ruKu.ck_id = selCangKu.id;
+        }
     }
     tj.paramters = ruKu;
     var options = {};
@@ -353,6 +373,9 @@ function selectRuKu_m() {
     }
     if ($("#inpSelCk").val() !== "" && $("#inpSelCk").val() === selCangKu.mc) {
         ruKu.ck_id = selCangKu.id;
+    }
+    if ($("#inpSelDh").val() !== "") {
+        ruKu.dh = $("#inpSelDh").val();
     }
     if ($("#inpSelKh").val() !== "" && $("#inpSelKh").val() === selKeHu.mc) {
         ruKu.kh_id = selKeHu.id;
@@ -382,7 +405,9 @@ function addRuKu() {
     editCangKu = {};
     editGongYingShang = {};
     editKeHu = {};
-    editXmd = {};
+    if (xmd_flag > 0) {
+        editXmd = {};
+    }
     $("#ruKuModel_title").html("新增入库单");
     $("#btnOk").html("保存");
     $("#divXzmx").show();
@@ -396,6 +421,12 @@ function addRuKu() {
     $("#inpBz").val("");
     $("#inpSl").val(0);
     $("#inpJe").val(0);
+    if (editXmd && editXmd.mc) {
+        $("#inpDh").val(editXmd.mc);
+        $("#inpLy").val("生产");
+        $(".rk_gys").val("").attr("disabled", "disabled").show();
+        $(".rk_kh").hide();
+    }
     jxRuKuMingXi();
     $("#ruKuModal").modal({backdrop: 'static'});
 }

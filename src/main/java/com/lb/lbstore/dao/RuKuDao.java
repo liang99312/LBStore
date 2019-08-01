@@ -295,6 +295,10 @@ public class RuKuDao extends BaseDao {
                 sql += " and rk.ck_id = ?";
                 parameters.add(map.get("ck_id"));
             }
+            if (map.containsKey("xmd_id")) {
+                sql += " and rk.xmd_id = ?";
+                parameters.add(map.get("xmd_id"));
+            }
             if (map.containsKey("lsh")) {
                 sql += " and rk.lsh like ?";
                 parameters.add("%" + map.get("lsh") + "%");
@@ -302,6 +306,10 @@ public class RuKuDao extends BaseDao {
             if (map.containsKey("wz")) {
                 sql += " and rk.wz like ?";
                 parameters.add("%" + map.get("wz") + "%");
+            }
+            if (map.containsKey("dh")) {
+                sql += " and rk.dh = ?";
+                parameters.add(map.get("dh"));
             }
             if (map.containsKey("state")) {
                 sql += " and rk.state = ?";
@@ -780,6 +788,62 @@ public class RuKuDao extends BaseDao {
                 String skrmc = (String) objs[1];
                 rkf.setSkrmc(skrmc);
                 result.add(rkf);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (session != null) {
+                    session.close();
+                }
+            } catch (Exception he) {
+                he.printStackTrace();
+            }
+        }
+        return result;
+    }
+    
+    public List<RuKuDetail> queryRuKuDetailsByPage(HashMap map) {
+        List<RuKuDetail> result = new ArrayList();
+        Session session = null;
+        try {
+            List parameters = new ArrayList();
+            parameters.add(map.get("qy_id"));
+            session = getSessionFactory().openSession();
+            String sql = "select {rkd.*},kh.mc as khmc,ck.mc as ckmc,rk.state as state from RuKuDetail rkd "
+                    + "left join RuKu rk on rkd.rk_id=rk.id "
+                    + "left join CangKu ck on rk.ck_id=ck.id left join KeHu kh on rk.kh_id=kh.id "
+                    + "where rk.qy_id=?";
+            if (map.containsKey("xmd_id")) {
+                sql += " and rkd.xmd_id = ?";
+                parameters.add(map.get("xmd_id"));
+            }
+            if (map.containsKey("wzmc")) {
+                sql += " and rkd.wzmc like ?";
+                parameters.add("%" + map.get("wzmc") + "%");
+            }
+            if (map.containsKey("lsh")) {
+                sql += " and rk.lsh = ?";
+                parameters.add(map.get("lsh"));
+            }
+            SQLQuery navtiveSQL = session.createSQLQuery(sql);
+            for (int i = 0; i < parameters.size(); i++) {
+                navtiveSQL.setParameter(i, parameters.get(i));
+            }
+            navtiveSQL.addEntity("rkd", RuKuDetail.class).addScalar("khmc", StandardBasicTypes.STRING).addScalar("ckmc", StandardBasicTypes.STRING).addScalar("state", StandardBasicTypes.INTEGER);
+            navtiveSQL.setFirstResult(Integer.parseInt(map.get("beginRow").toString()));
+            navtiveSQL.setMaxResults(Integer.parseInt(map.get("pageSize").toString()));
+            List list = navtiveSQL.list();
+            for (Object obj : list) {
+                Object[] objs = (Object[]) obj;
+                RuKuDetail rkd = (RuKuDetail) objs[0];
+                String khmc = (String) objs[1];
+                String ckmc = (String) objs[2];
+                Integer state = (Integer) objs[3];
+                rkd.setKhmc(khmc);
+                rkd.setCkmc(ckmc);
+                rkd.setState(state);
+                result.add(rkd);
             }
         } catch (Exception e) {
             e.printStackTrace();

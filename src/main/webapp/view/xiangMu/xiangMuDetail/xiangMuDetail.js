@@ -1,6 +1,7 @@
 var xiangMuDetails;
 var bbXiangMuDetail;
 var xiangMuFeis;
+var curXiangMuDetail;
 var feiOptFlag = -1;
 var optFlag = 1;
 var editIndex = -1;
@@ -49,7 +50,7 @@ function jxXiangMuDetail(json) {
         item.khmc = item.khmc === undefined || item.khmc === null ? "" : item.khmc;
         var readStr = '<button class="btn btn-info btn-xs icon-file-alt" onclick="readXiangMuDetail(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var liaoStr = '<button class="btn btn-info btn-xs icon-shopping-cart" onclick="liaoXiangMuDetail(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
-        var finishStr = '<button class="btn btn-info btn-xs icon-ok-sign" onclick="finishXiangMuDetail(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
+        var finishStr = '<button class="btn btn-info btn-xs icon-ok-sign" onclick="chanXiangMuDetail(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var trStr = '<tr' + classStr + '><td>' + item.xmmc + '</td><td>' + item.xmlsh + '</td><td>' + item.khmc + '</td><td>' + item.lsh + '</td><td>' + item.wzmc + '</td><td>' + item.xhgg + '</td><td>' + item.jhsl + '</td><td>' + item.dj + '</td><td>' + (item.jhsl * item.dj).toFixed(2) + '</td><td>'
                 + readStr
                 + liaoStr
@@ -132,7 +133,6 @@ function readXiangMuDetail(index) {
     editIndex = index;
     $("#dvMxCanKao").hide();
     jxReadXiangMuDetail(xiangMuDetail);
-    xiangMuLingLiao();
 }
 
 function jxReadXiangMuDetail(xiangMuDetail) {
@@ -237,10 +237,82 @@ function saveXiangMuDetail() {
     }
 }
 
-function xiangMuLingLiao() {
+function addXiangMuDetailLiao() {
     if (xiangMuDetails[editIndex] === undefined) {
         return;
     }
     var xmd_id = xiangMuDetails[editIndex].id;
-    window.top.addTabs({id:'504',title: '领料管理',close: true,url: '/LBStore/view/cangKu/lingLiao/lingLiao.html?xmd_id=' + xmd_id});
+    var xmd_mc = xiangMuDetails[editIndex].lsh;
+    window.top.addTabs({id:'504',title: '领料管理',close: true,url: '/LBStore/view/cangKu/lingLiao/lingLiao.html?xmd_id=' + xmd_id+'&xmd_mc='+xmd_mc,'refresh_flag':true});
+}
+
+function refreshXiangMuDetailLiao(){
+    liaoXiangMuDetail(editIndex);
+}
+
+function liaoXiangMuDetail(index){
+    if (xiangMuDetails[index] === undefined) {
+        return;
+    }
+    editIndex = index;
+    curXiangMuDetail = xiangMuDetails[index];
+    var lingLiao = {};
+    var tj = {"pageSize": 10, "currentPage": 1};
+    lingLiao.xmd_id = curXiangMuDetail.id;
+    tj.paramters = lingLiao;
+    var options = {};
+    options.url = "/LBStore/lingLiao/listLingLiaoDetailsByPage.do";
+    options.tj = tj;
+    options.func = jxXiangMuDetailLiao;
+    options.ul = "#example2";
+    queryPaginator(options);
+    $("#xiangMuLiaoModal").modal({backdrop: 'static'});
+}
+
+function jxXiangMuDetailLiao(json) {
+    $("#tblXiangMuLiao_body tr").remove();
+    $.each(json.list, function (index, item) { //遍历返回的json
+        var trStr = '<tr><td>' + item.wzmc + '</td><td>' + item.xhgg + '</td><td>' + item.dj + '</td><td>' + item.sll + '</td><td>' + (item.sll*item.dj).toFixed(2) + '</td><td>' + (item.state === 0?"未办理":"已办理") + '</td></tr>';
+        $("#tblXiangMuLiao_body").append(trStr);
+    });
+}
+
+function addXiangMuDetailChan() {
+    if (xiangMuDetails[editIndex] === undefined) {
+        return;
+    }
+    var xmd_id = xiangMuDetails[editIndex].id;
+    var xmd_mc = xiangMuDetails[editIndex].lsh;
+    window.top.addTabs({id:'503',title: '入库管理',close: true,url: '/LBStore/view/cangKu/ruKu/ruKu.html?xmd_id=' + xmd_id+'&xmd_mc='+xmd_mc,'refresh_flag':true});
+}
+
+function refreshXiangMuDetailChan(){
+    chanXiangMuDetail(editIndex);
+}
+
+function chanXiangMuDetail(index){
+    if (xiangMuDetails[index] === undefined) {
+        return;
+    }
+    editIndex = index;
+    curXiangMuDetail = xiangMuDetails[index];
+    var ruKu = {};
+    var tj = {"pageSize": 10, "currentPage": 1};
+    ruKu.xmd_id = curXiangMuDetail.id;
+    tj.paramters = ruKu;
+    var options = {};
+    options.url = "/LBStore/ruKu/listRuKuDetailsByPage.do";
+    options.tj = tj;
+    options.func = jxXiangMuDetailChan;
+    options.ul = "#example3";
+    queryPaginator(options);
+    $("#xiangMuChanModal").modal({backdrop: 'static'});
+}
+
+function jxXiangMuDetailChan(json) {
+    $("#tblXiangMuChan_body tr").remove();
+    $.each(json.list, function (index, item) { //遍历返回的json
+        var trStr = '<tr><td>' + item.wzmc + '</td><td>' + item.xhgg + '</td><td>' + item.dj + '</td><td>' + item.sl + '</td><td>' + (item.sl*item.dj).toFixed(2) + '</td><td>' + (item.state === 0?"未办理":"已办理") + '</td></tr>';
+        $("#tblXiangMuChan_body").append(trStr);
+    });
 }

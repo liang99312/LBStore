@@ -332,6 +332,35 @@ public class RuKuController extends BaseController {
         return model;
     }
     
+    //分页查询
+    @RequestMapping(value = "listRuKuDetailsByPage.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Page listRuKuDetailsByPage(@RequestBody Page model) {
+        HashMap map = model.getParamters();
+        if (map == null) {
+            map = new HashMap();
+        }
+        map.put("qy_id", getDlA01().getQy_id());
+        if (model.getRows() == 0) {
+            model.setRows(this.ruKuServiceImpl.queryDetailRows(map));//查询记录数
+        }
+        if (model.getRows() == 0) {
+            model.setCurrentPage(1);
+            model.setList(new ArrayList());
+            model.setParamters(new HashMap());
+            model.setRows(0);
+            model.setTotalPage(0);
+            return model;
+        }
+        if (model.getTotalPage() == 0) {
+            model.setTotalPage(model.calcTotalPage());
+        }
+        map.put("beginRow", model.getBegin());
+        map.put("pageSize", model.getPageSize());
+        model.setList(this.ruKuServiceImpl.queryRuKuDetailsByPage(map));
+        return model;
+    }
+    
     @RequestMapping(value = "getRuKuDetailTop100.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String, Object> getKuCunTop100(@RequestBody RuKuDetail model) {
