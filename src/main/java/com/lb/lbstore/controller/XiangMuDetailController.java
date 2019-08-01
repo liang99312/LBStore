@@ -37,6 +37,52 @@ public class XiangMuDetailController extends BaseController {
         return "xiangMu/xiangMuDetail/xiangMuDetail";
     }
     
+    @RequestMapping(value = "stopXiangMuDetail.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> stopXiangMuDetail(@RequestParam Integer id) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            XiangMuDetail model = xiangMuDetailServiceImpl.getXiangMuDetailById(id);
+            if(model.getState() == 0){
+                map.put("result", -1);
+                map.put("msg", "未办理项目单不需要终止！");
+                return map;
+            }
+            boolean result = xiangMuDetailServiceImpl.changeXiangMuDetailState(id,4);
+            map.put("result", result? 0:-1);
+        } catch (Exception e) {
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
+    }
+    
+     @RequestMapping(value = "finishXiangMuDetail.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> finishXiangMuDetail(@RequestParam Integer id) {
+        if (!existsUser()) {
+            return notLoginResult();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            XiangMuDetail model = xiangMuDetailServiceImpl.getXiangMuDetailById(id);
+            if(model.getState() == 0){
+                map.put("result", -1);
+                map.put("msg", "未办理项目单不可以完成！");
+                return map;
+            }
+            boolean result = xiangMuDetailServiceImpl.changeXiangMuDetailState(id,3);
+            map.put("result", result? 0:-1);
+        } catch (Exception e) {
+            map.put("result", -1);
+            map.put("msg", e.getMessage());
+        }
+        return map;
+    }
+    
     @RequestMapping(value = "getXiangMuDetailById.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String, Object> getXiangMuDetailById(@RequestParam Integer id) {

@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.type.StandardBasicTypes;
 import org.springframework.stereotype.Repository;
 
@@ -52,6 +53,33 @@ public class XiangMuDetailDao extends BaseDao {
                 result.add(xmd);
             }
         } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (session != null) {
+                    session.close();
+                }
+            } catch (Exception he) {
+                he.printStackTrace();
+            }
+        }
+        return result;
+    }
+    
+    public boolean changeXiangMuDetailState(Integer id, Integer state) {
+        boolean result = false;
+        Session session = null;
+        Transaction tx = null;
+        try {
+            session = getSessionFactory().openSession();
+            tx = session.beginTransaction();
+            String sql = "update XiangMuDetail set state=? where id=?";
+            session.createSQLQuery(sql).setParameter(0, state).setParameter(1, id).executeUpdate();
+            session.flush();
+            tx.commit();
+            result = true;
+        } catch (Exception e) {
+            tx.rollback();
             e.printStackTrace();
         } finally {
             try {

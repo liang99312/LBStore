@@ -54,7 +54,7 @@ public class XiangMuDetail {
     private Integer xq_id;
     private String xq;
     private String bz;
-    private Integer state; //0:未审批；1：已审批；2:已完成；21:部分完成；3:已发货；
+    private Integer state; //0:未审批；1：已审批；2:已完成；3:已发货；4:已取消；-1:已删除
     private transient String khmc;
     private transient String kdrmc;
     private transient String sprmc;

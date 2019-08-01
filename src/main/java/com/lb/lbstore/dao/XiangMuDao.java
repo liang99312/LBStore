@@ -532,8 +532,11 @@ public class XiangMuDao extends BaseDao {
         try {
             session = getSessionFactory().openSession();
             tx = session.beginTransaction();
-            String deleteFei = "update XiangMu set state=? where id=?";
-            session.createSQLQuery(deleteFei).setParameter(0, id).setParameter(1, state).executeUpdate();
+            String sql = "update XiangMu set state=? where id=?";
+            session.createSQLQuery(sql).setParameter(0, state).setParameter(1, id).executeUpdate();
+            session.flush();
+            String sqlDetail = "update XiangMuDetail set state=? where xm_id=?";
+            session.createSQLQuery(sqlDetail).setParameter(0, state).setParameter(1, id).executeUpdate();
             session.flush();
             tx.commit();
             result = true;

@@ -53,8 +53,7 @@ function jxXiangMuDetail(json) {
         var finishStr = '<button class="btn btn-info btn-xs icon-ok-sign" onclick="chanXiangMuDetail(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
         var trStr = '<tr' + classStr + '><td>' + item.xmmc + '</td><td>' + item.xmlsh + '</td><td>' + item.khmc + '</td><td>' + item.lsh + '</td><td>' + item.wzmc + '</td><td>' + item.xhgg + '</td><td>' + item.jhsl + '</td><td>' + item.dj + '</td><td>' + (item.jhsl * item.dj).toFixed(2) + '</td><td>'
                 + readStr
-                + liaoStr
-                + finishStr
+                + (item.state === 1?liaoStr + finishStr:"")
                 + '</td></tr>';
         $("#data_table_body").append(trStr);
     });
@@ -131,7 +130,13 @@ function readXiangMuDetail(index) {
     $("#btnOk").html("关闭");
     var xiangMuDetail = xiangMuDetails[index];
     editIndex = index;
-    $("#dvMxCanKao").hide();
+    if(xiangMuDetail.state === 1 || xiangMuDetail.state === 21){
+        $("#btnFinish").show();
+        $("#btnStop").show();
+    }else{
+        $("#btnFinish").hide();
+        $("#btnStop").hide();
+    }
     jxReadXiangMuDetail(xiangMuDetail);
 }
 

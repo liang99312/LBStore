@@ -17,6 +17,8 @@ public interface XiangMuDetailService {
 
     public XiangMuDetail getXiangMuDetailById(Integer id);
     
+    public boolean changeXiangMuDetailState(Integer id, Integer state);
+    
     public List<XiangMuDetail> getXiangMuDetailsByState(Integer state,Integer qy_id);
                
     public int queryRows(HashMap map);

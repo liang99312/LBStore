@@ -78,5 +78,10 @@ public class XiangMuDetailServiceImpl implements XiangMuDetailService {
     public List<XiangMuDetail> getXiangMuDetailsByState(Integer state,Integer qy_id) {
         return xiangMuDetailDao.queryXiangMuDetailsByState(state,qy_id);
     }
+    
+    @Override
+    public boolean changeXiangMuDetailState(Integer id, Integer state) {
+        return xiangMuDetailDao.changeXiangMuDetailState(id, state);
+    }
 
 }
