@@ -181,9 +181,9 @@ function jxXiangMu(json) {
                 + readStr
                 + (item.state === 0 ? editStr : "")
                 + (item.state === 0 ? dealStr : "")
-                + (item.state === 0 || item.state === -1 ? delStr : "")
-                + (item.state > 0 ? finishStr : "")
-                + (item.state > 0 ? feiStr : "")
+                + (item.state === 0 || item.state === -1 || item.state === 4 ? delStr : "")
+                + (item.state > 0 && item.state !== 4 ? finishStr : "")
+                + (item.state > 0 && item.state !== 4 ? feiStr : "")
                 + '</td></tr>';
         $("#data_table_body").append(trStr);
     });
@@ -262,6 +262,7 @@ function addXiangMu() {
     $("#divSpr").hide();
     $(".bb-element").hide();
     $(".item-view").hide();
+    $("#btnFinish").hide();
     $("#btnStop").hide();
     $("#inpMc").val("");
     $("#inpKh").val("");
@@ -289,6 +290,7 @@ function editXiangMu(index) {
     $(".bb-element").hide();
     $(".item-view").hide();
     $("#btnStop").hide();
+    $("#btnFinish").hide();
     var xiangMu = xiangMus[index];
     editIndex = index;
     selectXiangMuDetail(xiangMu.id, jxReadXiangMu);
@@ -306,6 +308,7 @@ function readXiangMu(index) {
     $("#divSpr").show();
     $(".bb-element").show();
     $(".item-view").show();
+    $("#btnFinish").hide();
     $("#btnStop").hide();
     var xiangMu = xiangMus[index];
     editIndex = index;
@@ -325,6 +328,7 @@ function finishXiangMu(index) {
     $("#divSpr").show();
     $(".bb-element").hide();
     $(".item-view").hide();
+    $("#btnFinish").show();
     $("#btnStop").show();
     var xiangMu = xiangMus[index];
     editIndex = index;
@@ -388,6 +392,8 @@ function dealXiangMu(index) {
     $("#dvMxCanKao").hide();
     $(".bb-element").hide();
     $(".item-view").hide();
+    $("#btnFinish").hide();
+    $("#btnStop").hide();
     var xiangMu = xiangMus[index];
     editIndex = index;
     selectXiangMuDetail(xiangMu.id, jxReadXiangMu);
@@ -523,9 +529,10 @@ function changeState(cz, url) {
                 alert(cz + "失败");
             },
             success: function (json) {
-                if (json.result === 0)
+                if (json.result === 0){
+                    $("#xiangMuModal").modal("hide");
                     selectXiangMu();
-                else
+                } else
                     alert(cz + "失败:" + json.msg ? json.msg : "");
             }
         });
