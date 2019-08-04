@@ -24,7 +24,7 @@ function selectBaoBiao() {
     }
     tj.paramters = baoBiao;
     var options = {};
-    options.url = "/LBStore/tongJi/listCangKuTjBaoBiaosByPage.do";
+    options.url = "/LBStore/tongJi/listXiangMuTjBaoBiaosByPage.do";
     options.tj = tj;
     options.func = jxBaoBiao;
     options.ul = "#example";

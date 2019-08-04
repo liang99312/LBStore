@@ -25,23 +25,60 @@ public class TongJiController extends BaseController {
     @Resource
     private BaoBiaoService baoBiaoServiceImpl;
 
-    @RequestMapping("goTongJi.do")
-    public String goTongJi() {
+    @RequestMapping("goCangKuTongJi.do")
+    public String goCangKuTongJi() {
         if (!existsUser()) {
             return "../index";
         }
         return "cangKu/tongJi/tongJi";
     }
     
-    @RequestMapping(value = "listTjfxBaoBiaosByPage.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping("goXiangMuTongJi.do")
+    public String goXiangMuTongJi() {
+        if (!existsUser()) {
+            return "../index";
+        }
+        return "xiangMu/tongJi/tongJi";
+    }
+    
+    @RequestMapping(value = "listCangKuTjBaoBiaosByPage.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Page listTjfxBaoBiaosByPage(@RequestBody Page model) {
+    public Page listCangKuTjBaoBiaosByPage(@RequestBody Page model) {
         HashMap map = model.getParamters();
         if (map == null) {
             map = new HashMap();
         }
         map.put("qy_id", getDlA01().getQy_id());
         map.put("mkdm","509");
+        if (model.getRows() == 0) {
+            model.setRows(this.baoBiaoServiceImpl.queryMkRows(map));//查询记录数
+        }
+        if (model.getRows() == 0) {
+            model.setCurrentPage(1);
+            model.setList(new ArrayList());
+            model.setParamters(new HashMap());
+            model.setRows(0);
+            model.setTotalPage(0);
+            return model;
+        }
+        if (model.getTotalPage() == 0) {
+            model.setTotalPage(model.calcTotalPage());
+        }
+        map.put("beginRow", model.getBegin());
+        map.put("pageSize", model.getPageSize());
+        model.setList(this.baoBiaoServiceImpl.queryMkBaoBiaosByPage(map));
+        return model;
+    }
+    
+    @RequestMapping(value = "listXiangMuTjBaoBiaosByPage.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Page listXiangMuTjBaoBiaosByPage(@RequestBody Page model) {
+        HashMap map = model.getParamters();
+        if (map == null) {
+            map = new HashMap();
+        }
+        map.put("qy_id", getDlA01().getQy_id());
+        map.put("mkdm","609");
         if (model.getRows() == 0) {
             model.setRows(this.baoBiaoServiceImpl.queryMkRows(map));//查询记录数
         }
