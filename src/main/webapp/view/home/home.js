@@ -49,12 +49,12 @@ var allMenu = {data: [
                 {id: '5010', text: '退货管理', icon: 'icon-glass', url: goTuiHuo},
                 {id: '5011', text: '退供管理', icon: 'icon-glass', url: goTuiGong},
                 {id: '508', text: '库存管理', icon: 'icon-glass', url: goKuCun},
-                {id: '509', text: '统计分析', icon: 'icon-glass', url: goCangKuTongJi}]},
+                {id: '509', text: '仓库统计', icon: 'icon-glass', url: goCangKuTongJi}]},
          {id: '6', text:'项目管理', icon: 'icon-leaf', url: '', menus: [
                 {id: '601', text: '需求管理', icon: 'icon-glass', url: goXuQiu},
                 {id: '602', text: '项目管理', icon: 'icon-glass', url: goXiangMu},
                 {id: '603', text: '项目明细', icon: 'icon-glass', url: goXiangMuDetail},
-                {id: '609', text: '统计分析', icon: 'icon-glass', url: goXiangMuTongJi}]},
+                {id: '609', text: '项目统计', icon: 'icon-glass', url: goXiangMuTongJi}]},
         {id: '7', text: '企业字典', icon: 'icon-leaf', url: '', menus: [
                 {id: '701', text: '字典类别', icon: 'icon-glass', url: goZiDianLeiBie},
                 {id: '702', text: '企业字典', icon: 'icon-glass', url: goQiYeZiDian}]},
