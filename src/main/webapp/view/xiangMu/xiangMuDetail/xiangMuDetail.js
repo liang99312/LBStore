@@ -48,12 +48,14 @@ function jxXiangMuDetail(json) {
         }
         item.lsh = item.lsh === undefined || item.lsh === null ? "" : item.lsh;
         item.khmc = item.khmc === undefined || item.khmc === null ? "" : item.khmc;
+        var readStyle = 'border: 1px solid #999;background-color: #999;';
         var readStr = '<button class="btn btn-info btn-xs icon-file-alt" onclick="readXiangMuDetail(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
-        var liaoStr = '<button class="btn btn-info btn-xs icon-shopping-cart" onclick="liaoXiangMuDetail(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
-        var finishStr = '<button class="btn btn-info btn-xs icon-ok-sign" onclick="chanXiangMuDetail(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;"></button>&nbsp;';
+        var liaoStr = '<button class="btn btn-info btn-xs icon-shopping-cart" onclick="liaoXiangMuDetail(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;' + (item.state !== 1 ? readStyle : '') + '"></button>&nbsp;';
+        var finishStr = '<button class="btn btn-info btn-xs icon-ok-sign" onclick="chanXiangMuDetail(' + index + ' );" style="padding-top: 4px;padding-bottom: 3px;' + (item.state !== 1 ? readStyle : '') + '"></button>&nbsp;';
         var trStr = '<tr' + classStr + '><td>' + item.xmmc + '</td><td>' + item.xmlsh + '</td><td>' + item.khmc + '</td><td>' + item.lsh + '</td><td>' + item.wzmc + '</td><td>' + item.xhgg + '</td><td>' + item.jhsl + '</td><td>' + item.dj + '</td><td>' + (item.jhsl * item.dj).toFixed(2) + '</td><td>'
                 + readStr
-                + (item.state === 1?liaoStr + finishStr:"")
+                + liaoStr
+                + finishStr
                 + '</td></tr>';
         $("#data_table_body").append(trStr);
     });
@@ -130,10 +132,10 @@ function readXiangMuDetail(index) {
     $("#btnOk").html("关闭");
     var xiangMuDetail = xiangMuDetails[index];
     editIndex = index;
-    if(xiangMuDetail.state === 1 || xiangMuDetail.state === 21){
+    if (xiangMuDetail.state === 1 || xiangMuDetail.state === 21) {
         $("#btnFinish").show();
         $("#btnStop").show();
-    }else{
+    } else {
         $("#btnFinish").hide();
         $("#btnStop").hide();
     }
@@ -248,19 +250,24 @@ function addXiangMuDetailLiao() {
     }
     var xmd_id = xiangMuDetails[editIndex].id;
     var xmd_mc = xiangMuDetails[editIndex].lsh;
-    window.top.addTabs({id:'504',title: '领料管理',close: true,url: '/LBStore/view/cangKu/lingLiao/lingLiao.html?xmd_id=' + xmd_id+'&xmd_mc='+xmd_mc,'refresh_flag':true});
+    window.top.addTabs({id: '504', title: '领料管理', close: true, url: '/LBStore/view/cangKu/lingLiao/lingLiao.html?xmd_id=' + xmd_id + '&xmd_mc=' + xmd_mc, 'refresh_flag': true});
 }
 
-function refreshXiangMuDetailLiao(){
+function refreshXiangMuDetailLiao() {
     liaoXiangMuDetail(editIndex);
 }
 
-function liaoXiangMuDetail(index){
+function liaoXiangMuDetail(index) {
     if (xiangMuDetails[index] === undefined) {
         return;
     }
     editIndex = index;
     curXiangMuDetail = xiangMuDetails[index];
+    if (curXiangMuDetail.state === 1) {
+        $("#btnLiao").show();
+    } else {
+        $("#btnLiao").hide();
+    }
     var lingLiao = {};
     var tj = {"pageSize": 10, "currentPage": 1};
     lingLiao.xmd_id = curXiangMuDetail.id;
@@ -277,7 +284,7 @@ function liaoXiangMuDetail(index){
 function jxXiangMuDetailLiao(json) {
     $("#tblXiangMuLiao_body tr").remove();
     $.each(json.list, function (index, item) { //遍历返回的json
-        var trStr = '<tr><td>' + item.wzmc + '</td><td>' + item.xhgg + '</td><td>' + item.dj + '</td><td>' + item.sll + '</td><td>' + (item.sll*item.dj).toFixed(2) + '</td><td>' + (item.state === 0?"未办理":"已办理") + '</td></tr>';
+        var trStr = '<tr><td>' + item.wzmc + '</td><td>' + item.xhgg + '</td><td>' + item.dj + '</td><td>' + item.sll + '</td><td>' + (item.sll * item.dj).toFixed(2) + '</td><td>' + (item.state === 0 ? "未办理" : "已办理") + '</td></tr>';
         $("#tblXiangMuLiao_body").append(trStr);
     });
 }
@@ -288,19 +295,24 @@ function addXiangMuDetailChan() {
     }
     var xmd_id = xiangMuDetails[editIndex].id;
     var xmd_mc = xiangMuDetails[editIndex].lsh;
-    window.top.addTabs({id:'503',title: '入库管理',close: true,url: '/LBStore/view/cangKu/ruKu/ruKu.html?xmd_id=' + xmd_id+'&xmd_mc='+xmd_mc,'refresh_flag':true});
+    window.top.addTabs({id: '503', title: '入库管理', close: true, url: '/LBStore/view/cangKu/ruKu/ruKu.html?xmd_id=' + xmd_id + '&xmd_mc=' + xmd_mc, 'refresh_flag': true});
 }
 
-function refreshXiangMuDetailChan(){
+function refreshXiangMuDetailChan() {
     chanXiangMuDetail(editIndex);
 }
 
-function chanXiangMuDetail(index){
+function chanXiangMuDetail(index) {
     if (xiangMuDetails[index] === undefined) {
         return;
     }
     editIndex = index;
     curXiangMuDetail = xiangMuDetails[index];
+    if (curXiangMuDetail.state === 1) {
+        $("#btnChan").show();
+    } else {
+        $("#btnChan").hide();
+    }
     var ruKu = {};
     var tj = {"pageSize": 10, "currentPage": 1};
     ruKu.xmd_id = curXiangMuDetail.id;
@@ -317,7 +329,7 @@ function chanXiangMuDetail(index){
 function jxXiangMuDetailChan(json) {
     $("#tblXiangMuChan_body tr").remove();
     $.each(json.list, function (index, item) { //遍历返回的json
-        var trStr = '<tr><td>' + item.wzmc + '</td><td>' + item.xhgg + '</td><td>' + item.dj + '</td><td>' + item.sl + '</td><td>' + (item.sl*item.dj).toFixed(2) + '</td><td>' + (item.state === 0?"未办理":"已办理") + '</td></tr>';
+        var trStr = '<tr><td>' + item.wzmc + '</td><td>' + item.xhgg + '</td><td>' + item.dj + '</td><td>' + item.sl + '</td><td>' + (item.sl * item.dj).toFixed(2) + '</td><td>' + (item.state === 0 ? "未办理" : "已办理") + '</td></tr>';
         $("#tblXiangMuChan_body").append(trStr);
     });
 }
