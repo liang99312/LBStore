@@ -19,7 +19,7 @@
         <mysql.connector.ver>8.0.12</mysql.connector.ver>
         <aspectj.ver>1.8.6</aspectj.ver>
         <jackson.ver>2.6.4</jackson.ver>
-        <commons-file.ver>1.3.1</commons-file.ver>
+        <commons-file.ver>1.3.3</commons-file.ver>
         <common.csv.ver>1.2</common.csv.ver>        
         <reflection.ver>0.9.10</reflection.ver>
     </properties>
