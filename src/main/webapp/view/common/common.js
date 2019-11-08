@@ -67,7 +67,7 @@ function getAllXuQius(func) {
 }
 
 function getXiangMuDetail1(func) {
-    gajax("/LBStore/xiangMuDetail/getXiangMuDetailsByState.do?state=1", {}, "lb_xiangMuDetails1", func);
+    gajax("/LBStore/xiangMuDetail/getXiangMuDetailsByState.do?state=1", "", "lb_xiangMuDetails1", func);
 }
 
 function findCode(list, id) {
